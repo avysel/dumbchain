@@ -1,5 +1,7 @@
 package com.avysel.blockchain.business;
 
+import com.avysel.blockchain.crypto.HashTools;
+
 public class ChainManager {
 	private Chain chain;
 
@@ -15,7 +17,7 @@ public class ChainManager {
 		return chain;
 	}
 
-	public void setChain(Chain chain) {
+	private void setChain(Chain chain) {
 		this.chain = chain;
 	}
 
@@ -23,18 +25,24 @@ public class ChainManager {
 	 * 	Create a new @Block from given data
 	 * @return the new @Block
 	 */
-	public Block createBlock(/* data */) {
+	public Block createBlock(String data) {
 	
-		return new Block();
+		Block block = new Block();
 		
-	}
-	
-	/**
-	 * Add a new @Block to the @Chain
-	 * @param block the @Block to add
-	 */
-	public void linkBlock(Block block) {
+		BlockHeader blockHeader = new BlockHeader();
+		BlockData blockData = new BlockData();
 		
+		blockData.setData(data);
+		
+		blockHeader.setTimestamp(System.currentTimeMillis());
+		
+		block.setBlockData(blockData);
+		
+		blockHeader.setHash(HashTools.calculateBlockHash(block));
+		
+		block.setBlockHeader(blockHeader);
+		
+		return block;
 	}
 	
 	/**
@@ -52,14 +60,41 @@ public class ChainManager {
 	 * @return the @Block with the given hash
 	 */
 	public Block findBlockByHash(String hash) {
-		return new Block();
+		
+		if(hash == null) return null;
+		
+		for(Block block : chain.getBlockList()){
+			if(block.getBlockHeader().getHash() != null 
+				&& block.getBlockHeader().getHash().equals(hash))
+				return block;
+		}
+		return null;
+	}
+	
+	/**
+	 * Create the @Chain and set a genesis @Block
+	 */
+	public void createChain() {
+		chain = new Chain();
+		createGenesis();
 	}
 	
 	/**
 	 * Create the genesis @Block and add it to the @Chain
 	 */
-	public void createGenesis() {
-		
+	private void createGenesis() {
+		Block genesis = createBlock("Genesis");
+		chain.linkBlock(genesis);
+		genesis.getBlockHeader().setPreviousHash(null);
 	}
 
+	public void display() {
+		Block currentBlock = chain.getLastBlock();
+		
+		while(currentBlock != null) {
+			System.out.println(currentBlock.getBlockData().getData().toString());
+			currentBlock = findBlockByHash(currentBlock.getBlockHeader().getPreviousHash());
+		}
+		
+	}
 }

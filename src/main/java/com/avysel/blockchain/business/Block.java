@@ -2,21 +2,20 @@ package com.avysel.blockchain.business;
 
 public class Block {
 	
-	private BlockHeader header;
-	private BlockData data;
+	private BlockHeader blockHeader;
+	private BlockData blockData;
 	
-	public BlockHeader getHeader() {
-		return header;
+	public BlockHeader getBlockHeader() {
+		return blockHeader;
 	}
-	public void setHeader(BlockHeader header) {
-		this.header = header;
+	public void setBlockHeader(BlockHeader blockHeader) {
+		this.blockHeader = blockHeader;
 	}
-	public BlockData getData() {
-		return data;
+	public BlockData getBlockData() {
+		return blockData;
 	}
-	public void setData(BlockData data) {
-		this.data = data;
+	public void setBlockData(BlockData blockData) {
+		this.blockData = blockData;
 	}
-	
 	
 }

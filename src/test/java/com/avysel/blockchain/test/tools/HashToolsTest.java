@@ -1,9 +1,8 @@
-package com.avysel.blockchain.test;
+package com.avysel.blockchain.test.tools;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.avysel.blockchain.business.Block;
 import com.avysel.blockchain.crypto.HashTools;
 
 

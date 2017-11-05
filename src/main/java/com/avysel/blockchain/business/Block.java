@@ -1,6 +1,7 @@
 package com.avysel.blockchain.business;
 
 public class Block {
+	
 	private BlockHeader header;
 	private BlockData data;
 	

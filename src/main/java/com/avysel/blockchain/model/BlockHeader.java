@@ -9,6 +9,15 @@ public class BlockHeader {
 	private long nonce;
 	private long difficulty;
 	
+	public BlockHeader(String previousHash, String merkleRoot, long timestamp, long nonce, long difficulty) {
+		super();
+		this.previousHash = previousHash;
+		this.merkleRoot = merkleRoot;
+		this.timestamp = timestamp;
+		this.nonce = nonce;
+		this.difficulty = difficulty;
+	}
+	
 	public long getHeight() {
 		return height;
 	}

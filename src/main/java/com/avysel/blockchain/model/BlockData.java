@@ -18,10 +18,12 @@ public class BlockData {
 		this.data = data;
 	}
 	
+	@Deprecated
 	public String getData() {
 		return data;
 	}
 
+	@Deprecated
 	public void setData(String data) {
 		this.data = data;
 	}
@@ -41,7 +43,5 @@ public class BlockData {
 	public void setDataList(List<SingleData> dataList) {
 		this.dataList = dataList;
 	}
-	
-	
 	
 }

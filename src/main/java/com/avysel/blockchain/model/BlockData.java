@@ -10,6 +10,7 @@ public class BlockData {
 
 	public BlockData() {
 		super();
+		dataList = new ArrayList<SingleData>();
 	}
 		
 	public BlockData(List<String> data) {

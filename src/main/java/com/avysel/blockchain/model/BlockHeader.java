@@ -18,6 +18,10 @@ public class BlockHeader {
 		this.difficulty = difficulty;
 	}
 	
+	public BlockHeader() {
+		super();
+	}
+
 	public long getHeight() {
 		return height;
 	}

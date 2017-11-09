@@ -4,29 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockData {
-	private String data;
 	
 	private String identifier;
-	private List<SingleData> dataList = new ArrayList<SingleData>();
+	private List<SingleData> dataList;
 
 	public BlockData() {
 		super();
 	}
-	
-	public BlockData(String data) {
+		
+	public BlockData(List<String> data) {
 		super();
-		this.data = data;
-	}
-	
-	@Deprecated
-	public String getData() {
-		return data;
-	}
-
-	@Deprecated
-	public void setData(String data) {
-		this.data = data;
-	}
+		dataList = new ArrayList<SingleData>();
+		for(String s : data) {
+			dataList.add(new SingleData(s));
+		}
+	}	
 
 	public String getIdentifier() {
 		return identifier;

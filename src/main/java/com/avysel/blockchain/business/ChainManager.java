@@ -1,10 +1,14 @@
 package com.avysel.blockchain.business;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.model.BlockData;
 import com.avysel.blockchain.model.BlockHeader;
 import com.avysel.blockchain.model.Chain;
+import com.avysel.blockchain.model.SingleData;
 
 /*
  * TODO verifier integrite d'un bloc a chaque lecture (HashTools.checkHash)
@@ -12,6 +16,10 @@ import com.avysel.blockchain.model.Chain;
  *
  */
 
+/**
+ * Contains a unique @Chain of @Blocks and provides available operations on it.
+ *
+ */
 public class ChainManager {
 	private Chain chain;
 
@@ -31,7 +39,7 @@ public class ChainManager {
 	 * 	Create a new @Block from given data
 	 * @return the new @Block
 	 */
-	public Block createBlock(String data) {
+	public Block createBlock(List<String> data) {
 			
 		BlockHeader blockHeader = new BlockHeader();
 		BlockData blockData = new BlockData(data);
@@ -63,8 +71,8 @@ public class ChainManager {
 		if(hash == null) return null;
 		
 		for(Block block : chain.getBlockList()){
-			if(block.getBlockHeader().getHash() != null 
-				&& block.getBlockHeader().getHash().equals(hash))
+			if(block.getHash() != null 
+				&& block.getHash().equals(hash))
 				return block;
 		}
 		return null;
@@ -82,18 +90,37 @@ public class ChainManager {
 	 * Create the genesis @Block and add it to the @Chain
 	 */
 	private void createGenesis() {
-		Block genesis = createBlock("Genesis");
+		Block genesis = createBlock(Arrays.asList("Genesis"));
 		chain.linkBlock(genesis);
-		genesis.getBlockHeader().setPreviousHash(null);
+		genesis.setPreviousHash(null);
 	}
 
 	public void display() {
 		Block currentBlock = chain.getLastBlock();
 		
 		while(currentBlock != null) {
-			System.out.println(currentBlock.getBlockData().getData().toString());
-			currentBlock = findBlockByHash(currentBlock.getBlockHeader().getPreviousHash());
+			List<SingleData> dataList;
+			dataList = currentBlock.getDataList();
+			for(SingleData singleData : dataList) {
+				System.out.println(singleData.toString());
+			}
+			
+			currentBlock = findBlockByHash(currentBlock.getPreviousHash());
 		}
+		
+	}
+	
+	/**
+	 * Load existing @Chain from database
+	 */
+	public void loadChain() {
+		
+	}
+	
+	/**
+	 * Perform integrity check for the @Chain
+	 */
+	public void checkChain() {
 		
 	}
 }

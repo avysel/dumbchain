@@ -1,5 +1,7 @@
 package com.avysel.blockchain.model;
 
+import java.util.List;
+
 import com.avysel.blockchain.model.BlockData;
 import com.avysel.blockchain.model.BlockHeader;
 
@@ -18,17 +20,35 @@ public class Block {
 		this.blockHeader = header;
 	}
 	
-	public BlockHeader getBlockHeader() {
+	protected BlockHeader getBlockHeader() {
 		return blockHeader;
 	}
+	
 	public void setBlockHeader(BlockHeader blockHeader) {
 		this.blockHeader = blockHeader;
 	}
-	public BlockData getBlockData() {
+	
+	protected BlockData getBlockData() {
 		return blockData;
 	}
 	public void setBlockData(BlockData blockData) {
 		this.blockData = blockData;
 	}
+	
+	public String getPreviousHash() {
+		return this.getBlockHeader().getPreviousHash();
+	}
+	
+	public String getHash() {
+		return this.getBlockHeader().getHash();
+	}
+
+	public void setPreviousHash(String hash) {
+		this.getBlockHeader().setPreviousHash(hash);
+	}	
+
+	public List<SingleData> getDataList() {
+		return this.getBlockData().getDataList();
+	}	
 	
 }

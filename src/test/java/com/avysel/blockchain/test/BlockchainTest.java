@@ -2,7 +2,7 @@ package com.avysel.blockchain.test;
 
 import org.junit.Test;
 
-import com.avysel.blockchain.business.Block;
+import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.business.ChainManager;
 
 public class BlockchainTest {

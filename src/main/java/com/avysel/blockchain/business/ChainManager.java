@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.Block;
-import com.avysel.blockchain.model.BlockData;
-import com.avysel.blockchain.model.BlockHeader;
 import com.avysel.blockchain.model.Chain;
 import com.avysel.blockchain.model.SingleData;
 
@@ -39,16 +37,15 @@ public class ChainManager {
 	 * 	Create a new @Block from given data
 	 * @return the new @Block
 	 */
-	public Block createBlock(List<String> data) {
+	public Block createBlock(List<String> dataList) {
 			
-		BlockHeader blockHeader = new BlockHeader();
-		BlockData blockData = new BlockData(data);
-				
-		blockHeader.setTimestamp(System.currentTimeMillis());
-				
-		Block block = new Block(blockHeader, blockData);
-		blockHeader.setHash(HashTools.calculateBlockHash(block));
+		Block block = new Block();
+		block.setTimestamp(System.currentTimeMillis());	
+		block.setHash(HashTools.calculateBlockHash(block));
 		
+		for(String data : dataList) {
+			block.addData(new SingleData(data));
+		}
 		return block;
 	}
 	

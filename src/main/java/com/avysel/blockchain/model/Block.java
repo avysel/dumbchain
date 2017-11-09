@@ -12,12 +12,8 @@ public class Block {
 	
 	public Block() {
 		super();
-	}
-	
-	public Block(BlockHeader header, BlockData data) {
-		super();
-		this.blockData = data;
-		this.blockHeader = header;
+		blockHeader = new BlockHeader();
+		blockData = new BlockData();
 	}
 	
 	protected BlockHeader getBlockHeader() {
@@ -34,7 +30,9 @@ public class Block {
 	public void setBlockData(BlockData blockData) {
 		this.blockData = blockData;
 	}
-	
+	public void addData(SingleData singleData) {
+		this.getBlockData().getDataList().add(singleData);
+	}
 	public String getPreviousHash() {
 		return this.getBlockHeader().getPreviousHash();
 	}
@@ -42,11 +40,46 @@ public class Block {
 	public String getHash() {
 		return this.getBlockHeader().getHash();
 	}
-
+	public void setHash(String hash) {
+		this.getBlockHeader().setHash(hash);
+	}
+	
 	public void setPreviousHash(String hash) {
 		this.getBlockHeader().setPreviousHash(hash);
 	}	
 
+	public long getHeight() {
+		return this.getBlockHeader().getHeight();
+	}
+	public void setHeight(long height) {
+		this.getBlockHeader().setHeight(height);
+	}
+
+	public String getMerkleRoot() {
+		return this.getBlockHeader().getMerkleRoot();
+	}
+	public void setMerkleRoot(String merkleRoot) {
+		this.getBlockHeader().setMerkleRoot(merkleRoot);
+	}
+	public long getTimestamp() {
+		return this.getBlockHeader().getTimestamp();
+	}
+	public void setTimestamp(long timestamp) {
+		this.getBlockHeader().setTimestamp(timestamp);
+	}
+	public long getNonce() {
+		return this.getBlockHeader().getNonce();
+	}
+	public void setNonce(long nonce) {
+		this.getBlockHeader().setNonce(nonce);
+	}
+	public long getDifficulty() {
+		return this.getBlockHeader().getDifficulty();
+	}
+	public void setDifficulty(long difficulty) {
+		this.getBlockHeader().setDifficulty(difficulty);
+	}	
+	
 	public List<SingleData> getDataList() {
 		return this.getBlockData().getDataList();
 	}	

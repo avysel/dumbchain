@@ -18,50 +18,50 @@ public class BlockHeader {
 		this.difficulty = difficulty;
 	}
 	
-	public BlockHeader() {
+	protected BlockHeader() {
 		super();
 	}
 
-	public long getHeight() {
+	protected long getHeight() {
 		return height;
 	}
-	public void setHeight(long height) {
+	protected void setHeight(long height) {
 		this.height = height;
 	}
-	public String getHash() {
+	protected String getHash() {
 		return hash;
 	}
-	public void setHash(String hash) {
+	protected void setHash(String hash) {
 		this.hash = hash;
 	}
-	public String getPreviousHash() {
+	protected String getPreviousHash() {
 		return previousHash;
 	}
-	public void setPreviousHash(String previousHash) {
+	protected void setPreviousHash(String previousHash) {
 		this.previousHash = previousHash;
 	}
-	public String getMerkleRoot() {
+	protected String getMerkleRoot() {
 		return merkleRoot;
 	}
-	public void setMerkleRoot(String merkleRoot) {
+	protected void setMerkleRoot(String merkleRoot) {
 		this.merkleRoot = merkleRoot;
 	}
-	public long getTimestamp() {
+	protected long getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(long timestamp) {
+	protected void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
-	public long getNonce() {
+	protected long getNonce() {
 		return nonce;
 	}
-	public void setNonce(long nonce) {
+	protected void setNonce(long nonce) {
 		this.nonce = nonce;
 	}
-	public long getDifficulty() {
+	protected long getDifficulty() {
 		return difficulty;
 	}
-	public void setDifficulty(long difficulty) {
+	protected void setDifficulty(long difficulty) {
 		this.difficulty = difficulty;
 	}
 	

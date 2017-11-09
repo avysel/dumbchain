@@ -1,4 +1,7 @@
-package com.avysel.blockchain.business;
+package com.avysel.blockchain.model;
+
+import com.avysel.blockchain.model.BlockData;
+import com.avysel.blockchain.model.BlockHeader;
 
 public class Block {
 	

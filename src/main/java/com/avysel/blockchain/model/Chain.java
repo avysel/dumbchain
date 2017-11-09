@@ -1,6 +1,8 @@
-package com.avysel.blockchain.business;
+package com.avysel.blockchain.model;
 
 import java.util.ArrayList;
+
+import com.avysel.blockchain.model.Block;
 
 public class Chain {
 	private Block genesis;

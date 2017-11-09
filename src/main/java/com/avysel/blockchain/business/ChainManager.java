@@ -1,6 +1,10 @@
 package com.avysel.blockchain.business;
 
 import com.avysel.blockchain.crypto.HashTools;
+import com.avysel.blockchain.model.Block;
+import com.avysel.blockchain.model.BlockData;
+import com.avysel.blockchain.model.BlockHeader;
+import com.avysel.blockchain.model.Chain;
 
 public class ChainManager {
 	private Chain chain;

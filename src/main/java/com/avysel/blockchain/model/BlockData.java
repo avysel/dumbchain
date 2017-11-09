@@ -1,4 +1,4 @@
-package com.avysel.blockchain.business;
+package com.avysel.blockchain.model;
 
 public class BlockData {
 	private String data;

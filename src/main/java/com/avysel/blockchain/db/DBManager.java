@@ -1,4 +1,4 @@
-package com.avysel.blockchain.model;
+package com.avysel.blockchain.db;
 import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 
 import java.io.File;

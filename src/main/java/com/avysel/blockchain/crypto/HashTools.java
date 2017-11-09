@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.avysel.blockchain.business.Block;
+import com.avysel.blockchain.model.Block;
 
 public class HashTools {
 

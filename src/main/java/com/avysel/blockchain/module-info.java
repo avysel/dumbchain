@@ -3,4 +3,5 @@ module com.avysel.blockchain {
 	exports com.avysel.blockchain.crypto;
 	exports com.avysel.blockchain.model;
 	exports com.avysel.blockchain.network;
+	exports com.avysel.blockchain.db;
 }

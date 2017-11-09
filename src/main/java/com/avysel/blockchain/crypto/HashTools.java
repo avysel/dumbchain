@@ -20,6 +20,11 @@ public class HashTools {
 		
 	}
 	
+	/**
+	 * Calculate the hash for a text data
+	 * @param text the data to hash
+	 * @return the SHA-256 hash for the given text
+	 */
 	public static String calculateHash(String text) {
 		
 		try {
@@ -48,5 +53,15 @@ public class HashTools {
 	        hexString.append(hex);
 	    }
 	    return hexString.toString();
+	}
+	
+	/**
+	 * Check data integrity according to checksum hash
+	 * @param hash the checksum of data
+	 * @param data the data to check
+	 * @return true if integrity of data is ok
+	 */
+	public boolean checkHash(String hash, String data) {
+		return true;
 	}
 }

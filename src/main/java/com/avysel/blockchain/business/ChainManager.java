@@ -6,6 +6,12 @@ import com.avysel.blockchain.model.BlockData;
 import com.avysel.blockchain.model.BlockHeader;
 import com.avysel.blockchain.model.Chain;
 
+/*
+ * TODO verifier integrite d'un bloc a chaque lecture (HashTools.checkHash)
+ * TODO verifier integrite de l'arbre a chaque initialisation
+ *
+ */
+
 public class ChainManager {
 	private Chain chain;
 

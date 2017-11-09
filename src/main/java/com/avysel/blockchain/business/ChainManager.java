@@ -17,30 +17,19 @@ public class ChainManager {
 		return chain;
 	}
 
-	private void setChain(Chain chain) {
-		this.chain = chain;
-	}
-
 	/**
 	 * 	Create a new @Block from given data
 	 * @return the new @Block
 	 */
 	public Block createBlock(String data) {
-	
-		Block block = new Block();
-		
+			
 		BlockHeader blockHeader = new BlockHeader();
-		BlockData blockData = new BlockData();
-		
-		blockData.setData(data);
-		
+		BlockData blockData = new BlockData(data);
+				
 		blockHeader.setTimestamp(System.currentTimeMillis());
-		
-		block.setBlockData(blockData);
-		
+				
+		Block block = new Block(blockHeader, blockData);
 		blockHeader.setHash(HashTools.calculateBlockHash(block));
-		
-		block.setBlockHeader(blockHeader);
 		
 		return block;
 	}

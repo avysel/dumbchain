@@ -5,6 +5,16 @@ public class Block {
 	private BlockHeader blockHeader;
 	private BlockData blockData;
 	
+	public Block() {
+		super();
+	}
+	
+	public Block(BlockHeader header, BlockData data) {
+		super();
+		this.blockData = data;
+		this.blockHeader = header;
+	}
+	
 	public BlockHeader getBlockHeader() {
 		return blockHeader;
 	}

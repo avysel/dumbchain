@@ -1,5 +1,7 @@
 package com.avysel.blockchain.test;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import com.avysel.blockchain.model.Block;
@@ -14,10 +16,10 @@ public class BlockchainTest {
 		
 		manager.createChain();
 		
-		Block block1 = manager.createBlock("data1");
-		Block block2 = manager.createBlock("data2");
-		Block block3 = manager.createBlock("data3");
-		Block block4 = manager.createBlock("data4");
+		Block block1 = manager.createBlock(Arrays.asList("data1"));
+		Block block2 = manager.createBlock(Arrays.asList("data2"));
+		Block block3 = manager.createBlock(Arrays.asList("data3"));
+		Block block4 = manager.createBlock(Arrays.asList("data4"));
 		
 		manager.getChain().linkBlock(block1);
 		manager.getChain().linkBlock(block2);

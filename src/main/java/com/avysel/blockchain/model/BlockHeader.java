@@ -1,7 +1,7 @@
 package com.avysel.blockchain.model;
 
 public class BlockHeader {
-	private long height;
+	private long index;
 	private String hash;
 	private String previousHash;
 	private String merkleRoot;
@@ -22,11 +22,11 @@ public class BlockHeader {
 		super();
 	}
 
-	protected long getHeight() {
-		return height;
+	protected long getIndex() {
+		return index;
 	}
-	protected void setHeight(long height) {
-		this.height = height;
+	protected void setIndex(long index) {
+		this.index = index;
 	}
 	protected String getHash() {
 		return hash;

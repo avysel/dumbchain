@@ -16,20 +16,20 @@ public class Block {
 		blockData = new BlockData();
 	}
 	
-	protected BlockHeader getBlockHeader() {
+	private BlockHeader getBlockHeader() {
 		return blockHeader;
 	}
 	
-	public void setBlockHeader(BlockHeader blockHeader) {
+	/*private void setBlockHeader(BlockHeader blockHeader) {
 		this.blockHeader = blockHeader;
-	}
+	}*/
 	
-	protected BlockData getBlockData() {
+	private BlockData getBlockData() {
 		return blockData;
 	}
-	public void setBlockData(BlockData blockData) {
+	/*private void setBlockData(BlockData blockData) {
 		this.blockData = blockData;
-	}
+	}*/
 	public void addData(SingleData singleData) {
 		this.getBlockData().getDataList().add(singleData);
 	}
@@ -48,11 +48,11 @@ public class Block {
 		this.getBlockHeader().setPreviousHash(hash);
 	}	
 
-	public long getHeight() {
-		return this.getBlockHeader().getHeight();
+	public long getIndex() {
+		return this.getBlockHeader().getIndex();
 	}
-	public void setHeight(long height) {
-		this.getBlockHeader().setHeight(height);
+	public void setIndex(long index) {
+		this.getBlockHeader().setIndex(index);
 	}
 
 	public String getMerkleRoot() {
@@ -84,4 +84,11 @@ public class Block {
 		return this.getBlockData().getDataList();
 	}	
 	
+	public String getHashData() {
+		StringBuffer hashData = new StringBuffer();
+		hashData.append(this.getIndex());
+		hashData.append(this.getTimestamp());
+		hashData.append(this.getDataList()); // TODO passer en json
+		return hashData.toString();
+	}
 }

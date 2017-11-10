@@ -117,7 +117,37 @@ public class ChainManager {
 	/**
 	 * Perform integrity check for the @Chain
 	 */
-	public void checkChain() {
+	public boolean checkChain() {
+		List<Block> blockList = chain.getBlockList();
+		for(Block block : blockList) {
+			if(!checkBlockHash(block))
+				return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Perform integrity check for all @Block. (Only checks @Block's hash)
+	 * @return true if all blocks have good integrity
+	 */
+	public boolean checkAllBlocksHash() {
+		List<Block> blockList = chain.getBlockList();
+		for(Block block : blockList) {
+			if(!checkBlockHash(block))
+				return false;
+		}
+		return true;
+		// TODO retourner l'index du premier bloc erronne rencontre ?
+	}
+	
+	/**
+	 *  Perform integrity check for a @Block. (Only checks @Block's hash)
+	 * @param block the @Block to check
+	 * @return true if @Block integrity is good
+	 */
+	public boolean checkBlockHash(Block block) {
+		String hash = HashTools.calculateBlockHash(block);
 		
+		return hash.equals(block.getHash());
 	}
 }

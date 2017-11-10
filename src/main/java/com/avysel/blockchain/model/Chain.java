@@ -38,12 +38,12 @@ public class Chain {
 	 */
 	public void linkBlock(Block block) {
 		if(this.lastBlock != null) {
-			block.getBlockHeader().setPreviousHash(this.lastBlock.getBlockHeader().getHash());
-			block.getBlockHeader().setHeight(this.lastBlock.getBlockHeader().getHeight() + 1);
+			block.setPreviousHash(this.lastBlock.getHash());
+			block.setIndex(this.lastBlock.getIndex() + 1);
 		}
 		else {
-			block.getBlockHeader().setPreviousHash(null);
-			block.getBlockHeader().setHeight(1);			
+			block.setPreviousHash(null);
+			block.setIndex(1);			
 		}
 
 		blockList.add(block);

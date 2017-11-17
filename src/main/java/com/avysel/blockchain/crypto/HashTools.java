@@ -16,7 +16,7 @@ public class HashTools {
 	public static String calculateBlockHash(Block block) {
 
 		if(block == null) return null;
-		return calculateHash(block.getHashData()); // TODO what block data to use ?
+		return calculateHash(block.getHashData()); 
 		
 	}
 	

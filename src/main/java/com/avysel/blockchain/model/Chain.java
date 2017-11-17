@@ -6,6 +6,7 @@ import com.avysel.blockchain.model.Block;
 
 public class Chain {
 	private Block genesis;
+	public static final long GENESIS_INDEX = 0;
 
 	private Block lastBlock;
 
@@ -39,11 +40,9 @@ public class Chain {
 	public void linkBlock(Block block) {
 		if(this.lastBlock != null) {
 			block.setPreviousHash(this.lastBlock.getHash());
-			block.setIndex(this.lastBlock.getIndex() + 1);
 		}
 		else {
-			block.setPreviousHash(null);
-			block.setIndex(1);			
+			block.setPreviousHash(null);		
 		}
 
 		blockList.add(block);

@@ -1,10 +1,10 @@
 package com.avysel.blockchain.model;
 
 import java.util.List;
-
-import com.avysel.blockchain.model.BlockData;
-import com.avysel.blockchain.model.BlockHeader;
-
+/*
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+*/
 public class Block {
 	
 	private BlockHeader blockHeader;
@@ -14,6 +14,10 @@ public class Block {
 		super();
 		blockHeader = new BlockHeader();
 		blockData = new BlockData();
+	}
+	
+	public boolean isGenesis() {
+		return this.getIndex() == Chain.GENESIS_INDEX;
 	}
 	
 	private BlockHeader getBlockHeader() {
@@ -84,11 +88,56 @@ public class Block {
 		return this.getBlockData().getDataList();
 	}	
 	
+	/**
+	 * Return @String representation of data used to calculate @Block's hash
+	 * @return
+	 */
 	public String getHashData() {
 		StringBuffer hashData = new StringBuffer();
 		hashData.append(this.getIndex());
-		hashData.append(this.getTimestamp());
+	//	hashData.append(this.getTimestamp());
 		hashData.append(this.getDataList()); // TODO passer en json
 		return hashData.toString();
 	}
+	
+	public String getStringData() {
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("[");
+		List<SingleData> dataList = this.getDataList();
+		for(SingleData singleData : dataList) {
+			builder.append(singleData.getData());
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("{index:");
+		builder.append(this.getIndex());
+		builder.append(", time:");
+		builder.append(this.getTimestamp());
+		builder.append(", data:");
+		builder.append(this.getStringData());
+		builder.append(", hash:");
+		builder.append(this.getHash());
+		builder.append(", previousHash:");
+		builder.append(this.getPreviousHash());
+		builder.append("}");
+		
+		return builder.toString();
+	}
+	
+	/*public String toString() {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}*/
 }

@@ -41,11 +41,19 @@ public class ChainManager {
 			
 		Block block = new Block();
 		block.setTimestamp(System.currentTimeMillis());	
-		block.setHash(HashTools.calculateBlockHash(block));
+		
+		long lastIndex = getLastIndex();
+		if( lastIndex == Chain.GENESIS_INDEX)
+			block.setIndex(Chain.GENESIS_INDEX);
+		else
+			block.setIndex(getLastIndex() + 1);
 		
 		for(String data : dataList) {
 			block.addData(new SingleData(data));
-		}
+		}		
+		
+		block.setHash(HashTools.calculateBlockHash(block));
+		
 		return block;
 	}
 	
@@ -92,16 +100,23 @@ public class ChainManager {
 		genesis.setPreviousHash(null);
 	}
 
+	public long getLastIndex() {
+		if(this.getChain().getLastBlock() != null) {
+			return this.getChain().getLastBlock().getIndex();
+		}
+		else {
+			return Chain.GENESIS_INDEX;
+		}
+	}
+	
+	/**
+	 * Display the @Chain from last @Block to Genesis @Block
+	 */
 	public void display() {
 		Block currentBlock = chain.getLastBlock();
 		
 		while(currentBlock != null) {
-			List<SingleData> dataList;
-			dataList = currentBlock.getDataList();
-			for(SingleData singleData : dataList) {
-				System.out.println(singleData.toString());
-			}
-			
+			System.out.println(currentBlock);			
 			currentBlock = findBlockByHash(currentBlock.getPreviousHash());
 		}
 		
@@ -120,24 +135,16 @@ public class ChainManager {
 	public boolean checkChain() {
 		List<Block> blockList = chain.getBlockList();
 		for(Block block : blockList) {
-			if(!checkBlockHash(block))
+			if(!checkBlockHash(block)) {
+				System.out.println("Bad hash for block "+block.getIndex());
 				return false;
+			}
+			if(!checkBlockPrevious(block)) {
+				System.out.println("Bad previous for block "+block.getIndex());
+				return false;
+			}
 		}
 		return true;
-	}
-	
-	/**
-	 * Perform integrity check for all @Block. (Only checks @Block's hash)
-	 * @return true if all blocks have good integrity
-	 */
-	public boolean checkAllBlocksHash() {
-		List<Block> blockList = chain.getBlockList();
-		for(Block block : blockList) {
-			if(!checkBlockHash(block))
-				return false;
-		}
-		return true;
-		// TODO retourner l'index du premier bloc erronne rencontre ?
 	}
 	
 	/**
@@ -146,8 +153,12 @@ public class ChainManager {
 	 * @return true if @Block integrity is good
 	 */
 	public boolean checkBlockHash(Block block) {
-		String hash = HashTools.calculateBlockHash(block);
-		
+		String hash = HashTools.calculateBlockHash(block);	
 		return hash.equals(block.getHash());
+	}
+	
+	public boolean checkBlockPrevious(Block block) {
+		Block previous = findBlockByHash(block.getPreviousHash());
+		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() +1);
 	}
 }

@@ -4,8 +4,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.business.ChainManager;
+import com.avysel.blockchain.model.Block;
+import static org.junit.Assert.assertEquals;
 
 public class BlockchainTest {
 
@@ -13,8 +14,9 @@ public class BlockchainTest {
 	public void testBlockchain() {
 		
 		ChainManager manager = new ChainManager();
-		
+
 		manager.createChain();
+		
 		
 		Block block1 = manager.createBlock(Arrays.asList("data1"));
 		Block block2 = manager.createBlock(Arrays.asList("data2"));
@@ -27,6 +29,8 @@ public class BlockchainTest {
 		manager.getChain().linkBlock(block4);
 		
 		manager.display();
+		
+		assertEquals(true, manager.checkChain());
 		
 	}
 	

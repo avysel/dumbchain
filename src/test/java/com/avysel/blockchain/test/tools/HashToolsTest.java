@@ -15,6 +15,8 @@ public class HashToolsTest {
 	public void testHash() {
 		String hash = HashTools.calculateHash(STRING_TO_HASH);	
 
+		System.out.println(hash);
+		
 		assertEquals(hash, RESULT_HASH);
 	}
 	

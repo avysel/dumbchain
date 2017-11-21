@@ -28,16 +28,14 @@ public class Block {
 		return blockHeader;
 	}
 	
-	/*private void setBlockHeader(BlockHeader blockHeader) {
-		this.blockHeader = blockHeader;
-	}*/
-	
 	private BlockData getBlockData() {
 		return blockData;
 	}
-	/*private void setBlockData(BlockData blockData) {
-		this.blockData = blockData;
-	}*/
+
+	public void addAllData(List<SingleData> dataList) {
+		this.getBlockData().getDataList().addAll(dataList);
+	}
+	
 	public void addData(SingleData singleData) {
 		this.getBlockData().getDataList().add(singleData);
 	}

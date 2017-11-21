@@ -20,13 +20,15 @@ public class Miner {
 		// si on utilise le timestamp, le check ne fonctionnera pas
 		String hash;
 		do {
-			pendingData.addAll(dataList); // reset working dataset
+			// put unused data back to pending data
+			pendingData.addAll(dataList);
+			
+			// clean current data set
 			block.cleanData();
 			
-			dataList = pendingData.getRandomData(); // pick new dataset
-			for(SingleData data : dataList) { // TODO addAll ?
-				block.addData(data);
-			}
+			// pick new dataset
+			dataList = pendingData.getRandomData();
+			block.addAllData(dataList);
 			
 			//System.out.println(pendingData);
 			

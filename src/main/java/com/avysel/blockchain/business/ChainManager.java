@@ -41,19 +41,6 @@ public class ChainManager {
 	}
 	
 	/**
-	 * 	Create a new @Block from given data
-	 * @return the new @Block
-	 */
-/*	public Block createBlock(List<String> dataList) {
-			
-		Block block = miner.mine(pendingData);
-
-		block.setIndex(getLastIndex() + 1);
-		
-		return block;
-	}*/
-	
-	/**
 	 * Find a @Block with a given height
 	 * @param height the height
 	 * @return the @Block with the given height
@@ -150,9 +137,9 @@ public class ChainManager {
 	}
 	
 	/**
-	 *  Perform integrity check for a @Block. (Only checks @Block's hash)
+	 * Perform integrity check for a @Block. Only checks @Block's hash
 	 * @param block the @Block to check
-	 * @return true if @Block integrity is good
+	 * @return true if @Block's hash is the one expected
 	 */
 	public boolean checkBlockHash(Block block) {
 		String hash = HashTools.calculateBlockHash(block);
@@ -160,11 +147,20 @@ public class ChainManager {
 		return hash.equals(block.getHash());
 	}
 	
+	/**
+	 * Perform integrity check for a @Block. Checks if @Block's parent is the one expected.
+	 * @param block the @Block to check
+	 * @return if @Block's parent is the one expected
+	 */
 	public boolean checkBlockPrevious(Block block) {
 		Block previous = findBlockByHash(block.getPreviousHash());
 		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() -1);
 	}
 	
+	/**
+	 * Add a new data to be included in a block at one of the next mining.
+	 * @param data
+	 */
 	public void addIncomingData(SingleData data) {
 		System.out.println("add data : "+data);
 		pendingData.addData(data);

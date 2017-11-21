@@ -8,27 +8,8 @@ import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.model.SingleData;
 
 public class Miner {
-
-	private List<SingleData> availableData = new ArrayList<SingleData>();
 	
 	public Miner() {
-		
-	}
-		
-	public List<SingleData> getAvailableData() {
-		return availableData;
-	}
-
-	public void setAvailableData(List<SingleData> availableData) {
-		this.availableData = availableData;
-	}
-
-	public void addData(SingleData data) {
-		getAvailableData().add(data);
-	}
-	
-	public void clearData() {
-		getAvailableData().clear();
 	}
 
 	public Block mine(PendingData pendingData) {

@@ -9,6 +9,9 @@ import java.util.Random;
 
 import com.avysel.blockchain.model.SingleData;
 
+/**
+ * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...
+ */
 public class PendingData {
 	private Deque<SingleData> queue;
 
@@ -39,6 +42,10 @@ public class PendingData {
 		return result;
 	}
 	
+	/**
+	 * Pick a random quantity of data in the list of pending data.
+	 * @return a @List<SingleData> that contains a random quantity of data
+	 */
 	public  List<SingleData> getRandomData() {
 		System.out.println("Remains " + getPendingData().size()+" data");
 		int quantity = (new Random()).nextInt(getPendingData().size() / 2) +1;

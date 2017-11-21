@@ -9,7 +9,7 @@ import com.avysel.blockchain.model.Chain;
 public class Main {
 	public static void main (String[] args) {
 
-		ChainManager manager = new ChainManager();
+	/*	ChainManager manager = new ChainManager();
 		
 		manager.createChain();
 		
@@ -23,6 +23,6 @@ public class Main {
 		manager.getChain().linkBlock(block3);
 		manager.getChain().linkBlock(block4);
 		
-		manager.display();
+		manager.display();*/
 	}
 }

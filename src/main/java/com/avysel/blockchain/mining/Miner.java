@@ -52,13 +52,12 @@ public class Miner {
 			hash = HashTools.calculateBlockHash(block);
 			System.out.println(hash);
 			
-			
+			/*
 			 try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			 
 			 
 		} while (!hash.startsWith("0")); // TODO mettre condition en parametre

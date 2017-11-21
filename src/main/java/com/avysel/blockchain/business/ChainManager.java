@@ -135,17 +135,18 @@ public class ChainManager {
 	 */
 	public boolean checkChain() {
 		List<Block> blockList = chain.getBlockList();
+		boolean integrity = true;
 		for(Block block : blockList) {
 			if(!checkBlockHash(block)) {
 				System.out.println("Bad hash for block "+block.getIndex());
-				return false;
+				integrity = false;
 			}
 			if(!checkBlockPrevious(block)) {
 				System.out.println("Bad previous for block "+block.getIndex());
-				return false;
+				integrity = false;
 			}
 		}
-		return true;
+		return integrity;
 	}
 	
 	/**
@@ -154,13 +155,14 @@ public class ChainManager {
 	 * @return true if @Block integrity is good
 	 */
 	public boolean checkBlockHash(Block block) {
-		String hash = HashTools.calculateBlockHash(block);	
+		String hash = HashTools.calculateBlockHash(block);
+		System.out.println("Check hash, expected : "+hash+", found : "+block.getHash());
 		return hash.equals(block.getHash());
 	}
 	
 	public boolean checkBlockPrevious(Block block) {
 		Block previous = findBlockByHash(block.getPreviousHash());
-		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() +1);
+		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() -1);
 	}
 	
 	public void addIncomingData(SingleData data) {
@@ -171,7 +173,7 @@ public class ChainManager {
 	public void run() {
 		
 		System.out.println("Start miner.");
-		while(pendingData.size() > 1) {
+		while(pendingData.size() > 10) {
 			Block block = miner.mine(pendingData);
 			System.out.println("New block created");
 			chain.linkBlock(block);

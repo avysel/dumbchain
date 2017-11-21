@@ -41,7 +41,7 @@ public class PendingData {
 	
 	public  List<SingleData> getRandomData() {
 		System.out.println("Remains " + getPendingData().size()+" data");
-		int quantity = (new Random()).nextInt(getPendingData().size()) +1;
+		int quantity = (new Random()).nextInt(getPendingData().size() / 2) +1;
 		List<SingleData> result = new ArrayList<SingleData>();
 		System.out.println("Pick " + quantity +" data");
 		for(int i=0 ; i < quantity ; i++) {

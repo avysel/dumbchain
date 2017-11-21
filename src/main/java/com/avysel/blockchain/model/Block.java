@@ -97,7 +97,7 @@ public class Block {
 	 */
 	public String getHashData() {
 		StringBuffer hashData = new StringBuffer();
-		hashData.append(this.getIndex());
+		//hashData.append(this.getIndex());
 		//hashData.append(this.getTimestamp());
 		hashData.append(this.getDataList()); // TODO passer en json
 		return hashData.toString();

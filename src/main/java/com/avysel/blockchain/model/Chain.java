@@ -33,6 +33,15 @@ public class Chain {
 		this.lastBlock = lastBlock;
 	}
 
+	public long getLastIndex() {
+		if(this.getLastBlock() != null) {
+			return this.getLastBlock().getIndex();
+		}
+		else {
+			return Chain.GENESIS_INDEX;
+		}
+	}	
+	
 	/**
 	 * Add a new @Block to the @Chain, and set @Block link data (previous hash ...)
 	 * @param block the @Block to add
@@ -44,7 +53,7 @@ public class Chain {
 		else {
 			block.setPreviousHash(null);		
 		}
-
+		block.setIndex(getLastIndex() + 1);
 		blockList.add(block);
 		lastBlock = block;
 	}

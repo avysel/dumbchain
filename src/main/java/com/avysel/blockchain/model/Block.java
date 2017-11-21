@@ -37,6 +37,9 @@ public class Block {
 	public void addData(SingleData singleData) {
 		this.getBlockData().getDataList().add(singleData);
 	}
+	public void cleanData() {
+		this.getBlockData().getDataList().clear();
+	}
 	public String getPreviousHash() {
 		return this.getBlockHeader().getPreviousHash();
 	}
@@ -95,7 +98,7 @@ public class Block {
 	public String getHashData() {
 		StringBuffer hashData = new StringBuffer();
 		hashData.append(this.getIndex());
-	//	hashData.append(this.getTimestamp());
+		//hashData.append(this.getTimestamp());
 		hashData.append(this.getDataList()); // TODO passer en json
 		return hashData.toString();
 	}
@@ -107,6 +110,7 @@ public class Block {
 		List<SingleData> dataList = this.getDataList();
 		for(SingleData singleData : dataList) {
 			builder.append(singleData.getData());
+			builder.append(", ");
 		}
 		builder.append("]");
 		return builder.toString();

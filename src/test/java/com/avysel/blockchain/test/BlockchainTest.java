@@ -1,12 +1,11 @@
 package com.avysel.blockchain.test;
 
-import java.util.Arrays;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.avysel.blockchain.business.ChainManager;
-import com.avysel.blockchain.model.Block;
-import static org.junit.Assert.assertEquals;
+import com.avysel.blockchain.model.SingleData;
 
 public class BlockchainTest {
 
@@ -17,17 +16,10 @@ public class BlockchainTest {
 
 		manager.createChain();
 		
-		
-		Block block1 = manager.createBlock(Arrays.asList("data1"));
-		Block block2 = manager.createBlock(Arrays.asList("data2"));
-		Block block3 = manager.createBlock(Arrays.asList("data3"));
-		Block block4 = manager.createBlock(Arrays.asList("data4"));
-		
-		manager.getChain().linkBlock(block1);
-		manager.getChain().linkBlock(block2);
-		manager.getChain().linkBlock(block3);
-		manager.getChain().linkBlock(block4);
-		
+		for(int i = 1 ; i<10;i++)
+			manager.addIncomingData(new SingleData("data"+i));
+	
+		manager.run();
 		manager.display();
 		
 		assertEquals(true, manager.checkChain());

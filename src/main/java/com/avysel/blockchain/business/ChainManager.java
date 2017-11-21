@@ -1,9 +1,10 @@
 package com.avysel.blockchain.business;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.avysel.blockchain.crypto.HashTools;
+import com.avysel.blockchain.mining.Miner;
+import com.avysel.blockchain.mining.PendingData;
 import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.model.Chain;
 import com.avysel.blockchain.model.SingleData;
@@ -20,49 +21,44 @@ import com.avysel.blockchain.model.SingleData;
  */
 public class ChainManager {
 	private Chain chain;
+	private PendingData pendingData;
+	private Miner miner;
 
 	public ChainManager() {
-		
+		this.chain = new Chain();
+		this.pendingData = new PendingData();
+		this.miner = new Miner();		
 	}
 	
 	public ChainManager(Chain chain) {
 		this.chain = chain;
+		this.pendingData = new PendingData();
+		this.miner = new Miner();
 	}
 	
 	public Chain getChain() {
 		return chain;
 	}
-
+	
 	/**
 	 * 	Create a new @Block from given data
 	 * @return the new @Block
 	 */
-	public Block createBlock(List<String> dataList) {
+/*	public Block createBlock(List<String> dataList) {
 			
-		Block block = new Block();
-		block.setTimestamp(System.currentTimeMillis());	
-		
-		long lastIndex = getLastIndex();
-		if( lastIndex == Chain.GENESIS_INDEX)
-			block.setIndex(Chain.GENESIS_INDEX);
-		else
-			block.setIndex(getLastIndex() + 1);
-		
-		for(String data : dataList) {
-			block.addData(new SingleData(data));
-		}		
-		
-		block.setHash(HashTools.calculateBlockHash(block));
+		Block block = miner.mine(pendingData);
+
+		block.setIndex(getLastIndex() + 1);
 		
 		return block;
-	}
+	}*/
 	
 	/**
 	 * Find a @Block with a given height
 	 * @param height the height
 	 * @return the @Block with the given height
 	 */
-	public Block findBlockByHeight(long height) {
+	public Block findBlockByHeight(long height) {// TODO index au lieu de height
 		return new Block();
 	}
 	
@@ -95,7 +91,12 @@ public class ChainManager {
 	 * Create the genesis @Block and add it to the @Chain
 	 */
 	private void createGenesis() {
-		Block genesis = createBlock(Arrays.asList("Genesis"));
+		Block genesis = new Block();
+		genesis.addData(new SingleData("Genesis"));
+		genesis.setIndex(Chain.GENESIS_INDEX);
+		genesis.setTimestamp(System.currentTimeMillis());
+		genesis.setPreviousHash(null);
+		genesis.setHash(HashTools.calculateBlockHash(genesis));
 		chain.linkBlock(genesis);
 		genesis.setPreviousHash(null);
 	}
@@ -160,5 +161,23 @@ public class ChainManager {
 	public boolean checkBlockPrevious(Block block) {
 		Block previous = findBlockByHash(block.getPreviousHash());
 		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() +1);
+	}
+	
+	public void addIncomingData(SingleData data) {
+		System.out.println("add data : "+data);
+		pendingData.addData(data);
+	}
+	
+	public void run() {
+		
+		System.out.println("Start miner.");
+		while(pendingData.size() > 1) {
+			Block block = miner.mine(pendingData);
+			System.out.println("New block created");
+			chain.linkBlock(block);
+			System.out.println("New block linked");
+		}
+		System.out.println("End miner.");
+		
 	}
 }

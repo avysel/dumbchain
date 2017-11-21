@@ -2,4 +2,4 @@
 
 POC de blockchain en Java 9.
 
-Rien de bien avancé ou utilisable pour le moment
+Rien de bien avancÃ© ou utilisable pour le moment

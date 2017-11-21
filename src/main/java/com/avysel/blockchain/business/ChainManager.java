@@ -23,6 +23,8 @@ public class ChainManager {
 	private Chain chain;
 	private PendingData pendingData;
 	private Miner miner;
+	
+	private boolean mining = true;
 
 	public ChainManager() {
 		this.chain = new Chain();
@@ -40,6 +42,14 @@ public class ChainManager {
 		return chain;
 	}
 	
+	public boolean isMining() {
+		return mining;
+	}
+
+	public void setMining(boolean mining) {
+		this.mining = mining;
+	}
+
 	/**
 	 * Find a @Block with a given height
 	 * @param height the height
@@ -169,11 +179,15 @@ public class ChainManager {
 	public void run() {
 		
 		System.out.println("Start miner.");
-		while(pendingData.size() > 10) {
+		while(isMining()) {
 			Block block = miner.mine(pendingData);
 			System.out.println("New block created");
 			chain.linkBlock(block);
 			System.out.println("New block linked");
+			
+			if(pendingData.size() < 10)
+				setMining(false);
+			
 		}
 		System.out.println("End miner.");
 		

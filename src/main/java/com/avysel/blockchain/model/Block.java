@@ -78,12 +78,6 @@ public class Block {
 	public void setTimestamp(long timestamp) {
 		this.getBlockHeader().setTimestamp(timestamp);
 	}
-	public long getNonce() {
-		return this.getBlockHeader().getNonce();
-	}
-	public void setNonce(long nonce) {
-		this.getBlockHeader().setNonce(nonce);
-	}
 	public long getDifficulty() {
 		return this.getBlockHeader().getDifficulty();
 	}

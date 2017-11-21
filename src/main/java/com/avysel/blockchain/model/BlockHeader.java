@@ -10,7 +10,6 @@ public class BlockHeader {
 	private String previousHash;
 	private String merkleRoot;
 	private long timestamp;
-	private long nonce;
 	private long difficulty;
 	
 	public BlockHeader(String previousHash, String merkleRoot, long timestamp, long nonce, long difficulty) {
@@ -18,7 +17,6 @@ public class BlockHeader {
 		this.previousHash = previousHash;
 		this.merkleRoot = merkleRoot;
 		this.timestamp = timestamp;
-		this.nonce = nonce;
 		this.difficulty = difficulty;
 	}
 	
@@ -55,12 +53,6 @@ public class BlockHeader {
 	}
 	protected void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
-	}
-	protected long getNonce() {
-		return nonce;
-	}
-	protected void setNonce(long nonce) {
-		this.nonce = nonce;
 	}
 	protected long getDifficulty() {
 		return difficulty;

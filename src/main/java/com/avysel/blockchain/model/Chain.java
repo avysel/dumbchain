@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.avysel.blockchain.model.Block;
 
+/**
+ * The blockchain.
+ * It contains the list of @Block
+ */
 public class Chain {
 	private Block genesis;
 	public static final long GENESIS_INDEX = 0;

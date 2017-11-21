@@ -5,6 +5,10 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 */
+/**
+ * A @Block
+ * Contains a list of @SingleData and all information used to identify the @Block and check its integrity
+ */
 public class Block {
 	
 	private BlockHeader blockHeader;

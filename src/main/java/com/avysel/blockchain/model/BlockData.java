@@ -3,9 +3,12 @@ package com.avysel.blockchain.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main content of of @Block.
+ * It contains a @List of @SingleData
+ */
 public class BlockData {
 	
-	private String identifier;
 	private List<SingleData> dataList;
 
 	public BlockData() {
@@ -20,14 +23,6 @@ public class BlockData {
 			dataList.add(new SingleData(s));
 		}
 	}	
-
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
 
 	public List<SingleData> getDataList() {
 		return dataList;

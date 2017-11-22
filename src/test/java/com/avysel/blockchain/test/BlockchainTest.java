@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
-import com.avysel.blockchain.model.SingleData;
+import com.avysel.blockchain.model.data.SingleData;
 
 public class BlockchainTest {
 

@@ -6,7 +6,7 @@ public class ChainIntegrityException extends Exception {
 
 	public ChainIntegrityException() {
 		super();
-	}	
+	}
 	
 	public ChainIntegrityException(String message) {
 		super(message);

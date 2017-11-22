@@ -1,6 +1,10 @@
-package com.avysel.blockchain.model;
+package com.avysel.blockchain.model.block;
 
 import java.util.List;
+
+import com.avysel.blockchain.model.block.BlockData;
+import com.avysel.blockchain.model.block.BlockHeader;
+import com.avysel.blockchain.model.data.SingleData;
 /*
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

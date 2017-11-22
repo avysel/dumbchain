@@ -1,8 +1,9 @@
-package com.avysel.blockchain.model;
+package com.avysel.blockchain.model.chain;
 
 import java.util.ArrayList;
 
-import com.avysel.blockchain.model.Block;
+import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.block.Genesis;
 
 /**
  * The blockchain.

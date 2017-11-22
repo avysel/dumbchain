@@ -1,6 +1,6 @@
 package com.avysel.blockchain.crypto;
 
-import com.avysel.blockchain.model.Block;
+import com.avysel.blockchain.model.block.Block;
 
 public class MerkleTree {
 

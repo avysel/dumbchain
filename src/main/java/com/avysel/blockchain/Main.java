@@ -1,11 +1,5 @@
 package com.avysel.blockchain;
 
-import java.util.Arrays;
-
-import com.avysel.blockchain.business.Blockchain;
-import com.avysel.blockchain.model.Block;
-import com.avysel.blockchain.model.Chain;
-
 public class Main {
 	public static void main (String[] args) {
 

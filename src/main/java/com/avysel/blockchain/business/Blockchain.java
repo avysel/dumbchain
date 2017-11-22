@@ -3,10 +3,10 @@ package com.avysel.blockchain.business;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.mining.Miner;
 import com.avysel.blockchain.mining.PendingData;
-import com.avysel.blockchain.model.Block;
-import com.avysel.blockchain.model.Chain;
-import com.avysel.blockchain.model.Genesis;
-import com.avysel.blockchain.model.SingleData;
+import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.block.Genesis;
+import com.avysel.blockchain.model.chain.Chain;
+import com.avysel.blockchain.model.data.SingleData;
 
 /*
  * TODO verifier integrite d'un bloc a chaque lecture (HashTools.checkHash)
@@ -109,6 +109,9 @@ public class Blockchain {
 		pendingData.addData(data);
 	}
 	
+	/**
+	 * Start the @Blockchain.
+	 */
 	public void run() {
 		
 		System.out.println("Start miner.");

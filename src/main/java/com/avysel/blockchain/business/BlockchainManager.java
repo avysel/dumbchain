@@ -3,8 +3,8 @@ package com.avysel.blockchain.business;
 import java.util.List;
 
 import com.avysel.blockchain.crypto.HashTools;
-import com.avysel.blockchain.model.Block;
-import com.avysel.blockchain.model.ChainPart;
+import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.chain.ChainPart;
 
 public class BlockchainManager {
 	

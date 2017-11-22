@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.avysel.blockchain.crypto.HashTools;
-import com.avysel.blockchain.model.Block;
-import com.avysel.blockchain.model.SingleData;
+import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.data.SingleData;
 
 public class Miner {
 	

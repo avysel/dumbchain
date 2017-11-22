@@ -1,7 +1,9 @@
-package com.avysel.blockchain.model;
+package com.avysel.blockchain.model.block;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.avysel.blockchain.model.data.SingleData;
 
 /**
  * The main content of of @Block.

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import com.avysel.blockchain.model.SingleData;
+import com.avysel.blockchain.model.data.SingleData;
 
 /**
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...

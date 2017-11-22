@@ -1,6 +1,6 @@
 package com.avysel.blockchain.tools;
 
-import com.avysel.blockchain.model.Block;
+import com.avysel.blockchain.model.block.Block;
 
 public class JsonTools {
 	

@@ -32,13 +32,25 @@ public class Block {
 		return blockData;
 	}
 
+	/**
+	 * Add a @List of @SingleData to the @Block
+	 * @param dataList the data to add
+	 */ 
 	public void addAllData(List<SingleData> dataList) {
 		this.getBlockData().getDataList().addAll(dataList);
 	}
 	
+	/**
+	 * Add a @SingleData to the @Block
+	 * @param singleData the piece of data to add
+	 */
 	public void addData(SingleData singleData) {
 		this.getBlockData().getDataList().add(singleData);
 	}
+	
+	/**
+	 * Remove all data 
+	 */
 	public void cleanData() {
 		this.getBlockData().getDataList().clear();
 	}

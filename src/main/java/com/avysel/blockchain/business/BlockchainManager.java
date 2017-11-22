@@ -3,60 +3,17 @@ package com.avysel.blockchain.business;
 import java.util.List;
 
 import com.avysel.blockchain.crypto.HashTools;
-import com.avysel.blockchain.mining.Miner;
-import com.avysel.blockchain.mining.PendingData;
 import com.avysel.blockchain.model.Block;
-import com.avysel.blockchain.model.Chain;
-import com.avysel.blockchain.model.Genesis;
-import com.avysel.blockchain.model.SingleData;
+import com.avysel.blockchain.model.ChainPart;
 
-/*
- * TODO verifier integrite d'un bloc a chaque lecture (HashTools.checkHash)
- * TODO verifier integrite de l'arbre a chaque initialisation
- *
- */
-
-/**
- * The main class of the Blockchain.
- * Contains a unique @Chain of @Blocks and provides available operations on it.
- */
 public class BlockchainManager {
-	private Chain chain;
-	private PendingData pendingData;
-	private Miner miner;
 	
-	private boolean mining = true;
-
-	public BlockchainManager() {
-		this.chain = new Chain();
-		this.pendingData = new PendingData();
-		this.miner = new Miner();		
-	}
-	
-	public BlockchainManager(Chain chain) {
-		this.chain = chain;
-		this.pendingData = new PendingData();
-		this.miner = new Miner();
-	}
-	
-	public Chain getChain() {
-		return chain;
-	}
-	
-	public boolean isMining() {
-		return mining;
-	}
-
-	public void setMining(boolean mining) {
-		this.mining = mining;
-	}
-
 	/**
 	 * Find a @Block with a given index
 	 * @param index the index to find
 	 * @return the @Block with the given index
 	 */
-	public Block findBlockByInedx(long index) {
+	public static Block findBlockByInedx(ChainPart chain, long index) {
 	
 		for(Block block : chain.getBlockList()){
 			if(block.getIndex() == index)
@@ -70,7 +27,7 @@ public class BlockchainManager {
 	 * @param hash the hash
 	 * @return the @Block with the given hash
 	 */
-	public Block findBlockByHash(String hash) {
+	public static Block findBlockByHash(ChainPart chain, String hash) {
 		
 		if(hash == null) return null;
 		
@@ -80,61 +37,13 @@ public class BlockchainManager {
 				return block;
 		}
 		return null;
-	}
-	
-	/**
-	 * Create the @Chain and set a genesis @Block
-	 */
-	public void createChain() {
-		chain = new Chain();
-		createGenesis();
-	}
-	
-	/**
-	 * Create the genesis @Block and add it to the @Chain
-	 */
-	private void createGenesis() {
-		Block genesis = new Genesis();
-		genesis.setTimestamp(System.currentTimeMillis());
-		genesis.setHash(HashTools.calculateBlockHash(genesis));
-		chain.linkBlock(genesis);
-		genesis.setPreviousHash(null);
-	}
-
-	public long getLastIndex() {
-		if(this.getChain().getLastBlock() != null) {
-			return this.getChain().getLastBlock().getIndex();
-		}
-		else {
-			return Genesis.GENESIS_INDEX;
-		}
-	}
-	
-	/**
-	 * Display the @Chain from last @Block to Genesis @Block
-	 */
-	public void display() {
-		Block currentBlock = chain.getLastBlock();
-		
-		while(currentBlock != null) {
-			System.out.println(currentBlock);			
-			currentBlock = findBlockByHash(currentBlock.getPreviousHash());
-		}
-		
-	}
-	
-	/**
-	 * Load existing @Chain from database
-	 */
-	public void loadChain() {
-		
-	}
+	}	
 	
 	/**
 	 * Perform integrity check for the @Chain
 	 * @return true if @Chain integrity is good
 	 */
-	public boolean checkChain() {
+	public static boolean checkChain(ChainPart chain) {
 		List<Block> blockList = chain.getBlockList();
 		boolean integrity = true;
 		for(Block block : blockList) {
@@ -142,7 +51,7 @@ public class BlockchainManager {
 				System.out.println("Bad hash for block "+block.getIndex());
 				integrity = false;
 			}
-			if(!checkBlockPrevious(block)) {
+			if(!checkBlockPrevious(chain, block)) {
 				System.out.println("Bad previous for block "+block.getIndex());
 				integrity = false;
 			}
@@ -155,7 +64,7 @@ public class BlockchainManager {
 	 * @param block the @Block to check
 	 * @return true if @Block's hash is the one expected
 	 */
-	public boolean checkBlockHash(Block block) {
+	public static boolean checkBlockHash(Block block) {
 		String hash = HashTools.calculateBlockHash(block);
 		System.out.println("Check hash for "+block.getIndex()+". Expected : "+hash+", found : "+block.getHash());
 		return hash.equals(block.getHash());
@@ -166,38 +75,12 @@ public class BlockchainManager {
 	 * @param block the @Block to check
 	 * @return if @Block's parent is the one expected
 	 */
-	public boolean checkBlockPrevious(Block block) {
-		Block previous = findBlockByHash(block.getPreviousHash());
+	public static boolean checkBlockPrevious(ChainPart chain, Block block) {
+		Block previous = findBlockByHash(chain, block.getPreviousHash());
 		
 		if(!block.isGenesis())
 			System.out.println("Check previous for "+block.getIndex()+". Expected : "+(block.getIndex()-1)+", found : "+previous.getIndex());
 		
 		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() -1);
-	}
-	
-	/**
-	 * Add a new data to be included in a block at one of the next mining.
-	 * @param data
-	 */
-	public void addIncomingData(SingleData data) {
-		System.out.println("add data : "+data);
-		pendingData.addData(data);
-	}
-	
-	public void run() {
-		
-		System.out.println("Start miner.");
-		while(isMining()) {
-			Block block = miner.mine(pendingData);
-			System.out.println("New block created");
-			chain.linkBlock(block);
-			System.out.println("New block linked");
-			
-			if(pendingData.size() < 10)
-				setMining(false);
-			
-		}
-		System.out.println("End miner.");
-		
 	}
 }

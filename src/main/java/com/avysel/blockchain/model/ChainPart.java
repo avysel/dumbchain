@@ -52,4 +52,8 @@ public class ChainPart {
 			lastBlock = block;
 		}
 	}
+	
+	public void addChainPart(ChainPart chainPart) {
+		
+	}
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
 import com.avysel.blockchain.model.SingleData;
 
@@ -12,7 +13,7 @@ public class BlockchainTest {
 	@Test
 	public void testBlockchain() {
 		
-		BlockchainManager manager = new BlockchainManager();
+		Blockchain manager = new Blockchain();
 
 		manager.createChain();
 		
@@ -22,7 +23,7 @@ public class BlockchainTest {
 		manager.run();
 		manager.display();
 		
-		assertEquals(true, manager.checkChain());
+		assertEquals(true, BlockchainManager.checkChain(manager.getChain()));
 		
 	}
 	

@@ -1,11 +1,13 @@
 package com.avysel.blockchain.business;
 
 import com.avysel.blockchain.crypto.HashTools;
+import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.Miner;
 import com.avysel.blockchain.mining.PendingData;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
+import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.SingleData;
 
 /*
@@ -117,15 +119,28 @@ public class Blockchain {
 		System.out.println("Start miner.");
 		while(isMining()) {
 			Block block = miner.mine(pendingData);
-			System.out.println("New block created");
+			System.out.println("New block created with "+block.getDataList().size()+" data");
 			chain.linkBlock(block);
+			System.out.println(block);
 			System.out.println("New block linked");
-			
-			if(pendingData.size() < 10)
+			System.out.println("Remaining : "+pendingData.size());
+			if(pendingData.size() < 10) //TODO what to do when not enough data to find a block that respects condition ?
 				setMining(false);
 			
 		}
 		System.out.println("End miner.");
+		System.out.println("Effort : "+chain.getEffort());
 		
+	}
+	
+	/**
+	 *  Add a subchain to the end of the current @Blockchain.
+	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the @Blockchain.
+	 *  The index of subchain's first @Block must be current's chain last @Block +1.
+	 * @param subChain
+	 * @throws ChainIntegrityException 
+	 */
+	public void addSubChain(ChainPart subChain) throws ChainIntegrityException {
+		this.getChain().addChainPart(subChain);
 	}
 }

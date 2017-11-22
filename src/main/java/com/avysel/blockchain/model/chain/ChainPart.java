@@ -71,6 +71,29 @@ public class ChainPart {
 		}
 	}
 	
+	/**
+	 * Returns difficulty of @ChainPart (sum of difficulties of all @Blocks in the @ChainPart).
+	 * @return @ChainPart difficulty
+	 */
+	public long getDifficulty() {
+		return getBlockList().stream().mapToLong(block -> block.getDifficulty()).sum();
+	}
+	
+	/**
+	 * Returns the effort needed to produce de @ChainPart.
+	 * The effort is difficulty / number of @Blocks.
+	 * The effort is used when two @ChainParts are candidates to be appended to the @BlockChain. The one with higher effort is the one that will be appended.
+	 * @return
+	 */
+	public float getEffort() {
+		return getDifficulty() / getBlockList().size();
+	}
+	
+	/**
+	 * Add a subchain to the end of the current chain
+	 * @param chainPart
+	 * @throws ChainIntegrityException
+	 */
 	public void addChainPart(ChainPart chainPart) throws ChainIntegrityException {
 		
 		// chain part must have a good integrity

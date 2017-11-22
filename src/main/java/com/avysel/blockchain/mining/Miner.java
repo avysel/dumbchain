@@ -19,6 +19,7 @@ public class Miner {
 		// TODO quel element a changer pour avoir un nouveau hash a chaque tentative ?
 		// si on utilise le timestamp, le check ne fonctionnera pas
 		String hash;
+		long difficulty = 0;
 		do {
 			// put unused data back to pending data
 			pendingData.addAll(dataList);
@@ -33,7 +34,7 @@ public class Miner {
 			//System.out.println(pendingData);
 			
 			hash = HashTools.calculateBlockHash(block);
-			System.out.println(hash);
+			//System.out.println(hash);
 			
 			/*
 			 try {
@@ -42,11 +43,12 @@ public class Miner {
 				e.printStackTrace();
 			}*/
 			 
-			 
-		} while (!hash.startsWith("0")); // TODO mettre condition en parametre
+			 difficulty ++;
+		} while (! (hash.startsWith("00") || (difficulty > 1000000 && hash.startsWith("0")))); // TODO mettre condition en parametre
 			
 		block.setHash(hash);
 		block.setTimestamp(System.currentTimeMillis());
+		block.setDifficulty(difficulty);
 		
 		return block;
 	}

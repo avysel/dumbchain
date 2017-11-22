@@ -141,6 +141,8 @@ public class Block {
 		builder.append(this.getHash());
 		builder.append(", previousHash:");
 		builder.append(this.getPreviousHash());
+		builder.append(", difficulty:");
+		builder.append(this.getDifficulty());
 		builder.append("}");
 		
 		return builder.toString();

@@ -9,18 +9,21 @@ import com.avysel.blockchain.model.Block;
  * It contains the list of @Block, starting with a @Genesis
  */
 public class Chain extends ChainPart {
-	private Block genesis;
+	//private Block genesis;
 	
 	public Chain() {
 		blockList = new ArrayList<Block>();
 	}
 
 	public Block getGenesis() {
-		return genesis;
+		if(firstBlock.isGenesis())
+			return firstBlock;
+		else
+			return null;
 	}
 
 	public void setGenesis(Block genesis) {
-		this.genesis = genesis;
+		this.firstBlock = genesis;
 		blockList.add(genesis);
 	}
 
@@ -42,7 +45,7 @@ public class Chain extends ChainPart {
 	public void linkBlock(Block block) {
 		
 		if(block.isGenesis()) {
-			genesis = block;
+			firstBlock = block;
 		}
 		else {
 			block.setPreviousHash(this.lastBlock.getHash());

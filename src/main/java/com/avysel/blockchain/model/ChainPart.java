@@ -1,6 +1,10 @@
 package com.avysel.blockchain.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.avysel.blockchain.business.BlockchainManager;
+import com.avysel.blockchain.exception.ChainIntegrityException;
 
 /**
  * A part of blockchain.
@@ -8,6 +12,7 @@ import java.util.ArrayList;
  */
 public class ChainPart {
 	protected ArrayList<Block> blockList;
+	protected Block firstBlock;
 	protected Block lastBlock;
 	
 	public ArrayList<Block> getBlockList() {
@@ -18,6 +23,14 @@ public class ChainPart {
 		this.blockList = blockList;
 	}
 	
+	public Block getFirstBlock() {
+		return firstBlock;
+	}
+
+	public void setFirstBlock(Block firstBlock) {
+		this.firstBlock = firstBlock;
+	}
+
 	public Block getLastBlock() {
 		return lastBlock;
 	}
@@ -26,6 +39,10 @@ public class ChainPart {
 		this.lastBlock = lastBlock;
 	}	
 
+	private void addBlocks(List<Block> blockList) {
+		this.getBlockList().addAll(blockList);
+	}
+	
 	/**
 	 * Returns the index of last @Block added to the @ChainPart
 	 * @return the index of last @Block if exists, -1 otherwise.
@@ -53,7 +70,24 @@ public class ChainPart {
 		}
 	}
 	
-	public void addChainPart(ChainPart chainPart) {
+	public void addChainPart(ChainPart chainPart) throws ChainIntegrityException {
 		
+		if( ! BlockchainManager.checkChain(chainPart) ) {
+			throw new ChainIntegrityException("ChainPart is corrupted");
+		}
+		
+		if( chainPart.getFirstBlock().getIndex() != this.getLastBlock().getIndex() +1 ) {
+			throw new ChainIntegrityException("ChainPart cannot be linked, wrong index");
+		}
+		
+		// do the link between the two chains
+		chainPart.getFirstBlock().setPreviousHash(this.getLastBlock().getHash());
+		
+		// add content of new chain to this chain
+		this.addBlocks(chainPart.getBlockList());
+		
+		if( ! BlockchainManager.checkChain(this) ) {
+			throw new ChainIntegrityException("Result is corrupted");
+		}
 	}
 }

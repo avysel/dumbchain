@@ -17,8 +17,8 @@ import com.avysel.blockchain.model.SingleData;
  */
 
 /**
+ * The main class of the Blockchain.
  * Contains a unique @Chain of @Blocks and provides available operations on it.
- *
  */
 public class BlockchainManager {
 	private Chain chain;

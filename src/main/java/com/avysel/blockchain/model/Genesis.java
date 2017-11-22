@@ -1,5 +1,9 @@
 package com.avysel.blockchain.model;
 
+/**
+ * The genesis @Block
+ * The first @Block to be added in a @Chain.
+ */
 public class Genesis extends Block {
 	
 	public static final long GENESIS_INDEX = 0;

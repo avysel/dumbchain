@@ -72,10 +72,12 @@ public class ChainPart {
 	
 	public void addChainPart(ChainPart chainPart) throws ChainIntegrityException {
 		
+		// chain part must have a good integrity
 		if( ! BlockchainManager.checkChain(chainPart) ) {
 			throw new ChainIntegrityException("ChainPart is corrupted");
 		}
 		
+		// two parts of chain must be linkable (index must follow each other)
 		if( chainPart.getFirstBlock().getIndex() != this.getLastBlock().getIndex() +1 ) {
 			throw new ChainIntegrityException("ChainPart cannot be linked, wrong index");
 		}
@@ -86,6 +88,7 @@ public class ChainPart {
 		// add content of new chain to this chain
 		this.addBlocks(chainPart.getBlockList());
 		
+		// check the result
 		if( ! BlockchainManager.checkChain(this) ) {
 			throw new ChainIntegrityException("Result is corrupted");
 		}

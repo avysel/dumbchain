@@ -19,20 +19,20 @@ import com.avysel.blockchain.model.SingleData;
  * Contains a unique @Chain of @Blocks and provides available operations on it.
  *
  */
-public class ChainManager {
+public class BlockchainManager {
 	private Chain chain;
 	private PendingData pendingData;
 	private Miner miner;
 	
 	private boolean mining = true;
 
-	public ChainManager() {
+	public BlockchainManager() {
 		this.chain = new Chain();
 		this.pendingData = new PendingData();
 		this.miner = new Miner();		
 	}
 	
-	public ChainManager(Chain chain) {
+	public BlockchainManager(Chain chain) {
 		this.chain = chain;
 		this.pendingData = new PendingData();
 		this.miner = new Miner();

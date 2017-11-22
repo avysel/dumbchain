@@ -2,7 +2,7 @@ package com.avysel.blockchain;
 
 import java.util.Arrays;
 
-import com.avysel.blockchain.business.ChainManager;
+import com.avysel.blockchain.business.BlockchainManager;
 import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.model.Chain;
 

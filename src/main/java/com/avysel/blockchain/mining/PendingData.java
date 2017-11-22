@@ -24,13 +24,19 @@ public class PendingData {
 	}
 
 	
+	/**
+	 * Add a new @SingleData to the pending data list to be added in a @Block
+	 * @param data the @SingleData to be added
+	 */
 	public void addData(SingleData data) {
 		getPendingData().addLast(data);
 	}
 	
+	/**
+	 * Add a @List of @SingleData to the pending data list to be added in a @Block
+	 * @param dataList the @List of @SingleData to be added
+	 */	
 	public void addAll(List<SingleData> dataList) {
-		// TODO add first pour les remettre a leur place ? 
-		// a priori non, pour maintenir le picking aleatoire a chaque tentative de minage
 		getPendingData().addAll(dataList);
 	}
 	
@@ -57,6 +63,10 @@ public class PendingData {
 		return result;
 	}
 	
+	/**
+	 * Returns the number of remaining pending data
+	 * @return the size of pending data list
+	 */
 	public int size() {
 		return getPendingData().size();
 	}

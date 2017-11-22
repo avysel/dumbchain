@@ -157,7 +157,7 @@ public class BlockchainManager {
 	 */
 	public boolean checkBlockHash(Block block) {
 		String hash = HashTools.calculateBlockHash(block);
-		System.out.println("Check hash, expected : "+hash+", found : "+block.getHash());
+		System.out.println("Check hash for "+block.getIndex()+". Expected : "+hash+", found : "+block.getHash());
 		return hash.equals(block.getHash());
 	}
 	
@@ -168,6 +168,10 @@ public class BlockchainManager {
 	 */
 	public boolean checkBlockPrevious(Block block) {
 		Block previous = findBlockByHash(block.getPreviousHash());
+		
+		if(!block.isGenesis())
+			System.out.println("Check previous for "+block.getIndex()+". Expected : "+(block.getIndex()-1)+", found : "+previous.getIndex());
+		
 		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() -1);
 	}
 	

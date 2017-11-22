@@ -50,13 +50,13 @@ public class Chain {
 	 * @param block the @Block to add
 	 */
 	public void linkBlock(Block block) {
-		if(this.lastBlock != null) {
-			block.setPreviousHash(this.lastBlock.getHash());
-			block.setIndex(getLastIndex() + 1);
+		
+		if(block.isGenesis()) {
+			genesis = block;
 		}
 		else {
-			block.setPreviousHash(null);
-			genesis = block;
+			block.setPreviousHash(this.lastBlock.getHash());
+			block.setIndex(getLastIndex() + 1);
 		}
 		
 		blockList.add(block);

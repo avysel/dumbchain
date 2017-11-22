@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class Block {
 	
-	private BlockHeader blockHeader;
-	private BlockData blockData;
+	protected BlockHeader blockHeader;
+	protected BlockData blockData;
 	
 	public Block() {
 		super();
@@ -21,14 +21,14 @@ public class Block {
 	}
 	
 	public boolean isGenesis() {
-		return this.getIndex() == Chain.GENESIS_INDEX;
+		return false;
 	}
 	
-	private BlockHeader getBlockHeader() {
+	protected BlockHeader getBlockHeader() {
 		return blockHeader;
 	}
 	
-	private BlockData getBlockData() {
+	protected BlockData getBlockData() {
 		return blockData;
 	}
 

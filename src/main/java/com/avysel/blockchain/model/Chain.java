@@ -10,8 +10,7 @@ import com.avysel.blockchain.model.Block;
  */
 public class Chain {
 	private Block genesis;
-	public static final long GENESIS_INDEX = 0;
-
+	
 	private Block lastBlock;
 
 	private ArrayList<Block> blockList;
@@ -42,7 +41,7 @@ public class Chain {
 			return this.getLastBlock().getIndex();
 		}
 		else {
-			return Chain.GENESIS_INDEX;
+			return Genesis.GENESIS_INDEX;
 		}
 	}	
 	
@@ -53,11 +52,13 @@ public class Chain {
 	public void linkBlock(Block block) {
 		if(this.lastBlock != null) {
 			block.setPreviousHash(this.lastBlock.getHash());
+			block.setIndex(getLastIndex() + 1);
 		}
 		else {
-			block.setPreviousHash(null);		
+			block.setPreviousHash(null);
+			genesis = block;
 		}
-		block.setIndex(getLastIndex() + 1);
+		
 		blockList.add(block);
 		lastBlock = block;
 	}

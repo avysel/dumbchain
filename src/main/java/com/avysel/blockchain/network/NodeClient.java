@@ -6,6 +6,10 @@ import com.avysel.blockchain.model.SingleData;
 
 public class NodeClient {
 	
+	public void createNodeClient() {
+		
+	}
+	
 	public void getData(SingleData data) {
 		
 	}

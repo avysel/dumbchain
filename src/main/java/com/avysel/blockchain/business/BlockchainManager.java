@@ -7,6 +7,7 @@ import com.avysel.blockchain.mining.Miner;
 import com.avysel.blockchain.mining.PendingData;
 import com.avysel.blockchain.model.Block;
 import com.avysel.blockchain.model.Chain;
+import com.avysel.blockchain.model.Genesis;
 import com.avysel.blockchain.model.SingleData;
 
 /*
@@ -51,12 +52,17 @@ public class BlockchainManager {
 	}
 
 	/**
-	 * Find a @Block with a given height
-	 * @param height the height
-	 * @return the @Block with the given height
+	 * Find a @Block with a given index
+	 * @param index the index to find
+	 * @return the @Block with the given index
 	 */
-	public Block findBlockByHeight(long height) {// TODO index au lieu de height
-		return new Block();
+	public Block findBlockByInedx(long index) {
+	
+		for(Block block : chain.getBlockList()){
+			if(block.getIndex() == index)
+				return block;
+		}
+		return null;
 	}
 	
 	/**
@@ -88,11 +94,8 @@ public class BlockchainManager {
 	 * Create the genesis @Block and add it to the @Chain
 	 */
 	private void createGenesis() {
-		Block genesis = new Block();
-		genesis.addData(new SingleData("Genesis"));
-		genesis.setIndex(Chain.GENESIS_INDEX);
+		Block genesis = new Genesis();
 		genesis.setTimestamp(System.currentTimeMillis());
-		genesis.setPreviousHash(null);
 		genesis.setHash(HashTools.calculateBlockHash(genesis));
 		chain.linkBlock(genesis);
 		genesis.setPreviousHash(null);
@@ -103,7 +106,7 @@ public class BlockchainManager {
 			return this.getChain().getLastBlock().getIndex();
 		}
 		else {
-			return Chain.GENESIS_INDEX;
+			return Genesis.GENESIS_INDEX;
 		}
 	}
 	
@@ -129,6 +132,7 @@ public class BlockchainManager {
 	
 	/**
 	 * Perform integrity check for the @Chain
+	 * @return true if @Chain integrity is good
 	 */
 	public boolean checkChain() {
 		List<Block> blockList = chain.getBlockList();

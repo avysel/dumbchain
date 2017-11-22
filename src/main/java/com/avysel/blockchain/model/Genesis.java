@@ -15,6 +15,7 @@ public class Genesis extends Block {
 		this.getBlockData().getDataList().add(new SingleData(Genesis.GENESIS_LABEL));
 	}
 	
+	@Override
 	public boolean isGenesis() {
 		return true;
 	}

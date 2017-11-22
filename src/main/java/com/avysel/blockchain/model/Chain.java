@@ -6,15 +6,11 @@ import com.avysel.blockchain.model.Block;
 
 /**
  * The blockchain.
- * It contains the list of @Block
+ * It contains the list of @Block, starting with a @Genesis
  */
-public class Chain {
+public class Chain extends ChainPart {
 	private Block genesis;
 	
-	private Block lastBlock;
-
-	private ArrayList<Block> blockList;
-
 	public Chain() {
 		blockList = new ArrayList<Block>();
 	}
@@ -28,14 +24,7 @@ public class Chain {
 		blockList.add(genesis);
 	}
 
-	public Block getLastBlock() {
-		return lastBlock;
-	}
-
-	public void setLastBlock(Block lastBlock) {
-		this.lastBlock = lastBlock;
-	}
-
+	@Override
 	public long getLastIndex() {
 		if(this.getLastBlock() != null) {
 			return this.getLastBlock().getIndex();
@@ -46,9 +35,10 @@ public class Chain {
 	}	
 	
 	/**
-	 * Add a new @Block to the @Chain, and set @Block link data (previous hash ...)
-	 * @param block the @Block to add
+	 * Add a new @Block to the @Chain, and set @Block link data (previous hash ...). It also manages to add a @Block if it is the @Genesis @Block
+	 * @param block the @Block to add.
 	 */
+	@Override
 	public void linkBlock(Block block) {
 		
 		if(block.isGenesis()) {
@@ -61,13 +51,5 @@ public class Chain {
 		
 		blockList.add(block);
 		lastBlock = block;
-	}
-
-	public ArrayList<Block> getBlockList() {
-		return blockList;
-	}
-
-	public void setBlockList(ArrayList<Block> blockList) {
-		this.blockList = blockList;
 	}
 }

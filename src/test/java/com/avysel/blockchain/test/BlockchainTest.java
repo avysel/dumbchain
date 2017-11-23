@@ -17,7 +17,7 @@ public class BlockchainTest {
 
 		manager.createChain();
 		
-		for(int i = 1 ; i<100;i++)
+		for(int i = 1 ; i < 100 ; i++)
 			manager.addIncomingData(new SingleData("data"+i));
 	
 		manager.run();

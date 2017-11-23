@@ -1,24 +1,23 @@
 package com.avysel.blockchain.network;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.data.SingleData;
+import java.net.Socket;
 
 public class NodeClient {
 	
+	private Socket socket;
+	private boolean running = true;
+	
 	public void createNodeClient() {
 		
+		
+		run();
 	}
 	
-	public void getData(SingleData data) {
+	private void run() {
 		
 	}
 	
-	public void getBlock(Block block) {
-		
-	}
-	
-	public void getChain(Chain chain) {
+	public void read(String data) {
 		
 	}
 }

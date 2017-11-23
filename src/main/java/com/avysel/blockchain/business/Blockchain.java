@@ -9,6 +9,7 @@ import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.network.NetworkManager;
 
 /*
  * TODO verifier integrite d'un bloc a chaque lecture (HashTools.checkHash)
@@ -24,19 +25,22 @@ public class Blockchain {
 	private Chain chain;
 	private PendingData pendingData;
 	private Miner miner;
+	private NetworkManager network;
 	
 	private boolean mining = true;
 
 	public Blockchain() {
 		this.chain = new Chain();
 		this.pendingData = new PendingData();
-		this.miner = new Miner();		
+		this.miner = new Miner();	
+		this.network = new NetworkManager();
 	}
 	
 	public Blockchain(Chain chain) {
 		this.chain = chain;
 		this.pendingData = new PendingData();
 		this.miner = new Miner();
+		this.network = new NetworkManager();
 	}
 	
 	public Chain getChain() {
@@ -142,5 +146,10 @@ public class Blockchain {
 	 */
 	public void addSubChain(ChainPart subChain) throws ChainIntegrityException {
 		this.getChain().addChainPart(subChain);
+	}
+	
+	public void startNode() {
+		network.start();
+		run();
 	}
 }

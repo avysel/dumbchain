@@ -1,5 +1,44 @@
 package com.avysel.blockchain.network;
 
-public class NetworkTools {
+import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.chain.Chain;
+import com.avysel.blockchain.model.data.SingleData;
 
+public class NetworkManager {
+	
+	public final String DATATYPE_BLOCK = "BLOCK";
+	public final String DATATYPE_CHAIN = "CHAIN";
+	public final String DATATYPE_DATA = "DATA";
+	
+	private NodeServer server = new NodeServer();
+	private NodeClient client = new NodeClient();
+	
+	public void start() {
+		server.createNodeServer();
+		client.createNodeClient();
+	}
+	
+	public void sendData(SingleData data) {
+		
+	}
+	
+	public void sendBlock(Block block) {
+		
+	}
+	
+	public void sendChain(Chain chain) {
+		
+	}
+	
+	public void getData(SingleData data) {
+		
+	}
+	
+	public void getBlock(Block block) {
+		
+	}
+	
+	public void getChain(Chain chain) {
+		
+	}	
 }

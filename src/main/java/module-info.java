@@ -1,4 +1,4 @@
-module com.avysel.blockchain {
+/*module com.avysel.blockchain {
 	exports com.avysel.blockchain.business;
 	
 	exports com.avysel.blockchain.crypto
@@ -18,4 +18,4 @@ module com.avysel.blockchain {
 	
 	exports com.avysel.blockchain.db
 	to com.avysel.blockchain;
-}
+}*/

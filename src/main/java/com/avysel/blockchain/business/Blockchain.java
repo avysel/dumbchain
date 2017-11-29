@@ -150,6 +150,6 @@ public class Blockchain {
 	
 	public void startNode() {
 		network.start();
-		run();
+		//run();
 	}
 }

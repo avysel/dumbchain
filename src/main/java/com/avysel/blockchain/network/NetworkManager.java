@@ -15,18 +15,21 @@ public class NetworkManager {
 	
 	public void start() {
 		server.createNodeServer();
-		client.createNodeClient();
 	}
 	
+	/**
+	 * Send a data to the network
+	 * @param data
+	 */
 	public void sendData(SingleData data) {
 		
 	}
 	
+	/**
+	 * Send a @Block to the network
+	 * @param block
+	 */
 	public void sendBlock(Block block) {
-		
-	}
-	
-	public void sendChain(Chain chain) {
 		
 	}
 	
@@ -37,8 +40,13 @@ public class NetworkManager {
 	public void getBlock(Block block) {
 		
 	}
+
+	/*
+	public void sendChain(Chain chain) {
+		
+	}	
 	
 	public void getChain(Chain chain) {
 		
-	}	
+	}	*/
 }

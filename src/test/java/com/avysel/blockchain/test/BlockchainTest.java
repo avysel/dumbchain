@@ -20,7 +20,7 @@ public class BlockchainTest {
 		for(int i = 1 ; i < 100 ; i++)
 			manager.addIncomingData(new SingleData("data"+i));
 	
-		manager.run();
+		manager.startNode();
 		manager.display();
 		
 		assertEquals(true, BlockchainManager.checkChain(manager.getChain()));

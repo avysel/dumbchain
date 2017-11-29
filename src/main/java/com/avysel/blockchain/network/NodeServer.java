@@ -7,14 +7,18 @@ import java.net.Socket;
 
 public class NodeServer {
 
-	private int port;
+	private int port=7895;
 	private String host = "127.0.0.1";
 	private ServerSocket serverSocket;
 	private boolean running = true;
 	
+	/**
+	 * Create the server socket and start listening network
+	 */
 	public void createNodeServer() {
 		try {
 			serverSocket = new ServerSocket(port, 100, InetAddress.getByName(host));
+			System.out.println("Create node server for "+host+":"+port);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -23,17 +27,21 @@ public class NodeServer {
 		run();
 	}
 	
+	/**
+	 * Start listening network
+	 */
 	private void run() {
 
 	      Thread t = new Thread(new Runnable(){
 	         public void run(){
+	        	 System.out.println("Server starts runing ...");
 	            while(running){
 	               
 	               try {
-	                  //On attend une connexion d'un client
+	                  // wait for client connection
 	                  Socket client = serverSocket.accept();
 	                  
-	                  //Une fois reçue, on la traite dans un thread séparé
+	                  // new thread to process the connection
 	                  System.out.println("Connexion cliente reçue.");                  
 	                  Thread t = new Thread(new ClientProcessor(client));
 	                  t.start();
@@ -53,9 +61,5 @@ public class NodeServer {
 	      });
 	      
 	      t.start();
-	}
-	
-	public void read(String data) {
-		
 	}
 }

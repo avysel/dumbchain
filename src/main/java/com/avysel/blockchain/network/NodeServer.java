@@ -7,7 +7,6 @@ import java.net.Socket;
 
 public class NodeServer {
 
-	private int port=7895;
 	private String host = "127.0.0.1";
 	private ServerSocket serverSocket;
 	private boolean running = true;
@@ -17,8 +16,8 @@ public class NodeServer {
 	 */
 	public void createNodeServer() {
 		try {
-			serverSocket = new ServerSocket(port, 100, InetAddress.getByName(host));
-			System.out.println("Create node server for "+host+":"+port);
+			serverSocket = new ServerSocket(NetworkManager.getPort(), 100, InetAddress.getByName(host));
+			System.out.println("Create node server for "+host+":"+NetworkManager.getPort());
 		}
 		catch(IOException e) {
 			e.printStackTrace();

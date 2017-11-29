@@ -16,12 +16,19 @@ public class NodeClient {
 
 	private DatagramSocket clientSocket;
 
-	public void broadcast(String data) {
+	public void broadcast(DataBulk bulk) {
 		try {
+			
+			// create broadcast socket
 			clientSocket = new DatagramSocket();
 			clientSocket.setBroadcast(true);
-			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, InetAddress.getByName("255.255.255.255"), 45556);
+			
+			String data = bulk.toString();
+			
+			// create and send packet
+			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, InetAddress.getByName("255.255.255.255"), NetworkManager.getPort());
 			clientSocket.send(packet);
+			
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} catch (UnknownHostException e) {

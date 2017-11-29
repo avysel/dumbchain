@@ -1,17 +1,14 @@
 package com.avysel.blockchain.network;
 
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.data.SingleData;
 
 public class NetworkManager {
 	
-	public final String DATATYPE_BLOCK = "BLOCK";
-	public final String DATATYPE_CHAIN = "CHAIN";
-	public final String DATATYPE_DATA = "DATA";
-	
 	private NodeServer server = new NodeServer();
 	private NodeClient client = new NodeClient();
+	
+	private static int port;
 	
 	public void start() {
 		server.createNodeServer();
@@ -22,7 +19,12 @@ public class NetworkManager {
 	 * @param data
 	 */
 	public void sendData(SingleData data) {
+		DataBulk bulk = new DataBulk();
 		
+		bulk.setType(DataBulk.DATATYPE_DATA);
+		bulk.setData(data.getData());
+		
+		client.broadcast(bulk);
 	}
 	
 	/**
@@ -30,7 +32,12 @@ public class NetworkManager {
 	 * @param block
 	 */
 	public void sendBlock(Block block) {
+		DataBulk bulk = new DataBulk();
 		
+		bulk.setType(DataBulk.DATATYPE_BLOCK);
+		bulk.setData(block.getStringData());
+		
+		client.broadcast(bulk);
 	}
 	
 	public void getData(SingleData data) {
@@ -41,12 +48,12 @@ public class NetworkManager {
 		
 	}
 
-	/*
-	public void sendChain(Chain chain) {
-		
-	}	
-	
-	public void getChain(Chain chain) {
-		
-	}	*/
+	public static int getPort() {
+		return port;
+	}
+
+	public static void setPort(int port) {
+		NetworkManager.port = port;
+	}
+
 }

@@ -68,4 +68,11 @@ public class ClientProcessor implements Runnable {
 		data = new String(b, 0, stream);
 		return data;
 	}
+	
+	private DataBulk getDatabulk(String data) {
+		
+		// TODO change read data to DataBulk, with the right type
+		
+		return null;
+	}
 }

@@ -33,14 +33,14 @@ public class Blockchain {
 		this.chain = new Chain();
 		this.pendingData = new PendingData();
 		this.miner = new Miner();	
-		this.network = new NetworkManager();
+		this.network = new NetworkManager(this);
 	}
 	
 	public Blockchain(Chain chain) {
 		this.chain = chain;
 		this.pendingData = new PendingData();
 		this.miner = new Miner();
-		this.network = new NetworkManager();
+		this.network = new NetworkManager(this);
 	}
 	
 	public Chain getChain() {

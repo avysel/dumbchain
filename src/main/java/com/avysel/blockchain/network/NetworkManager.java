@@ -62,5 +62,8 @@ public class NetworkManager {
 	public static void setPort(int port) {
 		NetworkManager.port = port;
 	}
-
+	
+	public static void getIncoming(DataBulk bulk) {
+		
+	}
 }

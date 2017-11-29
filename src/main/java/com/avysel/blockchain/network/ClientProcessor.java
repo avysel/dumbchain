@@ -41,7 +41,9 @@ public class ClientProcessor implements Runnable {
 				debug += "\t -> Commande reçue : " + data + "\n";
 				System.out.println("\n" + debug);				
 
-
+				DataBulk bulk = getDataBulk(data);
+				NetworkManager.getIncoming(bulk);
+				
 				// send response data to client
 				String response = "OK";
 
@@ -69,7 +71,7 @@ public class ClientProcessor implements Runnable {
 		return data;
 	}
 	
-	private DataBulk getDatabulk(String data) {
+	private DataBulk getDataBulk(String data) {
 		
 		// TODO change read data to DataBulk, with the right type
 		

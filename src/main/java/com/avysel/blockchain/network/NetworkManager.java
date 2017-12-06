@@ -6,9 +6,9 @@ import java.net.UnknownHostException;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.server.NodeServer;
+import com.avysel.blockchain.tools.JsonMapper;
 
 public class NetworkManager {
 	
@@ -23,6 +23,11 @@ public class NetworkManager {
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
 	}
+
+	public static int getPort() {	return port; }
+	public static void setPort(int port) {		NetworkManager.port = port;	}	
+	public static InetAddress getBroadcastAddress() throws UnknownHostException {	return InetAddress.getByName(broadcastAddress);	}
+	
 	
 	public void start() {
 		// start server and link this manager to the server part, in order to be added to listener that listens network
@@ -62,34 +67,24 @@ public class NetworkManager {
 	private void processIncomingBlock(Block block) {
 		// TODO manage incoming block in blockchain
 	}
-
-	public static int getPort() {
-		return port;
-	}
-
-	public static void setPort(int port) {
-		NetworkManager.port = port;
-	}
-	
-	
-	public static InetAddress getBroadcastAddress() throws UnknownHostException {
-		return InetAddress.getByName(broadcastAddress);
-	}
 	
 
+
+	/**
+	 * Gets data from network, transform it into @ISingleData or @Block and add it to the @Blockchain
+	 * @param bulk the incoming @DataBulk
+	 */
 	public void getIncoming(DataBulk bulk) {
 		switch(bulk.getType()) {
 		case DataBulk.DATATYPE_BLOCK :
 			System.out.println("Get a block from network");
-			
-			processIncomingBlock(null);
+			Block block = JsonMapper.jsonToBlock(bulk.getData());
+			processIncomingBlock(block);
 			break;
 		case DataBulk.DATATYPE_DATA :
 			System.out.println("Get a data from network");
-			
-			ISingleData data = new SingleData(/* TODO input */null);
-			processIncomingData(data); // start adding data to blockchain
-			
+			ISingleData data = JsonMapper.jsonToData(bulk.getData());
+			processIncomingData(data);
 			break;
 		case DataBulk.DATATYPE_CHAIN :
 			System.out.println("Get a chain from network");

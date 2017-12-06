@@ -43,5 +43,4 @@ public class DataBulk {
 		// TODO json
 		return this.toString();
 	}
-	
 }

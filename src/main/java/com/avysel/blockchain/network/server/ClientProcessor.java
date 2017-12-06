@@ -1,10 +1,13 @@
-package com.avysel.blockchain.network;
+package com.avysel.blockchain.network.server;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+
+import com.avysel.blockchain.network.DataBulk;
+import com.avysel.blockchain.network.NetworkManager;
 
 /**
  * This class is used to handle a @NodeClient connection from another @Blockchain instance on the network to the local @NodeServer
@@ -15,9 +18,11 @@ public class ClientProcessor implements Runnable {
 	private Socket socket;
 	private PrintWriter writer = null;
 	private BufferedInputStream reader = null;
+	private NetworkManager network = null;
 
-	public ClientProcessor(Socket clientSocket){
+	public ClientProcessor(Socket clientSocket, NetworkManager network){
 		socket = clientSocket;
+		this.network = network;
 	}	
 
 	@Override
@@ -42,7 +47,7 @@ public class ClientProcessor implements Runnable {
 				System.out.println("\n" + debug);				
 
 				DataBulk bulk = getDataBulk(data);
-				NetworkManager.getIncoming(bulk);
+				network.getIncoming(bulk);
 				
 				// send response data to client
 				String response = "OK";

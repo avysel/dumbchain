@@ -1,4 +1,4 @@
-package com.avysel.blockchain.network;
+package com.avysel.blockchain.network.client;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
+
+import com.avysel.blockchain.network.DataBulk;
+import com.avysel.blockchain.network.NetworkManager;
 
 public class NodeClient {
 
@@ -26,7 +29,7 @@ public class NodeClient {
 			String data = bulk.toString();
 			
 			// create and send packet
-			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, InetAddress.getByName("255.255.255.255"), NetworkManager.getPort());
+			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getPort());
 			clientSocket.send(packet);
 			
 		} catch (SocketException e) {

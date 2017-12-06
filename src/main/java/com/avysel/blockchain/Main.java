@@ -8,7 +8,6 @@ public class Main {
 
 	/*	ChainManager manager = new ChainManager();
 		
-		manager.createChain();
 		
 		Block block1 = manager.createBlock(Arrays.asList("data1"));
 		Block block2 = manager.createBlock(Arrays.asList("data2"));
@@ -25,7 +24,6 @@ public class Main {
 		
 		Blockchain manager = new Blockchain();
 
-		manager.createChain();
 		
 		for(int i = 1 ; i < 100 ; i++)
 			manager.addIncomingData(new SingleData("data"+i));

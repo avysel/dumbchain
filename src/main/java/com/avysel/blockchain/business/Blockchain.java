@@ -39,6 +39,7 @@ public class Blockchain {
 
 	public Blockchain() {
 		this.chain = new Chain();
+		createChain();
 		this.pendingData = new PendingData();
 		this.miner = new Miner(chain, pendingData);	
 		this.network = new NetworkManager(this);
@@ -46,6 +47,7 @@ public class Blockchain {
 	
 	public Blockchain(Chain chain) {
 		this.chain = chain;
+		createChain();
 		this.pendingData = new PendingData();
 		this.miner = new Miner(chain, pendingData);
 		this.network = new NetworkManager(this);
@@ -67,7 +69,7 @@ public class Blockchain {
 	/**
 	 * Create the @Chain and set a genesis @Block
 	 */
-	public void createChain() {
+	private void createChain() {
 		chain = new Chain();
 		createGenesis();
 	}

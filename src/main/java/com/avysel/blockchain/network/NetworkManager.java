@@ -2,7 +2,7 @@ package com.avysel.blockchain.network;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 
 public class NetworkManager {
 	
@@ -25,11 +25,11 @@ public class NetworkManager {
 	 * Send a data to the network
 	 * @param data
 	 */
-	public void sendData(SingleData data) {
+	public void sendData(ISingleData data) {
 		DataBulk bulk = new DataBulk();
 		
 		bulk.setType(DataBulk.DATATYPE_DATA);
-		bulk.setData(data.getData());
+		bulk.setData(data.jsonData());
 		
 		client.broadcast(bulk);
 	}
@@ -47,7 +47,7 @@ public class NetworkManager {
 		client.broadcast(bulk);
 	}
 	
-	public void incomingData(SingleData data) {
+	public void incomingData(ISingleData data) {
 		blockchain.addIncomingData(data);
 	}
 	

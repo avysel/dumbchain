@@ -8,7 +8,7 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.network.NetworkManager;
 
 /*
@@ -110,7 +110,7 @@ public class Blockchain {
 	 * Add a new data to be included in a block at one of the next mining.
 	 * @param data
 	 */
-	public void addIncomingData(SingleData data) {
+	public void addIncomingData(ISingleData data) {
 		System.out.println("add data : "+data);
 		pendingData.addData(data);
 	}

@@ -14,7 +14,7 @@ public class Genesis extends Block {
 	public Genesis() {
 		this.getBlockHeader().setIndex(Genesis.GENESIS_INDEX);
 		this.getBlockHeader().setPreviousHash(null);
-		this.getBlockData().getDataList().add(new SingleData(Genesis.GENESIS_LABEL));
+		this.getBlockData().getDataList().add(new SingleData(Genesis.GENESIS_LABEL)); // TODO inject ISingleData
 	}
 	
 	@Override

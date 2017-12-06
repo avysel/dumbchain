@@ -6,7 +6,7 @@ import java.util.UUID;
  * A piece of data that can be included in a @Block.
  * A @Block can contains several @SingleData.
  */
-public class SingleData {
+public class SingleData implements ISingleData {
 	private String data;
 	private UUID guid;
 
@@ -29,5 +29,11 @@ public class SingleData {
 	
 	public String toString() {
 		return data + " - "+ guid.toString();
+	}
+
+	@Override
+	public String jsonData() {
+		
+		return toString();
 	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 
 public class Miner {
 	
@@ -14,7 +14,7 @@ public class Miner {
 
 	public Block mine(PendingData pendingData) {
 		Block block = new Block();		
-		List<SingleData> dataList = new ArrayList<SingleData>();
+		List<ISingleData> dataList = new ArrayList<ISingleData>();
 		
 		// TODO quel element a changer pour avoir un nouveau hash a chaque tentative ?
 		// si on utilise le timestamp, le check ne fonctionnera pas

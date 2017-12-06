@@ -26,7 +26,7 @@ public class NodeClient {
 			clientSocket = new DatagramSocket();
 			clientSocket.setBroadcast(true);
 			
-			String data = bulk.toString();
+			String data = bulk.toString(); // TODO to json
 			
 			// create and send packet
 			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getPort());
@@ -41,6 +41,7 @@ public class NodeClient {
 		}		
 	}
 
+	// TODO how to use ?
 	List<InetAddress> listAllBroadcastAddresses() throws SocketException {
 		List<InetAddress> broadcastList = new ArrayList<>();
 		Enumeration<NetworkInterface> interfaces 

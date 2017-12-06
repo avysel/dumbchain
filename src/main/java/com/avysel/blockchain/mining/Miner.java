@@ -23,7 +23,7 @@ public class Miner {
 	public void start() {
 		System.out.println("Start miner.");
 		while(mining) {
-			Block block = mine();
+			Block block = mine(); // TODO put in a thread
 			System.out.println("New block created with "+block.getDataList().size()+" data");
 			chain.linkBlock(block);
 			System.out.println(block);
@@ -42,7 +42,11 @@ public class Miner {
 	}
 	
 	
-	public Block mine() {
+	/**
+	 * Create a @Block
+	 * @return a @Block that contains random data taken from @PendingData
+	 */
+	private Block mine() {
 		Block block = new Block();		
 		List<ISingleData> dataList = new ArrayList<ISingleData>();
 		
@@ -60,18 +64,8 @@ public class Miner {
 			// pick new dataset
 			dataList = pendingData.getRandomData();
 			block.addAllData(dataList);
-			
-			//System.out.println(pendingData);
-			
+						
 			hash = HashTools.calculateBlockHash(block);
-			//System.out.println(hash);
-			
-			/*
-			 try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
 			 
 			 difficulty ++;
 		} while (! (hash.startsWith("00") || (difficulty > 1000000 && hash.startsWith("0")))); // TODO mettre condition en parametre

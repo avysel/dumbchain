@@ -6,15 +6,17 @@ package com.avysel.blockchain.model.data;
  * To use a custom data object, implements this Interface.
  */
 public interface ISingleData {
-
-	
 	
 	/**
-	 * Return JSON representation of the data
+	 * Returns JSON representation of the data.
 	 * @return JSON string
 	 */
 	public String jsonData();
 	
+	/**
+	 * Returns the unique identifier for the data.
+	 * @return a unique identifier
+	 */
 	public String getUniqueId();
 	
 }

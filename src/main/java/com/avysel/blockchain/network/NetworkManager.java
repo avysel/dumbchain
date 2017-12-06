@@ -71,7 +71,7 @@ public class NetworkManager {
 	}
 	
 	private void processIncomingBlock(Block block) {
-		// TODO manage incoming block in blockchain
+		// TODO manage incoming block in blockchain + manage forks
 	}
 	
 	/**

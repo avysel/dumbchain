@@ -40,14 +40,14 @@ public class Blockchain {
 	public Blockchain() {
 		this.chain = new Chain();
 		this.pendingData = new PendingData();
-		this.miner = new Miner();	
+		this.miner = new Miner(chain, pendingData);	
 		this.network = new NetworkManager(this);
 	}
 	
 	public Blockchain(Chain chain) {
 		this.chain = chain;
 		this.pendingData = new PendingData();
-		this.miner = new Miner();
+		this.miner = new Miner(chain, pendingData);
 		this.network = new NetworkManager(this);
 	}
 	
@@ -129,28 +129,7 @@ public class Blockchain {
 		}
 	}
 	
-	/**
-	 * Start the @Blockchain.
-	 */
-	public void startMining() {
-		
-		System.out.println("Start miner.");
-		while(isMining()) {
-			Block block = miner.mine(pendingData);
-			System.out.println("New block created with "+block.getDataList().size()+" data");
-			chain.linkBlock(block);
-			System.out.println(block);
-			System.out.println("New block linked");
-			System.out.println("Remaining : "+pendingData.size());
-			if(pendingData.size() < 10) //TODO make miner wait for new data instead of stop
-				setMining(false);
-			
-		}
-		System.out.println("End miner.");
-		System.out.println("Effort : "+chain.getEffort());
-		
-	}
-	
+
 	/**
 	 *  Add a subchain to the end of the current @Blockchain.
 	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the @Blockchain.
@@ -162,8 +141,13 @@ public class Blockchain {
 		this.getChain().addChainPart(subChain);
 	}
 	
-	public void startNode() {
+	public void start() {
 		network.start();
-		startMining();
+		miner.start();
+	}
+	
+	public void stop() {
+		network.stop();
+		miner.stop();
 	}
 }

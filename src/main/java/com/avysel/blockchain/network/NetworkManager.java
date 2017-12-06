@@ -6,7 +6,6 @@ import java.net.UnknownHostException;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.server.NodeServer;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -33,6 +32,10 @@ public class NetworkManager {
 	
 	public void start() {
 		server.createNodeServer(this);
+	}
+	
+	public void stop() {
+		server.stop();
 	}
 		
 	/**

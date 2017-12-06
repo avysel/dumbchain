@@ -87,4 +87,9 @@ public class NodeServer {
 		bulk.setData(data);
 		return bulk;
 	}
+	
+	public void stop() {
+		System.out.println("Stop server");
+		running = false;
+	}
 }

@@ -30,7 +30,7 @@ public class Main {
 		for(int i = 1 ; i < 100 ; i++)
 			manager.addIncomingData(new SingleData("data"+i));
 	
-		manager.startNode();
+		manager.start();
 		manager.display();		
 		
 	}

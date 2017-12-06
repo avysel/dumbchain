@@ -37,7 +37,7 @@ public class ClientProcessor implements Runnable {
 				// get data from client socket				
 				String data = read();
 
-				InetSocketAddress remote = (InetSocketAddress)socket.getRemoteSocketAddress();
+				InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
 
 				String debug = "";
 				debug = "Thread : " + Thread.currentThread().getName() + ". ";
@@ -46,7 +46,10 @@ public class ClientProcessor implements Runnable {
 				debug += "\t -> Commande reçue : " + data + "\n";
 				System.out.println("\n" + debug);				
 
+				// read the data
 				DataBulk bulk = getDataBulk(data);
+				
+				// push data to network manager
 				network.getIncoming(bulk);
 				
 				// send response data to client
@@ -63,7 +66,7 @@ public class ClientProcessor implements Runnable {
 	}
 
 	/**
-	 * Reads data from stream
+	 * Reads raw data from stream
 	 * @return data
 	 * @throws IOException
 	 */
@@ -77,9 +80,8 @@ public class ClientProcessor implements Runnable {
 	}
 	
 	private DataBulk getDataBulk(String data) {
-		
-		// TODO change read data to DataBulk, with the right type
-		
-		return null;
+		DataBulk bulk = new DataBulk();
+		// TODO read raw data into a DataBulk
+		return bulk;
 	}
 }

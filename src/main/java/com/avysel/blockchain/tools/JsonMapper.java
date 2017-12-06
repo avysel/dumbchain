@@ -4,6 +4,8 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 
+// TODO use Jackson
+
 public class JsonMapper {
 	
 	/**

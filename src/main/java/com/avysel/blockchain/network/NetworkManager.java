@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.server.NodeServer;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -17,8 +18,9 @@ public class NetworkManager {
 	
 	private Blockchain blockchain;
 	
-	private static int port;
-	private static String broadcastAddress = "255.255.255.255";
+	private static int port = 45458;
+	//private static String broadcastAddress = "255.255.255.255";
+	private static String broadcastAddress = "127.0.0.1";
 	
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
@@ -60,7 +62,9 @@ public class NetworkManager {
 	}
 	
 	private void processIncomingData(ISingleData data) {
+		System.out.println("Pending before : "+blockchain.pendingData.size());
 			blockchain.addIncomingData(data);
+			System.out.println("Pending after : "+blockchain.pendingData.size());
 	}
 	
 	private void processIncomingBlock(Block block) {

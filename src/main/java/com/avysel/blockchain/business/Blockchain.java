@@ -27,7 +27,7 @@ public class Blockchain {
 	private Chain chain;
 	
 	// storage for data waiting to be included in a block
-	private PendingData pendingData;
+	public PendingData pendingData;
 	
 	// block generator
 	private Miner miner;
@@ -119,14 +119,20 @@ public class Blockchain {
 	 * @param data
 	 */
 	public void addIncomingData(ISingleData data) {
-		System.out.println("add data : "+data);
-		pendingData.addData(data);
+
+		if(!pendingData.exists(data.getUniqueId())) {
+			pendingData.addData(data);
+			System.out.println("Add "+data.getUniqueId());
+		}
+		else {
+			System.out.println("Data "+data.getUniqueId()+" already exists");
+		}
 	}
 	
 	/**
 	 * Start the @Blockchain.
 	 */
-	public void run() {
+	public void startMining() {
 		
 		System.out.println("Start miner.");
 		while(isMining()) {
@@ -136,7 +142,7 @@ public class Blockchain {
 			System.out.println(block);
 			System.out.println("New block linked");
 			System.out.println("Remaining : "+pendingData.size());
-			if(pendingData.size() < 10) //TODO what to do when not enough data to find a block that respects condition ?
+			if(pendingData.size() < 10) //TODO make miner wait for new data instead of stop
 				setMining(false);
 			
 		}
@@ -158,6 +164,6 @@ public class Blockchain {
 	
 	public void startNode() {
 		network.start();
-		//run();
+		startMining();
 	}
 }

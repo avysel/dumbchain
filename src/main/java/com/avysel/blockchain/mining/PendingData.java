@@ -1,11 +1,11 @@
 package com.avysel.blockchain.mining;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import com.avysel.blockchain.model.data.ISingleData;
 
@@ -16,7 +16,7 @@ public class PendingData {
 	private Deque<ISingleData> queue;
 
 	public PendingData() {
-		queue = new ArrayDeque<ISingleData>();
+		queue = new ConcurrentLinkedDeque<ISingleData>();
 	}
 	
 	private Deque<ISingleData> getPendingData() {
@@ -77,6 +77,14 @@ public class PendingData {
 	      while(it.hasNext())
 	         result.append(it.next());
 		return result.toString();
+	}
+	
+	public boolean exists(String uniqueId) {
+		 Iterator<ISingleData> it = getPendingData().iterator();
+	      while(it.hasNext())
+	         if(it.next().getUniqueId().equals(uniqueId))
+	        	 return true;
+	      return false;
 	}
 	
 }

@@ -36,4 +36,9 @@ public class SingleData implements ISingleData {
 		
 		return toString();
 	}
+
+	@Override
+	public String getUniqueId() {
+		return getGuid().toString();
+	}
 }

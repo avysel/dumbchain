@@ -5,10 +5,10 @@ package com.avysel.blockchain.network;
  *
  */
 public class DataBulk {
-	
-	public static final int DATATYPE_BLOCK = 100;
-	public static final int DATATYPE_CHAIN = 101;
-	public static final int DATATYPE_DATA = 102;	
+
+	public static final int DATATYPE_DATA = 100;
+	public static final int DATATYPE_BLOCK = 101;
+	public static final int DATATYPE_CHAIN = 102;	
 	
 	private int type;
 	private String data;
@@ -41,6 +41,6 @@ public class DataBulk {
 
 	public String toString() {
 		// TODO json
-		return this.toString();
+		return super.toString();
 	}
 }

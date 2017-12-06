@@ -3,7 +3,6 @@ package com.avysel.blockchain.tools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
-//import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 // TODO use Jackson

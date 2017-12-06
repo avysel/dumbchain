@@ -3,6 +3,8 @@ package com.avysel.blockchain.tools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 // TODO use Jackson
 
@@ -27,7 +29,7 @@ public class JsonMapper {
 	public static String blockToJson(Block block) {
 		String json = new String();
 		
-		// TODO
+		//json = new ObjectMapper().writeValueAsString(block);
 		
 		return json;
 	}
@@ -46,6 +48,5 @@ public class JsonMapper {
 		// TODO
 		
 		return json;
-	}	
-	
+	}
 }

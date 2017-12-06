@@ -48,10 +48,10 @@ public class ClientProcessor implements Runnable {
 
 				// read the data
 				DataBulk bulk = getDataBulk(data);
-				
+
 				// push data to network manager
 				network.getIncoming(bulk);
-				
+
 				// send response data to client
 				String response = "OK";
 
@@ -78,7 +78,7 @@ public class ClientProcessor implements Runnable {
 		data = new String(b, 0, stream);
 		return data;
 	}
-	
+
 	private DataBulk getDataBulk(String data) {
 		DataBulk bulk = new DataBulk();
 		// TODO read raw data into a DataBulk

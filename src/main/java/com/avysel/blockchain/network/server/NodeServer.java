@@ -13,7 +13,7 @@ public class NodeServer {
 	private ServerSocket serverSocket;
 	private boolean running = true;
 	private NetworkManager network = null;
-	
+
 	/**
 	 * Create the server socket and start listening network
 	 */
@@ -26,43 +26,43 @@ public class NodeServer {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		run();
 	}
-	
+
 	/**
 	 * Start listening network
 	 */
 	private void run() {
 
-	      Thread t = new Thread(new Runnable(){
-	         public void run(){
-	        	 System.out.println("Server starts runing ...");
-	            while(running){
-	               
-	               try {
-	                  // wait for client connection
-	                  Socket client = serverSocket.accept();
-	                  
-	                  // new thread to process the connection
-	                  System.out.println("Connexion cliente reçue.");                  
-	                  Thread t = new Thread(new ClientProcessor(client, network));
-	                  t.start();
-	                  
-	               } catch (IOException e) {
-	                  e.printStackTrace();
-	               }
-	            }
-	            
-	            try {
-	            	serverSocket.close();
-	            } catch (IOException e) {
-	               e.printStackTrace();
-	               serverSocket = null;
-	            }
-	         }
-	      });
-	      
-	      t.start();
+		Thread t = new Thread(new Runnable(){
+			public void run(){
+				System.out.println("Server starts runing ...");
+				while(running){
+
+					try {
+						// wait for client connection
+						Socket client = serverSocket.accept();
+
+						// new thread to process the connection
+						System.out.println("Connexion cliente reçue.");                  
+						Thread t = new Thread(new ClientProcessor(client, network));
+						t.start();
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+				try {
+					serverSocket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					serverSocket = null;
+				}
+			}
+		});
+
+		t.start();
 	}
 }

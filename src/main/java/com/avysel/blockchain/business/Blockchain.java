@@ -22,9 +22,17 @@ import com.avysel.blockchain.network.NetworkManager;
  * Contains a unique @Chain of @Blocks and provides available operations on it.
  */
 public class Blockchain {
+	
+	// the list of blocks
 	private Chain chain;
+	
+	// storage for data waiting to be included in a block
 	private PendingData pendingData;
+	
+	// block generator
 	private Miner miner;
+	
+	// data network input/output
 	private NetworkManager network;
 	
 	private boolean mining = true;

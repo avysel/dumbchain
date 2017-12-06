@@ -30,7 +30,6 @@ public class NetworkManager {
 	
 	
 	public void start() {
-		// start server and link this manager to the server part, in order to be added to listener that listens network
 		server.createNodeServer(this);
 	}
 		
@@ -68,8 +67,6 @@ public class NetworkManager {
 		// TODO manage incoming block in blockchain
 	}
 	
-
-
 	/**
 	 * Gets data from network, transform it into @ISingleData or @Block and add it to the @Blockchain
 	 * @param bulk the incoming @DataBulk

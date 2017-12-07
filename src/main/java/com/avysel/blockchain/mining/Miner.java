@@ -23,15 +23,10 @@ public class Miner {
 	public void start() {
 		System.out.println("Start miner.");
 		while(mining) {
-			Block block = mine(); // TODO put in a thread
-			System.out.println("New block created with "+block.getDataList().size()+" data");
+			Block block = mine();
 			chain.linkBlock(block);
 			System.out.println(block);
-			System.out.println("New block linked");
-			System.out.println("Remaining : "+pendingData.size());
-			if(pendingData.size() < 10) //TODO make miner wait for new data instead of stop
-				stop();
-			
+			System.out.println("New block created with "+block.getDataList().size()+" data. Remaining : "+pendingData.size());			
 		}
 		System.out.println("End miner.");
 		System.out.println("Effort : "+chain.getEffort());		
@@ -61,7 +56,7 @@ public class Miner {
 			// clean current data set
 			block.cleanData();
 			
-			// pick new dataset
+			// pick new dataset, blocking when pending data is empty
 			dataList = pendingData.getRandomData();
 			block.addAllData(dataList);
 						

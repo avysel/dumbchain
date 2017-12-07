@@ -119,8 +119,9 @@ public class Blockchain {
 	/**
 	 * Add a new data to be included in a block at one of the next mining.
 	 * @param data
+	 * @throws InterruptedException 
 	 */
-	public void addIncomingData(ISingleData data) {
+	public void addIncomingData(ISingleData data) throws InterruptedException {
 
 		if(!pendingData.exists(data.getUniqueId())) {
 			pendingData.addData(data);

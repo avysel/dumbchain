@@ -26,7 +26,12 @@ public class Main {
 
 		
 		for(int i = 1 ; i < 100 ; i++)
-			manager.addIncomingData(new SingleData("data"+i));
+			try {
+				manager.addIncomingData(new SingleData("data"+i));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	
 		manager.start();
 		manager.display();		

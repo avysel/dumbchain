@@ -10,6 +10,7 @@ import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...
+ * It uses a synchronized queue, fed by the network and consumed by the Miner.
  */
 public class PendingData {
 	private LinkedBlockingQueue<ISingleData> queue;
@@ -88,6 +89,11 @@ public class PendingData {
 		return result.toString();
 	}
 
+	/**
+	 * Allows to know if a given data is already present in the pending data.
+	 * @param uniqueId unique identifier of data to check if exists
+	 * @return true if a data with the same unique identifier is present in queue
+	 */
 	public boolean exists(String uniqueId) {
 		Iterator<ISingleData> it = getPendingData().iterator();
 		while(it.hasNext())

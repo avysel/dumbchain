@@ -22,20 +22,18 @@ import com.avysel.blockchain.network.NetworkManager;
  * Contains a unique @Chain of @Blocks and provides available operations on it.
  */
 public class Blockchain {
-	
+
 	// the list of blocks
 	private Chain chain;
-	
+
 	// storage for data waiting to be included in a block
 	public PendingData pendingData;
-	
+
 	// block generator
 	private Miner miner;
-	
+
 	// data network input/output
 	private NetworkManager network;
-	
-	private boolean mining = true;
 
 	public Blockchain() {
 		this.chain = new Chain();
@@ -44,7 +42,7 @@ public class Blockchain {
 		this.miner = new Miner(chain, pendingData);	
 		this.network = new NetworkManager(this);
 	}
-	
+
 	public Blockchain(Chain chain) {
 		this.chain = chain;
 		createChain();
@@ -52,19 +50,10 @@ public class Blockchain {
 		this.miner = new Miner(chain, pendingData);
 		this.network = new NetworkManager(this);
 	}
-	
+
 	public Chain getChain() {
 		return chain;
 	}
-	
-	public boolean isMining() {
-		return mining;
-	}
-
-	public void setMining(boolean mining) {
-		this.mining = mining;
-	}
-
 
 	/**
 	 * Create the @Chain and set a genesis @Block
@@ -73,7 +62,7 @@ public class Blockchain {
 		chain = new Chain();
 		createGenesis();
 	}
-	
+
 	/**
 	 * Create the genesis @Block and add it to the @Chain
 	 */
@@ -85,6 +74,10 @@ public class Blockchain {
 		genesis.setPreviousHash(null);
 	}
 
+	/**
+	 * Gets the Block index of last Block linked at the end of the Chain
+	 * @return the last Block index
+	 */
 	public long getLastIndex() {
 		if(this.getChain().getLastBlock() != null) {
 			return this.getChain().getLastBlock().getIndex();
@@ -93,29 +86,29 @@ public class Blockchain {
 			return Genesis.GENESIS_INDEX;
 		}
 	}
-	
+
 	/**
 	 * Display the @Chain from last @Block to Genesis @Block
 	 */
 	public void display() {
 		Block currentBlock = chain.getLastBlock();
-		
+
 		while(currentBlock != null) {
 			System.out.println(currentBlock);			
 			currentBlock = BlockchainManager.findBlockByHash(chain, currentBlock.getPreviousHash());
 		}
-		
+
 	}
-	
+
 	/**
 	 * Load existing @Chain from database
 	 */
 	public void loadChain() {
-		
-	}
-	
 
-	
+	}
+
+
+
 	/**
 	 * Add a new data to be included in a block at one of the next mining.
 	 * @param data
@@ -131,7 +124,7 @@ public class Blockchain {
 			System.out.println("Data "+data.getUniqueId()+" already exists");
 		}
 	}
-	
+
 
 	/**
 	 *  Add a subchain to the end of the current @Blockchain.
@@ -143,12 +136,18 @@ public class Blockchain {
 	public void addSubChain(ChainPart subChain) throws ChainIntegrityException {
 		this.getChain().addChainPart(subChain);
 	}
-	
+
+	/**
+	 * Starts the Blockchain (network listening and mining)
+	 */
 	public void start() {
 		network.start();
 		miner.start();
 	}
-	
+
+	/**
+	 * Stops the Blockchain (network listening and mining)
+	 */
 	public void stop() {
 		network.stop();
 		miner.stop();

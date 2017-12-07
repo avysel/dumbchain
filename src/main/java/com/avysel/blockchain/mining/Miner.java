@@ -14,10 +14,20 @@ import com.avysel.blockchain.model.data.ISingleData;
  */
 public class Miner {
 	
+	// mining or not ?
 	private boolean mining;
+	
+	// the queue of pending data to be included in a Block
 	private PendingData pendingData;
+	
+	// The current existing Chain
 	private Chain chain;
 	
+	/**
+	 * Creates the Miner
+	 * @param chain the Chain that will gets new Blocks
+	 * @param pendingData the queue to peek data
+	 */
 	public Miner(Chain chain, PendingData pendingData) {
 		mining = true;
 		this.pendingData = pendingData;

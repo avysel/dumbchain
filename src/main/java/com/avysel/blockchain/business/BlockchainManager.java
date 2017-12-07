@@ -6,6 +6,9 @@ import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
 
+/**
+ * Provides some operation on the Blockchain, such as finding a Block or checking Chain integrity.
+ */
 public class BlockchainManager {
 	
 	/**
@@ -13,7 +16,7 @@ public class BlockchainManager {
 	 * @param index the index to find
 	 * @return the @Block with the given index
 	 */
-	public static Block findBlockByInedx(ChainPart chain, long index) {
+	public static Block findBlockByIndex(ChainPart chain, long index) {
 	
 		for(Block block : chain.getBlockList()){
 			if(block.getIndex() == index)

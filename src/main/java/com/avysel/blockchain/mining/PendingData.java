@@ -53,7 +53,7 @@ public class PendingData {
 	 * Pick a random quantity of data in the list of pending data.
 	 * @return a @List<SingleData> that contains a random quantity of data
 	 */
-	public  List<ISingleData> getRandomData() {
+	public  List<ISingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
 		int quantity;
 		List<ISingleData> result = new ArrayList<ISingleData>();
 		do {

@@ -11,13 +11,6 @@ Rien de bien avancé ou utilisable pour le moment.
 
 
 # A faire
-- Réception des blocks depuis le réseau (en cours)
-- Gestion des forks
-- Envoi des blocks créés sur le réseau (en cours)
-- Arbre de Merkle
-- Stockage des données en BDD
-- Création de données
-
 
 ### Minage
 - Pool de données orphelines, reçues du réseau
@@ -32,18 +25,19 @@ Rien de bien avancé ou utilisable pour le moment.
 ### Réseau
 - Agent UDP pour envoyer un broadcast de découverte de pairs
 - Agent UDP qui traite les demandes de découvertes reçues
-
 - Manager TCP qui maintient les connexions avec les pairs connus
-  - Agent client qui envoie les blocs créés
-  - Agent serveur qui reçoit les données et blocs depuis le réseau
-  - Reconstruction de la chaîne existante pour un nouveau noeud
-  - Envoie de la chaîne à un nouveau noeud
+- Agent TCP client qui envoie les blocs créés
+- Agent TCP serveur qui reçoit les données et blocs depuis le réseau
 
+### Construction de la chaîne
+- Reconstruction de la chaîne existante pour un nouveau noeud
+- Envoie de la chaîne à un nouveau noeud
+- Gestion des forks
 
 ### Stockage
 - Couche de persistance LevelDB pour la chaîne.
-  - Stockage en temps réel
-  - Chargement au démarrage
+- Stockage en temps réel
+- Chargement au démarrage
 
 
 ### Utilisation

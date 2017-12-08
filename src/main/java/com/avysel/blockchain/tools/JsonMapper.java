@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
-import com.avysel.blockchain.network.DataBulk;
+import com.avysel.blockchain.network.NetworkDataBulk;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -105,7 +105,7 @@ public class JsonMapper {
 		return json;		
 	}
 
-	public static String bulkToJson(DataBulk bulk) {
+	public static String bulkToJson(NetworkDataBulk bulk) {
 		String json = new String();
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -120,13 +120,13 @@ public class JsonMapper {
 		return json;		
 	}	
 	
-	public static DataBulk jsonToBulk(String json) {
-		DataBulk data = null;
+	public static NetworkDataBulk jsonToBulk(String json) {
+		NetworkDataBulk data = null;
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		try {
-			data = mapper.readValue(json, DataBulk.class);
+			data = mapper.readValue(json, NetworkDataBulk.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

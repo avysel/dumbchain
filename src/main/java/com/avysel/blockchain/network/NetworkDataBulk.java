@@ -4,7 +4,7 @@ package com.avysel.blockchain.network;
  * Encapsulate a data to broadcast to the network and the type of data.
  *
  */
-public class DataBulk {
+public class NetworkDataBulk {
 
 	public static final int DATATYPE_DATA = 100;
 	public static final int DATATYPE_BLOCK = 101;
@@ -13,11 +13,11 @@ public class DataBulk {
 	private int type;
 	private String data;
 
-	public DataBulk() {
+	public NetworkDataBulk() {
 		super();
 	}	
 	
-	public DataBulk(int type, String data) {
+	public NetworkDataBulk(int type, String data) {
 		super();
 		this.type = type;
 		this.data = data;

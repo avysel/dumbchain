@@ -14,8 +14,19 @@ public class PeerExplorer implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
+		while (running) {
+			
+		}
 
 	}
+	
+	public void stop() {
+		running = false;
+	}
 
+	private void explore() {
+		
+	}
+	
 }

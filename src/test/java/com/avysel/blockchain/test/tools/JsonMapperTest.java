@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
-import com.avysel.blockchain.network.DataBulk;
+import com.avysel.blockchain.network.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
 public class JsonMapperTest {
@@ -116,8 +116,8 @@ public class JsonMapperTest {
 	@Test
 	public void bulkToJson() {
 		
-		DataBulk bulk = new DataBulk();
-		bulk.setType(DataBulk.DATATYPE_BLOCK);
+		NetworkDataBulk bulk = new NetworkDataBulk();
+		bulk.setType(NetworkDataBulk.DATATYPE_BLOCK);
 		bulk.setData(JsonMapper.blockToJson(createTestBlock()));
 		
 		String json = JsonMapper.bulkToJson(bulk);
@@ -132,14 +132,14 @@ public class JsonMapperTest {
 		
 		String json = "{\"type\":101,\"data\":\"{\\\"timestamp\\\":546546,\\\"index\\\":0,\\\"difficulty\\\":520,\\\"hash\\\":\\\"toto\\\",\\\"previousHash\\\":\\\"titi\\\",\\\"dataList\\\":[{\\\"data\\\":\\\"data1\\\",\\\"uniqueId\\\":\\\"4f65c8a8-4502-4b87-a9ca-78d2e6f05265\\\"},{\\\"data\\\":\\\"data2\\\",\\\"uniqueId\\\":\\\"9af6a263-d0f4-4849-9ff7-1a4b6212b73a\\\"}],\\\"merkleRoot\\\":null}\"}";
 		
-		DataBulk bulk = JsonMapper.jsonToBulk(json);
+		NetworkDataBulk bulk = JsonMapper.jsonToBulk(json);
 		
 		assertNotNull(bulk);
 		System.out.println("Bulk pour json : ");
 		System.out.println(bulk);
 		
 		assertNotNull(bulk.getType());
-		assertEquals(bulk.getType(), DataBulk.DATATYPE_BLOCK);
+		assertEquals(bulk.getType(), NetworkDataBulk.DATATYPE_BLOCK);
 		assertNotNull(bulk.getData());
 	}	
 	

@@ -8,7 +8,7 @@ public class Peer {
 
 	private String uid;
 	private String ip;
-	private String port;
+	private int port;
 	private ServerSocket server;
 	private Socket client;
 
@@ -16,7 +16,7 @@ public class Peer {
 		
 	}	
 	
-	public Peer(String ip, String port) {
+	public Peer(String ip, int port) {
 		super();
 		this.ip = ip;
 		this.port = port;
@@ -35,10 +35,10 @@ public class Peer {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public String getPort() {
+	public int getPort() {
 		return port;
 	}
-	public void setPort(String port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
 	public ServerSocket getServer() {

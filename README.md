@@ -37,4 +37,7 @@ Rien de bien avancé ou utilisable pour le moment.
 
 ### Utilisation
 - [ ] Création de données
+- [ ] API d'ajout de données
+- [ ] Consultation des données
+- [ ] API consultation des données
 

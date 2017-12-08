@@ -12,33 +12,32 @@ Rien de bien avancé ou utilisable pour le moment.
 
 # A faire
 
-### Minage
-- Pool de données orphelines, reçues du réseau
-- Vérification des données orphelines, passage en attente si ok (Quelles sont les règles de vérification)
-- Pool de données en attente, vérifiées par le noeud et proposées au minage
+### Construction de la chaîne et minage
+- [x] Création de la chaîne et du block Genesis
+- [x] Minage de bloc et hachageavec
+- [x] Gestion des données en attente (alimentation, piochage aléatoire)
+- [x] Preuve de travail
+- [ ] Reconstruction de la chaîne existante pour un nouveau noeud
+- [ ] Envoie de la chaîne à un nouveau noeud
+- [ ] Gestion des forks
 
 ### Sécurité
-- Calcul de la racine de Merkle d'un bloc
-- Vérification de l'intégrité de la chaîne par l'arbre de Merkle
-
+- [x] Vérification de l'intégrité de la chaîne par le liage des blocs par hash
+- [ ] Calcul de la racine de Merkle d'un bloc
+- [ ] Vérification de l'intégrité de la chaîne par l'arbre de Merkle
 
 ### Réseau
-- Agent UDP pour envoyer un broadcast de découverte de pairs
-- Agent UDP qui traite les demandes de découvertes reçues
-- Manager TCP qui maintient les connexions avec les pairs connus
-- Agent TCP client qui envoie les blocs créés
-- Agent TCP serveur qui reçoit les données et blocs depuis le réseau
-
-### Construction de la chaîne
-- Reconstruction de la chaîne existante pour un nouveau noeud
-- Envoie de la chaîne à un nouveau noeud
-- Gestion des forks
+- [x] Mapping JSON des données
+- [ ] Agent UDP pour envoyer un broadcast de découverte de pairs
+- [ ] Agent UDP qui traite les demandes de découvertes reçues
+- [ ] Manager TCP qui maintient les connexions avec les pairs connus
+- [ ] Agent TCP client qui envoie les blocs créés
+- [ ] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
 
 ### Stockage
-- Couche de persistance LevelDB pour la chaîne.
-- Stockage en temps réel
-- Chargement au démarrage
-
+- [ ] Couche de persistance LevelDB pour la chaîne.
+- [ ] Stockage en temps réel
+- [ ] Chargement au démarrage
 
 ### Utilisation
-- Création de données
+- [ ] Création de données

@@ -27,7 +27,7 @@ public class PeerListener implements Runnable {
 		Thread t = new Thread(this);
 		t.start();
 	}
-	
+
 	/**
 	 * Start listening network
 	 */
@@ -60,7 +60,7 @@ public class PeerListener implements Runnable {
 
 						// push data to network manager
 						networkManager.addPeer(getPeer(bulk));
-						
+
 						//On réinitialise la taille du datagramme, pour les futures réceptions
 						packet.setLength(buffer.length);
 
@@ -76,21 +76,21 @@ public class PeerListener implements Runnable {
 
 		t.start();
 	}	
-	
+
 	private NetworkMessageBulk getMessageBulk(String data) {
-		
+
 		// convert json to message bulk
 		return new NetworkMessageBulk();
-		
+
 	}
 
 	private Peer getPeer(NetworkMessageBulk bulk) {
-		
+
 		// create peer from received data
-		
+
 		return new Peer();
 	}
-	
+
 	public void stop() {
 		running = false;
 	}

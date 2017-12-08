@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
 
-import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
@@ -15,35 +14,35 @@ public class NodeClient {
 
 	private Socket clientSocket;
 	private NetworkManager networkManager;
-	
+
 	public NodeClient(NetworkManager networkManager) {
 		this.networkManager = networkManager;
 	}
-	
+
 	public void sendDataToAllPeers(NetworkDataBulk bulk) {
-		
+
 		// send data to all peers
 		List<Peer> peers = networkManager.getPeers();
 		for(Peer peer : peers) {
 			sendData(bulk, peer);
 		}
 	}
-	
+
 	public void sendData(NetworkDataBulk bulk, Peer peer) {
 		try {
 			// connect to distant peer's server part
 			clientSocket = new Socket(peer.getIp(), peer.getPort());
-			
+
 			// send data
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
 			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
 			bos.flush();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	public void broadcast(NetworkDataBulk bulk) {
 		try {

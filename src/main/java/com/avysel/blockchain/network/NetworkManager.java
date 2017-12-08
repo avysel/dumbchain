@@ -36,8 +36,8 @@ public class NetworkManager {
 
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
-		server = new NodeServer();
-		client = new NodeClient();
+		server = new NodeServer(this);
+		client = new NodeClient(this);
 		peers = new ArrayList<Peer>();
 		peerExplorer = new PeerExplorer(this);
 		peerListener = new PeerListener(this);		
@@ -90,7 +90,7 @@ public class NetworkManager {
 		bulk.setData(data.getData());
 
 		// send to all connected peers
-		client.broadcast(bulk);
+		client.sendDataToAllPeers(bulk);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class NetworkManager {
 		bulk.setType(NetworkDataBulk.DATATYPE_BLOCK);
 		bulk.setData(block.getStringData());
 
-		client.broadcast(bulk);
+		client.sendDataToAllPeers(bulk);
 	}
 
 	private void processIncomingData(SingleData data) {

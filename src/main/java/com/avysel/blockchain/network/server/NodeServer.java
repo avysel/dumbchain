@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.network.data.NetworkBulk;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
@@ -138,8 +139,8 @@ public class NodeServer {
 		t.start();
 	}
 */
-	private NetworkDataBulk getDataBulk(String data) {
-		NetworkDataBulk bulk = JsonMapper.jsonToBulk(data);
+	private NetworkBulk getDataBulk(String data) {
+		NetworkBulk bulk = JsonMapper.jsonToBulk(data);
 		return bulk;
 	}
 

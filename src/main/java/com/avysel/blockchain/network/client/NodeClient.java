@@ -2,13 +2,10 @@ package com.avysel.blockchain.network.client;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.List;
 
+import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
@@ -47,7 +44,7 @@ public class NodeClient {
 		}
 	}
 	
-	
+	/*
 	public void broadcast(NetworkDataBulk bulk) {
 		try {
 
@@ -68,5 +65,5 @@ public class NodeClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
-	}
+	}*/
 }

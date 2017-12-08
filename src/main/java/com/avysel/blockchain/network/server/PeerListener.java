@@ -9,6 +9,9 @@ import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkMessageBulk;
 import com.avysel.blockchain.network.peer.Peer;
 
+/**
+ * Listen to the network to catch new peers connection requests, then add new peers to NetworkManager's peers collection
+ */
 public class PeerListener implements Runnable {
 
 	private DatagramSocket datagramSocket;

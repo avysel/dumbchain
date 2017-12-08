@@ -2,46 +2,40 @@ package com.avysel.blockchain.model.data;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * A piece of data that can be included in a @Block.
  * A @Block can contains several @SingleData.
  */
 public class SingleData implements ISingleData {
 	private String data;
-	private UUID guid;
-
+	private UUID uniqueId;
+	
 	public SingleData(String data) {
 		this.data = data;
-		this.guid = UUID.randomUUID();
+		this.uniqueId = UUID.randomUUID();
 	}
 	
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
-	@JsonIgnore
-	public UUID getGuid() {
-		return guid;
-	}
-	
-	public String toString() {
-		return data + " - "+ guid.toString();
-	}
-
 	@Override
-	public String jsonData() {
-		
+	public String getData() {
 		return toString();
 	}
 
 	@Override
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	@Override
 	public String getUniqueId() {
-		return getGuid().toString();
+		return this.uniqueId.toString();
+	}
+
+	@Override
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = UUID.fromString(uniqueId);
+	}	
+	
+	public String toString() {
+		return data + " - "+ uniqueId.toString();
 	}
 }

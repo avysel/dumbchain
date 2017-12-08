@@ -46,7 +46,7 @@ public class NetworkManager {
 		DataBulk bulk = new DataBulk();
 
 		bulk.setType(DataBulk.DATATYPE_DATA);
-		bulk.setData(data.jsonData());
+		bulk.setData(data.getData());
 
 		client.broadcast(bulk);
 	}

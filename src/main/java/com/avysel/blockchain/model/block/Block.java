@@ -123,7 +123,7 @@ public class Block {
 		builder.append("[");
 		List<ISingleData> dataList = this.getDataList();
 		for(ISingleData singleData : dataList) {
-			builder.append(singleData.jsonData());
+			builder.append(singleData.getData());
 			builder.append(", ");
 		}
 		builder.append("]");

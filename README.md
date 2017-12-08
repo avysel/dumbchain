@@ -16,7 +16,7 @@ A faire :
 - Envoi des blocks créés sur le réseau (en cours)
 - Arbre de Merkle
 - Stockage des données en BDD
-
+- Création de données
 
 Technique :
 - Gestion du Json pourles formats de données

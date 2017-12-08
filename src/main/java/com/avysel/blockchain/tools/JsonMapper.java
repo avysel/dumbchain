@@ -61,9 +61,18 @@ public class JsonMapper {
 	}
 
 	public static ISingleData jsonToData(String jsonData) {
-		ISingleData data = new SingleData(null);
+		ISingleData data = null;
 		
-		// TODO
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			data = mapper.readValue(jsonData, SingleData.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return data;
 	}

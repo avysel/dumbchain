@@ -57,6 +57,10 @@ public class JsonMapperTest {
 	
 	@Test
 	public void jsonToData() {
+		String json = "{\"data\":\"data1\",\"uniqueId\":\"2cb9e2a9-fa4b-489c-914a-fa6dffce88fd\"}";
+		ISingleData data = JsonMapper.jsonToData(json);
 		
+		System.out.println("Data pour json : ");
+		System.out.println(data);
 	}
 }

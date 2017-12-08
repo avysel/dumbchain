@@ -11,12 +11,16 @@ public interface ISingleData {
 	 * Returns JSON representation of the data.
 	 * @return JSON string
 	 */
-	public String jsonData();
+	public String getData();
 	
 	/**
 	 * Returns the unique identifier for the data.
 	 * @return a unique identifier
 	 */
 	public String getUniqueId();
+	
+	public void setUniqueId(String uniqueId);
+	
+	public void setData(String data);
 	
 }

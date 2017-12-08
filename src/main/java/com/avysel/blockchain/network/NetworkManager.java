@@ -11,7 +11,6 @@ import java.util.Objects;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.server.NodeServer;
@@ -21,6 +20,7 @@ public class NetworkManager {
 
 	private NodeServer server = new NodeServer();
 	private NodeClient client = new NodeClient();
+	private List<Peer> peers = new ArrayList<Peer>();
 
 	private Blockchain blockchain;
 
@@ -67,7 +67,7 @@ public class NetworkManager {
 	 * Send a data to the network
 	 * @param data
 	 */
-	public void sendData(ISingleData data) {
+	public void sendData(SingleData data) {
 		DataBulk bulk = new DataBulk();
 
 		bulk.setType(DataBulk.DATATYPE_DATA);
@@ -125,5 +125,17 @@ public class NetworkManager {
 			// TODO usefull ?
 			break;
 		}
+	}
+	
+	public List<Peer> getPeers() {
+		return peers;
+	}
+	
+	public void addPeer(Peer peer) {
+		peers.add(peer);
+	}
+	
+	public void removePeer(Peer peer) {
+		peers.remove(peer);
 	}
 }

@@ -5,7 +5,8 @@ import com.avysel.blockchain.network.NetworkManager;
 public class PeerListener implements Runnable {
 
 	private NetworkManager manager;
-	
+	private boolean running = true;
+
 	public PeerListener(NetworkManager manager) {
 		super();
 		this.manager = manager;
@@ -14,7 +15,7 @@ public class PeerListener implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -13,14 +13,18 @@ import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
+import com.avysel.blockchain.network.client.PeerExplorer;
 import com.avysel.blockchain.network.server.NodeServer;
+import com.avysel.blockchain.network.server.PeerListener;
 import com.avysel.blockchain.tools.JsonMapper;
 
 public class NetworkManager {
 
-	private NodeServer server = new NodeServer();
-	private NodeClient client = new NodeClient();
-	private List<Peer> peers = new ArrayList<Peer>();
+	private NodeServer server;
+	private NodeClient client;
+	private List<Peer> peers;
+	private PeerExplorer peerExplorer;
+	private PeerListener peerListener;
 
 	private Blockchain blockchain;
 
@@ -30,6 +34,11 @@ public class NetworkManager {
 
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
+		server = new NodeServer();
+		client = new NodeClient();
+		peers = new ArrayList<Peer>();
+		peerExplorer = new PeerExplorer(this);
+		peerListener = new PeerListener(this);		
 	}
 
 	public static int getPort() {	return port; }
@@ -57,6 +66,8 @@ public class NetworkManager {
 
 	public void start() {
 		server.createNodeServer(this);
+		peerExplorer.run();
+		peerListener.run();
 	}
 
 	public void stop() {
@@ -126,15 +137,15 @@ public class NetworkManager {
 			break;
 		}
 	}
-	
+
 	public List<Peer> getPeers() {
 		return peers;
 	}
-	
+
 	public void addPeer(Peer peer) {
 		peers.add(peer);
 	}
-	
+
 	public void removePeer(Peer peer) {
 		peers.remove(peer);
 	}

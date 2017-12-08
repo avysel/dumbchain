@@ -85,7 +85,7 @@ public class NodeServer {
 		DataBulk bulk = JsonMapper.jsonToBulk(data);
 		return bulk;
 	}
-	
+
 	public void stop() {
 		System.out.println("Stop server");
 		running = false;

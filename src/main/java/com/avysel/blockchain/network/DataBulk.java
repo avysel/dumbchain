@@ -39,8 +39,4 @@ public class DataBulk {
 		this.data = data;
 	}
 
-	public String toString() {
-		// TODO json
-		return super.toString();
-	}
 }

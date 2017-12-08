@@ -36,7 +36,7 @@ public class Miner {
 		mining = true;
 		this.pendingData = pendingData;
 		this.chain = chain;
-		this.proof = new ProofOfWork(); // TODO inject ?
+		this.proof = new ProofOfWork();
 	}
 
 	/**
@@ -70,8 +70,6 @@ public class Miner {
 		Block block;
 		List<SingleData> dataList = new ArrayList<SingleData>();
 
-		// TODO quel element a changer pour avoir un nouveau hash a chaque tentative ?
-		// si on utilise le timestamp, le check ne fonctionnera pas
 		String hash;
 		long difficulty = 0;
 		do {

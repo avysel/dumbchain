@@ -17,7 +17,7 @@
 //		try {
 //			db = factory.open(new File("example"), options);
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
+//			
 //			e.printStackTrace();
 //		}
 //		try {
@@ -28,7 +28,7 @@
 //		  try {
 //			db.close();
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
+//		
 //			e.printStackTrace();
 //		}
 //		}		

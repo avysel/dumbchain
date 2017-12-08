@@ -10,7 +10,6 @@ public class ProofOfWork implements IProof {
 		String hash = block.getHash();
 		long difficulty = block.getDifficulty();
 
-		// TODO how to put condition in parameter ?
 		return (hash.startsWith("00") || (difficulty > 1000000 && hash.startsWith("0")));
 	}
 

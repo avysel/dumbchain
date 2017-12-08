@@ -7,6 +7,7 @@ import java.net.SocketException;
 
 import com.avysel.blockchain.network.DataBulk;
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeServer {
 
@@ -81,10 +82,7 @@ public class NodeServer {
 	}
 
 	private DataBulk getDataBulk(String data) {
-		DataBulk bulk = new DataBulk();
-		// TODO parse json, set Type
-		bulk.setType(DataBulk.DATATYPE_DATA);
-		bulk.setData(data);
+		DataBulk bulk = JsonMapper.jsonToBulk(data);
 		return bulk;
 	}
 	

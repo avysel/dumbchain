@@ -1,9 +1,11 @@
 package com.avysel.blockchain.tools;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.network.DataBulk;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -87,5 +89,53 @@ public class JsonMapper {
 				
 		return json;
 	}
+	
+	public static String dataListToJson(List<SingleData> dataList) {
+		String json = new String();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		
+		try {
+			json = mapper.writeValueAsString(dataList);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+				
+		return json;		
+	}
 
+	public static String bulkToJson(DataBulk bulk) {
+		String json = new String();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		
+		try {
+			json = mapper.writeValueAsString(bulk);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+				
+		return json;		
+	}	
+	
+	public static DataBulk jsonToBulk(String json) {
+		DataBulk data = null;
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		try {
+			data = mapper.readValue(json, DataBulk.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return data;		
+	}
+	
 }

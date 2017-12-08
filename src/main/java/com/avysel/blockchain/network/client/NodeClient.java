@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import com.avysel.blockchain.network.DataBulk;
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeClient {
 
@@ -26,7 +27,7 @@ public class NodeClient {
 			clientSocket = new DatagramSocket();
 			clientSocket.setBroadcast(true);
 			
-			String data = bulk.toString(); // TODO to json
+			String data = JsonMapper.bulkToJson(bulk);
 			
 			// create and send packet
 			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getPort());

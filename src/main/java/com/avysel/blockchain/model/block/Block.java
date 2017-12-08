@@ -3,6 +3,7 @@ package com.avysel.blockchain.model.block;
 import java.util.List;
 
 import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /*
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -112,7 +113,7 @@ public class Block {
 		StringBuffer hashData = new StringBuffer();
 		//hashData.append(this.getIndex());
 		//hashData.append(this.getTimestamp());
-		hashData.append(this.getDataList()); // TODO passer en json
+		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
 		return hashData.toString();
 	}
 	

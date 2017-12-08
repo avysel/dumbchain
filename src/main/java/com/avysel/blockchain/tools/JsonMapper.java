@@ -1,8 +1,16 @@
 package com.avysel.blockchain.tools;
 
+import java.io.IOException;
+
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 
 // TODO use Jackson
@@ -19,8 +27,20 @@ public class JsonMapper {
 	
 	public static Block jsonToBlock(String jsonData) {
 		Block block = new Block();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
 		
-		// TODO
+		
+		try {
+			block = mapper.readValue(jsonData, Block.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return block;
 	}
@@ -28,7 +48,14 @@ public class JsonMapper {
 	public static String blockToJson(Block block) {
 		String json = new String();
 		
-		//json = new ObjectMapper().writeValueAsString(block);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		
+		try {
+			json = mapper.writeValueAsString(block);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
 		return json;
 	}
@@ -44,8 +71,15 @@ public class JsonMapper {
 	public static String dataToJson(ISingleData data) {
 		String json = new String();
 		
-		// TODO
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		
+		try {
+			json = mapper.writeValueAsString(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+				
 		return json;
 	}
 }

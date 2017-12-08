@@ -2,6 +2,8 @@ package com.avysel.blockchain.model.data;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A piece of data that can be included in a @Block.
  * A @Block can contains several @SingleData.
@@ -23,6 +25,7 @@ public class SingleData implements ISingleData {
 		this.data = data;
 	}
 
+	@JsonIgnore
 	public UUID getGuid() {
 		return guid;
 	}

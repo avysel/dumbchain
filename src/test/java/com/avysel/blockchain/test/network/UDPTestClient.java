@@ -1,4 +1,4 @@
-package network;
+package com.avysel.blockchain.test.network;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

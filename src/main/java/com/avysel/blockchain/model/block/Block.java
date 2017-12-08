@@ -3,6 +3,7 @@ package com.avysel.blockchain.model.block;
 import java.util.List;
 
 import com.avysel.blockchain.model.data.ISingleData;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /*
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,7 @@ public class Block {
 		blockData = new BlockData();
 	}
 	
+	@JsonIgnore
 	public boolean isGenesis() {
 		return false;
 	}
@@ -105,6 +107,7 @@ public class Block {
 	 * Return @String representation of data used to calculate @Block's hash
 	 * @return
 	 */
+	@JsonIgnore
 	public String getHashData() {
 		StringBuffer hashData = new StringBuffer();
 		//hashData.append(this.getIndex());
@@ -113,6 +116,7 @@ public class Block {
 		return hashData.toString();
 	}
 	
+	@JsonIgnore
 	public String getStringData() {
 		StringBuilder builder = new StringBuilder();
 		

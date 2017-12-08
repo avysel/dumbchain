@@ -105,7 +105,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Gets data from network, transform it into @ISingleData or @Block and add it to the @Blockchain
+	 * Gets data from network, transform it into @SingleData or @Block and add it to the @Blockchain
 	 * @param bulk the incoming @DataBulk
 	 */
 	public void getIncoming(DataBulk bulk) {

@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
-import com.avysel.blockchain.network.NetworkDataBulk;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
 public class JsonMapperTest {

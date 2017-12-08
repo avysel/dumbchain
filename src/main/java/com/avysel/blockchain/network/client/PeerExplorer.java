@@ -12,6 +12,12 @@ public class PeerExplorer implements Runnable {
 		this.manager = manager;
 	}	
 
+	
+	public void start() {
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
 	@Override
 	public void run() {
 		

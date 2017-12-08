@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
-import com.avysel.blockchain.network.NetworkDataBulk;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

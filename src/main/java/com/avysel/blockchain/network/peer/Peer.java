@@ -1,4 +1,4 @@
-package com.avysel.blockchain.network;
+package com.avysel.blockchain.network.peer;
 
 import java.net.ServerSocket;
 import java.net.Socket;

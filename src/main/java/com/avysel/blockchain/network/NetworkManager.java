@@ -14,6 +14,8 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.client.PeerExplorer;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.network.server.NodeServer;
 import com.avysel.blockchain.network.server.PeerListener;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -65,13 +67,15 @@ public class NetworkManager {
 	}	
 
 	public void start() {
-		server.createNodeServer(this);
-		peerExplorer.run();
-		peerListener.run();
+		server.start();
+		peerExplorer.start();
+		peerListener.start();
 	}
 
 	public void stop() {
 		server.stop();
+		peerExplorer.stop();
+		peerListener.stop();
 	}
 
 	/**
@@ -107,7 +111,7 @@ public class NetworkManager {
 		try {
 			blockchain.addIncomingData(data);
 		} catch (InterruptedException e) {
-			// TODO what to do when data not added
+			// TODO what to do when data not added ?
 			e.printStackTrace();
 		}
 		System.out.println("Pending after : "+blockchain.pendingData.size());
@@ -137,6 +141,10 @@ public class NetworkManager {
 			System.out.println("Get a chain from network");
 			// TODO usefull ?
 			break;
+		default: 
+			System.out.println("error incoming, unkown type");
+			break;
+
 		}
 	}
 

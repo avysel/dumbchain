@@ -9,9 +9,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import com.avysel.blockchain.network.NetworkDataBulk;
 import com.avysel.blockchain.network.NetworkManager;
-import com.avysel.blockchain.network.Peer;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeClient {
@@ -43,7 +43,6 @@ public class NodeClient {
 			bos.flush();
 			
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 	}

@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import com.avysel.blockchain.network.NetworkDataBulk;
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**

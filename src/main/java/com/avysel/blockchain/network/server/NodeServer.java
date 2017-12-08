@@ -5,8 +5,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.avysel.blockchain.network.NetworkDataBulk;
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeServer {
@@ -16,12 +16,15 @@ public class NodeServer {
 	private boolean running = true;
 	private NetworkManager network = null;
 
+	public NodeServer(NetworkManager network) {
+		this.network = network;
+	}
+	
 	/**
 	 * Create the server socket and start listening network
 	 */
-	public void createNodeServer(NetworkManager network) {
+	public void start() {
 		try {
-			this.network = network;
 			serverSocket = new ServerSocket(NetworkManager.getPort(), 100, InetAddress.getByName(host));
 			System.out.println("Create node server for "+host+":"+NetworkManager.getPort());
 		}
@@ -44,11 +47,11 @@ public class NodeServer {
 
 					try {
 						// wait for client connection
-						Socket client = serverSocket.accept();
+						Socket clientSocket = serverSocket.accept();
 
 						// new thread to process the connection
 						System.out.println("Connexion cliente reçue.");                  
-						Thread t = new Thread(new ClientProcessor(client, network));
+						Thread t = new Thread(new ClientProcessor(clientSocket, network));
 						t.start();
 
 					} catch (IOException e) {

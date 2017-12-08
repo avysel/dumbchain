@@ -13,6 +13,8 @@ public interface ISingleData {
 	 */
 	public String getData();
 	
+	public void setData(String data);
+	
 	/**
 	 * Returns the unique identifier for the data.
 	 * @return a unique identifier
@@ -20,7 +22,5 @@ public interface ISingleData {
 	public String getUniqueId();
 	
 	public void setUniqueId(String uniqueId);
-	
-	public void setData(String data);
-	
+
 }

@@ -3,7 +3,6 @@ package com.avysel.blockchain.tools;
 import java.io.IOException;
 
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,9 +10,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
-
-// TODO use Jackson
 
 public class JsonMapper {
 	
@@ -30,7 +26,6 @@ public class JsonMapper {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
-		
 		
 		try {
 			block = mapper.readValue(jsonData, Block.class);
@@ -60,10 +55,11 @@ public class JsonMapper {
 		return json;
 	}
 
-	public static ISingleData jsonToData(String jsonData) {
-		ISingleData data = null;
+	public static SingleData jsonToData(String jsonData) {
+		SingleData data = null;
 		
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		try {
 			data = mapper.readValue(jsonData, SingleData.class);
 		} catch (JsonParseException e) {
@@ -77,7 +73,7 @@ public class JsonMapper {
 		return data;
 	}
 
-	public static String dataToJson(ISingleData data) {
+	public static String dataToJson(SingleData data) {
 		String json = new String();
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -91,4 +87,5 @@ public class JsonMapper {
 				
 		return json;
 	}
+
 }

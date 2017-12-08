@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.model.data.SingleData;
 
 /**
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...
  * It uses a synchronized queue, fed by the network and consumed by the Miner.
  */
 public class PendingData {
-	private LinkedBlockingQueue<ISingleData> queue;
+	private LinkedBlockingQueue<SingleData> queue;
 
 	public PendingData() {
-		queue = new LinkedBlockingQueue<ISingleData>();
+		queue = new LinkedBlockingQueue<SingleData>();
 	}
 
-	private LinkedBlockingQueue<ISingleData> getPendingData() {
+	private LinkedBlockingQueue<SingleData> getPendingData() {
 		return queue;
 	}
 
@@ -29,7 +29,7 @@ public class PendingData {
 	 * @param data the @SingleData to be added
 	 * @throws InterruptedException 
 	 */
-	public void addData(ISingleData data) throws InterruptedException {
+	public void addData(SingleData data) throws InterruptedException {
 		getPendingData().put(data);
 	}
 
@@ -37,12 +37,12 @@ public class PendingData {
 	 * Add a @List of @SingleData to the pending data list to be added in a @Block
 	 * @param dataList the @List of @SingleData to be added
 	 */	
-	public void addAll(List<ISingleData> dataList) {
+	public void addAll(List<SingleData> dataList) {
 		getPendingData().addAll(dataList);
 	}
 
-	public List<ISingleData> getData(long quantity) {
-		List<ISingleData> result = new ArrayList<ISingleData>();
+	public List<SingleData> getData(long quantity) {
+		List<SingleData> result = new ArrayList<SingleData>();
 		for(int i=0 ; i < quantity && !getPendingData().isEmpty() ; i++) {
 			result.add(getPendingData().poll());
 		}
@@ -53,11 +53,11 @@ public class PendingData {
 	 * Pick a random quantity of data in the list of pending data.
 	 * @return a @List<SingleData> that contains a random quantity of data
 	 */
-	public  List<ISingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
+	public  List<SingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
 		int quantity;
-		List<ISingleData> result = new ArrayList<ISingleData>();
+		List<SingleData> result = new ArrayList<SingleData>();
 		do {
-			// random quatity of data to take in pending data (no more than half of remaining)
+			// random quantity of data to take in pending data (no more than half of remaining)
 			quantity = (new Random()).nextInt(getPendingData().size() / 2) +1;
 
 			// if enough data, take it
@@ -83,7 +83,7 @@ public class PendingData {
 
 	public String toString() {
 		StringBuffer result = new StringBuffer();
-		Iterator<ISingleData> it = getPendingData().iterator();
+		Iterator<SingleData> it = getPendingData().iterator();
 		while(it.hasNext())
 			result.append(it.next());
 		return result.toString();
@@ -95,7 +95,7 @@ public class PendingData {
 	 * @return true if a data with the same unique identifier is present in queue
 	 */
 	public boolean exists(String uniqueId) {
-		Iterator<ISingleData> it = getPendingData().iterator();
+		Iterator<SingleData> it = getPendingData().iterator();
 		while(it.hasNext())
 			if(it.next().getUniqueId().equals(uniqueId))
 				return true;

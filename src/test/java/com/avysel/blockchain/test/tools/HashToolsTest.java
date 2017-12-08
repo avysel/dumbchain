@@ -19,5 +19,5 @@ public class HashToolsTest {
 		
 		assertEquals(hash, RESULT_HASH);
 	}
-	
+
 }

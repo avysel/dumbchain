@@ -8,7 +8,7 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.NetworkManager;
 
 /*
@@ -114,7 +114,7 @@ public class Blockchain {
 	 * @param data
 	 * @throws InterruptedException 
 	 */
-	public void addIncomingData(ISingleData data) throws InterruptedException {
+	public void addIncomingData(SingleData data) throws InterruptedException {
 
 		if(!pendingData.exists(data.getUniqueId())) {
 			pendingData.addData(data);

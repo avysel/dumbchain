@@ -8,7 +8,7 @@ import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.model.data.SingleData;
 
 /**
  * The Miner creates Blocks with pending data. Each try of create a Block use a random quantity of data. If a Block can be created, it's linked to the Chain
@@ -68,7 +68,7 @@ public class Miner {
 	 */
 	private Block mine() {
 		Block block;
-		List<ISingleData> dataList = new ArrayList<ISingleData>();
+		List<SingleData> dataList = new ArrayList<SingleData>();
 
 		// TODO quel element a changer pour avoir un nouveau hash a chaque tentative ?
 		// si on utilise le timestamp, le check ne fonctionnera pas

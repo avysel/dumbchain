@@ -2,7 +2,7 @@ package com.avysel.blockchain.model.block;
 
 import java.util.List;
 
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.model.data.SingleData;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /*
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,7 +40,7 @@ public class Block {
 	 * Add a @List of @SingleData to the @Block
 	 * @param dataList the data to add
 	 */ 
-	public void addAllData(List<ISingleData> dataList) {
+	public void addAllData(List<SingleData> dataList) {
 		this.getBlockData().getDataList().addAll(dataList);
 	}
 	
@@ -48,7 +48,7 @@ public class Block {
 	 * Add a @SingleData to the @Block
 	 * @param singleData the piece of data to add
 	 */
-	public void addData(ISingleData singleData) {
+	public void addData(SingleData singleData) {
 		this.getBlockData().getDataList().add(singleData);
 	}
 	
@@ -99,7 +99,7 @@ public class Block {
 		this.getBlockHeader().setDifficulty(difficulty);
 	}	
 	
-	public List<ISingleData> getDataList() {
+	public List<SingleData> getDataList() {
 		return this.getBlockData().getDataList();
 	}	
 	
@@ -121,8 +121,8 @@ public class Block {
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append("[");
-		List<ISingleData> dataList = this.getDataList();
-		for(ISingleData singleData : dataList) {
+		List<SingleData> dataList = this.getDataList();
+		for(SingleData singleData : dataList) {
 			builder.append(singleData.getData());
 			builder.append(", ");
 		}

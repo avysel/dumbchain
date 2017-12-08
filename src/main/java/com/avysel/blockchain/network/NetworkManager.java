@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.server.NodeServer;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -64,7 +65,7 @@ public class NetworkManager {
 		client.broadcast(bulk);
 	}
 
-	private void processIncomingData(ISingleData data) {
+	private void processIncomingData(SingleData data) {
 		System.out.println("Pending before : "+blockchain.pendingData.size());
 		try {
 			blockchain.addIncomingData(data);
@@ -92,7 +93,7 @@ public class NetworkManager {
 			break;
 		case DataBulk.DATATYPE_DATA :
 			System.out.println("Get a data from network");
-			ISingleData data = JsonMapper.jsonToData(bulk.getData());
+			SingleData data = JsonMapper.jsonToData(bulk.getData());
 			processIncomingData(data);
 			break;
 		case DataBulk.DATATYPE_CHAIN :

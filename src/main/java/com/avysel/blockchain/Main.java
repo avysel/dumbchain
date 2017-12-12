@@ -6,6 +6,7 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.data.SingleData;
@@ -16,6 +17,7 @@ public class Main {
 	
 	public static void main (String[] args) {
 		
+		// PropertyConfigurator.configure("log4j.properties"); TODO use file
 	    Logger logRoot = Logger.getRootLogger();
 	    ConsoleAppender ca = new ConsoleAppender();
 	    PatternLayout pattern = new PatternLayout();
@@ -27,7 +29,7 @@ public class Main {
 	    logRoot.setLevel(Level.INFO);
 	    
 		Blockchain manager = new Blockchain();
-		log.info("Welcom to blockchain !");
+		log.info("Welcome to blockchain !");
 		
 		for(int i = 1 ; i < 100 ; i++) {
 			try {

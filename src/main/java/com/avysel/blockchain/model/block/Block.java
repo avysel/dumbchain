@@ -118,7 +118,7 @@ public class Block {
 	}
 	
 	@JsonIgnore
-	public String getStringData() {
+	public String getStringData() { // only for debug display
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append("[");
@@ -131,7 +131,7 @@ public class Block {
 		return builder.toString();
 	}
 	
-	public String toString() {
+	public String toString() { // only for debug display
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append("{index:");
@@ -150,15 +150,5 @@ public class Block {
 		
 		return builder.toString();
 	}
-	
-	/*public String toString() {
-		ObjectMapper mapper = new ObjectMapper();
-		
-		try {
-			return mapper.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}*/
+
 }

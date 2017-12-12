@@ -16,7 +16,7 @@ import com.avysel.blockchain.network.peer.Peer;
  */
 public class PeerListener implements Runnable {
 
-	Logger log = Logger.getLogger("com.avysel.blockchain.network.server.PeerListener");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.PeerListener");
 	
 	private DatagramSocket datagramSocket;
 	private NetworkManager networkManager;

@@ -13,7 +13,7 @@ import com.avysel.blockchain.model.chain.ChainPart;
  */
 public class BlockchainManager {
 	
-	static Logger log = Logger.getLogger("com.avysel.blockchain.business.BlockchainManager");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.BlockchainManager");
 	
 	/**
 	 * Find a @Block with a given index

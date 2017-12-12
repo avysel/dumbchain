@@ -117,4 +117,13 @@ public class ChainPart {
 			throw new ChainIntegrityException("Result is corrupted");
 		}
 	}
+	
+	public long size() {
+		if(this.blockList != null) {
+			return blockList.size();
+		}
+		else {
+			return 0;
+		}
+	}
 }

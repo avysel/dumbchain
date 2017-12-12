@@ -18,7 +18,7 @@ import com.avysel.blockchain.model.data.SingleData;
  */
 public class Miner {
 
-	Logger log = Logger.getLogger("com.avysel.blockchain.mining.Miner");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.Miner");
 	
 	// mining or not ?
 	private boolean mining;
@@ -51,11 +51,11 @@ public class Miner {
 		while(mining) {
 			Block block = mine();
 			chain.linkBlock(block);
-			log.info("New block created with "+block.getDataList().size()+" data. Remaining : "+pendingData.size());
-			log.info(block);
+			log.info("New block created with "+block.getDataList().size()+" data. "+pendingData.size() +" data in pool. Chain size : "+chain.size());
+			log.debug(block);
 		}
 		log.info("End miner.");
-		log.info("Effort : "+chain.getEffort());		
+		log.debug("Effort : "+chain.getEffort());		
 	}
 
 	/**

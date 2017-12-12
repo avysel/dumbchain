@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.model.data.SingleData;
 
 /**
@@ -13,6 +15,9 @@ import com.avysel.blockchain.model.data.SingleData;
  * It uses a synchronized queue, fed by the network and consumed by the Miner.
  */
 public class PendingData {
+	
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.PendingData");
+	
 	private LinkedBlockingQueue<SingleData> queue;
 
 	public PendingData() {
@@ -29,7 +34,15 @@ public class PendingData {
 	 * @throws InterruptedException 
 	 */
 	public void addData(SingleData data) throws InterruptedException {
-		getPendingData().put(data);
+		
+		if(!exists(data.getUniqueId())) {
+			getPendingData().put(data);
+			log.info("New data in pool");
+			log.debug(data);
+		}
+		else {
+			log.warn("Data "+data.getUniqueId()+" already exists");
+		}
 	}
 
 	/**

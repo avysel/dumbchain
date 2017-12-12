@@ -18,7 +18,7 @@ import com.avysel.blockchain.tools.JsonMapper;
  */
 public class ClientProcessor implements Runnable {
 
-	Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
 	
 	private Socket socket;
 	private PrintWriter writer = null;
@@ -49,7 +49,7 @@ public class ClientProcessor implements Runnable {
 				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
 				debug += " Sur le port : " + remote.getPort() + ".\n";
 				debug += "\t -> Commande reçue : " + data + "\n";
-				log.debug("\n" + debug);				
+				log.trace("\n" + debug);				
 
 				// read the data
 				NetworkDataBulk bulk = getDataBulk(data);

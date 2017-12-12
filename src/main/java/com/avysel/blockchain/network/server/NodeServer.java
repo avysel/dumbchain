@@ -11,7 +11,7 @@ import com.avysel.blockchain.network.NetworkManager;
 
 public class NodeServer {
 
-	Logger log = Logger.getLogger("com.avysel.blockchain.network.server.NodeServer");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.NodeServer");
 	
 	private String host = "127.0.0.1";
 	private ServerSocket serverSocket;

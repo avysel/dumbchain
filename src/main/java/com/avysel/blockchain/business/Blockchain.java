@@ -25,7 +25,7 @@ import com.avysel.blockchain.network.NetworkManager;
  */
 public class Blockchain {
 
-	Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 	
 	// the list of blocks
 	private Chain chain;
@@ -119,14 +119,7 @@ public class Blockchain {
 	 * @throws InterruptedException 
 	 */
 	public void addIncomingData(SingleData data) throws InterruptedException {
-
-		if(!pendingData.exists(data.getUniqueId())) {
-			pendingData.addData(data);
-			log.info("Add "+data.getUniqueId());
-		}
-		else {
-			log.info("Data "+data.getUniqueId()+" already exists");
-		}
+		pendingData.addData(data);
 	}
 
 

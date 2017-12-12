@@ -112,6 +112,8 @@ public class NetworkManager {
 	 * @param data
 	 */
 	public void sendData(SingleData data) {
+		log.info("Send a data to the network.");
+		log.trace(data.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 
 		// create network packet
@@ -127,6 +129,8 @@ public class NetworkManager {
 	 * @param block
 	 */
 	public void sendBlock(Block block) {
+		log.info("Send a block to the network.");
+		log.trace(block.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 
 		bulk.setType(NetworkDataBulk.DATATYPE_BLOCK);

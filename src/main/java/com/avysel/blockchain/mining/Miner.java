@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.data.SingleData;
 
 /**
@@ -27,8 +27,10 @@ public class Miner {
 	private DataPool dataPool;
 
 	// The current existing Chain
-	private Chain chain;
+	/*private Chain chain;*/
 
+	private Blockchain blockchain;
+	
 	private IProof proof;
 
 	/**
@@ -36,10 +38,10 @@ public class Miner {
 	 * @param chain the Chain that will gets new Blocks
 	 * @param dataPool the queue to peek data
 	 */
-	public Miner(Chain chain, DataPool dataPool) {
+	public Miner(Blockchain blockchain, DataPool dataPool) {
 		mining = true;
 		this.dataPool = dataPool;
-		this.chain = chain;
+		this.blockchain = blockchain;
 		this.proof = new ProofOfWork();
 	}
 
@@ -47,15 +49,18 @@ public class Miner {
 	 * Starts mining
 	 */
 	public void start() {
+		// TODO put in a thread
 		log.info("Start miner.");
 		while(mining) {
 			Block block = mine();
-			chain.linkBlock(block);
-			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain size : "+chain.size());
+			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain size : "+blockchain.getChain().size());
 			log.debug(block);
+			
+			// send new block to blockchain
+			blockchain.addBlock(block);
 		}
 		log.info("End miner.");
-		log.debug("Effort : "+chain.getEffort());		
+		log.debug("Effort : "+blockchain.getChain().getEffort());		
 	}
 
 	/**

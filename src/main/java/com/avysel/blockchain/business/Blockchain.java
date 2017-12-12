@@ -43,7 +43,7 @@ public class Blockchain {
 		this.chain = new Chain();
 		createChain();
 		this.dataPool = new DataPool();
-		this.miner = new Miner(chain, dataPool);	
+		this.miner = new Miner(this, dataPool);	
 		this.network = new NetworkManager(this);
 	}
 
@@ -51,7 +51,7 @@ public class Blockchain {
 		this.chain = chain;
 		createChain();
 		this.dataPool = new DataPool();
-		this.miner = new Miner(chain, dataPool);
+		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
 	}
 
@@ -124,6 +124,14 @@ public class Blockchain {
 		dataPool.addData(data);
 	}
 
+	public void addBlock(Block block) {
+		
+		// link block to current chain
+		getChain().linkBlock(block);
+		
+		// send block to the network
+		network.sendBlock(block);
+	}
 
 	/**
 	 *  Add a subchain to the end of the current @Blockchain.

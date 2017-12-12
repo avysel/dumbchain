@@ -1,5 +1,7 @@
 package com.avysel.blockchain.network.data;
 
+import com.avysel.blockchain.tools.JsonMapper;
+
 /**
  * Encapsulate a data to broadcast to the network and the type of data.
  *
@@ -57,5 +59,9 @@ public class NetworkDataBulk {
 	
 	public void setData(String data) {
 		this.data = data;
+	}
+	
+	public String toString() {
+		return JsonMapper.bulkToJson(this);
 	}
 }

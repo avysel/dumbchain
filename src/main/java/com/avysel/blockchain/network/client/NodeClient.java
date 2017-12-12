@@ -33,6 +33,7 @@ public class NodeClient {
 	}
 
 	public void sendData(NetworkDataBulk bulk, Peer peer) {
+		log.info("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getPort());
 		try {
 			// connect to distant peer's server part
 			clientSocket = new Socket(peer.getIp(), peer.getPort());
@@ -43,6 +44,7 @@ public class NodeClient {
 			bos.flush();
 
 		} catch (IOException e) {
+			log.error("Data not send to "+peer.getIp()+":"+peer.getPort());
 			e.printStackTrace();
 		}
 	}

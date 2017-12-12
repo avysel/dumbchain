@@ -31,6 +31,8 @@ public class PeerExplorer {
 	 */
 	public void wakeUp() {
 
+		log.info("Local peer is taking its place on the network.");
+		
 		try {
 
 			DatagramSocket clientSocket = new DatagramSocket();

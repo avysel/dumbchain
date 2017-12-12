@@ -135,7 +135,7 @@ public class Blockchain {
 		getChain().linkBlock(block);
 		
 		// send block to the network
-		network.sendBlock(block);
+		//network.sendBlock(block);
 	}
 
 	/**

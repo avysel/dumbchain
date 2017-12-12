@@ -27,7 +27,7 @@ public class PeerListener implements Runnable {
 		super();
 		this.networkManager = manager;
 		try {
-			this.datagramSocket = new DatagramSocket(NetworkManager.getPort());
+			this.datagramSocket = new DatagramSocket(0);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
@@ -90,6 +90,7 @@ public class PeerListener implements Runnable {
 			switch(bulk.getType()) {
 
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
+				log.info("New peer on the network, add it.");
 				Peer peer = JsonMapper.jsonToPeer(bulk.getData());
 				// push data to network manager
 				networkManager.addPeer(peer);

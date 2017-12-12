@@ -4,6 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.UUID;
 
+import com.avysel.blockchain.network.NetworkManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Peer {
@@ -77,9 +78,9 @@ public class Peer {
 	public static Peer initFromLocal() {
 		
 		Peer peer = new Peer();
-		peer.setIp("127.0.0.1");
+		peer.setIp("127.0.0.1"); // TODO
 		peer.setLastAlive(System.currentTimeMillis());
-		peer.setPort(5645);
+		peer.setPort(NetworkManager.getPort());
 		peer.setUid(UUID.randomUUID().toString());
 		
 		return peer;

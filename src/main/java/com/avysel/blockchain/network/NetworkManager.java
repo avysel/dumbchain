@@ -186,13 +186,16 @@ public class NetworkManager {
 	}
 
 	public void addPeer(Peer peer) {
-		if(! isLocalPeer(peer)) {
+	/*	if(! isLocalPeer(peer)) {
 			peers.add(peer);
 			log.info("New peer added : "+peer);
 		}
 		else {
 			log.info("Message from local peer, skip it !");
-		}
+		}*/
+		
+		peers.add(peer);
+		log.info("New peer added : "+peer);
 	}
 
 	public void removePeer(Peer peer) {

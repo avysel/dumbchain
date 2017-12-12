@@ -27,7 +27,8 @@ public class NodeServer {
 	 */
 	public void start() {
 		try {
-			serverSocket = new ServerSocket(NetworkManager.getPort(), 100, InetAddress.getByName(host));
+			serverSocket = new ServerSocket(0, 100, InetAddress.getByName(host));
+			NetworkManager.setPort(serverSocket.getLocalPort());
 			log.info("Create node server for "+host+":"+NetworkManager.getPort());
 		}
 		catch(IOException e) {

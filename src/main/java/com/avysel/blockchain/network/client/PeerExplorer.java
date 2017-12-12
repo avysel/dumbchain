@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -15,22 +17,19 @@ import com.avysel.blockchain.tools.JsonMapper;
  */
 public class PeerExplorer {
 
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.client.PeerExplorer");
+	
 	private NetworkManager manager;
-	private boolean running = true;
 
 	public PeerExplorer(NetworkManager manager) {
 		super();
 		this.manager = manager;
 	}	
 
-
-	public void start() {
-		/*	Thread t = new Thread(this);
-		t.start();*/
-		run();
-	}
-
-	public void run() {
+	/**
+	 * Send a broadcast message to network to introduce itself as a new node
+	 */
+	public void wakeUp() {
 
 		try {
 
@@ -38,12 +37,17 @@ public class PeerExplorer {
 			// create broadcast socket
 			clientSocket.setBroadcast(true);
 
+			// create network exploration request 
 			NetworkDataBulk bulk = new NetworkDataBulk();
-
+			bulk.setType(NetworkDataBulk.MESSAGE_PEER_HELLO);
+			String peerData = JsonMapper.peerToJson(manager.getLocalPeer());
+			bulk.setData(peerData);
 			String data = JsonMapper.bulkToJson(bulk);
 
 			// create and send packet // TODO listAllBroadcastAddresses
 			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getPort());
+
+			log.info("Send connection request to network.");
 			clientSocket.send(packet);
 
 			clientSocket.close();
@@ -59,13 +63,4 @@ public class PeerExplorer {
 			// close ?
 		}
 	}
-
-	public void stop() {
-		running = false;
-	}
-
-	private void explore() {
-
-	}
-
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.peer.Peer;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -138,4 +139,36 @@ public class JsonMapper {
 		return data;		
 	}
 	
+	public static String peerToJson(Peer peer) {
+		String json = new String();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		
+		try {
+			json = mapper.writeValueAsString(peer);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+				
+		return json;		
+	}
+	
+	public static Peer jsonToPeer(String json) {
+		Peer data = null;
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		try {
+			data = mapper.readValue(json, Peer.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return data;		
+	}
 }

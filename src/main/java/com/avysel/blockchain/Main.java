@@ -1,5 +1,7 @@
 package com.avysel.blockchain;
 
+import java.util.UUID;
+
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -17,7 +19,7 @@ public class Main {
 	    Logger logRoot = Logger.getRootLogger();
 	    ConsoleAppender ca = new ConsoleAppender();
 	    PatternLayout pattern = new PatternLayout();
-	    pattern.setConversionPattern("%d{ISO8601} - %-5p [%c] - %m%n");
+	    pattern.setConversionPattern(UUID.randomUUID().toString().substring(0, 6)+ ":%d{ISO8601} - %-5p [%c] - %m%n");
 	    ca.setName("console");
 	    ca.setLayout(pattern);
 	    ca.activateOptions();
@@ -25,7 +27,8 @@ public class Main {
 	    logRoot.setLevel(Level.INFO);
 	    
 		Blockchain manager = new Blockchain();
-
+		log.info("Welcom to blockchain !");
+		
 		for(int i = 1 ; i < 100 ; i++) {
 			try {
 				manager.addIncomingData(new SingleData("data"+i));

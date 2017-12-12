@@ -31,6 +31,7 @@ public class NetworkManager {
 	private List<Peer> peers;
 	private PeerExplorer peerExplorer;
 	private PeerListener peerListener;
+	private Peer localPeer;
 
 	private Blockchain blockchain;
 
@@ -54,12 +55,21 @@ public class NetworkManager {
 		client = new NodeClient(this);
 		peers = new ArrayList<Peer>();
 		peerExplorer = new PeerExplorer(this);
-		peerListener = new PeerListener(this);		
+		peerListener = new PeerListener(this);	
+		localPeer = Peer.initFromLocal();
 	}
 
 	public static int getPort() {	return port; }
 	public static void setPort(int port) {		NetworkManager.port = port;	}	
 	public static InetAddress getBroadcastAddress() throws UnknownHostException {	return InetAddress.getByName(broadcastAddress);	}
+
+	public Peer getLocalPeer() {
+		return localPeer;
+	}
+
+	public void setLocalPeer(Peer localPeer) {
+		this.localPeer = localPeer;
+	}
 
 	public List<InetAddress> listAllBroadcastAddresses() throws SocketException {
 		List<InetAddress> broadcastList = new ArrayList<>();
@@ -85,7 +95,7 @@ public class NetworkManager {
 	 */
 	public void start() {
 		server.start();
-		peerExplorer.start();
+		peerExplorer.wakeUp();
 		peerListener.start();
 	}
 
@@ -94,7 +104,6 @@ public class NetworkManager {
 	 */
 	public void stop() {
 		server.stop();
-		peerExplorer.stop();
 		peerListener.stop();
 	}
 
@@ -174,11 +183,16 @@ public class NetworkManager {
 
 	public void addPeer(Peer peer) {
 		peers.add(peer);
+		log.info("New peer added : "+peer);
 	}
 
 	public void removePeer(Peer peer) {
 		peers.remove(peer);
 	}
+	
+	public boolean isLocalPeer(Peer peer) {
+		return this.localPeer.getUid().equals(peer.getUid());
+	}	
 	
 	/**
 	 * Get peers that are still alive

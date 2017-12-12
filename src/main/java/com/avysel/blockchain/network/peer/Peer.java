@@ -4,6 +4,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Peer {
 
 	private String uid;
@@ -14,7 +16,7 @@ public class Peer {
 	private long lastAliveTimestamp;
 
 	public Peer() {
-		
+		super();
 	}	
 	
 	public Peer(String ip, int port) {
@@ -22,6 +24,7 @@ public class Peer {
 		this.ip = ip;
 		this.port = port;
 		this.uid = UUID.randomUUID().toString();
+		this.lastAliveTimestamp = System.currentTimeMillis();
 	}
 	
 	public String getUid() {
@@ -42,12 +45,16 @@ public class Peer {
 	public void setPort(int port) {
 		this.port = port;
 	}
+	
+	@JsonIgnore
 	public ServerSocket getServer() {
 		return server;
 	}
 	public void setServer(ServerSocket server) {
 		this.server = server;
 	}
+	
+	@JsonIgnore
 	public Socket getClient() {
 		return client;
 	}
@@ -65,6 +72,21 @@ public class Peer {
 
 	public void setLastAlive(long lastAlive) {
 		this.lastAliveTimestamp = lastAlive;
+	}
+	
+	public static Peer initFromLocal() {
+		
+		Peer peer = new Peer();
+		peer.setIp("127.0.0.1");
+		peer.setLastAlive(System.currentTimeMillis());
+		peer.setPort(5645);
+		peer.setUid(UUID.randomUUID().toString());
+		
+		return peer;
+	}
+	
+	public String toString() {
+		return this.ip+":"+this.port;
 	}
 	
 }

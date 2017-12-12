@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
+import com.avysel.blockchain.tools.JsonMapper;
 
 /**
  * Listen to the network to catch new peers connection requests, then add new peers to NetworkManager's peers collection
@@ -17,7 +18,7 @@ import com.avysel.blockchain.network.peer.Peer;
 public class PeerListener implements Runnable {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.PeerListener");
-	
+
 	private DatagramSocket datagramSocket;
 	private NetworkManager networkManager;
 	private boolean running = true;
@@ -54,23 +55,19 @@ public class PeerListener implements Runnable {
 						byte[] buffer = new byte[8192];
 						DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
-						log.info("Wait for packet");
+						log.info("Wait for peer ...");
 						// wait for data
 						datagramSocket.receive(packet);
-						log.info("Get a packet");
+						log.info("Get a packet. Is it a peer ?");
 
 						// read
 						String str = new String(packet.getData());
-						//System.out.print("Reçu de la part de " + packet.getAddress()	+ " sur le port " + packet.getPort() + " : ");
-						log.debug(str);
+						log.info("Reçu de la part de " + packet.getAddress()	+ " sur le port " + packet.getPort() + " : ");
+						log.info(str);
 
-						// convert data
-						NetworkDataBulk bulk = getDataBulk(str);
+						processData(str);
 
-						// push data to network manager
-						networkManager.addPeer(getPeer(bulk));
-
-						//On réinitialise la taille du datagramme, pour les futures réceptions
+						//reinit buffer
 						packet.setLength(buffer.length);
 
 					}
@@ -86,18 +83,26 @@ public class PeerListener implements Runnable {
 		t.start();
 	}	
 
-	private NetworkDataBulk getDataBulk(String data) {
+	private void processData(String data) {
+		NetworkDataBulk bulk = JsonMapper.jsonToBulk(data);
 
-		// convert json to message bulk
-		return new NetworkDataBulk();
-
-	}
-
-	private Peer getPeer(NetworkDataBulk bulk) {
-
-		// create peer from received data
-
-		return new Peer();
+		if(bulk != null) {
+			switch(bulk.getType()) {
+			case NetworkDataBulk.MESSAGE_REQUEST_CONNECTION:
+				break;
+			case NetworkDataBulk.MESSAGE_PEER_HELLO :
+				Peer peer = JsonMapper.jsonToPeer(bulk.getData());
+				// push data to network manager
+				/*if(! networkManager.isLocalPeer(peer))*/
+					networkManager.addPeer(peer);
+				/*else
+					log.info("Message from local peer, skip it !");*/
+				break;
+			default:
+				log.warn("Unknown bulk : "+data);
+				break;
+			}
+		}
 	}
 
 	public void stop() {

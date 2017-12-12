@@ -28,8 +28,14 @@ public class NodeServer {
 	 */
 	public void start() {
 		try {
+			
+			// create server socket on a random available port
 			serverSocket = new ServerSocket(0, 100, InetAddress.getByName(host));
+			
+			// store chosen port in current network configuration
 			NetworkManager.setServerListeningPort(serverSocket.getLocalPort());
+			
+			// creates a Peer that represent the current node, it contains uid, ip and listening port
 			network.setLocalPeer(Peer.initFromLocal());
 			log.info("Create node server for "+host+":"+NetworkManager.getServerListeningPort());
 		}

@@ -30,6 +30,10 @@ public class ClientProcessor implements Runnable {
 		this.network = network;
 	}	
 
+	/**
+	 * Creates a thread that process a client connection to the current node's socket
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		log.info("Start processing incoming client connection");
@@ -55,7 +59,7 @@ public class ClientProcessor implements Runnable {
 				NetworkDataBulk bulk = getDataBulk(data);
 
 				// push data to network manager
-				network.getIncoming(bulk);
+				network.processIncoming(bulk);
 
 				// send response data to client
 				String response = "OK";
@@ -72,7 +76,7 @@ public class ClientProcessor implements Runnable {
 
 	/**
 	 * Reads raw data from stream
-	 * @return data
+	 * @return data String that contains raw data read from stream
 	 * @throws IOException
 	 */
 	private String read() throws IOException{
@@ -84,6 +88,11 @@ public class ClientProcessor implements Runnable {
 		return data;
 	}
 
+	/**
+	 * Convert raw data from network to NetworkDataBulk object
+	 * @param data the string read from network
+	 * @return the NetworkDataBulk object created from raw data
+	 */
 	private NetworkDataBulk getDataBulk(String data) {
 		return JsonMapper.jsonToBulk(data);
 	}

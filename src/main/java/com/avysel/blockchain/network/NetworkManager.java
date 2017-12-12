@@ -59,27 +59,61 @@ public class NetworkManager {
 		peerListener = new PeerListener(this);	
 	}
 
+	/**
+	 * Provides the port used by current server
+	 * @return the server port
+	 */
 	public static int getServerListeningPort() {	
 		if(serverListeningPort == 0) {
 			log.error("Server port not initialized");
 		}
 		return serverListeningPort; 
 	}
+	
+	/**
+	 * Set the listening port of the current server
+	 * @param port the port
+	 */
 	public static void setServerListeningPort(int port) {		serverListeningPort = port;	}
 	
-	public static InetAddress getBroadcastAddress() throws UnknownHostException {	return InetAddress.getByName(broadcastAddress);	}
+	/**
+	 * Provides the InetAddress used to send broadcast hello message when a blockchain node is started
+	 * @return the InetAddress that represents broadcast IP address
+	 * @throws UnknownHostException
+	 */
+	public static InetAddress getBroadcastAddress() throws UnknownHostException {	
+		return InetAddress.getByName(broadcastAddress);	
+	}
 
-	public static int getBroadcastPort() {		return broadcastPort;	}
-	public static void setBroadcastPort(int broadcastPort) {	NetworkManager.broadcastPort = broadcastPort;	}
-
+	/**
+	 * Provides the port used to send hello messages when a blockchain node is started
+	 * @return
+	 */
+	public static int getBroadcastPort() {		
+		return broadcastPort;	
+	}
+	
+	/**
+	 * Returns the Peer representing the current node
+	 * @return the local Peer
+	 */
 	public Peer getLocalPeer() {
 		return localPeer;
 	}
 
+	/**
+	 * Sets the Peer represening the current node
+	 * @param localPeer the current node's Peer representation
+	 */
 	public void setLocalPeer(Peer localPeer) {
 		this.localPeer = localPeer;
 	}
 
+	/**
+	 * Provides all InetAddress that can be used on the current network to broadcast data
+	 * @return a List of broadcast InetAddress
+	 * @throws SocketException
+	 */
 	public List<InetAddress> listAllBroadcastAddresses() throws SocketException {
 		List<InetAddress> broadcastList = new ArrayList<>();
 		Enumeration<NetworkInterface> interfaces 
@@ -118,7 +152,7 @@ public class NetworkManager {
 
 	/**
 	 * Send a data to the network
-	 * @param data
+	 * @param data the SingleData object to send
 	 */
 	public void sendData(SingleData data) {
 		log.info("Send a data to the network.");
@@ -135,7 +169,7 @@ public class NetworkManager {
 
 	/**
 	 * Send a @Block to the network
-	 * @param block
+	 * @param block the Block object to send
 	 */
 	public void sendBlock(Block block) {
 		log.info("Send a block to the network.");
@@ -148,6 +182,10 @@ public class NetworkManager {
 		client.sendDataToAllPeers(bulk);
 	}
 
+	/**
+	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists
+	 * @param data the incoming SingleData
+	 */
 	private void processIncomingData(SingleData data) {
 		log.info("Pending before : "+blockchain.getDataPool().size());
 		try {
@@ -159,6 +197,10 @@ public class NetworkManager {
 		log.info("Pending after : "+blockchain.getDataPool().size());
 	}
 
+	/**
+	 * Process an incoming Block received from the network. Add it to the Chain according to rules about consensus and forks.
+	 * @param data the incoming Block
+	 */
 	private void processIncomingBlock(Block block) {
 		// TODO manage incoming block in blockchain + manage forks
 	}
@@ -167,7 +209,7 @@ public class NetworkManager {
 	 * Gets data from network, transform it into @SingleData or @Block and add it to the @Blockchain
 	 * @param bulk the incoming @DataBulk
 	 */
-	public void getIncoming(NetworkDataBulk bulk) {
+	public void processIncoming(NetworkDataBulk bulk) {
 		switch(bulk.getType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
 			log.info("Get a block from network");
@@ -190,11 +232,21 @@ public class NetworkManager {
 		}
 	}
 
+	/**
+	 * Provides all Peers connected to current node.
+	 * @return
+	 */
 	public List<Peer> getPeers() {
 		return peers;
 	}
 
+	/**
+	 * Add a Peer to the list of connected Peers
+	 * @param peer the Peer to add.
+	 */
 	public void addPeer(Peer peer) {
+		
+		// TODO do not add if local peer, or already exists
 		/*	if(! isLocalPeer(peer)) {
 			peers.add(peer);
 			log.info("New peer added : "+peer);

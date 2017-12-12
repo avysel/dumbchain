@@ -23,7 +23,6 @@ public class PendingData {
 		return queue;
 	}
 
-
 	/**
 	 * Add a new @SingleData to the pending data list to be added in a @Block
 	 * @param data the @SingleData to be added

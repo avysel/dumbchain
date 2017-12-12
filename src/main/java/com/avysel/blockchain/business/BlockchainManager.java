@@ -2,6 +2,8 @@ package com.avysel.blockchain.business;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
@@ -10,6 +12,8 @@ import com.avysel.blockchain.model.chain.ChainPart;
  * Provides some operation on the Blockchain, such as finding a Block or checking Chain integrity.
  */
 public class BlockchainManager {
+	
+	static Logger log = Logger.getLogger("com.avysel.blockchain.business.BlockchainManager");
 	
 	/**
 	 * Find a @Block with a given index
@@ -51,11 +55,11 @@ public class BlockchainManager {
 		boolean integrity = true;
 		for(Block block : blockList) {
 			if(!checkBlockHash(block)) {
-				System.out.println("Bad hash for block "+block.getIndex());
+				log.warn("Bad hash for block "+block.getIndex());
 				integrity = false;
 			}
 			if(!checkBlockPrevious(chain, block)) {
-				System.out.println("Bad previous for block "+block.getIndex());
+				log.warn("Bad previous for block "+block.getIndex());
 				integrity = false;
 			}
 		}
@@ -69,7 +73,7 @@ public class BlockchainManager {
 	 */
 	public static boolean checkBlockHash(Block block) {
 		String hash = HashTools.calculateBlockHash(block);
-		System.out.println("Check hash for "+block.getIndex()+". Expected : "+hash+", found : "+block.getHash());
+		log.warn("Check hash for "+block.getIndex()+". Expected : "+hash+", found : "+block.getHash());
 		return hash.equals(block.getHash());
 	}
 	
@@ -82,7 +86,7 @@ public class BlockchainManager {
 		Block previous = findBlockByHash(chain, block.getPreviousHash());
 		
 		if(!block.isGenesis())
-			System.out.println("Check previous for "+block.getIndex()+". Expected : "+(block.getIndex()-1)+", found : "+previous.getIndex());
+			log.warn("Check previous for "+block.getIndex()+". Expected : "+(block.getIndex()-1)+", found : "+previous.getIndex());
 		
 		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() -1);
 	}

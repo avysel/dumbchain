@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
@@ -12,6 +14,8 @@ import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeClient {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.network.client.NodeClient");
+	
 	private Socket clientSocket;
 	private NetworkManager networkManager;
 

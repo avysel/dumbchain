@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -16,6 +18,8 @@ import com.avysel.blockchain.tools.JsonMapper;
  */
 public class ClientProcessor implements Runnable {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
+	
 	private Socket socket;
 	private PrintWriter writer = null;
 	private BufferedInputStream reader = null;
@@ -28,7 +32,7 @@ public class ClientProcessor implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Start processing incoming client connection");
+		log.info("Start processing incoming client connection");
 
 		while(socket != null && !socket.isClosed()) {
 			try {
@@ -45,7 +49,7 @@ public class ClientProcessor implements Runnable {
 				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
 				debug += " Sur le port : " + remote.getPort() + ".\n";
 				debug += "\t -> Commande reçue : " + data + "\n";
-				System.out.println("\n" + debug);				
+				log.debug("\n" + debug);				
 
 				// read the data
 				NetworkDataBulk bulk = getDataBulk(data);

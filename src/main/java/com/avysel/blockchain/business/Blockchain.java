@@ -1,5 +1,7 @@
 package com.avysel.blockchain.business;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.Miner;
@@ -23,6 +25,8 @@ import com.avysel.blockchain.network.NetworkManager;
  */
 public class Blockchain {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
+	
 	// the list of blocks
 	private Chain chain;
 
@@ -118,10 +122,10 @@ public class Blockchain {
 
 		if(!pendingData.exists(data.getUniqueId())) {
 			pendingData.addData(data);
-			System.out.println("Add "+data.getUniqueId());
+			log.info("Add "+data.getUniqueId());
 		}
 		else {
-			System.out.println("Data "+data.getUniqueId()+" already exists");
+			log.info("Data "+data.getUniqueId()+" already exists");
 		}
 	}
 
@@ -141,6 +145,7 @@ public class Blockchain {
 	 * Starts the Blockchain (network listening and mining)
 	 */
 	public void start() {
+		log.info("Starting blockchain");
 		network.start();
 		miner.start();
 	}
@@ -149,6 +154,7 @@ public class Blockchain {
 	 * Stops the Blockchain (network listening and mining)
 	 */
 	public void stop() {
+		log.info("Stopping blockchain");
 		network.stop();
 		miner.stop();
 	}

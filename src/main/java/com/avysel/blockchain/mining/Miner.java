@@ -3,6 +3,8 @@ package com.avysel.blockchain.mining;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
@@ -16,6 +18,8 @@ import com.avysel.blockchain.model.data.SingleData;
  */
 public class Miner {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.mining.Miner");
+	
 	// mining or not ?
 	private boolean mining;
 
@@ -43,15 +47,15 @@ public class Miner {
 	 * Starts mining
 	 */
 	public void start() {
-		System.out.println("Start miner.");
+		log.info("Start miner.");
 		while(mining) {
 			Block block = mine();
 			chain.linkBlock(block);
-			System.out.println(block);
-			System.out.println("New block created with "+block.getDataList().size()+" data. Remaining : "+pendingData.size());			
+			log.info(block);
+			log.info("New block created with "+block.getDataList().size()+" data. Remaining : "+pendingData.size());			
 		}
-		System.out.println("End miner.");
-		System.out.println("Effort : "+chain.getEffort());		
+		log.info("End miner.");
+		log.info("Effort : "+chain.getEffort());		
 	}
 
 	/**

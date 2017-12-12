@@ -9,6 +9,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
@@ -22,6 +24,8 @@ import com.avysel.blockchain.tools.JsonMapper;
 
 public class NetworkManager {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.network.NetworkManager");
+	
 	private NodeServer server;
 	private NodeClient client;
 	private List<Peer> peers;
@@ -107,14 +111,14 @@ public class NetworkManager {
 	}
 
 	private void processIncomingData(SingleData data) {
-		System.out.println("Pending before : "+blockchain.pendingData.size());
+		log.info("Pending before : "+blockchain.pendingData.size());
 		try {
 			blockchain.addIncomingData(data);
 		} catch (InterruptedException e) {
 			// TODO what to do when data not added ?
 			e.printStackTrace();
 		}
-		System.out.println("Pending after : "+blockchain.pendingData.size());
+		log.info("Pending after : "+blockchain.pendingData.size());
 	}
 
 	private void processIncomingBlock(Block block) {
@@ -128,17 +132,17 @@ public class NetworkManager {
 	public void getIncoming(NetworkDataBulk bulk) {
 		switch(bulk.getType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
-			System.out.println("Get a block from network");
+			log.info("Get a block from network");
 			Block block = JsonMapper.jsonToBlock(bulk.getData());
 			processIncomingBlock(block);
 			break;
 		case NetworkDataBulk.DATATYPE_DATA :
-			System.out.println("Get a data from network");
+			log.info("Get a data from network");
 			SingleData data = JsonMapper.jsonToData(bulk.getData());
 			processIncomingData(data);
 			break;
 		case NetworkDataBulk.DATATYPE_CHAIN :
-			System.out.println("Get a chain from network");
+			log.info("Get a chain from network");
 			// TODO usefull ?
 			break;
 		default: 

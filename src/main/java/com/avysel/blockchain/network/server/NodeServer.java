@@ -5,10 +5,14 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.network.NetworkManager;
 
 public class NodeServer {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.network.server.NodeServer");
+	
 	private String host = "127.0.0.1";
 	private ServerSocket serverSocket;
 	private boolean running = true;
@@ -24,7 +28,7 @@ public class NodeServer {
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(NetworkManager.getPort(), 100, InetAddress.getByName(host));
-			System.out.println("Create node server for "+host+":"+NetworkManager.getPort());
+			log.info("Create node server for "+host+":"+NetworkManager.getPort());
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -40,7 +44,7 @@ public class NodeServer {
 
 		Thread t = new Thread(new Runnable(){
 			public void run(){
-				System.out.println("Server starts runing ...");
+				log.info("NodeServer starts runing ...");
 				while(running){
 
 					try {
@@ -48,7 +52,7 @@ public class NodeServer {
 						Socket clientSocket = serverSocket.accept();
 
 						// new thread to process the connection
-						System.out.println("Connexion cliente reçue.");                  
+						log.info("Connexion cliente reçue.");                  
 						Thread t = new Thread(new ClientProcessor(clientSocket, network));
 						t.start();
 
@@ -70,7 +74,7 @@ public class NodeServer {
 	}	
 
 	public void stop() {
-		System.out.println("Stop server");
+		log.info("Stop node server");
 		running = false;
 	}
 }

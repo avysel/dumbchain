@@ -10,7 +10,6 @@ import com.avysel.blockchain.model.block.Genesis;
  * It contains the list of @Block, starting with a @Genesis
  */
 public class Chain extends ChainPart {
-	//private Block genesis;
 	
 	public Chain() {
 		blockList = new ArrayList<Block>();

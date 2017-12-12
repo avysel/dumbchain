@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
@@ -14,6 +16,8 @@ import com.avysel.blockchain.network.peer.Peer;
  */
 public class PeerListener implements Runnable {
 
+	Logger log = Logger.getLogger("com.avysel.blockchain.network.server.PeerListener");
+	
 	private DatagramSocket datagramSocket;
 	private NetworkManager networkManager;
 	private boolean running = true;
@@ -41,7 +45,7 @@ public class PeerListener implements Runnable {
 
 		Thread t = new Thread(new Runnable(){
 			public void run(){
-				System.out.println("Server starts runing ...");
+				log.info("Peer listener starts runing ...");
 
 				try {
 					while(running){
@@ -50,15 +54,15 @@ public class PeerListener implements Runnable {
 						byte[] buffer = new byte[8192];
 						DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
-						System.out.println("Wait for packet");
+						log.info("Wait for packet");
 						// wait for data
 						datagramSocket.receive(packet);
-						System.out.println("Get a packet");
+						log.info("Get a packet");
 
 						// read
 						String str = new String(packet.getData());
 						//System.out.print("Reçu de la part de " + packet.getAddress()	+ " sur le port " + packet.getPort() + " : ");
-						System.out.println(str);
+						log.debug(str);
 
 						// convert data
 						NetworkDataBulk bulk = getDataBulk(str);

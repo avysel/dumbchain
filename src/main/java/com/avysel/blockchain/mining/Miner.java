@@ -24,7 +24,7 @@ public class Miner {
 	private boolean mining;
 
 	// the queue of pending data to be included in a Block
-	private PendingData pendingData;
+	private DataPool dataPool;
 
 	// The current existing Chain
 	private Chain chain;
@@ -34,11 +34,11 @@ public class Miner {
 	/**
 	 * Creates the Miner
 	 * @param chain the Chain that will gets new Blocks
-	 * @param pendingData the queue to peek data
+	 * @param dataPool the queue to peek data
 	 */
-	public Miner(Chain chain, PendingData pendingData) {
+	public Miner(Chain chain, DataPool dataPool) {
 		mining = true;
-		this.pendingData = pendingData;
+		this.dataPool = dataPool;
 		this.chain = chain;
 		this.proof = new ProofOfWork();
 	}
@@ -51,7 +51,7 @@ public class Miner {
 		while(mining) {
 			Block block = mine();
 			chain.linkBlock(block);
-			log.info("New block created with "+block.getDataList().size()+" data. "+pendingData.size() +" data in pool. Chain size : "+chain.size());
+			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain size : "+chain.size());
 			log.debug(block);
 		}
 		log.info("End miner.");
@@ -68,7 +68,7 @@ public class Miner {
 
 	/**
 	 * Create a @Block
-	 * @return a @Block that contains random data taken from @PendingData
+	 * @return a @Block that contains random data taken from @DataPool
 	 */
 	private Block mine() {
 		Block block;
@@ -80,13 +80,13 @@ public class Miner {
 			
 			block = new Block();	
 			// put unused data back to pending data
-			pendingData.addAll(dataList);
+			dataPool.addAll(dataList);
 
 			// clean current data set
 			block.cleanData();
 
 			// pick new dataset, blocking when pending data is empty
-			dataList = pendingData.getRandomData();
+			dataList = dataPool.getRandomData();
 			block.addAllData(dataList);
 
 			hash = HashTools.calculateBlockHash(block);

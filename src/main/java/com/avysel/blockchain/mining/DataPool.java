@@ -14,17 +14,17 @@ import com.avysel.blockchain.model.data.SingleData;
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...
  * It uses a synchronized queue, fed by the network and consumed by the Miner.
  */
-public class PendingData {
+public class DataPool {
 	
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.PendingData");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.DataPool");
 	
 	private LinkedBlockingQueue<SingleData> queue;
 
-	public PendingData() {
+	public DataPool() {
 		queue = new LinkedBlockingQueue<SingleData>();
 	}
 
-	private LinkedBlockingQueue<SingleData> getPendingData() {
+	private LinkedBlockingQueue<SingleData> getDataPool() {
 		return queue;
 	}
 
@@ -36,7 +36,7 @@ public class PendingData {
 	public void addData(SingleData data) throws InterruptedException {
 		
 		if(!exists(data.getUniqueId())) {
-			getPendingData().put(data);
+			getDataPool().put(data);
 			log.info("New data in pool");
 			log.debug(data);
 		}
@@ -50,13 +50,13 @@ public class PendingData {
 	 * @param dataList the @List of @SingleData to be added
 	 */	
 	public void addAll(List<SingleData> dataList) {
-		getPendingData().addAll(dataList);
+		getDataPool().addAll(dataList);
 	}
 
 	public List<SingleData> getData(long quantity) {
 		List<SingleData> result = new ArrayList<SingleData>();
-		for(int i=0 ; i < quantity && !getPendingData().isEmpty() ; i++) {
-			result.add(getPendingData().poll());
+		for(int i=0 ; i < quantity && !getDataPool().isEmpty() ; i++) {
+			result.add(getDataPool().poll());
 		}
 		return result;
 	}
@@ -70,17 +70,17 @@ public class PendingData {
 		List<SingleData> result = new ArrayList<SingleData>();
 		do {
 			// random quantity of data to take in pending data (no more than half of remaining)
-			quantity = (new Random()).nextInt(getPendingData().size() / 2) +1;
+			quantity = (new Random()).nextInt(getDataPool().size() / 2) +1;
 
 			// if enough data, take it
-			if(quantity <= getPendingData().size()) {
+			if(quantity <= getDataPool().size()) {
 				for(int i=0 ; i < quantity ; i++) {
-					result.add(getPendingData().poll());
+					result.add(getDataPool().poll());
 				}
 			}
 			
 			// if not enough data, try again (wait for a suitable quantity, or for the queue to be filled)
-		} while(quantity > getPendingData().size());
+		} while(quantity > getDataPool().size());
 
 		return result;
 	}
@@ -90,12 +90,12 @@ public class PendingData {
 	 * @return the size of pending data list
 	 */
 	public int size() {
-		return getPendingData().size();
+		return getDataPool().size();
 	}
 
 	public String toString() {
 		StringBuffer result = new StringBuffer();
-		Iterator<SingleData> it = getPendingData().iterator();
+		Iterator<SingleData> it = getDataPool().iterator();
 		while(it.hasNext())
 			result.append(it.next());
 		return result.toString();
@@ -107,7 +107,7 @@ public class PendingData {
 	 * @return true if a data with the same unique identifier is present in queue
 	 */
 	public boolean exists(String uniqueId) {
-		Iterator<SingleData> it = getPendingData().iterator();
+		Iterator<SingleData> it = getDataPool().iterator();
 		while(it.hasNext())
 			if(it.next().getUniqueId().equals(uniqueId))
 				return true;

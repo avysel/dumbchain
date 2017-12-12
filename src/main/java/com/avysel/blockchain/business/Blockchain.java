@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.Miner;
-import com.avysel.blockchain.mining.PendingData;
+import com.avysel.blockchain.mining.DataPool;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
@@ -31,7 +31,7 @@ public class Blockchain {
 	private Chain chain;
 
 	// storage for data waiting to be included in a block
-	public PendingData pendingData;
+	private DataPool dataPool;
 
 	// block generator
 	private Miner miner;
@@ -42,16 +42,16 @@ public class Blockchain {
 	public Blockchain() {
 		this.chain = new Chain();
 		createChain();
-		this.pendingData = new PendingData();
-		this.miner = new Miner(chain, pendingData);	
+		this.dataPool = new DataPool();
+		this.miner = new Miner(chain, dataPool);	
 		this.network = new NetworkManager(this);
 	}
 
 	public Blockchain(Chain chain) {
 		this.chain = chain;
 		createChain();
-		this.pendingData = new PendingData();
-		this.miner = new Miner(chain, pendingData);
+		this.dataPool = new DataPool();
+		this.miner = new Miner(chain, dataPool);
 		this.network = new NetworkManager(this);
 	}
 
@@ -111,7 +111,9 @@ public class Blockchain {
 
 	}
 
-
+	public DataPool getDataPool() {
+		return this.getDataPool();
+	}
 
 	/**
 	 * Add a new data to be included in a block at one of the next mining.
@@ -119,7 +121,7 @@ public class Blockchain {
 	 * @throws InterruptedException 
 	 */
 	public void addIncomingData(SingleData data) throws InterruptedException {
-		pendingData.addData(data);
+		dataPool.addData(data);
 	}
 
 

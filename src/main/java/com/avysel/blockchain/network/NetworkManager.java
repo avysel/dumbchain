@@ -35,7 +35,7 @@ public class NetworkManager {
 
 	private Blockchain blockchain;
 
-	private static int serverListeningPort;
+	private static int serverListeningPort = 0;
 	private static int broadcastPort = 45458;
 	//private static String broadcastAddress = "255.255.255.255";
 	private static String broadcastAddress = "127.0.0.1";
@@ -57,11 +57,16 @@ public class NetworkManager {
 		peers = new ArrayList<Peer>();
 		peerExplorer = new PeerExplorer(this);
 		peerListener = new PeerListener(this);	
-		localPeer = Peer.initFromLocal();
 	}
 
-	public static int getServerListeningPort() {	return serverListeningPort; }
-	public static void setServerListeningPort(int port) {		NetworkManager.serverListeningPort = port;	}	
+	public static int getServerListeningPort() {	
+		if(serverListeningPort == 0) {
+			log.error("Server port not initialized");
+		}
+		return serverListeningPort; 
+	}
+	public static void setServerListeningPort(int port) {		serverListeningPort = port;	}
+	
 	public static InetAddress getBroadcastAddress() throws UnknownHostException {	return InetAddress.getByName(broadcastAddress);	}
 
 	public static int getBroadcastPort() {		return broadcastPort;	}
@@ -190,14 +195,14 @@ public class NetworkManager {
 	}
 
 	public void addPeer(Peer peer) {
-	/*	if(! isLocalPeer(peer)) {
+		/*	if(! isLocalPeer(peer)) {
 			peers.add(peer);
 			log.info("New peer added : "+peer);
 		}
 		else {
 			log.info("Message from local peer, skip it !");
 		}*/
-		
+
 		peers.add(peer);
 		log.info("New peer added : "+peer);
 	}

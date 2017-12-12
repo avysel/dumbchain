@@ -8,6 +8,7 @@ import java.net.Socket;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.network.peer.Peer;
 
 public class NodeServer {
 
@@ -29,6 +30,7 @@ public class NodeServer {
 		try {
 			serverSocket = new ServerSocket(0, 100, InetAddress.getByName(host));
 			NetworkManager.setServerListeningPort(serverSocket.getLocalPort());
+			network.setLocalPeer(Peer.initFromLocal());
 			log.info("Create node server for "+host+":"+NetworkManager.getServerListeningPort());
 		}
 		catch(IOException e) {

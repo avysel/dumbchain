@@ -4,11 +4,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.network.NetworkManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Peer {
 
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.peer.Peer");
+	
 	private String uid;
 	private String ip;
 	private int port;
@@ -82,6 +86,8 @@ public class Peer {
 		peer.setLastAlive(System.currentTimeMillis());
 		peer.setPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());
+		
+		log.info("Init local peer : "+peer.toString());
 		
 		return peer;
 	}

@@ -31,7 +31,7 @@ public class PeerExplorer {
 	 */
 	public void wakeUp() {
 
-		log.info("Local peer is taking its place on the network.");
+		log.info("Local peer says hello.");
 		
 		try {
 
@@ -46,6 +46,8 @@ public class PeerExplorer {
 			bulk.setData(peerData);
 			String data = JsonMapper.bulkToJson(bulk);
 
+			log.info(peerData);
+			
 			// create and send packet // TODO listAllBroadcastAddresses
 			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getBroadcastPort());
 

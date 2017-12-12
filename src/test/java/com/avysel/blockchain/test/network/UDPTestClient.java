@@ -35,7 +35,7 @@ public class UDPTestClient {
 					String data = "{type=100, data={data=data"+randomData+", uid="+randomData+"}}";
 					System.out.println("Send data : "+data);
 					// create and send packet
-					DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, InetAddress.getByName("127.0.0.1")	, NetworkManager.getPort());
+					DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, InetAddress.getByName("127.0.0.1")	, NetworkManager.getBroadcastPort());
 					clientSocket.send(packet);		
 				}
 				Thread.sleep(seconds * 1000);

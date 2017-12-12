@@ -27,7 +27,7 @@ public class PeerListener implements Runnable {
 		super();
 		this.networkManager = manager;
 		try {
-			this.datagramSocket = new DatagramSocket(0);
+			this.datagramSocket = new DatagramSocket(NetworkManager.getBroadcastPort());
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

@@ -35,7 +35,8 @@ public class NetworkManager {
 
 	private Blockchain blockchain;
 
-	private static int port = 45458;
+	private static int serverListeningPort;
+	private static int broadcastPort = 45458;
 	//private static String broadcastAddress = "255.255.255.255";
 	private static String broadcastAddress = "127.0.0.1";
 
@@ -59,9 +60,12 @@ public class NetworkManager {
 		localPeer = Peer.initFromLocal();
 	}
 
-	public static int getPort() {	return port; }
-	public static void setPort(int port) {		NetworkManager.port = port;	}	
+	public static int getServerListeningPort() {	return serverListeningPort; }
+	public static void setServerListeningPort(int port) {		NetworkManager.serverListeningPort = port;	}	
 	public static InetAddress getBroadcastAddress() throws UnknownHostException {	return InetAddress.getByName(broadcastAddress);	}
+
+	public static int getBroadcastPort() {		return broadcastPort;	}
+	public static void setBroadcastPort(int broadcastPort) {	NetworkManager.broadcastPort = broadcastPort;	}
 
 	public Peer getLocalPeer() {
 		return localPeer;

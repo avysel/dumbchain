@@ -47,7 +47,7 @@ public class PeerExplorer {
 			String data = JsonMapper.bulkToJson(bulk);
 
 			// create and send packet // TODO listAllBroadcastAddresses
-			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getPort());
+			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getBroadcastPort());
 
 			log.info("Send connection request to network.");
 			clientSocket.send(packet);

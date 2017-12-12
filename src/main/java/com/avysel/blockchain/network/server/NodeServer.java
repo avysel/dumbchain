@@ -28,8 +28,8 @@ public class NodeServer {
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(0, 100, InetAddress.getByName(host));
-			NetworkManager.setPort(serverSocket.getLocalPort());
-			log.info("Create node server for "+host+":"+NetworkManager.getPort());
+			NetworkManager.setServerListeningPort(serverSocket.getLocalPort());
+			log.info("Create node server for "+host+":"+NetworkManager.getServerListeningPort());
 		}
 		catch(IOException e) {
 			e.printStackTrace();

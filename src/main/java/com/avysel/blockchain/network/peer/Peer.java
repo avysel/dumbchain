@@ -80,7 +80,7 @@ public class Peer {
 		Peer peer = new Peer();
 		peer.setIp("127.0.0.1"); // TODO
 		peer.setLastAlive(System.currentTimeMillis());
-		peer.setPort(NetworkManager.getPort());
+		peer.setPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());
 		
 		return peer;

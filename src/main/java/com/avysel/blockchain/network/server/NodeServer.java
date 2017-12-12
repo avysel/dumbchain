@@ -6,8 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.avysel.blockchain.network.NetworkManager;
-import com.avysel.blockchain.network.data.NetworkBulk;
-import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeServer {
 

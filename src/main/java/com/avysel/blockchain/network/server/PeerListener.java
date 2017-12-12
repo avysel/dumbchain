@@ -6,7 +6,7 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 
 import com.avysel.blockchain.network.NetworkManager;
-import com.avysel.blockchain.network.data.NetworkMessageBulk;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
 
 /**
@@ -21,6 +21,11 @@ public class PeerListener implements Runnable {
 	public PeerListener(NetworkManager manager) {
 		super();
 		this.networkManager = manager;
+		try {
+			this.datagramSocket = new DatagramSocket(NetworkManager.getPort());
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void start() {
@@ -56,7 +61,7 @@ public class PeerListener implements Runnable {
 						System.out.println(str);
 
 						// convert data
-						NetworkMessageBulk bulk = getMessageBulk(str);
+						NetworkDataBulk bulk = getDataBulk(str);
 
 						// push data to network manager
 						networkManager.addPeer(getPeer(bulk));
@@ -77,14 +82,14 @@ public class PeerListener implements Runnable {
 		t.start();
 	}	
 
-	private NetworkMessageBulk getMessageBulk(String data) {
+	private NetworkDataBulk getDataBulk(String data) {
 
 		// convert json to message bulk
-		return new NetworkMessageBulk();
+		return new NetworkDataBulk();
 
 	}
 
-	private Peer getPeer(NetworkMessageBulk bulk) {
+	private Peer getPeer(NetworkDataBulk bulk) {
 
 		// create peer from received data
 

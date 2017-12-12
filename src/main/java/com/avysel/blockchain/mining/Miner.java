@@ -51,8 +51,8 @@ public class Miner {
 		while(mining) {
 			Block block = mine();
 			chain.linkBlock(block);
+			log.info("New block created with "+block.getDataList().size()+" data. Remaining : "+pendingData.size());
 			log.info(block);
-			log.info("New block created with "+block.getDataList().size()+" data. Remaining : "+pendingData.size());			
 		}
 		log.info("End miner.");
 		log.info("Effort : "+chain.getEffort());		
@@ -91,6 +91,8 @@ public class Miner {
 
 			hash = HashTools.calculateBlockHash(block);
 
+			log.debug("Hash : "+hash);
+			
 			block.setHash(hash);
 			block.setTimestamp(System.currentTimeMillis());
 			block.setDifficulty(difficulty);

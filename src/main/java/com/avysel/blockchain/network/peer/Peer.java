@@ -11,6 +11,7 @@ public class Peer {
 	private int port;
 	private ServerSocket server;
 	private Socket client;
+	private long lastAliveTimestamp;
 
 	public Peer() {
 		
@@ -57,4 +58,13 @@ public class Peer {
 	public boolean equals(Object peer) {
 		return this.uid.equals(((Peer) peer).getUid());
 	}
+
+	public long getLastAlive() {
+		return lastAliveTimestamp;
+	}
+
+	public void setLastAlive(long lastAlive) {
+		this.lastAliveTimestamp = lastAlive;
+	}
+	
 }

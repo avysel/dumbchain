@@ -37,6 +37,16 @@ public class NetworkManager {
 	private static int port = 45458;
 	//private static String broadcastAddress = "255.255.255.255";
 	private static String broadcastAddress = "127.0.0.1";
+	
+	/**
+	 * Number of second from last contact with peer to consider it as still alive.
+	 */
+	public static long DEFAULT_PEER_STILL_ALIVE = 3600;
+	
+	/**
+	 * Maximum number of peers to a peer asking for connections.
+	 */
+	public static long DEFAULT_PEER_NUMBER_TO_SEND = 10;
 
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
@@ -70,12 +80,18 @@ public class NetworkManager {
 		return broadcastList;
 	}	
 
+	/**
+	 * Start network manager of blockchain node
+	 */
 	public void start() {
 		server.start();
 		peerExplorer.start();
 		peerListener.start();
 	}
 
+	/**
+	 * Stop network manager of blockchain node
+	 */
 	public void stop() {
 		server.stop();
 		peerExplorer.stop();
@@ -162,5 +178,19 @@ public class NetworkManager {
 
 	public void removePeer(Peer peer) {
 		peers.remove(peer);
+	}
+	
+	/**
+	 * Get peers that are still alive
+	 * @return list of alive peers
+	 */
+	public List<Peer> getAlivePeers() {
+		List<Peer> peers = new ArrayList<Peer>();
+		// TODO
+		return peers;
+	}
+	
+	private void cleanPeersList() {
+		// TODO ping all peers to keep them alive
 	}
 }

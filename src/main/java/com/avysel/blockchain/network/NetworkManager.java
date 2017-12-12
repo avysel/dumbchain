@@ -22,6 +22,12 @@ import com.avysel.blockchain.network.server.NodeServer;
 import com.avysel.blockchain.network.server.PeerListener;
 import com.avysel.blockchain.tools.JsonMapper;
 
+/**
+ * Handle all the network part of the current Blockchain.
+ * This Manager creates and maintains server connections to be connected to other network nodes (Peers).
+ * It's the link between network and current Chain. It handles process of incoming and outgoing data.
+ *
+ */
 public class NetworkManager {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.NetworkManager");
@@ -259,10 +265,19 @@ public class NetworkManager {
 		log.info("New peer added : "+peer);
 	}
 
+	/**
+	 * Remove a Peer from the list of connected Peers.
+	 * @param peer the Peer to remove.
+	 */
 	public void removePeer(Peer peer) {
 		peers.remove(peer);
 	}
 
+	/**
+	 * Allows to know if a given Peer is the current local Peer.
+	 * @param peer the Peer that is to be compared with local Peer.
+	 * @return true if the given Peer is the local Peer.
+	 */
 	public boolean isLocalPeer(Peer peer) {
 		return this.localPeer.getUid().equals(peer.getUid());
 	}	
@@ -277,6 +292,9 @@ public class NetworkManager {
 		return peers;
 	}
 
+	/**
+	 * Checks if all connected Peers are stil alive, remove Peers that did not respond for more than DEFAULT_PEER_STILL_ALIVE seconds.
+	 */
 	private void cleanPeersList() {
 		// TODO ping all peers to keep them alive
 	}

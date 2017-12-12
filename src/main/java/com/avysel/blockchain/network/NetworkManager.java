@@ -25,7 +25,7 @@ import com.avysel.blockchain.tools.JsonMapper;
 public class NetworkManager {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.NetworkManager");
-	
+
 	private NodeServer server;
 	private NodeClient client;
 	private List<Peer> peers;
@@ -38,12 +38,12 @@ public class NetworkManager {
 	private static int port = 45458;
 	//private static String broadcastAddress = "255.255.255.255";
 	private static String broadcastAddress = "127.0.0.1";
-	
+
 	/**
 	 * Number of second from last contact with peer to consider it as still alive.
 	 */
 	public static long DEFAULT_PEER_STILL_ALIVE = 3600;
-	
+
 	/**
 	 * Maximum number of peers to a peer asking for connections.
 	 */
@@ -186,18 +186,23 @@ public class NetworkManager {
 	}
 
 	public void addPeer(Peer peer) {
-		peers.add(peer);
-		log.info("New peer added : "+peer);
+		if(! isLocalPeer(peer)) {
+			peers.add(peer);
+			log.info("New peer added : "+peer);
+		}
+		else {
+			log.info("Message from local peer, skip it !");
+		}
 	}
 
 	public void removePeer(Peer peer) {
 		peers.remove(peer);
 	}
-	
+
 	public boolean isLocalPeer(Peer peer) {
 		return this.localPeer.getUid().equals(peer.getUid());
 	}	
-	
+
 	/**
 	 * Get peers that are still alive
 	 * @return list of alive peers
@@ -207,7 +212,7 @@ public class NetworkManager {
 		// TODO
 		return peers;
 	}
-	
+
 	private void cleanPeersList() {
 		// TODO ping all peers to keep them alive
 	}

@@ -19,18 +19,11 @@ public class NetworkDataBulk {
 	 * This bulk contains a chain part.
 	 */
 	public static final int DATATYPE_CHAIN = 102;	
+
 	/**
-	 * This bulk contains a request from a new node that wants to be connected.
+	 * This bulk contains an message from a new node announcing its arrival on network.
 	 */
-	public static final int MESSAGE_REQUEST_CONNECTION = 200;
-	/**
-	 * This bulk contains a list of peers.
-	 */
-	public static final int MESSAGE_PEER_LIST = 300;
-	/**
-	 * This bulk contains an answer from a peer to connect each other.
-	 */
-	public static final int MESSAGE_PEER_HELLO = 400;
+	public static final int MESSAGE_PEER_HELLO = 300;
 	
 	private int type;
 	private String data;

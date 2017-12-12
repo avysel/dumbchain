@@ -124,6 +124,11 @@ public class Blockchain {
 		dataPool.addData(data);
 	}
 
+	/**
+	 * Add a block to the blockchain.
+	 * Link the new block to the existing chain and send this block to the network.
+	 * @param block the block to add
+	 */
 	public void addBlock(Block block) {
 		
 		// link block to current chain

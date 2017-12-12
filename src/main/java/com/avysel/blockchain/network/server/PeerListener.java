@@ -88,15 +88,11 @@ public class PeerListener implements Runnable {
 
 		if(bulk != null) {
 			switch(bulk.getType()) {
-			case NetworkDataBulk.MESSAGE_REQUEST_CONNECTION:
-				break;
+
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
 				Peer peer = JsonMapper.jsonToPeer(bulk.getData());
 				// push data to network manager
-				/*if(! networkManager.isLocalPeer(peer))*/
-					networkManager.addPeer(peer);
-				/*else
-					log.info("Message from local peer, skip it !");*/
+				networkManager.addPeer(peer);
 				break;
 			default:
 				log.warn("Unknown bulk : "+data);

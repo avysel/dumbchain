@@ -24,9 +24,9 @@ Rien de bien avancé ou utilisable pour le moment.
 ### Réseau
 - [x] Mapping JSON des données
 - [x] Manager réseau qui fait le lien avec la chaîne en cours
-- [ ] Agent UDP pour envoyer un broadcast de découverte de pairs
-- [ ] Agent UDP qui traite les demandes de découvertes reçues
-- [ ] Manager TCP qui maintient les connexions avec les pairs connus
+- [X] Agent UDP pour envoyer un broadcast de découverte de pairs
+- [X] Agent UDP qui traite les demandes de découvertes reçues
+- [ ] Manager qui maintient les connexions avec les pairs connus
 - [ ] Agent TCP client qui envoie les blocs créés
 - [ ] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
 
@@ -40,4 +40,7 @@ Rien de bien avancé ou utilisable pour le moment.
 - [ ] API d'ajout de données
 - [ ] Consultation des données
 - [ ] API consultation des données
+
+### Technique
+- [ ] Initialiser modules Java 9
 

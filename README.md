@@ -27,8 +27,8 @@ Rien de bien avancé ou utilisable pour le moment.
 - [x] Agent UDP pour envoyer un broadcast de découverte de pairs
 - [x] Agent UDP qui traite les demandes de découvertes reçues
 - [ ] Manager qui maintient les connexions avec les pairs connus
-- [ ] Agent TCP client qui envoie les blocs créés
-- [ ] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
+- [x] Agent TCP client qui envoie les blocs créés
+- [x] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
 - [ ] Chiffrer les données transmises
 
 ### Stockage

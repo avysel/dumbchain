@@ -189,7 +189,7 @@ public class NetworkManager {
 	 * @param data the incoming Block
 	 */
 	private void processIncomingBlock(Block block) {
-		// TODO manage incoming block in blockchain + manage forks + remove used data from pool
+		blockchain.addIncomingBlock(block);
 	}
 
 	/**

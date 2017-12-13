@@ -8,15 +8,15 @@ import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
 
-public class ChainBuilder {
+public class ChainConsensusBuilder {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.consensus.ChainBuilder");
 
 	private Blockchain blockchain;
 	private Chain chain;
 
-	public ChainBuilder(Blockchain blockchain, Chain chain) {
-		this.chain = chain;
+	public ChainConsensusBuilder(Blockchain blockchain) {
+		this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
 	}
 
@@ -26,8 +26,6 @@ public class ChainBuilder {
 	 * @return true if incoming block has been added, false if it has been rejected
 	 */
 	public boolean processExternalBlock(Block incomingBlock) {
-		// si ajout ok, alors ajout
-		// sinon, creation d'une chain part
 
 		if(isSuitableNextBlock(incomingBlock)) {
 			// the incoming block can be easily added at the end of chain
@@ -74,16 +72,33 @@ public class ChainBuilder {
 		return new Block();
 	}
 
+	/**
+	 * Remove from blockchain's data pool all given block's data. 
+	 * Use it when a block not mined by local node is linked to the chain.
+	 * @param block the block that is going to be unlinked from the chain
+	 */
 	private void cleanDataPool(Block block) {
 		// remove from data pool all block data
 		blockchain.getDataPool().removeAll(block.getDataList());
 	}
 
+	/**
+	 * Put back to blockchain's data pool all given block's data. Use it when a block is to be unlinked from the chain.
+	 * @param block the block that is going to be unlinked from the chain
+	 */
 	private void resetDataPool(Block block) {
 		// put back in pool data of this block (because block is rejected)
 		blockchain.getDataPool().addAll(block.getDataList());
 	}
 
+	/**
+	 * Find out the best block among two blocks. 
+	 * The best block means the one that will be kept in the chain when two blocks have the same index 
+	 * because created at the same time by two different nodes
+	 * @param block1 the first block to compare, will be the best if the two blocks have the same quality
+	 * @param block2 the second block to compare, will be rejected if the two blocks have the same quality
+	 * @return the block, with the best quality among the two given blocks
+	 */
 	private Block bestBlock(Block block1, Block block2) {
 		// return the best block to keep among the two given blocks
 
@@ -96,8 +111,7 @@ public class ChainBuilder {
 			return block2;
 		}
 		else {
-			return block1; // TODO random 1 vs 2
+			return block1;
 		}
 	}
-
 }

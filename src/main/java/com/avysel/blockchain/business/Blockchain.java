@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.consensus.ChainConsensusBuilder;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.exception.ChainIntegrityException;
-import com.avysel.blockchain.mining.Miner;
 import com.avysel.blockchain.mining.DataPool;
+import com.avysel.blockchain.mining.Miner;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
@@ -42,6 +43,8 @@ public class Blockchain {
 
 	// data network input/output
 	private NetworkManager network;
+	
+	private ChainConsensusBuilder consensusBuilder;
 
 	public Blockchain() {
 		this.nodeId = UUID.randomUUID().toString();
@@ -50,6 +53,7 @@ public class Blockchain {
 		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);	
 		this.network = new NetworkManager(this);
+		this.consensusBuilder = new ChainConsensusBuilder(this);
 	}
 
 	public Blockchain(Chain chain) {
@@ -58,6 +62,7 @@ public class Blockchain {
 		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
+		this.consensusBuilder = new ChainConsensusBuilder(this);
 	}
 	
 	/**
@@ -135,6 +140,22 @@ public class Blockchain {
 	 */
 	public void addIncomingData(SingleData data) throws InterruptedException {
 		dataPool.addData(data);
+	}
+	
+	/**
+	 * Add a new block to be linked at the end of the chain. 
+	 * A consensus calculation will be performed if the incoming block has a local competitor.
+	 * @param block the incoming block to add
+	 */
+	public void addIncomingBlock(Block block) {
+		boolean incomingBlockAdded = consensusBuilder.processExternalBlock(block);
+		if(incomingBlockAdded) {
+			log.info("An incoming block has been linked : "+ block);
+		}
+		else {
+			// TODO something else to do ?
+			log.info("An incoming block has been rejected : "+block);
+		}
 	}
 
 	/**

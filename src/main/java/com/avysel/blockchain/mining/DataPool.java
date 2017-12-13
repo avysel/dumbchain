@@ -53,6 +53,10 @@ public class DataPool {
 		getDataPool().addAll(dataList);
 	}
 
+	public void removeAll(List<SingleData> dataList) {
+		getDataPool().removeAll(dataList);
+	}
+	
 	public List<SingleData> getData(long quantity) {
 		List<SingleData> result = new ArrayList<SingleData>();
 		for(int i=0 ; i < quantity && !getDataPool().isEmpty() ; i++) {

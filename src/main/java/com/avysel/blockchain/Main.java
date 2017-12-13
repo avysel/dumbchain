@@ -16,7 +16,7 @@ public class Main {
 	
 	public static void main (String[] args) {
 
-	    Logger logRoot = Logger.getRootLogger();
+	   /* Logger logRoot = Logger.getRootLogger();
 	    ConsoleAppender ca = new ConsoleAppender();
 	    PatternLayout pattern = new PatternLayout();
 	    pattern.setConversionPattern(UUID.randomUUID().toString().substring(0, 6)+ ":%d{ISO8601} - %-5p [%c] - %m%n");
@@ -24,10 +24,10 @@ public class Main {
 	    ca.setLayout(pattern);
 	    ca.activateOptions();
 	    logRoot.addAppender(ca);
-	    logRoot.setLevel(Level.INFO);
+	    logRoot.setLevel(Level.INFO);*/
 	    
 		Blockchain manager = new Blockchain();
-		log.info("Welcome to blockchain !");
+		log.info("Welcome to blockchain "+manager.getNodeId());
 		
 		for(int i = 1 ; i < 100 ; i++) {
 			try {

@@ -1,5 +1,7 @@
 package com.avysel.blockchain.business;
 
+import java.util.UUID;
+
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.crypto.HashTools;
@@ -27,6 +29,8 @@ public class Blockchain {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 	
+	private String nodeId;
+	
 	// the list of blocks
 	private Chain chain;
 
@@ -40,6 +44,7 @@ public class Blockchain {
 	private NetworkManager network;
 
 	public Blockchain() {
+		this.nodeId = UUID.randomUUID().toString();
 		this.chain = new Chain();
 		createChain();
 		this.dataPool = new DataPool();
@@ -53,6 +58,14 @@ public class Blockchain {
 		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
+	}
+	
+	/**
+	 * Returns the unique ID of the current Blockchain node.
+	 * @return unique ID of this node
+	 */
+	public String getNodeId() {
+		return nodeId;
 	}
 
 	public Chain getChain() {

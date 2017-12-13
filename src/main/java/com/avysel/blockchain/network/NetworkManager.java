@@ -75,13 +75,13 @@ public class NetworkManager {
 		}
 		return serverListeningPort; 
 	}
-	
+
 	/**
 	 * Set the listening port of the current server
 	 * @param port the port
 	 */
 	public static void setServerListeningPort(int port) {		serverListeningPort = port;	}
-	
+
 	/**
 	 * Provides the InetAddress used to send broadcast hello message when a blockchain node is started
 	 * @return the InetAddress that represents broadcast IP address
@@ -98,7 +98,7 @@ public class NetworkManager {
 	public static int getBroadcastPort() {		
 		return broadcastPort;	
 	}
-	
+
 	/**
 	 * Returns the Peer representing the current node
 	 * @return the local Peer
@@ -208,7 +208,7 @@ public class NetworkManager {
 	 * @param data the incoming Block
 	 */
 	private void processIncomingBlock(Block block) {
-		// TODO manage incoming block in blockchain + manage forks
+		// TODO manage incoming block in blockchain + manage forks + remove used data from pool
 	}
 
 	/**
@@ -253,18 +253,15 @@ public class NetworkManager {
 	 * @param peer the Peer to add.
 	 */
 	public void addPeer(Peer peer) {
-		
-		// TODO do not add if local peer, or already exists
-		/*	if(! isLocalPeer(peer)) {
+
+		// TODO do not add if already exists
+		if(! isLocalPeer(peer)) {
 			peers.add(peer);
 			log.info("New peer added : "+peer);
 		}
 		else {
 			log.info("Message from local peer, skip it !");
-		}*/
-
-		peers.add(peer);
-		log.info("New peer added : "+peer);
+		}
 	}
 
 	/**

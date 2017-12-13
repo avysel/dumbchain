@@ -58,11 +58,10 @@ public class PeerListener implements Runnable {
 						log.info("Wait for peer ...");
 						// wait for data
 						datagramSocket.receive(packet);
-						log.info("Get a packet. Is it a peer ?");
+						log.info("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
 
 						// read
 						String str = new String(packet.getData());
-						log.info("Reçu de la part de " + packet.getAddress()	+ " sur le port " + packet.getPort() + " : ");
 						log.info(str);
 
 						processData(str);

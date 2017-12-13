@@ -61,7 +61,7 @@ public class NodeServer {
 						Socket clientSocket = serverSocket.accept();
 
 						// new thread to process the connection
-						log.info("Connexion cliente reçue.");                  
+						log.info("Incoming connection");                  
 						Thread t = new Thread(new ClientProcessor(clientSocket, network));
 						t.start();
 

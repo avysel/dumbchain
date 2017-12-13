@@ -96,4 +96,7 @@ public class Peer {
 		return this.ip+":"+this.port;
 	}
 	
+	public boolean equals(Peer otherPeer) {
+		return this.uid.equals(otherPeer.getUid());
+	}
 }

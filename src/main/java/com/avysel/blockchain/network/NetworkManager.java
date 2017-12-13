@@ -15,11 +15,10 @@ import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
-import com.avysel.blockchain.network.client.PeerExplorer;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
+import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.network.server.NodeServer;
-import com.avysel.blockchain.network.server.PeerListener;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
@@ -34,10 +33,8 @@ public class NetworkManager {
 
 	private NodeServer server;
 	private NodeClient client;
-	private List<Peer> peers;
-	private PeerExplorer peerExplorer;
-	private PeerListener peerListener;
-	private Peer localPeer;
+	private PeerManager peerManager;
+
 
 	private Blockchain blockchain;
 
@@ -60,9 +57,8 @@ public class NetworkManager {
 		this.blockchain = blockchain;
 		server = new NodeServer(this);
 		client = new NodeClient(this);
-		peers = new ArrayList<Peer>();
-		peerExplorer = new PeerExplorer(this);
-		peerListener = new PeerListener(this);	
+
+		peerManager = new PeerManager(this);
 	}
 
 	/**
@@ -99,21 +95,7 @@ public class NetworkManager {
 		return broadcastPort;	
 	}
 
-	/**
-	 * Returns the Peer representing the current node
-	 * @return the local Peer
-	 */
-	public Peer getLocalPeer() {
-		return localPeer;
-	}
 
-	/**
-	 * Sets the Peer represening the current node
-	 * @param localPeer the current node's Peer representation
-	 */
-	public void setLocalPeer(Peer localPeer) {
-		this.localPeer = localPeer;
-	}
 
 	/**
 	 * Provides all InetAddress that can be used on the current network to broadcast data
@@ -144,8 +126,7 @@ public class NetworkManager {
 	 */
 	public void start() {
 		server.start();
-		peerExplorer.wakeUp();
-		peerListener.start();
+		peerManager.start();
 	}
 
 	/**
@@ -153,7 +134,7 @@ public class NetworkManager {
 	 */
 	public void stop() {
 		server.stop();
-		peerListener.stop();
+		peerManager.stop();
 	}
 
 	/**
@@ -241,60 +222,26 @@ public class NetworkManager {
 	}
 
 	/**
+	 * Returns the Peer representing the current node
+	 * @return the local Peer
+	 */
+	public Peer getLocalPeer() {
+		return peerManager.getLocalPeer();
+	}
+
+	/**
+	 * Sets the Peer represening the current node
+	 * @param localPeer the current node's Peer representation
+	 */
+	public void setLocalPeer(Peer localPeer) {
+		this.peerManager.setLocalPeer(localPeer);
+	}	
+
+	/**
 	 * Provides all Peers connected to current node.
 	 * @return
 	 */
 	public List<Peer> getPeers() {
-		return peers;
-	}
-
-	/**
-	 * Add a Peer to the list of connected Peers
-	 * @param peer the Peer to add.
-	 */
-	public void addPeer(Peer peer) {
-
-		// TODO do not add if already exists
-		if(! isLocalPeer(peer)) {
-			peers.add(peer);
-			log.info("New peer added : "+peer);
-		}
-		else {
-			log.info("Message from local peer, skip it !");
-		}
-	}
-
-	/**
-	 * Remove a Peer from the list of connected Peers.
-	 * @param peer the Peer to remove.
-	 */
-	public void removePeer(Peer peer) {
-		peers.remove(peer);
-	}
-
-	/**
-	 * Allows to know if a given Peer is the current local Peer.
-	 * @param peer the Peer that is to be compared with local Peer.
-	 * @return true if the given Peer is the local Peer.
-	 */
-	public boolean isLocalPeer(Peer peer) {
-		return this.localPeer.getUid().equals(peer.getUid());
-	}	
-
-	/**
-	 * Get peers that are still alive
-	 * @return list of alive peers
-	 */
-	public List<Peer> getAlivePeers() {
-		List<Peer> peers = new ArrayList<Peer>();
-		// TODO
-		return peers;
-	}
-
-	/**
-	 * Checks if all connected Peers are stil alive, remove Peers that did not respond for more than DEFAULT_PEER_STILL_ALIVE seconds.
-	 */
-	private void cleanPeersList() {
-		// TODO ping all peers to keep them alive
+		return peerManager.getPeersList();
 	}
 }

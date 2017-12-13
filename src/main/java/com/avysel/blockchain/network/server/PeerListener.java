@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
+import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
@@ -20,12 +21,12 @@ public class PeerListener implements Runnable {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.PeerListener");
 
 	private DatagramSocket datagramSocket;
-	private NetworkManager networkManager;
+	private PeerManager peerManager;
 	private boolean running = true;
 
-	public PeerListener(NetworkManager manager) {
+	public PeerListener(PeerManager manager) {
 		super();
-		this.networkManager = manager;
+		this.peerManager = manager;
 		try {
 			this.datagramSocket = new DatagramSocket(NetworkManager.getBroadcastPort());
 		} catch (SocketException e) {
@@ -91,8 +92,7 @@ public class PeerListener implements Runnable {
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
 				log.info("New peer on the network, add it.");
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
-				// push data to network manager
-				networkManager.addPeer(peer);
+				peerManager.addPeer(peer);
 				break;
 			default:
 				log.warn("Unknown bulk : "+data);

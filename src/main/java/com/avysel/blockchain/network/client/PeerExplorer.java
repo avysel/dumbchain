@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
@@ -18,12 +19,12 @@ import com.avysel.blockchain.tools.JsonMapper;
 public class PeerExplorer {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.client.PeerExplorer");
-	
-	private NetworkManager manager;
 
-	public PeerExplorer(NetworkManager manager) {
+	private PeerManager peerManager;
+
+	public PeerExplorer(PeerManager manager) {
 		super();
-		this.manager = manager;
+		this.peerManager = manager;
 	}	
 
 	/**
@@ -32,7 +33,7 @@ public class PeerExplorer {
 	public void wakeUp() {
 
 		log.info("Local peer says hello.");
-		
+
 		try {
 
 			DatagramSocket clientSocket = new DatagramSocket();
@@ -42,12 +43,12 @@ public class PeerExplorer {
 			// create network exploration request 
 			NetworkDataBulk bulk = new NetworkDataBulk();
 			bulk.setBulkType(NetworkDataBulk.MESSAGE_PEER_HELLO);
-			String peerData = JsonMapper.peerToJson(manager.getLocalPeer());
+			String peerData = JsonMapper.peerToJson(peerManager.getLocalPeer());
 			bulk.setBulkData(peerData);
 			String data = JsonMapper.bulkToJson(bulk);
 
 			log.info(peerData);
-			
+
 			// create and send packet // TODO listAllBroadcastAddresses
 			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getBroadcastPort());
 

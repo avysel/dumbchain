@@ -15,8 +15,7 @@ public class Main {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.Main");
 	
 	public static void main (String[] args) {
-		
-		// PropertyConfigurator.configure("log4j.properties"); TODO use file
+
 	    Logger logRoot = Logger.getRootLogger();
 	    ConsoleAppender ca = new ConsoleAppender();
 	    PatternLayout pattern = new PatternLayout();

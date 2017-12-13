@@ -3,6 +3,8 @@ package com.avysel.blockchain.tools;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
@@ -15,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JsonMapper {
+	
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.tools.JsonMapper");
 	
 	/**
 	 * @param block
@@ -29,6 +33,7 @@ public class JsonMapper {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
 		
 		try {
 			block = mapper.readValue(jsonData, Block.class);
@@ -51,6 +56,7 @@ public class JsonMapper {
 		
 		try {
 			json = mapper.writeValueAsString(block);
+			log.info("Serialized block : "+json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}

@@ -166,8 +166,8 @@ public class NetworkManager {
 		NetworkDataBulk bulk = new NetworkDataBulk();
 
 		// create network packet
-		bulk.setType(NetworkDataBulk.DATATYPE_DATA);
-		bulk.setData(data.getData());
+		bulk.setBulkType(NetworkDataBulk.DATATYPE_DATA);
+		bulk.setBulkData(data.getData());
 
 		// send to all connected peers
 		client.sendDataToAllPeers(bulk);
@@ -182,8 +182,8 @@ public class NetworkManager {
 		log.trace(block.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 
-		bulk.setType(NetworkDataBulk.DATATYPE_BLOCK);
-		bulk.setData(block.getStringData());
+		bulk.setBulkType(NetworkDataBulk.DATATYPE_BLOCK);
+		bulk.setBulkData(JsonMapper.blockToJson(block));
 
 		client.sendDataToAllPeers(bulk);
 	}
@@ -216,15 +216,17 @@ public class NetworkManager {
 	 * @param bulk the incoming @DataBulk
 	 */
 	public void processIncoming(NetworkDataBulk bulk) {
-		switch(bulk.getType()) {
+		switch(bulk.getBulkType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
 			log.info("Get a block from network");
-			Block block = JsonMapper.jsonToBlock(bulk.getData());
+			log.info(bulk);
+			Block block = JsonMapper.jsonToBlock(bulk.getBulkData());
 			processIncomingBlock(block);
 			break;
 		case NetworkDataBulk.DATATYPE_DATA :
 			log.info("Get a data from network");
-			SingleData data = JsonMapper.jsonToData(bulk.getData());
+			log.info(bulk);
+			SingleData data = JsonMapper.jsonToData(bulk.getBulkData());
 			processIncomingData(data);
 			break;
 		case NetworkDataBulk.DATATYPE_CHAIN :

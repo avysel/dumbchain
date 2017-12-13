@@ -117,8 +117,8 @@ public class JsonMapperTest {
 	public void bulkToJson() {
 		
 		NetworkDataBulk bulk = new NetworkDataBulk();
-		bulk.setType(NetworkDataBulk.DATATYPE_BLOCK);
-		bulk.setData(JsonMapper.blockToJson(createTestBlock()));
+		bulk.setBulkType(NetworkDataBulk.DATATYPE_BLOCK);
+		bulk.setBulkData(JsonMapper.blockToJson(createTestBlock()));
 		
 		String json = JsonMapper.bulkToJson(bulk);
 		
@@ -138,9 +138,9 @@ public class JsonMapperTest {
 		System.out.println("Bulk pour json : ");
 		System.out.println(bulk);
 		
-		assertNotNull(bulk.getType());
-		assertEquals(bulk.getType(), NetworkDataBulk.DATATYPE_BLOCK);
-		assertNotNull(bulk.getData());
+		assertNotNull(bulk.getBulkType());
+		assertEquals(bulk.getBulkType(), NetworkDataBulk.DATATYPE_BLOCK);
+		assertNotNull(bulk.getBulkData());
 	}	
 	
 }

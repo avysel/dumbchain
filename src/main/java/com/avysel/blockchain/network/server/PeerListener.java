@@ -87,11 +87,11 @@ public class PeerListener implements Runnable {
 		NetworkDataBulk bulk = JsonMapper.jsonToBulk(data);
 
 		if(bulk != null) {
-			switch(bulk.getType()) {
+			switch(bulk.getBulkType()) {
 
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
 				log.info("New peer on the network, add it.");
-				Peer peer = JsonMapper.jsonToPeer(bulk.getData());
+				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				// push data to network manager
 				networkManager.addPeer(peer);
 				break;

@@ -41,9 +41,9 @@ public class PeerExplorer {
 
 			// create network exploration request 
 			NetworkDataBulk bulk = new NetworkDataBulk();
-			bulk.setType(NetworkDataBulk.MESSAGE_PEER_HELLO);
+			bulk.setBulkType(NetworkDataBulk.MESSAGE_PEER_HELLO);
 			String peerData = JsonMapper.peerToJson(manager.getLocalPeer());
-			bulk.setData(peerData);
+			bulk.setBulkData(peerData);
 			String data = JsonMapper.bulkToJson(bulk);
 
 			log.info(peerData);

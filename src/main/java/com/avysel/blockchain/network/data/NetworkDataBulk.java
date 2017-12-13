@@ -25,8 +25,8 @@ public class NetworkDataBulk {
 	 */
 	public static final int MESSAGE_PEER_HELLO = 300;
 	
-	private int type;
-	private String data;
+	private int bulkType;
+	private String bulkData;
 
 	public NetworkDataBulk() {
 		super();
@@ -34,24 +34,24 @@ public class NetworkDataBulk {
 	
 	public NetworkDataBulk(int type, String data) {
 		super();
-		this.type = type;
-		this.data = data;
+		this.bulkType = type;
+		this.bulkData = data;
 	}
 	
-	public int getType() {
-		return type;
+	public int getBulkType() {
+		return bulkType;
 	}
 	
-	public void setType(int type) {
-		this.type = type;
+	public void setBulkType(int bulkType) {
+		this.bulkType = bulkType;
 	}
 	
-	public String getData() {
-		return data;
+	public String getBulkData() {
+		return bulkData;
 	}
 	
-	public void setData(String data) {
-		this.data = data;
+	public void setBulkData(String bulkData) {
+		this.bulkData = bulkData;
 	}
 	
 	public String toString() {

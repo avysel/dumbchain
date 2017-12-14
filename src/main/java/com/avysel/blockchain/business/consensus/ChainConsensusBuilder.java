@@ -104,10 +104,10 @@ public class ChainConsensusBuilder {
 
 		// TODO verifier aussi la longueur de la chaine suivant le block
 
-		if(block2 == null || block1.getDifficulty() > block2.getDifficulty()) {
+		if(block2 == null || block1.getQuality() > block2.getQuality()) {
 			return block1;
 		}
-		else if(block1 == null || block1.getDifficulty() < block2.getDifficulty()) {
+		else if(block1 == null || block1.getQuality() < block2.getQuality()) {
 			return block2;
 		}
 		else {

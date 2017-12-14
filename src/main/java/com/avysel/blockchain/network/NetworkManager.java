@@ -174,14 +174,14 @@ public class NetworkManager {
 	 * @param data the incoming SingleData
 	 */
 	private void processIncomingData(SingleData data) {
-		log.info("Pending before : "+blockchain.getDataPool().size());
+		log.info("Pool size before : "+blockchain.getDataPool().size());
 		try {
 			blockchain.addIncomingData(data);
 		} catch (InterruptedException e) {
 			// TODO what to do when data not added ?
 			e.printStackTrace();
 		}
-		log.info("Pending after : "+blockchain.getDataPool().size());
+		log.info("Pool size after : "+blockchain.getDataPool().size());
 	}
 
 	/**

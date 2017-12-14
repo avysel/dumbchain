@@ -13,6 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * A @Block
  * Contains a list of @SingleData and all information used to identify the @Block and check its integrity
  */
+/**
+ * @author avanryssel
+ *
+ */
 public class Block {
 	
 	protected BlockHeader blockHeader;
@@ -149,6 +153,17 @@ public class Block {
 		builder.append("}");
 		
 		return builder.toString();
+	}
+	
+	
+	/**
+	 * Returns the quality of a block. 
+	 * Quality is used when two blocks are in competition to be added to the chain, the one with higher quality will be added, the other one will be rejected.
+	 * @return
+	 */
+	public long getQuality() {
+		// TODO how to make it overridable or customisable ?
+		return getDifficulty();
 	}
 
 }

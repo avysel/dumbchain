@@ -93,11 +93,10 @@ public class ChainPart {
 	/**
 	 * Returns the effort needed to produce de @ChainPart.
 	 * The effort is difficulty / number of @Blocks.
-	 * The effort is used when two @ChainParts are candidates to be appended to the @BlockChain. The one with higher effort is the one that will be appended.
 	 * @return
 	 */
-	public float getEffort() {
-		return getDifficulty() / getBlockList().size();
+	public long getEffort() {
+		return (long) (getDifficulty() / getBlockList().size());
 	}
 	
 	/**
@@ -136,5 +135,14 @@ public class ChainPart {
 		else {
 			return 0;
 		}
+	}
+	
+	/**
+	 * Returns the quality of the chain part
+	 * The quality is used when two @ChainParts are candidates to be appended to the @BlockChain. The one with higher effort is the one that will be appended.
+	 * @return
+	 */
+	public long getQuality() {
+		return getEffort();
 	}
 }

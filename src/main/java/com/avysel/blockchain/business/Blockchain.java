@@ -30,6 +30,7 @@ public class Blockchain {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 	
+	// unique identifier of blockchain node
 	private String nodeId;
 	
 	// the list of blocks
@@ -44,6 +45,7 @@ public class Blockchain {
 	// data network input/output
 	private NetworkManager network;
 	
+	// build chain according to consensus rules
 	private ChainConsensusBuilder consensusBuilder;
 
 	public Blockchain() {

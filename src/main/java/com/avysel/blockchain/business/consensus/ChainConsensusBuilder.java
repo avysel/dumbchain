@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.BlockchainManager;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
 
@@ -23,10 +24,17 @@ public class ChainConsensusBuilder {
 	/**
 	 * Check if an incoming block can be added at the end of current chain of instead of an existing block.
 	 * @param incomingBlock the block to add
-	 * @return true if incoming block has been added, false if it has been rejected
+	 * @return true if incoming block has been added or is already in the chain, false if it has been rejected
 	 */
 	public boolean processExternalBlock(Block incomingBlock) {
 
+		Block existingBlock = BlockchainManager.findBlockByHash(chain, incomingBlock.getHash());
+		if(existingBlock != null) {
+			// The block is already in chain
+			log.info("The incoming block is already in chain");
+			return true;
+		}
+		
 		if(isSuitableNextBlock(incomingBlock)) {
 			// the incoming block can be easily added at the end of chain
 			chain.linkBlock(incomingBlock);
@@ -42,7 +50,7 @@ public class ChainConsensusBuilder {
 			// find out the best block between incoming and local competitor
 			Block bestBlock = bestBlock(localCompetitor, incomingBlock);
 
-			if(bestBlock != localCompetitor) { // TODO need an equals ?
+			if(bestBlock.equals(localCompetitor)) {
 				// the best block is the incoming one, remove local block
 				List<Block> removedBlocksList = chain.unlinkBlock(localCompetitor);
 

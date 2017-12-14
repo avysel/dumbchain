@@ -155,6 +155,9 @@ public class Block {
 		return builder.toString();
 	}
 	
+	public boolean equals(Block otherBlock) {
+		return this.getHash().equals(otherBlock.getHash());
+	}
 	
 	/**
 	 * Returns the quality of a block. 

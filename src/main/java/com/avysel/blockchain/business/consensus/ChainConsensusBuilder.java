@@ -60,39 +60,11 @@ public class ChainConsensusBuilder {
 			return true;
 		}
 		
-		if(isSuitableNextBlock(incomingBlock)) {
-			// the incoming block can be easily added at the end of chain
-			chain.linkBlock(incomingBlock);
-			cleanDataPool(incomingBlock);
-			return true;
-		}
-		else {
-			// there is a competition between the incoming block and an existing block
-
-			// find out the competitor block in current chain
-			Block localCompetitor = findCompetitorInChain(incomingBlock);
-
-			// find out the best block between incoming and local competitor
-			Block bestBlock = bestBlock(localCompetitor, incomingBlock);
-
-			if(bestBlock.equals(localCompetitor)) {
-				// the best block is the incoming one, remove local block
-				List<Block> removedBlocksList = chain.unlinkBlock(localCompetitor);
-
-				// add incoming block
-				chain.linkBlock(bestBlock);
-				
-				// put back in data pool data from removed blocks
-				for(Block removedBlock : removedBlocksList) {
-					resetDataPool(removedBlock);
-				}
-				return true;
-			}
-			else {
-				// the best block is the local one, incoming block is rejected, current chain stays unchanged
-				return false;
-			}
-		}
+		// the incoming block can be easily added at the end of chain
+		chain.linkBlock(incomingBlock);
+		cleanDataPool(incomingBlock);
+		return true;
+		
 	}
 
 	private boolean isSuitableNextBlock(Block incomingBlock) {

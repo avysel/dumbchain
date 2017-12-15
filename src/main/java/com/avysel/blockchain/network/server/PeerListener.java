@@ -27,14 +27,16 @@ public class PeerListener implements Runnable {
 	public PeerListener(PeerManager manager) {
 		super();
 		this.peerManager = manager;
+	}
+
+	public void start() {
+		
 		try {
 			this.datagramSocket = new DatagramSocket(NetworkManager.getBroadcastPort());
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void start() {
+		
 		Thread t = new Thread(this);
 		t.start();
 	}

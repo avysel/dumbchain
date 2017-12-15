@@ -36,8 +36,10 @@ public class ChainConsensusBuilder {
 		if(incomingBlock == null) return false;
 		
 		// integrity of block has to be ok
-		if( ! BlockchainManager.checkBlockHash(incomingBlock))	
-			throw new BlockIntegrityException("Incoming block "+incomingBlock.getHash()+" rejected because of wrong hash.");
+		if( ! BlockchainManager.checkBlockHash(incomingBlock))	{
+			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because of wrong hash.");
+			return false;
+		}
 		
 		// block has to respect proof of work
 		IProof proof = new ProofOfWork();

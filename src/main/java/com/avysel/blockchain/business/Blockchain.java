@@ -133,7 +133,7 @@ public class Blockchain {
 	}
 
 	public DataPool getDataPool() {
-		return this.getDataPool();
+		return this.dataPool;
 	}
 
 	/**

@@ -75,7 +75,7 @@ public class Miner {
 	 * Create a @Block
 	 * @return a @Block that contains random data taken from @DataPool
 	 */
-	private Block mine() {
+	public Block mine() {
 		Block block;
 		List<SingleData> dataList = new ArrayList<SingleData>();
 

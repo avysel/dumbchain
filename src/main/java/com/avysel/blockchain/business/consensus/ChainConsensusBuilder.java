@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
+import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
 
@@ -25,9 +26,14 @@ public class ChainConsensusBuilder {
 	 * Check if an incoming block can be added at the end of current chain of instead of an existing block.
 	 * @param incomingBlock the block to add
 	 * @return true if incoming block has been added or is already in the chain, false if it has been rejected
+	 * @throws BlockIntegrityException 
 	 */
-	public boolean processExternalBlock(Block incomingBlock) {
+	public boolean processExternalBlock(Block incomingBlock) throws BlockIntegrityException {
 
+		if(incomingBlock == null) return false;
+		if( ! BlockchainManager.checkBlockHash(incomingBlock))	
+			throw new BlockIntegrityException("Incoming block "+incomingBlock.getHash()+" rejected because of wrong hash");
+		
 		Block existingBlock = BlockchainManager.findBlockByHash(chain, incomingBlock.getHash());
 		if(existingBlock != null) {
 			// The block is already in chain
@@ -70,14 +76,19 @@ public class ChainConsensusBuilder {
 		}
 	}
 
-	private boolean isSuitableNextBlock(Block block) {
+	private boolean isSuitableNextBlock(Block incomingBlock) {
 		// can the block be added to the end of chain ?
-		// verifier index, previous ... pour déterminer sa place
-		return true;
+
+		Block competitor = findCompetitorInChain(incomingBlock);
+		Block lastBlock = chain.getLastBlock();
+		
+		return competitor == null 
+				&& incomingBlock.getPreviousHash().equals(lastBlock.getHash())
+				&& incomingBlock.getIndex() == incomingBlock.getIndex() +1 ;
 	}
 
-	private Block findCompetitorInChain(Block block) {
-		return new Block();
+	private Block findCompetitorInChain(Block incomingBlock) {
+		return BlockchainManager.findBlockByIndex(chain, incomingBlock.getIndex());
 	}
 
 	/**

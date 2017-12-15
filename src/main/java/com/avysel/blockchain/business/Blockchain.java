@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.consensus.ChainConsensusBuilder;
 import com.avysel.blockchain.crypto.HashTools;
+import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.DataPool;
 import com.avysel.blockchain.mining.Miner;
@@ -150,7 +151,13 @@ public class Blockchain {
 	 * @param block the incoming block to add
 	 */
 	public void addIncomingBlock(Block block) {
-		boolean incomingBlockAdded = consensusBuilder.processExternalBlock(block);
+		boolean incomingBlockAdded;
+		try {
+			incomingBlockAdded = consensusBuilder.processExternalBlock(block);
+		} catch (BlockIntegrityException e) {
+			incomingBlockAdded = false;
+			e.printStackTrace();
+		}
 		if(incomingBlockAdded) {
 			log.info("An incoming block has been linked : "+ block);
 		}

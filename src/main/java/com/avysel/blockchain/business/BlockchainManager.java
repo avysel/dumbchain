@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
+import com.avysel.blockchain.model.data.SingleData;
 
 /**
  * Provides some operation on the Blockchain, such as finding a Block or checking Chain integrity.
@@ -45,6 +46,27 @@ public class BlockchainManager {
 		}
 		return null;
 	}	
+	
+	/**
+	 * Find the Block that contains the data identified by given data unique identifier
+	 * @param chain the Chain to explore
+	 * @param dataUniqueId the identifier of targeted data
+	 * @return the Block that contains searched data
+	 */
+	public static Block findBlockByData(ChainPart chain, String dataUniqueId) {
+		if(dataUniqueId == null) return null;
+		
+		for(Block block : chain.getBlockList()){
+			List<SingleData> dataList = block.getDataList();
+			if(dataList != null) {
+				for(SingleData data : dataList) {
+					if(dataUniqueId.equals(data.getUniqueId()))
+						return block;
+				}
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Perform integrity check for the @Chain

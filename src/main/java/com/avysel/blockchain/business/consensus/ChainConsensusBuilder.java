@@ -15,7 +15,7 @@ import com.avysel.blockchain.model.data.SingleData;
 
 public class ChainConsensusBuilder {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.consensus.ChainBuilder");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.consensus.ChainConsensusBuilder");
 
 	private Blockchain blockchain;
 	private Chain chain;
@@ -48,18 +48,18 @@ public class ChainConsensusBuilder {
 			return false;
 		}
 		
-		// no one of data in the block can already be in a previous block
-		if(dataAlreadyInChain(incomingBlock)) {
-			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because it contains data already validated in chain.");
-			return false;
-		}
-		
 		// block can't already exist in the chain
 		Block existingBlock = BlockchainManager.findBlockByHash(chain, incomingBlock.getHash());
 		if(existingBlock != null) {
 			// The block is already in chain
 			log.info("The incoming block is already in chain");
-			return true;
+			return false;
+		}
+		
+		// no one of data in the block can already be in a previous block
+		if(dataAlreadyInChain(incomingBlock)) {
+			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because it contains data already validated in chain.");
+			return false;
 		}
 		
 		// the incoming block can be easily added at the end of chain

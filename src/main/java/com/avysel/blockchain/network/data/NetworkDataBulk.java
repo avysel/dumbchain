@@ -32,10 +32,10 @@ public class NetworkDataBulk {
 		super();
 	}	
 	
-	public NetworkDataBulk(int type, String data) {
+	public NetworkDataBulk(int bulkType, String bulkData) {
 		super();
-		this.bulkType = type;
-		this.bulkData = data;
+		this.bulkType = bulkType;
+		this.bulkData = bulkData;
 	}
 	
 	public int getBulkType() {

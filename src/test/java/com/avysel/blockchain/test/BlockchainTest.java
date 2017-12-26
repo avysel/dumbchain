@@ -23,7 +23,7 @@ public class BlockchainTest {
 				e.printStackTrace();
 			}
 	
-		manager.start();
+		//manager.start();
 		manager.display();
 		
 		assertEquals(true, BlockchainManager.checkChain(manager.getChain()));

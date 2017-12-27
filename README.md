@@ -14,7 +14,7 @@ Rien de bien avancé ou utilisable pour le moment.
 - [x] Preuve de travail
 - [ ] Reconstruction de la chaîne existante pour un nouveau noeud
 - [ ] Envoi de la chaîne à un nouveau noeud
-- [ ] Gestion des forks
+- [/] Gestion des forks
 
 ### Sécurité
 - [x] Vérification de l'intégrité de la chaîne par les hachages
@@ -26,7 +26,7 @@ Rien de bien avancé ou utilisable pour le moment.
 - [x] Manager réseau qui fait le lien avec la chaîne en cours
 - [x] Agent UDP pour envoyer un broadcast de découverte de pairs
 - [x] Agent UDP qui traite les demandes de découvertes reçues
-- [ ] Manager qui maintient les connexions avec les pairs connus
+- [/] Manager qui maintient les connexions avec les pairs connus
 - [x] Agent TCP client qui envoie les blocs créés
 - [x] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
 - [ ] Chiffrer les données transmises
@@ -44,4 +44,5 @@ Rien de bien avancé ou utilisable pour le moment.
 
 ### Technique
 - [ ] Initialiser modules Java 9
+- [ ] Optimiser la recherche de block et de données avec un index
 

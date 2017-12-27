@@ -2,7 +2,8 @@
 
 POC de blockchain en Java 9.
 
-Rien de bien avancé ou utilisable pour le moment.
+Ce projet a pour but de développer un système de stockage de données en utilisant la blockchain.
+Il a été créé dans le but de réaliser un exemple de fonctionnement de blockchain, et non pour être réellement utilisé en production. A ce titre, il peut comporter des failles de sécurité, des problèmes d'optimisation, etc ... Il est livré en l'état sans aucune garantie.
 
 
 # A faire
@@ -45,4 +46,5 @@ Rien de bien avancé ou utilisable pour le moment.
 ### Technique
 - [ ] Initialiser modules Java 9
 - [ ] Optimiser la recherche de block et de données avec un index
+- [ ] Optimiser BD par utilisation d'un pool de connexions.
 

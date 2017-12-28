@@ -1,4 +1,4 @@
-package db;
+package com.avysel.blockchain.test.db;
 
 import java.util.UUID;
 

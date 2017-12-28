@@ -214,8 +214,13 @@ public class NetworkManager {
 			log.info("Get a chain from network");
 			// TODO usefull ?
 			break;
+		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
+			log.info("A peer answered to hello, add it.");
+			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
+			peerManager.addPeer(peer);
+			break;				
 		default: 
-			System.out.println("error incoming, unkown type");
+			log.error("error incoming, unkown type");
 			break;
 
 		}

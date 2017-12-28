@@ -24,6 +24,11 @@ public class NetworkDataBulk {
 	 * This bulk contains an message from a new node announcing its arrival on network.
 	 */
 	public static final int MESSAGE_PEER_HELLO = 300;
+
+	/**
+	 * This bulk contains an answer to a new node hello message, to give back our current ip.port.
+	 */
+	public static final int MESSAGE_PEER_HELLO_ANSWER = 301;
 	
 	private int bulkType;
 	private String bulkData;

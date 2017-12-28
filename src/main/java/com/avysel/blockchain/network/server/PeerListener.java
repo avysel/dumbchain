@@ -1,8 +1,10 @@
 package com.avysel.blockchain.network.server;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Socket;
 import java.net.SocketException;
 
 import org.apache.log4j.Logger;
@@ -95,7 +97,8 @@ public class PeerListener implements Runnable {
 				log.info("New peer on the network, add it.");
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				peerManager.addPeer(peer);
-				break;
+				answerBack(peer);
+				break;			
 			default:
 				log.warn("Unknown bulk : "+data);
 				break;
@@ -107,4 +110,25 @@ public class PeerListener implements Runnable {
 		running = false;
 	}
 
+	
+	private void answerBack(Peer peer) {
+		// create network exploration request 
+		NetworkDataBulk bulk = new NetworkDataBulk();
+		bulk.setBulkType(NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER);
+		String peerData = JsonMapper.peerToJson(peerManager.getLocalPeer());
+		bulk.setBulkData(peerData);	
+		
+		// create and send packet to peer
+		Socket clientSocket;
+		try {
+			clientSocket = new Socket(peer.getIp(), peer.getPort());
+			log.info("Send back answer to peer's hello.");
+			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
+			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
+			bos.flush();	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

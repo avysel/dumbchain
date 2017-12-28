@@ -31,6 +31,10 @@ public class Blockchain {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 	
+	
+	// is the current blockchain mining ? (default true, else only building chain by listening)
+	private boolean mining;
+	
 	// unique identifier of blockchain node
 	private String nodeId;
 	
@@ -50,22 +54,23 @@ public class Blockchain {
 	private ChainConsensusBuilder consensusBuilder;
 
 	public Blockchain() {
+		this.mining = true;
+		init();
+	}
+
+	public Blockchain(boolean mining) {
+		this.mining = mining;
+		init();
+	}
+	
+	private void init() {
 		this.nodeId = UUID.randomUUID().toString();
 		this.chain = new Chain();
 		createChain();
 		this.dataPool = new DataPool();
-		this.miner = new Miner(this, dataPool);	
-		this.network = new NetworkManager(this);
-		this.consensusBuilder = new ChainConsensusBuilder(this);
-	}
-
-	public Blockchain(Chain chain) {
-		this.chain = chain;
-		createChain();
-		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
-		this.consensusBuilder = new ChainConsensusBuilder(this);
+		this.consensusBuilder = new ChainConsensusBuilder(this);		
 	}
 	
 	/**
@@ -86,6 +91,18 @@ public class Blockchain {
 	private void createChain() {
 		chain = new Chain();
 		createGenesis();
+	}
+
+	public boolean isMining() {
+		return mining;
+	}
+
+	public void setMining(boolean mining) {
+		this.mining = mining;
+		if(mining)
+			miner.start();
+		else
+			miner.stop();
 	}
 
 	/**
@@ -198,7 +215,8 @@ public class Blockchain {
 	public void start() {
 		log.info("Starting blockchain");
 		network.start();
-		miner.start();
+		if(mining)
+			miner.start();
 	}
 
 	/**

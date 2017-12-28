@@ -15,15 +15,23 @@ import com.avysel.blockchain.tools.Util;
 
 public class DBManager {
 
-	private static String DB_FILE_PATH = "file:///C:/leveldb.txt";
+	private static String DB_DIR_PATH = "C:\\Developpement\\leveldb";
 	
 	private DB db;
 
+	private void createDir() {
+		File directory = new File(DB_DIR_PATH);
+		if(!directory.exists()) {
+			directory.mkdir();
+		}
+	}
+	
 	public void openDB() {
 		Options options = new Options();
 		options.createIfMissing(true);
 		try {
-			db = factory.open(new File(DBManager.DB_FILE_PATH), options);
+			createDir();
+			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -47,6 +55,7 @@ public class DBManager {
 	}
 
 	public void putBlock(Block block) {
+		openDB();
 		db.put(Util.bytes(block.getHash()), Util.bytes(block));
 	}
 
@@ -59,6 +68,7 @@ public class DBManager {
 	}
 
 	public Block getBlock(String hash) {
+		openDB();
 		String sBlock = Util.string(db.get(Util.bytes(hash)));
 		return JsonMapper.jsonToBlock(sBlock);
 	}

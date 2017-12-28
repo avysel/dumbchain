@@ -224,4 +224,13 @@ public class Blockchain {
 		network.stop();
 		miner.stop();
 	}
+	
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append('\n');
+		buffer.append("Node : ").append(this.nodeId).append('\n');
+		buffer.append("Mining : ").append(this.mining).append('\n');
+		
+		return buffer.toString();
+	}
 }

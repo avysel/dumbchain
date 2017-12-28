@@ -21,18 +21,18 @@ public class Main {
 	    logRoot.addAppender(ca);
 	    logRoot.setLevel(Level.INFO);*/
 	    
-		Blockchain manager = new Blockchain(Blockchain.MINING);
-		log.info("Welcome to blockchain "+manager.getNodeId());
+		Blockchain blockchain = new Blockchain(Blockchain.MINING);
+		log.info("Welcome to blockchain "+blockchain.toString());
 		
 		for(int i = 1 ; i < 100 ; i++) {
 			try {
-				manager.addIncomingData(new SingleData("data"+i));
+				blockchain.addIncomingData(new SingleData("data"+i));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		manager.start();
-		manager.display();				
+		blockchain.start();
+		blockchain.display();				
 	}
 }

@@ -62,11 +62,17 @@ public class ChainConsensusBuilder {
 			return false;
 		}
 		
-		// the incoming block can be easily added at the end of chain
-		chain.linkBlock(incomingBlock);
-		cleanDataPool(incomingBlock);
-		return true;
-		
+		if(isSuitableNextBlock(incomingBlock)) {
+			// the incoming block can be easily added at the end of chain
+			chain.linkBlock(incomingBlock);
+			cleanDataPool(incomingBlock);
+			return true;
+		}
+		else {
+			// TODO what to do ?
+			log.error("Incoming block cannot be added for some reasons");
+			return false;
+		}
 	}
 
 	private boolean isSuitableNextBlock(Block incomingBlock) {
@@ -109,7 +115,7 @@ public class ChainConsensusBuilder {
 	 * Put back to blockchain's data pool all given block's data. Use it when a block is to be unlinked from the chain.
 	 * @param block the block that is going to be unlinked from the chain
 	 */
-	private void resetDataPool(Block block) {
+	private void putBackDataToPool(Block block) {
 		// put back in pool data of this block (because block is rejected)
 		blockchain.getDataPool().addAll(block.getDataList());
 	}

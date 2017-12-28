@@ -55,6 +55,9 @@ public class ClientProcessor implements Runnable {
 				debug += "\t -> Commande reçue : " + data + "\n";
 				log.trace("\n" + debug);				
 
+				// keep in memory time of last contact for this peer
+				network.markPeerAlive(remote.getAddress().getHostAddress(), remote.getPort());
+				
 				// read the data
 				NetworkDataBulk bulk = getDataBulk(data);
 

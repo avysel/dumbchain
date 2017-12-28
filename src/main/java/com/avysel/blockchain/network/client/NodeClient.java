@@ -25,9 +25,10 @@ public class NodeClient {
 
 	public void sendDataToAllPeers(NetworkDataBulk bulk) {
 
-		// send data to all peers
-		List<Peer> peers = networkManager.getPeers();
+		// send data to all alive peers
+		List<Peer> peers = networkManager.getAlivePeers();
 		for(Peer peer : peers) {
+			log.info("Send to "+peer.toString() + " : "+bulk.toString());
 			sendData(bulk, peer);
 		}
 	}

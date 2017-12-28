@@ -1,8 +1,5 @@
 package com.avysel.blockchain.network.peer;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +17,14 @@ public class PeerManager {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.peer.PeerManager");
 	private Peer localPeer;
-	private NetworkManager networkManager;
 	private PeerExplorer peerExplorer;
 	private PeerListener peerListener;
 
 	private List<Peer> peersList = new ArrayList<Peer>();
 
-	
-	public PeerManager(NetworkManager networkManager) {
+
+	public PeerManager() {
 		super();
-		this.networkManager = networkManager;
 		peerExplorer = new PeerExplorer(this);
 		peerListener = new PeerListener(this);	
 	}
@@ -43,7 +38,7 @@ public class PeerManager {
 	}
 
 	/**
-	 * Sets the Peer represening the current node
+	 * Sets the Peer representing the current node
 	 * @param localPeer the current node's Peer representation
 	 */
 	public void setLocalPeer(Peer localPeer) {
@@ -61,28 +56,28 @@ public class PeerManager {
 	public void start() {
 		peerExplorer.wakeUp();
 		peerListener.start();
-		startPeerCleaner();
 	}
-	
+
 	public void stop() {
 		peerListener.stop();
-		stopPeerCleaner();
 	}
-	
+
 	/**
 	 * Add a Peer to the list of connected Peers
 	 * @param peer the Peer to add.
 	 */
 	public void addPeer(Peer peer) {
 
-	/*	if(! isLocalPeer(peer) && ! peerExists(peer)) {
+		/*	
+		 * TODO commented for local test only
+		 * if(! isLocalPeer(peer) && ! peerExists(peer)) {
 			peersList.add(peer);
 			log.info("New peer added : "+peer);
 		}
 		else {
 			log.info("Skip adding peer : "+peer);
 		}*/
-		
+
 		peersList.add(peer);
 		log.info("New peer added : "+peer);
 	}
@@ -108,30 +103,51 @@ public class PeerManager {
 		return peersList.contains(peer);
 	}
 
-	private void stopPeerCleaner() {
-		cleanPeersList();
-	}	
-	
-	private void startPeerCleaner() {
-		cleanPeersList();
+	/**
+	 * Find a peer by IP and port
+	 * @param ip the ip
+	 * @param port the port
+	 * @return the peer that is registered with given ip and port
+	 */
+	public Peer findPeer(String ip, int port) {
+		for(Peer peer : peersList) {
+			if(peer.getIp().equals(ip) && peer.getPort() == port) {
+				return peer;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Store last contact time for the peer hosted at a given IP/port.
+	 * @param ip
+	 * @param port
+	 */
+	public void markPeerAsAlive(String ip, int port) {
+		Peer peer = findPeer(ip, port);
+		if(peer != null) {
+			peer.setLastAlive(System.currentTimeMillis());
+			log.info("Peer "+peer.toString()+" is still alive");
+		}
+		else {
+			log.warn("Peer "+ip+"/"+port+" is not found to be marked alive");
+		}
 	}
 	
 	/**
-	 * Checks if all connected Peers are stil alive, remove Peers that did not respond for more than DEFAULT_PEER_STILL_ALIVE seconds.
+	 * Returns the list of peers we had contact with in less than NetworkManager.DEFAULT_PEER_STILL_ALIVE seconds ago.
+	 * @return the list of peers considered as still alive
 	 */
-	private void cleanPeersList() {
+	public List<Peer> getAlivePeers() {
+		List<Peer> alivePeers = new ArrayList<Peer>();
+		long currentTime = System.currentTimeMillis();
+		
 		for(Peer peer : peersList) {
-			try {
-				InetAddress addr = InetAddress.getByName(peer.getIp());
-				if(!addr.isReachable(5000)) {
-					removePeer(peer);
-					log.warn("Removing unreachable peer "+peer);
-				}
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if(currentTime - peer.getLastAlive() < (NetworkManager.DEFAULT_PEER_STILL_ALIVE * 1000)) {
+				alivePeers.add(peer);
 			}
 		}
+		
+		return alivePeers;
 	}
 }

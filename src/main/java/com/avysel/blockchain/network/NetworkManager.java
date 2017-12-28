@@ -58,7 +58,7 @@ public class NetworkManager {
 		server = new NodeServer(this);
 		client = new NodeClient(this);
 
-		peerManager = new PeerManager(this);
+		peerManager = new PeerManager();
 	}
 
 	/**
@@ -243,5 +243,17 @@ public class NetworkManager {
 	 */
 	public List<Peer> getPeers() {
 		return peerManager.getPeersList();
+	}
+	
+	/**
+	 * Returns the list of peers we had contact with in less than NetworkManager.DEFAULT_PEER_STILL_ALIVE seconds ago.
+	 * @return the list of peers considered as still alive
+	 */
+	public List<Peer> getAlivePeers() {
+		return peerManager.getAlivePeers();
+	}
+	
+	public void markPeerAlive(String ip, int port) {
+		peerManager.markPeerAsAlive(ip, port);
 	}
 }

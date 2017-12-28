@@ -21,7 +21,7 @@ public class Main {
 	    logRoot.addAppender(ca);
 	    logRoot.setLevel(Level.INFO);*/
 	    
-		Blockchain manager = new Blockchain();
+		Blockchain manager = new Blockchain(Blockchain.MINING);
 		log.info("Welcome to blockchain "+manager.getNodeId());
 		
 		for(int i = 1 ; i < 100 ; i++) {

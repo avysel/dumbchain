@@ -17,18 +17,15 @@ import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.NetworkManager;
 
-/*
- * TODO verifier integrite d'un bloc a chaque lecture (HashTools.checkHash)
- * TODO verifier integrite de l'arbre a chaque initialisation
- *
- */
-
 /**
  * The main class of the Blockchain.
  * Contains a unique @Chain of @Blocks and provides available operations on it.
  */
 public class Blockchain {
 
+	public static final boolean MINING = true;
+	public static final boolean NOT_MINING = false;
+	
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 	
 	

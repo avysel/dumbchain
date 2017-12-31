@@ -20,9 +20,9 @@ public class Main {
 
 		Blockchain blockchain = new Blockchain();
 		processParams(args, blockchain);
-		//log.info("Welcome to blockchain "+blockchain.toString());
+		log.info("Welcome to blockchain "+blockchain.toString());
 
-		/*	initTestData(blockchain); */
+		initTestData(blockchain);
 
 		blockchain.start();
 		blockchain.display();			
@@ -60,7 +60,7 @@ public class Main {
 				}
 				break;
 			case "-help" :
-				log.info("Help");
+				System.out.println("Usage : \n\t -mining 1 for a mining node. \n\t -mining 0 for a not mining node.");
 				break;
 			default:
 				log.error("Unknown parameter : "+args[i]);

@@ -47,4 +47,5 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] Initialiser modules Java 9
 - [ ] Optimiser la recherche de block et de données avec un index
 - [ ] Optimiser BD par utilisation d'un pool de connexions.
+- [x] Lancement du noeud avec minage ou non en ligne de commande
 

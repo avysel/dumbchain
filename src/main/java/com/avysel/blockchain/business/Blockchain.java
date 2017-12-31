@@ -25,16 +25,16 @@ public class Blockchain {
 
 	public static final boolean MINING = true;
 	public static final boolean NOT_MINING = false;
-	
+
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
-	
-	
+
+
 	// is the current blockchain mining ? (default true, else only building chain by listening)
 	private boolean mining;
-	
+
 	// unique identifier of blockchain node
 	private String nodeId;
-	
+
 	// the list of blocks
 	private Chain chain;
 
@@ -46,7 +46,7 @@ public class Blockchain {
 
 	// data network input/output
 	private NetworkManager network;
-	
+
 	// build chain according to consensus rules
 	private ChainConsensusBuilder consensusBuilder;
 
@@ -59,7 +59,7 @@ public class Blockchain {
 		this.mining = mining;
 		init();
 	}
-	
+
 	private void init() {
 		this.nodeId = UUID.randomUUID().toString();
 		this.chain = new Chain();
@@ -69,7 +69,7 @@ public class Blockchain {
 		this.network = new NetworkManager(this);
 		this.consensusBuilder = new ChainConsensusBuilder(this);		
 	}
-	
+
 	/**
 	 * Returns the unique ID of the current Blockchain node.
 	 * @return unique ID of this node
@@ -95,11 +95,13 @@ public class Blockchain {
 	}
 
 	public void setMining(boolean mining) {
-		this.mining = mining;
-		if(mining)
-			miner.start();
-		else
-			miner.stop();
+		if(this.mining != mining) {
+			this.mining = mining;
+			if(mining)
+				miner.start();
+			else
+				miner.stop();
+		}
 	}
 
 	/**
@@ -158,7 +160,7 @@ public class Blockchain {
 	public void addIncomingData(SingleData data) throws InterruptedException {
 		dataPool.addData(data);
 	}
-	
+
 	/**
 	 * Add a new block to be linked at the end of the chain. 
 	 * A consensus calculation will be performed if the incoming block has a local competitor.
@@ -187,10 +189,10 @@ public class Blockchain {
 	 * @param block the block to add
 	 */
 	public void addBlock(Block block) {
-		
+
 		// link block to current chain
 		getChain().linkBlock(block);
-		
+
 		// send block to the network
 		network.sendBlock(block);
 	}
@@ -224,13 +226,13 @@ public class Blockchain {
 		network.stop();
 		miner.stop();
 	}
-	
+
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append('\n');
 		buffer.append("Node : ").append(this.nodeId).append('\n');
 		buffer.append("Mining : ").append(this.mining).append('\n');
-		
+
 		return buffer.toString();
 	}
 }

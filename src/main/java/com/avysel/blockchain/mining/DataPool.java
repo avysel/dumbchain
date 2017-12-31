@@ -70,8 +70,10 @@ public class DataPool {
 	 * @return a @List<SingleData> that contains a random quantity of data
 	 */
 	public  List<SingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
-		int quantity;
 		List<SingleData> result = new ArrayList<SingleData>();
+		if(getDataPool().isEmpty()) return result;
+		
+		int quantity;
 		do {
 			// random quantity of data to take in pending data (no more than half of remaining)
 			quantity = (new Random()).nextInt(getDataPool().size() / 2) +1;

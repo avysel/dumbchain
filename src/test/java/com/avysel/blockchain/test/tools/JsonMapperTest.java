@@ -83,8 +83,8 @@ public class JsonMapperTest {
 		
 		assertNotNull(data.getData());
 		assertEquals(data.getData(), "data1");
-		assertNotNull(data.getUniqueId());
-		assertEquals(data.getUniqueId(), "2cb9e2a9-fa4b-489c-914a-fa6dffce88fd");
+		assertNotNull(data.getHash());
+		assertEquals(data.getHash(), "2cb9e2a9-fa4b-489c-914a-fa6dffce88fd");
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class JsonMapperTest {
 		
 		assertNotNull(data.getData());
 		assertEquals(data.getData(), "data1");
-		assertNull(data.getUniqueId());
+		assertNull(data.getHash());
 	}
 	
 	@Test

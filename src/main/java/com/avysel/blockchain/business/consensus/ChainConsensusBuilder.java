@@ -95,7 +95,7 @@ public class ChainConsensusBuilder {
 	private boolean dataAlreadyInChain(Block incomingBlock) {
 		List<SingleData> dataList = incomingBlock.getDataList();
 		for(SingleData data : dataList) {
-			if(BlockchainManager.findBlockByData(chain, data.getUniqueId()) != null)
+			if(BlockchainManager.findBlockByData(chain, data.getHash()) != null)
 				return true;
 		}
 		return false;

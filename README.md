@@ -19,8 +19,8 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 ### Sécurité
 - [x] Vérification de l'intégrité de la chaîne par les hachages
-- [ ] Calcul de la racine de Merkle d'un bloc
-- [ ] Vérification de l'intégrité de la chaîne par l'arbre de Merkle
+- [x] Calcul de la racine de Merkle d'un bloc
+- [ ] Vérification de la présence d'une transaction grâce à l'arbre de Merkle
 
 ### Réseau
 - [x] Mapping JSON des données

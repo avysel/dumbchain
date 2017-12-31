@@ -35,13 +35,13 @@ public class DataPool {
 	 */
 	public void addData(SingleData data) throws InterruptedException {
 		
-		if(!exists(data.getUniqueId())) {
+		if(!exists(data.getHash())) {
 			getDataPool().put(data);
 			log.info("New data in pool");
 			log.debug(data);
 		}
 		else {
-			log.warn("Data "+data.getUniqueId()+" already exists");
+			log.warn("Data "+data.getHash()+" already exists");
 		}
 	}
 
@@ -112,10 +112,10 @@ public class DataPool {
 	 * @param uniqueId unique identifier of data to check if exists
 	 * @return true if a data with the same unique identifier is present in queue
 	 */
-	public boolean exists(String uniqueId) {
+	public boolean exists(String hash) {
 		Iterator<SingleData> it = getDataPool().iterator();
 		while(it.hasNext())
-			if(it.next().getUniqueId().equals(uniqueId))
+			if(it.next().getHash().equals(hash))
 				return true;
 		return false;
 	}

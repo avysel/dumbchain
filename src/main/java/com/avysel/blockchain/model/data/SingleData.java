@@ -2,13 +2,16 @@ package com.avysel.blockchain.model.data;
 
 import java.util.UUID;
 
+import com.avysel.blockchain.crypto.HashTools;
+
 /**
  * A piece of data that can be included in a @Block.
  * A @Block can contains several @SingleData.
  */
 public class SingleData {
 	private String data;
-	private UUID uniqueId;
+	private String uuid;
+	private String hash;
 
 	public SingleData() {
 		super();
@@ -16,7 +19,8 @@ public class SingleData {
 
 	public SingleData(String data) {
 		this.data = data;
-		this.uniqueId = UUID.randomUUID();
+		this.uuid = UUID.randomUUID().toString();
+		this.hash = HashTools.calculateHash(data+uuid);
 	}
 
 	public String getData() {
@@ -27,20 +31,17 @@ public class SingleData {
 		this.data = data;
 	}
 
-	public String getUniqueId() {
-		if(uniqueId != null)
-			return this.uniqueId.toString();
-		else
-			return null;
+	public String getHash() {
+		return hash;
 	}
 
-	public void setUniqueId(String uniqueId) {
-		this.uniqueId = UUID.fromString(uniqueId);
-	}	
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
 
 	public String toString() {
-		if(uniqueId != null)
-			return data + " - " + uniqueId.toString();
+		if(hash != null)
+			return data + " - " + hash;
 		else
 			return data;
 

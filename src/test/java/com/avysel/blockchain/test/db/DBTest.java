@@ -21,7 +21,7 @@ public class DBTest {
 	private final static String testPreviousHash = "54f56ds4f5qf";
 	private final static long testTimestamp = System.currentTimeMillis();
 	private final static String testDataData = "Test Data";
-	private final static String testUid = UUID.randomUUID().toString();
+	private final static String testDataHash = UUID.randomUUID().toString();
 	
 	@BeforeClass
 	public static void init() {
@@ -33,7 +33,7 @@ public class DBTest {
 		testBlock.setTimestamp(DBTest.testTimestamp);
 		
 		testData.setData(DBTest.testDataData);
-		testData.setUniqueId(DBTest.testUid);
+		testData.setHash(DBTest.testDataHash);
 	}
 	
 	@Test

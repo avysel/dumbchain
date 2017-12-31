@@ -1,5 +1,7 @@
 package com.avysel.blockchain.model.block;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.avysel.blockchain.model.data.SingleData;
@@ -114,11 +116,25 @@ public class Block {
 	 */
 	@JsonIgnore
 	public String getHashData() {
+		// TODO move to byte[] ?
+		// TODO use header data instead of data ?
 		StringBuffer hashData = new StringBuffer();
 		//hashData.append(this.getIndex());
 		//hashData.append(this.getTimestamp());
 		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
 		return hashData.toString();
+	}
+	
+	/**
+	 * Return string representation of data used to calculate block's merkle root
+	 * @return
+	 */
+	@JsonIgnore	
+	public String getMerkleRootData() {
+		// TODO move to byte[] ?
+		StringBuffer hashData = new StringBuffer();
+		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
+		return hashData.toString();		
 	}
 	
 	@JsonIgnore
@@ -169,4 +185,16 @@ public class Block {
 		return getDifficulty();
 	}
 
+	
+	public ArrayList<String> getDataHashesList() {
+		ArrayList<String> list = new ArrayList<String>();
+
+		Iterator<SingleData> it = getDataList().iterator();
+		while(it.hasNext()) {
+			list.add(it.next().getHash());
+		}
+		
+		return list;
+	}	
+	
 }

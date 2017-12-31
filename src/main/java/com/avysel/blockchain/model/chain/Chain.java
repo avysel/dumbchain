@@ -1,6 +1,6 @@
 package com.avysel.blockchain.model.chain;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
@@ -12,7 +12,7 @@ import com.avysel.blockchain.model.block.Genesis;
 public class Chain extends ChainPart {
 	
 	public Chain() {
-		blockList = new ArrayList<Block>();
+		blockList = new LinkedList<Block>();
 	}
 
 	public Block getGenesis() {

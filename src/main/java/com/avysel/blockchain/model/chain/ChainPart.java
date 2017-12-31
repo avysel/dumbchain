@@ -1,6 +1,8 @@
 package com.avysel.blockchain.model.chain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.avysel.blockchain.business.BlockchainManager;
@@ -12,15 +14,15 @@ import com.avysel.blockchain.model.block.Block;
  * It contains the list of @Block, but contains no @Genesis. The @ChainPart is to be appended to an existing @Chain
  */
 public class ChainPart {
-	protected ArrayList<Block> blockList;
+	protected LinkedList<Block> blockList;
 	protected Block firstBlock;
 	protected Block lastBlock;
 	
-	public ArrayList<Block> getBlockList() {
+	public LinkedList<Block> getBlockList() {
 		return blockList;
 	}
 
-	public void setBlockList(ArrayList<Block> blockList) {
+	public void setBlockList(LinkedList<Block> blockList) {
 		this.blockList = blockList;
 	}
 	

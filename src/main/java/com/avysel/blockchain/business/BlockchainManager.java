@@ -53,14 +53,14 @@ public class BlockchainManager {
 	 * @param dataUniqueId the identifier of targeted data
 	 * @return the Block that contains searched data
 	 */
-	public static Block findBlockByData(ChainPart chain, String dataUniqueId) {
-		if(dataUniqueId == null) return null;
+	public static Block findBlockByData(ChainPart chain, String dataHash) {
+		if(dataHash == null) return null;
 		
 		for(Block block : chain.getBlockList()){
 			List<SingleData> dataList = block.getDataList();
 			if(dataList != null) {
 				for(SingleData data : dataList) {
-					if(dataUniqueId.equals(data.getUniqueId()))
+					if(dataHash.equals(data.getHash()))
 						return block;
 				}
 			}

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.crypto.HashTools;
+import com.avysel.blockchain.crypto.MerkleTree;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
@@ -51,7 +52,7 @@ public class Miner {
 	public void start() {
 		// TODO put in a thread
 		log.info("Start miner.");
-		while(mining) {
+		while(mining && dataPool.size() > 10) {
 			Block block = mine();
 			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain size : "+blockchain.getChain().size());
 			log.debug(block);
@@ -102,6 +103,8 @@ public class Miner {
 			block.setTimestamp(System.currentTimeMillis());
 			block.setDifficulty(difficulty);
 
+			block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
+			
 			difficulty ++;
 			
 		} while (! proof.checkCondition(block) ); // try again if pow is not checked

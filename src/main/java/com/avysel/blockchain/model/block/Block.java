@@ -185,7 +185,7 @@ public class Block {
 		return getDifficulty();
 	}
 
-	
+	@JsonIgnore
 	public ArrayList<String> getDataHashesList() {
 		ArrayList<String> list = new ArrayList<String>();
 

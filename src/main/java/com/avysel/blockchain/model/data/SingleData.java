@@ -8,10 +8,11 @@ import com.avysel.blockchain.crypto.HashTools;
  * A piece of data that can be included in a @Block.
  * A @Block can contains several @SingleData.
  */
-public class SingleData {
+public class SingleData implements ISingleData {
 	private String data;
 	private String uuid;
 	private String hash;
+	private Class clazz;
 
 	public SingleData() {
 		super();
@@ -37,6 +38,14 @@ public class SingleData {
 
 	public void setHash(String hash) {
 		this.hash = hash;
+	}
+
+	public Class getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(Class clazz) {
+		this.clazz = clazz;
 	}
 
 	public String toString() {

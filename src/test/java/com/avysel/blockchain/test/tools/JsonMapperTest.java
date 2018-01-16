@@ -75,7 +75,7 @@ public class JsonMapperTest {
 	
 	@Test
 	public void jsonToData() {
-		String json = "{\"data\":\"data1\",\"uniqueId\":\"2cb9e2a9-fa4b-489c-914a-fa6dffce88fd\"}";
+		String json = "{\"data\":\"data1\",\"hash\":\"85f461ede2f6ce88c48c4e96dcfb2b90a124950d704a9007f649554449ad3f7b\",\"clazz\":null}";
 		SingleData data = JsonMapper.jsonToData(json);
 		
 		System.out.println("Data pour json : ");
@@ -84,7 +84,7 @@ public class JsonMapperTest {
 		assertNotNull(data.getData());
 		assertEquals(data.getData(), "data1");
 		assertNotNull(data.getHash());
-		assertEquals(data.getHash(), "2cb9e2a9-fa4b-489c-914a-fa6dffce88fd");
+		assertEquals(data.getHash(), "85f461ede2f6ce88c48c4e96dcfb2b90a124950d704a9007f649554449ad3f7b");
 	}
 
 	@Test

@@ -13,9 +13,9 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Gestion des données en attente (alimentation, piochage aléatoire)
 - [x] Minage de bloc et hachage
 - [x] Preuve de travail
-- [ ] Reconstruction de la chaîne existante pour un nouveau noeud
+- [/] Reconstruction de la chaîne existante pour un nouveau noeud
 - [ ] Envoi de la chaîne à un nouveau noeud
-- [/] Gestion des forks
+- [/] Gestion des blocks entrants
 
 ### Sécurité
 - [x] Vérification de l'intégrité de la chaîne par les hachages

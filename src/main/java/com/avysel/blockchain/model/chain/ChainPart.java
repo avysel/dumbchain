@@ -1,7 +1,5 @@
 package com.avysel.blockchain.model.chain;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,8 +13,8 @@ import com.avysel.blockchain.model.block.Block;
  */
 public class ChainPart {
 	protected LinkedList<Block> blockList;
-	protected Block firstBlock;
-	protected Block lastBlock;
+	protected Block firstBlock; //TODO remove, use LinkedList.getFirst
+	protected Block lastBlock; // TODO remove, use LinkedList.getLast
 	
 	public LinkedList<Block> getBlockList() {
 		return blockList;
@@ -42,7 +40,7 @@ public class ChainPart {
 		this.lastBlock = lastBlock;
 	}	
 
-	private void addBlocks(List<Block> blockList) {
+	public final void addBlocks(List<Block> blockList) {
 		this.getBlockList().addAll(blockList);
 	}
 	

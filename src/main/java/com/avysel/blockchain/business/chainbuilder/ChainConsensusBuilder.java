@@ -1,4 +1,4 @@
-package com.avysel.blockchain.business.consensus;
+package com.avysel.blockchain.business.chainbuilder;
 
 import java.util.List;
 
@@ -27,13 +27,14 @@ public class ChainConsensusBuilder {
 		NONE
 	};
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.consensus.ChainConsensusBuilder");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder");
 
 	private Blockchain blockchain;
 	private Chain chain;
 
 	public ChainConsensusBuilder(Blockchain blockchain) {
-		this.chain = blockchain.getChain();
+		if(blockchain != null) 
+			this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
 	}
 
@@ -75,7 +76,7 @@ public class ChainConsensusBuilder {
 		}
 
 		RejectReason rejectReason = isSuitableNextBlock(incomingBlock);
-		
+
 		if(RejectReason.NONE.equals(rejectReason)) {
 			// the incoming block can be easily added at the end of chain
 			chain.linkBlock(incomingBlock);

@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import com.avysel.blockchain.business.consensus.ChainConsensusBuilder;
-import com.avysel.blockchain.business.consensus.ChainConsensusBuilder.RejectReason;
+import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
+import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;

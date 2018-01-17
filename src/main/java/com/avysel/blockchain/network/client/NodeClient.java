@@ -25,6 +25,13 @@ public class NodeClient {
 
 	public void sendDataToAllPeers(NetworkDataBulk bulk) {
 
+		if(networkManager.getLocalPeer() != null) {
+			bulk.setSender(networkManager.getLocalPeer());
+		}
+		else {
+			log.error("No local peer, unable to set sender data");
+		}
+		
 		// send data to all alive peers
 		List<Peer> peers = networkManager.getAlivePeers();
 		for(Peer peer : peers) {

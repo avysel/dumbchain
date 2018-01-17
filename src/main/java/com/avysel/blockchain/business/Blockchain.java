@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.consensus.ChainConsensusBuilder;
 import com.avysel.blockchain.crypto.HashTools;
-import com.avysel.blockchain.crypto.MerkleTree;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.DataPool;

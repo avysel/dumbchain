@@ -19,7 +19,7 @@ import com.avysel.blockchain.tools.JsonMapper;
 public class ClientProcessor implements Runnable {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
-	
+
 	private Socket socket;
 	private PrintWriter writer = null;
 	private BufferedInputStream reader = null;
@@ -38,6 +38,8 @@ public class ClientProcessor implements Runnable {
 	public void run() {
 		log.info("Start processing incoming client connection");
 
+		// TODO verifier que toute la donnee est bien lue avant de la parser
+		
 		while(socket != null && !socket.isClosed()) {
 			try {
 				writer = new PrintWriter(socket.getOutputStream());
@@ -55,21 +57,23 @@ public class ClientProcessor implements Runnable {
 				debug += "\t -> Commande reçue : " + data + "\n";
 				log.trace("\n" + debug);				
 
-				// keep in memory time of last contact for this peer
-				network.markPeerAlive(remote.getAddress().getHostAddress(), remote.getPort());
-				
 				// read the data
 				NetworkDataBulk bulk = getDataBulk(data);
+				if(bulk != null) {
+					if(bulk.getSender() != null) {
+						// keep in memory time of last contact for this peer
+						network.markPeerAsAlive(bulk.getSender().getIp(), bulk.getSender().getPort());
+					}
 
-				// push data to network manager
-				network.processIncoming(bulk);
+					// push data to network manager
+					network.processIncoming(bulk);
 
-				// send response data to client
-				String response = "OK";
+					// send response data to client
+					String response = "OK";
 
-				writer.write(response);
-				writer.flush();
-
+					writer.write(response);
+					writer.flush();
+				}
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -87,7 +91,12 @@ public class ClientProcessor implements Runnable {
 		int stream;
 		byte[] b = new byte[4096];
 		stream = reader.read(b);
-		data = new String(b, 0, stream);
+		try {
+			data = new String(b, 0, stream);
+		}
+		catch(StringIndexOutOfBoundsException e) {
+
+		}
 		return data;
 	}
 

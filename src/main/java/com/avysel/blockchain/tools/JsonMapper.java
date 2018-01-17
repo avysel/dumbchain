@@ -30,6 +30,9 @@ public class JsonMapper {
 	
 	public static Block jsonToBlock(String jsonData) {
 		Block block = new Block();
+		
+		if(jsonData == null || jsonData.isEmpty()) return null;
+		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
@@ -66,6 +69,8 @@ public class JsonMapper {
 
 	public static SingleData jsonToData(String jsonData) {
 		SingleData data = null;
+		
+		if(jsonData == null || jsonData.isEmpty()) return null;
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
@@ -127,22 +132,25 @@ public class JsonMapper {
 		return json;		
 	}	
 	
-	public static NetworkDataBulk jsonToBulk(String json) {
-		NetworkDataBulk data = null;
+	public static NetworkDataBulk jsonToBulk(String jsonData) {
+		NetworkDataBulk dataBulk = null;
+		
+		if(jsonData == null || jsonData.isEmpty()) return null;
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		try {
-			data = mapper.readValue(json, NetworkDataBulk.class);
+			dataBulk = mapper.readValue(jsonData, NetworkDataBulk.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
+			log.info("JSON : "+jsonData);
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return data;		
+		return dataBulk;		
 	}
 	
 	public static String peerToJson(Peer peer) {
@@ -160,13 +168,15 @@ public class JsonMapper {
 		return json;		
 	}
 	
-	public static Peer jsonToPeer(String json) {
+	public static Peer jsonToPeer(String jsonData) {
 		Peer data = null;
+		
+		if(jsonData == null || jsonData.isEmpty()) return null;
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		try {
-			data = mapper.readValue(json, Peer.class);
+			data = mapper.readValue(jsonData, Peer.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

@@ -1,5 +1,6 @@
 package com.avysel.blockchain.network.data;
 
+import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
@@ -32,6 +33,8 @@ public class NetworkDataBulk {
 	
 	private int bulkType;
 	private String bulkData;
+	
+	private Peer sender;
 
 	public NetworkDataBulk() {
 		super();
@@ -58,7 +61,15 @@ public class NetworkDataBulk {
 	public void setBulkData(String bulkData) {
 		this.bulkData = bulkData;
 	}
-	
+
+	public Peer getSender() {
+		return sender;
+	}
+
+	public void setSender(Peer sender) {
+		this.sender = sender;
+	}
+
 	public String toString() {
 		return JsonMapper.bulkToJson(this);
 	}

@@ -3,6 +3,7 @@ package com.avysel.blockchain.model.data;
 import java.util.UUID;
 
 import com.avysel.blockchain.crypto.HashTools;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A piece of data that can be included in a @Block.
@@ -48,6 +49,7 @@ public class SingleData implements ISingleData {
 		this.clazz = clazz;
 	}
 
+	@JsonIgnore
 	public String toString() {
 		if(hash != null)
 			return data + " - " + hash;

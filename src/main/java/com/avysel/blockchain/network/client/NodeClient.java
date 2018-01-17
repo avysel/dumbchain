@@ -36,7 +36,6 @@ public class NodeClient {
 		List<Peer> peers = networkManager.getAlivePeers();
 		log.info("Nb alive peers : "+peers.size());
 		for(Peer peer : peers) {
-			log.info("Send to "+peer.toString() + " : "+bulk.toString());
 			sendData(bulk, peer);
 		}
 	}
@@ -51,6 +50,8 @@ public class NodeClient {
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
 			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
 			bos.flush();
+			bos.close();
+			clientSocket.close();
 
 		} catch (IOException e) {
 			log.error("Data not send to "+peer.getIp()+":"+peer.getPort());

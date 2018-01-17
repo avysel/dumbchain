@@ -127,6 +127,8 @@ public class PeerListener implements Runnable {
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
 			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
 			bos.flush();	
+			bos.close();
+			clientSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

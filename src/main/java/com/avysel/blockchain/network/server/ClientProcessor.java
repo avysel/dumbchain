@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 
 import org.apache.log4j.Logger;
 
@@ -22,7 +21,7 @@ public class ClientProcessor implements Runnable {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
 
 	private Socket socket;
-	private PrintWriter writer = null;
+	//private PrintWriter writer = null;
 	private BufferedInputStream reader = null;
 	private NetworkManager network = null;
 
@@ -41,44 +40,45 @@ public class ClientProcessor implements Runnable {
 
 		// TODO verifier que toute la donnee est bien lue avant de la parser
 
-		while(socket != null && !socket.isClosed()) {
-			try {
-				writer = new PrintWriter(socket.getOutputStream());
-				reader = new BufferedInputStream(socket.getInputStream());
+		String data = new String();
+		try {
+		//	writer = new PrintWriter(socket.getOutputStream());
+			reader = new BufferedInputStream(socket.getInputStream());
+			
+			InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
+
+			while(socket != null && !socket.isClosed()) {
 
 				// get data from client socket				
-				String data = read();
-
-				InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
-
+				String tmp = read();
+				if(tmp != null && !tmp.isEmpty()) {
+					data += tmp;
+				}
+				else {
+					socket.close();
+				}
 				String debug = "";
 				debug = "Thread : " + Thread.currentThread().getName() + ". ";
 				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
 				debug += " Sur le port : " + remote.getPort() + ".\n";
 				debug += "\t -> Commande reçue : " + data + "\n";
-				log.trace("\n" + debug);				
-
-				// read the data
-				NetworkDataBulk bulk = getDataBulk(data);
-				if(bulk != null) {
-					if(bulk.getSender() != null) {
-						// keep in memory time of last contact for this peer
-						network.markPeerAsAlive(bulk.getSender().getIp(), bulk.getSender().getPort());
-					}
-
-					// push data to network manager
-					network.processIncoming(bulk);
-
-					// send response data to client
-					String response = "OK";
-
-					writer.write(response);
-					writer.flush();
-				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
+				log.info("\n" + debug);
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// read the data
+		NetworkDataBulk bulk = getDataBulk(data);
+		if(bulk != null) {
+			if(bulk.getSender() != null) {
+				// keep in memory time of last contact for this peer
+				network.markPeerAsAlive(bulk.getSender().getIp(), bulk.getSender().getPort());
+			}
+
+			// push data to network manager
+			network.processIncoming(bulk);
+
 		}
 	}
 
@@ -93,16 +93,17 @@ public class ClientProcessor implements Runnable {
 		byte[] b = new byte[4096];
 		try {
 			stream = reader.read(b);
+			if(stream != -1 ) {
+				data = new String(b, 0, stream);
+			}
 		}
 		catch(IOException e) {
-
-		}
-		try {
-			data = new String(b, 0, stream);
+			e.printStackTrace();
 		}
 		catch(StringIndexOutOfBoundsException e) {
-
+			e.printStackTrace();
 		}
+
 		return data;
 	}
 

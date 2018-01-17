@@ -59,7 +59,7 @@ public class JsonMapper {
 		
 		try {
 			json = mapper.writeValueAsString(block);
-			log.info("Serialized block : "+json);
+			log.trace("Serialized block : "+json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -144,7 +144,7 @@ public class JsonMapper {
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			log.info("JSON : "+jsonData);
+			log.trace("JSON : "+jsonData);
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

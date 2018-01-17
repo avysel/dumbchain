@@ -14,6 +14,9 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
 
+/**
+ * Try to build current chain for a new node
+ */
 public class ChainBeginnerBuilder {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainBeginnerBuilder");
 

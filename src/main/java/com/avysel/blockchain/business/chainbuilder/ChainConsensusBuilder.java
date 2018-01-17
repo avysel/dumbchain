@@ -13,6 +13,9 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.data.SingleData;
 
+/**
+ * Manage incoming blocks and deal with forks
+ */
 public class ChainConsensusBuilder {
 
 	public enum RejectReason {

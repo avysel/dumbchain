@@ -56,27 +56,4 @@ public class NodeClient {
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	public void broadcast(NetworkDataBulk bulk) {
-		try {
-
-			// create broadcast socket
-			clientSocket = new DatagramSocket();
-			clientSocket.setBroadcast(true);
-
-			String data = JsonMapper.bulkToJson(bulk);
-
-			// create and send packet // TODO listAllBroadcastAddresses
-			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getPort());
-			clientSocket.send(packet);
-
-		} catch (SocketException e) {
-			e.printStackTrace();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-	}*/
 }

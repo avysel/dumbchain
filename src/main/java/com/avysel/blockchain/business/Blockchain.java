@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.consensus.ChainConsensusBuilder;
+import com.avysel.blockchain.business.consensus.ChainConsensusBuilder.RejectReason;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
@@ -168,7 +169,8 @@ public class Blockchain {
 	public void addIncomingBlock(Block block) {
 		boolean incomingBlockAdded;
 		try {
-			incomingBlockAdded = consensusBuilder.processExternalBlock(block);
+			RejectReason rejectReason = consensusBuilder.processExternalBlock(block);
+			incomingBlockAdded = RejectReason.NONE.equals(rejectReason);
 		} catch (BlockIntegrityException e) {
 			incomingBlockAdded = false;
 			e.printStackTrace();

@@ -15,6 +15,18 @@ import com.avysel.blockchain.model.data.SingleData;
 
 public class ChainConsensusBuilder {
 
+	public enum RejectReason {
+		BLOCK_INTEGRITY,
+		PROOF_OF_WORK,
+		DUPLICATE_BLOCK,
+		DUPLICATE_DATA,
+		COMPETITION,
+		PREVIOUS_HASH,
+		PREVIOUS_INDEX,
+		OTHER,
+		NONE
+	};
+
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.consensus.ChainConsensusBuilder");
 
 	private Blockchain blockchain;
@@ -31,67 +43,69 @@ public class ChainConsensusBuilder {
 	 * @return true if incoming block has been added or is already in the chain, false if it has been rejected
 	 * @throws BlockIntegrityException 
 	 */
-	public boolean processExternalBlock(Block incomingBlock) throws BlockIntegrityException {
+	public RejectReason processExternalBlock(Block incomingBlock) throws BlockIntegrityException {
 
-		if(incomingBlock == null) return false;
-		
+		if(incomingBlock == null) return RejectReason.OTHER;
+
 		// integrity of block has to be ok
 		if( ! BlockchainManager.checkBlockHash(incomingBlock))	{
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because of wrong hash.");
-			return false;
+			return RejectReason.BLOCK_INTEGRITY;
 		}
-		
+
 		// block has to respect proof of work
 		IProof proof = new ProofOfWork();
 		if(!proof.checkCondition(incomingBlock)) {
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because it doesn't respect proof of work condition.");
-			return false;
+			return RejectReason.PROOF_OF_WORK;
 		}
-		
+
 		// block can't already exist in the chain
 		Block existingBlock = BlockchainManager.findBlockByHash(chain, incomingBlock.getHash());
 		if(existingBlock != null) {
 			// The block is already in chain
 			log.info("The incoming block is already in chain");
-			return false;
+			return RejectReason.DUPLICATE_BLOCK;
 		}
-		
+
 		// no one of data in the block can already be in a previous block
 		if(dataAlreadyInChain(incomingBlock)) {
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because it contains data already validated in chain.");
-			return false;
+			return RejectReason.DUPLICATE_DATA;
 		}
+
+		RejectReason rejectReason = isSuitableNextBlock(incomingBlock);
 		
-		if(isSuitableNextBlock(incomingBlock)) {
+		if(RejectReason.NONE.equals(rejectReason)) {
 			// the incoming block can be easily added at the end of chain
 			chain.linkBlock(incomingBlock);
 			cleanDataPool(incomingBlock);
-			return true;
+			return RejectReason.NONE;
 		}
 		else {
-			// TODO what to do ?
-			log.error("Incoming block cannot be added for some reasons");
-			return false;
+			log.error("Incoming block cannot be added for some reasons : "+rejectReason);
+			return rejectReason;
 		}
 	}
 
-	private boolean isSuitableNextBlock(Block incomingBlock) {
+	private RejectReason isSuitableNextBlock(Block incomingBlock) {
 		// can the block be added to the end of chain ?
 
 		Block competitor = findCompetitorInChain(incomingBlock);
 		Block lastBlock = chain.getLastBlock();
-		
-		// the incoming block should has
-		return competitor == null 
-				&& incomingBlock.getPreviousHash().equals(lastBlock.getHash())
-				&& incomingBlock.getIndex() == incomingBlock.getIndex() +1 ;
+
+		if(competitor != null) return RejectReason.COMPETITION;
+		if( ! incomingBlock.getPreviousHash().equals(lastBlock.getHash())) return RejectReason.PREVIOUS_HASH;
+		if( ! (incomingBlock.getIndex() == incomingBlock.getIndex() +1) ) return RejectReason.PREVIOUS_INDEX;
+		return RejectReason.NONE;
+
 	}
 
 	private Block findCompetitorInChain(Block incomingBlock) {
 		return BlockchainManager.findBlockByIndex(chain, incomingBlock.getIndex());
 	}
 
-	
+
 	private boolean dataAlreadyInChain(Block incomingBlock) {
 		List<SingleData> dataList = incomingBlock.getDataList();
 		for(SingleData data : dataList) {
@@ -100,7 +114,7 @@ public class ChainConsensusBuilder {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Remove from blockchain's data pool all given block's data. 
 	 * Use it when a block not mined by local node is linked to the chain.

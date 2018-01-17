@@ -217,6 +217,7 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
 			log.info("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
+			peer.setLastAlive(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;				
 		default: 

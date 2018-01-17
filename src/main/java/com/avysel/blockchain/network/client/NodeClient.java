@@ -34,6 +34,7 @@ public class NodeClient {
 		
 		// send data to all alive peers
 		List<Peer> peers = networkManager.getAlivePeers();
+		log.info("Nb alive peers : "+peers.size());
 		for(Peer peer : peers) {
 			log.info("Send to "+peer.toString() + " : "+bulk.toString());
 			sendData(bulk, peer);

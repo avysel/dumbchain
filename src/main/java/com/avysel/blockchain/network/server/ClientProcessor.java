@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 import org.apache.log4j.Logger;
 
@@ -39,7 +40,7 @@ public class ClientProcessor implements Runnable {
 		log.info("Start processing incoming client connection");
 
 		// TODO verifier que toute la donnee est bien lue avant de la parser
-		
+
 		while(socket != null && !socket.isClosed()) {
 			try {
 				writer = new PrintWriter(socket.getOutputStream());
@@ -86,11 +87,16 @@ public class ClientProcessor implements Runnable {
 	 * @return data String that contains raw data read from stream
 	 * @throws IOException
 	 */
-	private String read() throws IOException{
+	private String read() {
 		String data = "";
-		int stream;
+		int stream = 0;
 		byte[] b = new byte[4096];
-		stream = reader.read(b);
+		try {
+			stream = reader.read(b);
+		}
+		catch(IOException e) {
+
+		}
 		try {
 			data = new String(b, 0, stream);
 		}

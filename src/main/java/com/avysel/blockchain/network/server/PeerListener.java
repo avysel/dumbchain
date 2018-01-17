@@ -14,6 +14,7 @@ import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.tools.JsonMapper;
+import com.avysel.blockchain.tools.NetworkTool;
 
 /**
  * Listen to the network to catch new peers connection requests, then add new peers to NetworkManager's peers collection
@@ -33,8 +34,10 @@ public class PeerListener implements Runnable {
 
 	public void start() {
 		
+		int port = NetworkTool.getNextAvailablePort(NetworkManager.getBroadcastPort(), 1000);
+		
 		try {
-			this.datagramSocket = new DatagramSocket(NetworkManager.getBroadcastPort());
+			this.datagramSocket = new DatagramSocket(port);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

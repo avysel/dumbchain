@@ -62,7 +62,7 @@ public class ClientProcessor implements Runnable {
 				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
 				debug += " Sur le port : " + remote.getPort() + ".\n";
 				debug += "\t -> Commande reçue : " + data + "\n";
-				log.info("\n" + debug);
+				log.trace("\n" + debug);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

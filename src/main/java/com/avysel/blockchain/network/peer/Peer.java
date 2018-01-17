@@ -71,6 +71,7 @@ public class Peer {
 		return this.uid.equals(((Peer) peer).getUid());
 	}
 
+	@JsonIgnore
 	public long getLastAlive() {
 		return lastAliveTimestamp;
 	}
@@ -82,7 +83,7 @@ public class Peer {
 	public static Peer initFromLocal() {
 		
 		Peer peer = new Peer();
-		peer.setIp("127.0.0.1"); // TODO
+		peer.setIp("127.0.0.1"); // TODO use real ip
 		peer.setLastAlive(System.currentTimeMillis());
 		peer.setPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());

@@ -13,8 +13,6 @@ import com.avysel.blockchain.model.block.Block;
  */
 public class ChainPart {
 	protected LinkedList<Block> blockList;
-	protected Block firstBlock; //TODO remove, use LinkedList.getFirst
-	protected Block lastBlock; // TODO remove, use LinkedList.getLast
 	
 	public LinkedList<Block> getBlockList() {
 		return blockList;
@@ -24,20 +22,13 @@ public class ChainPart {
 		this.blockList = blockList;
 	}
 	
+	
 	public Block getFirstBlock() {
-		return firstBlock;
-	}
-
-	public void setFirstBlock(Block firstBlock) {
-		this.firstBlock = firstBlock;
+		return blockList.getFirst();
 	}
 
 	public Block getLastBlock() {
-		return lastBlock;
-	}
-
-	public void setLastBlock(Block lastBlock) {
-		this.lastBlock = lastBlock;
+		return blockList.getLast();
 	}	
 
 	public final void addBlocks(List<Block> blockList) {
@@ -64,10 +55,9 @@ public class ChainPart {
 	public void linkBlock(Block block) {
 		
 		if(! block.isGenesis()) {
-			block.setPreviousHash(this.lastBlock.getHash());
+			block.setPreviousHash(getLastBlock().getHash());
 			block.setIndex(getLastIndex() + 1);
 			blockList.add(block);
-			lastBlock = block;
 		}
 	}
 	

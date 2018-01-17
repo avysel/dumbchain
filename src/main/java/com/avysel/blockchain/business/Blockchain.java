@@ -91,6 +91,10 @@ public class Blockchain {
 		createGenesis();
 	}
 
+	public void setInitialChain(Chain chain) {
+		this.chain = chain;
+	}
+	
 	public boolean isMining() {
 		return mining;
 	}

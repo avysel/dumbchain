@@ -16,15 +16,14 @@ public class Chain extends ChainPart {
 	}
 
 	public Block getGenesis() {
-		if(firstBlock.isGenesis())
-			return firstBlock;
+		if(getFirstBlock().isGenesis())
+			return getFirstBlock();
 		else
 			return null;
 	}
 
 	public void setGenesis(Block genesis) {
-		this.firstBlock = genesis;
-		blockList.add(genesis);
+		blockList.addFirst(genesis);
 	}
 
 	@Override
@@ -44,15 +43,11 @@ public class Chain extends ChainPart {
 	@Override
 	public void linkBlock(Block block) {
 		
-		if(block.isGenesis()) {
-			firstBlock = block;
-		}
-		else {
-			block.setPreviousHash(this.lastBlock.getHash());
+		if( ! block.isGenesis()) {
+			block.setPreviousHash(getLastBlock().getHash());
 			block.setIndex(getLastIndex() + 1);
 		}
 		
 		blockList.add(block);
-		lastBlock = block;
 	}
 }

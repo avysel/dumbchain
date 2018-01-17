@@ -42,6 +42,8 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] API d'ajout de données
 - [ ] Consultation des données
 - [ ] API consultation des données
+- [x] Possibilité de ne pas miner
+- [ ] Possibilité de ne créer des données (pas de minage, pas de chaine stockée)
 
 ### Technique
 - [ ] Initialiser modules Java 9

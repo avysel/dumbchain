@@ -19,7 +19,7 @@ public class NetworkDataBulk {
 	/**
 	 * This bulk contains a chain part.
 	 */
-	public static final int DATATYPE_CHAIN = 102;	
+	public static final int DATATYPE_CHAIN = 102;
 
 	/**
 	 * This bulk contains an message from a new node announcing its arrival on network.
@@ -30,6 +30,11 @@ public class NetworkDataBulk {
 	 * This bulk contains an answer to a new node hello message, to give back our current ip.port.
 	 */
 	public static final int MESSAGE_PEER_HELLO_ANSWER = 301;
+	
+	/**
+	 * This bulk contains an message from a new node requesting to catch up with existing chain
+	 */
+	public static final int MESSAGE_CHAIN_REQUEST = 302;
 	
 	private int bulkType;
 	private String bulkData;

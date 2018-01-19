@@ -39,9 +39,6 @@ public class JsonMapper {
 	}
 
 	public static Object jsonToGeneric(String jsonData, Class clazz) {
-		
-		//Block object = new Block();
-
 		Object object;
 		try {
 			object = clazz.newInstance();
@@ -122,19 +119,7 @@ public class JsonMapper {
 	}
 
 	public static String blockToJson(Block block) {
-		String json = new String();
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
-
-		try {
-			json = mapper.writeValueAsString(block);
-			log.trace("Serialized block : "+json);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return json;
+		return genericToJson(block);
 	}
 
 	public static SingleData jsonToData(String jsonData) {
@@ -158,18 +143,7 @@ public class JsonMapper {
 	}
 
 	public static String dataToJson(SingleData data) {
-		String json = new String();
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
-
-		try {
-			json = mapper.writeValueAsString(data);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return json;
+		return genericToJson(data);
 	}
 
 	public static String dataListToJson(List<SingleData> dataList) {
@@ -188,18 +162,7 @@ public class JsonMapper {
 	}
 
 	public static String bulkToJson(NetworkDataBulk bulk) {
-		String json = new String();
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
-
-		try {
-			json = mapper.writeValueAsString(bulk);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return json;		
+		return genericToJson(bulk);
 	}	
 
 	public static NetworkDataBulk jsonToBulk(String jsonData) {
@@ -224,18 +187,7 @@ public class JsonMapper {
 	}
 
 	public static String peerToJson(Peer peer) {
-		String json = new String();
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
-
-		try {
-			json = mapper.writeValueAsString(peer);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return json;		
+		return genericToJson(peer);
 	}
 
 	public static Peer jsonToPeer(String jsonData) {
@@ -259,17 +211,6 @@ public class JsonMapper {
 	}
 
 	public static String messageToJson(NetworkMessage message) {
-		String json = new String();
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
-
-		try {
-			json = mapper.writeValueAsString(message);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return json;		
+		return genericToJson(message);
 	}
 }

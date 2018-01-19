@@ -22,20 +22,23 @@ public class ChainCatchUpBuilder {
 
 	private Blockchain blockchain;
 	private Chain chain;
-	
+
 	private long chainSize;
 	private Map<Long, List<Block>> pendingBlocks;
-	
+
 	private ChainRequestor requestor;
 	
+	private boolean completed;
+
 	public ChainCatchUpBuilder(Blockchain blockchain) {
 		if(blockchain != null) 
 			this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
-		
+
 		this.requestor = new ChainRequestor(this.blockchain);
+		this.completed = false;
 	}
-	
+
 	public long getChainSize() {
 		return chainSize;
 	}
@@ -45,11 +48,26 @@ public class ChainCatchUpBuilder {
 	}
 
 	public void startCatchUp() {
-		
+		requestor.requestBlocks();
+		while(!completed) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			completed = tryBuildingChain();
+		}
 	}
-	
+
+	public void addPendingBlocks(List<Block> blocks) {
+		for(Block block : blocks) {
+			addPendingBlock(block);
+		}
+	}	
+
 	public void addPendingBlock(Block block) {
-		
+
 		List<Block> sameIndexBlocks = pendingBlocks.get(block.getIndex());
 		if(sameIndexBlocks == null) {
 			sameIndexBlocks = new ArrayList<Block>();
@@ -57,28 +75,28 @@ public class ChainCatchUpBuilder {
 		}
 		sameIndexBlocks.add(block);
 	}
-	
+
 	public boolean tryBuildingChain() {
-		
+
 		log.info("Try to build the chain.");
-		
+
 		Long[] indexes = (Long[]) pendingBlocks.keySet().toArray();
 		Arrays.sort(indexes);
-		
+
 		for (int i = 0 ; i < indexes.length-1 ; i++) {
 			if(indexes[i] != indexes[i+1] - 1) {
 				log.info("Cannot build chain, missing block.");
 				return false;
 			}
 		}
-		
+
 		log.info("All blocks are present, start building chain.");
-		
+
 		List<Block> blocks = new LinkedList<Block>();
 		for (int i = 0 ; i < indexes.length ; i++) {
 			blocks.add(pendingBlocks.get(indexes[i]).get(0));
 		}		
-		
+
 		ChainPart chainPart = new ChainPart();
 		chainPart.addBlocks(blocks);
 		try {
@@ -91,7 +109,7 @@ public class ChainCatchUpBuilder {
 			log.warn("Error while building chain.");
 			return false;
 		}
-		
+
 	}
-	
+
 }

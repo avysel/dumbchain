@@ -39,7 +39,7 @@ public class NetworkDataBulk {
 	/**
 	 * This bulk contains an message from a new node requesting inventory of data it doesn't has
 	 */
-	public static final int MESSAGE_CATCH_UP_DATA = 302;	
+	public static final int MESSAGE_CATCH_UP_BLOCK = 302;	
 	
 	private int bulkType;
 	private String bulkData;

@@ -12,7 +12,7 @@ import com.avysel.blockchain.network.peer.Peer;
 public class ChainRequestor {
 	
 	private Blockchain blockchain;
-	
+
 	public ChainRequestor(Blockchain blockchain) {
 		super();
 		this.blockchain = blockchain;

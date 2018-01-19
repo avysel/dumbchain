@@ -235,7 +235,12 @@ public class NetworkManager {
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
-			break;				
+			break;		
+		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCK :
+			log.info("Get a catch up block");
+			List<Block> blocks = null;//JsonMapper.jsonToBlocks(bulk.getBulkData());
+			blockchain.addCatchUp(blocks);
+			break;
 		default: 
 			log.error("error incoming, unkown type");
 			break;

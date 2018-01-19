@@ -55,6 +55,8 @@ public class Blockchain {
 	// build chain according to consensus rules
 	private ChainConsensusBuilder consensusBuilder;
 
+	private ChainCatchUpBuilder catchUpBuilder;
+
 	public Blockchain() {
 		this.mining = true;
 		init();
@@ -98,7 +100,7 @@ public class Blockchain {
 	public void setInitialChain(Chain chain) {
 		this.chain = chain;
 	}
-	
+
 	public boolean isMining() {
 		return mining;
 	}
@@ -245,7 +247,7 @@ public class Blockchain {
 
 		return buffer.toString();
 	}
-	
+
 	/**
 	 * Catch up with existing chain
 	 */
@@ -254,22 +256,25 @@ public class Blockchain {
 		 * Wait for few peers connection
 		 * ask for how many blocks since this.chainHeight
 		 */
-		
+
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		ChainCatchUpBuilder builder = new ChainCatchUpBuilder(this);
-		builder.startCatchUp();
+
+		catchUpBuilder = new ChainCatchUpBuilder(this);
+		catchUpBuilder.startCatchUp();
 	}
-	
+
+	public void addCatchUp(List<Block> blocks) {
+		catchUpBuilder.addPendingBlocks(blocks);
+	}
+
 	public List<Peer> getPeers() {
 		return network.getAlivePeers();
 	}
-	
+
 	public void sendMessage(NetworkMessage message, Peer peer) {
 		network.sendMessage(message, peer);
 	}

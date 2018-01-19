@@ -1,9 +1,11 @@
 package com.avysel.blockchain.business;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
 import com.avysel.blockchain.crypto.HashTools;
@@ -17,6 +19,8 @@ import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.network.data.message.NetworkMessage;
+import com.avysel.blockchain.network.peer.Peer;
 
 /**
  * The main class of the Blockchain.
@@ -219,6 +223,7 @@ public class Blockchain {
 	public void start() {
 		log.info("Starting blockchain");
 		network.start();
+		catchUp();
 		if(mining)
 			miner.start();
 	}
@@ -239,5 +244,33 @@ public class Blockchain {
 		buffer.append("Mining : ").append(this.mining).append('\n');
 
 		return buffer.toString();
+	}
+	
+	/**
+	 * Catch up with existing chain
+	 */
+	private void catchUp() {
+		/*
+		 * Wait for few peers connection
+		 * ask for how many blocks since this.chainHeight
+		 */
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ChainCatchUpBuilder builder = new ChainCatchUpBuilder(this);
+		builder.startCatchUp();
+	}
+	
+	public List<Peer> getPeers() {
+		return network.getAlivePeers();
+	}
+	
+	public void sendMessage(NetworkMessage message, Peer peer) {
+		network.sendMessage(message, peer);
 	}
 }

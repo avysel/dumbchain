@@ -32,9 +32,14 @@ public class NetworkDataBulk {
 	public static final int MESSAGE_PEER_HELLO_ANSWER = 301;
 	
 	/**
-	 * This bulk contains an message from a new node requesting to catch up with existing chain
+	 * This bulk contains an message from a new node requesting catch up of data it doesn't has
 	 */
-	public static final int MESSAGE_CHAIN_REQUEST = 302;
+	public static final int MESSAGE_CATCH_UP_REQUEST = 302;
+	
+	/**
+	 * This bulk contains an message from a new node requesting inventory of data it doesn't has
+	 */
+	public static final int MESSAGE_CATCH_UP_DATA = 302;	
 	
 	private int bulkType;
 	private String bulkData;

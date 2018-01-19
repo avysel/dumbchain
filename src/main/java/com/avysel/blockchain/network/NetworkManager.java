@@ -16,6 +16,7 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.data.message.NetworkMessage;
 import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.network.server.NodeServer;
@@ -170,6 +171,21 @@ public class NetworkManager {
 	}
 
 	/**
+	 * Send a NetworkMessage to a Peer
+	 * @param message the message object to send
+	 */
+	public void sendMessage(NetworkMessage message, Peer peer) {
+		log.info("Send a message to "+peer);
+		log.trace(message.toString());
+		NetworkDataBulk bulk = new NetworkDataBulk();
+
+		bulk.setBulkType(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST);
+		bulk.setBulkData(JsonMapper.messageToJson(message));
+
+		client.sendData(bulk, peer);
+	}	
+	
+	/**
 	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists
 	 * @param data the incoming SingleData
 	 */
@@ -217,7 +233,7 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
 			log.info("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
-			peer.setLastAlive(System.currentTimeMillis());
+			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;				
 		default: 

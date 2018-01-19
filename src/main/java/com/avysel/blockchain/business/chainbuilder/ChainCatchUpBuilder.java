@@ -15,9 +15,9 @@ import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
 
 /**
- * Try to build current chain for a new node
+ * Catch up with existing blockchain
  */
-public class ChainBeginnerBuilder {
+public class ChainCatchUpBuilder {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainBeginnerBuilder");
 
 	private Blockchain blockchain;
@@ -26,10 +26,14 @@ public class ChainBeginnerBuilder {
 	private long chainSize;
 	private Map<Long, List<Block>> pendingBlocks;
 	
-	public ChainBeginnerBuilder(Blockchain blockchain) {
+	private ChainRequestor requestor;
+	
+	public ChainCatchUpBuilder(Blockchain blockchain) {
 		if(blockchain != null) 
 			this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
+		
+		this.requestor = new ChainRequestor(this.blockchain);
 	}
 	
 	public long getChainSize() {
@@ -40,6 +44,10 @@ public class ChainBeginnerBuilder {
 		this.chainSize = chainSize;
 	}
 
+	public void startCatchUp() {
+		
+	}
+	
 	public void addPendingBlock(Block block) {
 		
 		List<Block> sameIndexBlocks = pendingBlocks.get(block.getIndex());

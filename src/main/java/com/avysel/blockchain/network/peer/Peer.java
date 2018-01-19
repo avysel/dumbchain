@@ -19,11 +19,21 @@ public class Peer {
 	private ServerSocket server;
 	private Socket client;
 	private long lastAliveTimestamp;
+	private long chainHeight;
 
 	public Peer() {
 		super();
+		this.uid = UUID.randomUUID().toString();
 	}	
 	
+	public Peer(String ip, int port, long chainHeight) {
+		super();
+		this.ip = ip;
+		this.port = port;
+		this.chainHeight = chainHeight;
+		this.lastAliveTimestamp = System.currentTimeMillis();
+	}
+
 	public Peer(String ip, int port) {
 		super();
 		this.ip = ip;
@@ -72,19 +82,27 @@ public class Peer {
 	}
 
 	@JsonIgnore
-	public long getLastAlive() {
+	public long getLastAliveTimestamp() {
 		return lastAliveTimestamp;
 	}
 
-	public void setLastAlive(long lastAlive) {
+	public void setLastAliveTimestamp(long lastAlive) {
 		this.lastAliveTimestamp = lastAlive;
 	}
 	
+	public long getChainHeight() {
+		return chainHeight;
+	}
+
+	public void setChainHeight(long chainHeight) {
+		this.chainHeight = chainHeight;
+	}
+
 	public static Peer initFromLocal() {
 		
 		Peer peer = new Peer();
 		peer.setIp("127.0.0.1"); // TODO use real ip
-		peer.setLastAlive(System.currentTimeMillis());
+		peer.setLastAliveTimestamp(System.currentTimeMillis());
 		peer.setPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());
 		

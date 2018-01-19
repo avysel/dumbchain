@@ -13,6 +13,7 @@ import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
+import com.avysel.blockchain.network.peer.Peer;
 
 /**
  * Catch up with existing blockchain
@@ -63,6 +64,11 @@ public class ChainCatchUpBuilder {
 		log.info("Catch-up completed.");
 	}
 
+	public void emptyCatchUp(Peer peer) {
+		log.info("No chain to catch up.");
+		completed = true;
+	}
+	
 	public void addPendingBlocks(List<Block> blocks) {
 		if(blocks == null) return;
 		for(Block block : blocks) {

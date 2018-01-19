@@ -236,13 +236,20 @@ public class NetworkManager {
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;		
-		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCK :
+		case NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST :
+			// TODO
+			break;				
+		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
 			log.info("Get a catch up block");
 			List<Block> blocks = JsonMapper.jsonToBlockList(bulk.getBulkData());
 			blockchain.addCatchUp(blocks);
 			break;
+		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :
+			log.info("Get an empty catch-up");
+			blockchain.emptyCatchUp(bulk.getSender());
+			break;			
 		default: 
-			log.error("error incoming, unkown type");
+			log.error("error incoming, unkown type : "+bulk.getBulkType());
 			break;
 		}
 	}

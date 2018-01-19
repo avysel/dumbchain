@@ -271,6 +271,10 @@ public class Blockchain {
 		catchUpBuilder.addPendingBlocks(blocks);
 	}
 
+	public void emptyCatchUp(Peer peer) {
+		catchUpBuilder.emptyCatchUp(peer);
+	}
+	
 	public List<Peer> getPeers() {
 		return network.getAlivePeers();
 	}

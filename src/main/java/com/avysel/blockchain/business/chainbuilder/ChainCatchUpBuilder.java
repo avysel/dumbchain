@@ -21,6 +21,9 @@ import com.avysel.blockchain.network.peer.Peer;
 public class ChainCatchUpBuilder {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainBeginnerBuilder");
 
+	private static final int CATCH_UP_RETRY_DELAY = 1000;
+	private static final int CATCH_UP_MAX_DURATION= 10000;
+	
 	private Blockchain blockchain;
 	private Chain chain;
 
@@ -51,12 +54,14 @@ public class ChainCatchUpBuilder {
 	}
 
 	public void startCatchUp() {
-		
 		log.info("Start to catch up with chain");
+		
+		long startTime = System.currentTimeMillis();
+		
 		requestor.requestBlocks();
-		while(!completed && ! empty) {
+		while( (!completed && ! empty) && (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(CATCH_UP_RETRY_DELAY);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

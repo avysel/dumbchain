@@ -17,6 +17,7 @@ import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.NetworkMessage;
+import com.avysel.blockchain.network.data.message.SendBlocksMessage;
 import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.network.server.NodeServer;
@@ -242,7 +243,8 @@ public class NetworkManager {
 			break;				
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
 			log.info("Get a catch up block");
-			List<Block> blocks = JsonMapper.jsonToBlockList(bulk.getBulkData());
+			NetworkMessage message = JsonMapper.jsonToMessage(bulk.getBulkData());
+			List<Block> blocks = ((SendBlocksMessage)message).getBlocks();
 			blockchain.addCatchUp(blocks);
 			break;
 		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :

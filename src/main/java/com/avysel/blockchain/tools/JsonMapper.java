@@ -213,4 +213,24 @@ public class JsonMapper {
 	public static String messageToJson(NetworkMessage message) {
 		return genericToJson(message);
 	}
+	
+	public static NetworkMessage jsonToMessage(String jsonData, Class messageClass) {
+		NetworkMessage message;
+
+		if(jsonData == null || jsonData.isEmpty()) return null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		try {
+			message = (Class.forName(messageClass.getName())) mapper.readValue(jsonData, messageClass);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return message;			
+	}
 }

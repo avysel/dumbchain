@@ -35,7 +35,7 @@ public class ChainSender {
 			for (int i = 0 ; i < blockchain.getChain().size() ; i += MAX_BLOCKS_PER_BULK) {
 
 				SendBlocksMessage message = new SendBlocksMessage();
-				List<Block> sublist = blockchain.getChain().getBlockList().subList(i+1, MAX_BLOCKS_PER_BULK);
+				List<Block> sublist = blockchain.getChain().getBlockList().subList(i+1, Math.min(MAX_BLOCKS_PER_BULK,blockchain.getChain().getBlockList().size() - i*MAX_BLOCKS_PER_BULK));
 				if(sublist != null) {
 					message.setBlocks(sublist);
 					message.setStartIndex(sublist.get(0).getIndex());

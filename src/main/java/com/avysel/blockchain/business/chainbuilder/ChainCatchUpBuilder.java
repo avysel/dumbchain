@@ -30,6 +30,7 @@ public class ChainCatchUpBuilder {
 	private ChainRequestor requestor;
 
 	private boolean completed;
+	private boolean empty;
 
 	public ChainCatchUpBuilder(Blockchain blockchain) {
 		if(blockchain != null) 
@@ -38,6 +39,7 @@ public class ChainCatchUpBuilder {
 
 		this.requestor = new ChainRequestor(this.blockchain);
 		this.completed = false;
+		this.empty = false;
 	}
 
 	public long getChainSize() {
@@ -52,7 +54,7 @@ public class ChainCatchUpBuilder {
 		
 		log.info("Start to catch up with chain");
 		requestor.requestBlocks();
-		while(!completed) {
+		while(!completed && ! empty) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -66,7 +68,7 @@ public class ChainCatchUpBuilder {
 
 	public void emptyCatchUp(Peer peer) {
 		log.info("No chain to catch up.");
-		completed = true;
+		empty = true;
 	}
 	
 	public void addPendingBlocks(List<Block> blocks) {

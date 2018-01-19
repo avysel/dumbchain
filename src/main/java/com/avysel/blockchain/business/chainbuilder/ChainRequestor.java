@@ -3,6 +3,7 @@ package com.avysel.blockchain.business.chainbuilder;
 import java.util.Comparator;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.GetBlocksMessage;
 import com.avysel.blockchain.network.peer.Peer;
 
@@ -30,7 +31,7 @@ public class ChainRequestor {
 		if(peer != null) {
 			GetBlocksMessage message = new GetBlocksMessage();
 			message.setStartIndex(blockchain.getLastIndex());
-			blockchain.sendMessage(message, peer);
+			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST, message, peer);
 		}
 	}
 }

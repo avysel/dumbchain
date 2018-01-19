@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
+import com.avysel.blockchain.business.chainbuilder.ChainSender;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
@@ -279,7 +280,12 @@ public class Blockchain {
 		return network.getAlivePeers();
 	}
 
-	public void sendMessage(NetworkMessage message, Peer peer) {
-		network.sendMessage(message, peer);
+	public void sendCatchUp(Peer peer) {
+		ChainSender sender = new ChainSender(this);
+		sender.sendChainToPeer(peer);
+	}
+	
+	public void sendMessage(int messageType, NetworkMessage message, Peer peer) {
+		network.sendMessage(messageType, message, peer);
 	}
 }

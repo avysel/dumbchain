@@ -174,16 +174,16 @@ public class NetworkManager {
 	 * Send a NetworkMessage to a Peer
 	 * @param message the message object to send
 	 */
-	public void sendMessage(NetworkMessage message, Peer peer) {
+	public void sendMessage(int bulkType, NetworkMessage message, Peer peer) {
 		log.info("Send a message to "+peer);
-		log.trace(message.toString());
+		if (message != null) log.trace(message.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 
-		bulk.setBulkType(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST);
+		bulk.setBulkType(bulkType);
 		bulk.setBulkData(JsonMapper.messageToJson(message));
 
 		client.sendData(bulk, peer);
-	}	
+	}
 	
 	/**
 	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists
@@ -237,7 +237,8 @@ public class NetworkManager {
 			peerManager.addPeer(peer);
 			break;		
 		case NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST :
-			// TODO
+			log.info("Incoming catch-up request");
+			blockchain.sendCatchUp(bulk.getSender());
 			break;				
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
 			log.info("Get a catch up block");

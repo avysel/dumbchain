@@ -10,7 +10,7 @@ import com.avysel.blockchain.network.peer.Peer;
  * Used by a new node on the network to request other nodes to send the current chain 
  */
 public class ChainRequestor {
-	
+
 	private Blockchain blockchain;
 
 	public ChainRequestor(Blockchain blockchain) {
@@ -19,13 +19,18 @@ public class ChainRequestor {
 	}
 
 	private Peer selectPeerToRequest() {
-		return blockchain.getPeers().stream().max(Comparator.comparing(Peer::getChainHeight)).get();
+		if(blockchain.getPeers() != null &&  ! blockchain.getPeers().isEmpty())
+			return blockchain.getPeers().stream().max(Comparator.comparing(Peer::getChainHeight)).get();
+		else
+			return null;
 	}
-	
+
 	public void requestBlocks() {
 		Peer peer = selectPeerToRequest();
-		GetBlocksMessage message = new GetBlocksMessage();
-		message.setStartIndex(blockchain.getLastIndex());
-		blockchain.sendMessage(message, peer);
+		if(peer != null) {
+			GetBlocksMessage message = new GetBlocksMessage();
+			message.setStartIndex(blockchain.getLastIndex());
+			blockchain.sendMessage(message, peer);
+		}
 	}
 }

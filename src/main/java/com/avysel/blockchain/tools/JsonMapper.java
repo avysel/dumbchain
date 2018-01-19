@@ -1,6 +1,7 @@
 package com.avysel.blockchain.tools;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -21,14 +22,82 @@ public class JsonMapper {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.tools.JsonMapper");
 
-	/**
-	 * @param block
-	 * @return
-	 */
-	public String toJson(Block block) {
-		return null;
+	public static String genericToJson(Object o) {
+		String json = new String();
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+
+		try {
+			json = mapper.writeValueAsString(o);
+			log.trace("Serialized block : "+json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return json;
 	}
 
+	public static Object jsonToGeneric(String jsonData, Class clazz) {
+		
+		//Block object = new Block();
+
+		Object object;
+		try {
+			object = clazz.newInstance();
+		} catch (InstantiationException | IllegalAccessException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+		
+		if(jsonData == null || jsonData.isEmpty()) return null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
+
+		try {
+			object = mapper.readValue(jsonData, Block.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return object;
+		
+	}
+
+	public static String blockListToJson(List<Block> list) {
+		return genericToJson(list);
+	}
+
+	public static List<Block> jsonToBlockList(String jsonData) {
+		List<Block> list = new LinkedList<Block>();
+
+		if(jsonData == null || jsonData.isEmpty()) return null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
+
+		try {
+			list = mapper.readValue(jsonData, mapper.getTypeFactory().constructCollectionType(LinkedList.class, Block.class));
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}	
+	
 	public static Block jsonToBlock(String jsonData) {
 		Block block = new Block();
 

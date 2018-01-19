@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
@@ -142,5 +143,32 @@ public class JsonMapperTest {
 		assertEquals(bulk.getBulkType(), NetworkDataBulk.DATATYPE_BLOCK);
 		assertNotNull(bulk.getBulkData());
 	}	
+	
+	@Test
+	public void blockListToJson() {
+		List<Block> list = new LinkedList<Block>();
+		list.add(createTestBlock());
+		list.add(createTestBlock());
+		list.add(createTestBlock());
+		
+		String json = JsonMapper.blockListToJson(list);
+		
+		assertNotNull(json);
+		System.out.println("Json pour liste block : ");
+		System.out.println(json);
+
+	}
+	
+	@Test public void jsonToBlockList() {
+		String json = "[{\"timestamp\":546546,\"index\":0,\"difficulty\":520,\"hash\":\"toto\",\"previousHash\":\"titi\",\"dataList\":[{\"data\":\"data1\",\"hash\":\"f284f74d4e3b10eb1aa16752eafa5bbb2a6c3e1875a1ac53520183fb6be19a4a\",\"clazz\":null},{\"data\":\"data2\",\"hash\":\"957d149e1bb62808611751a85220ca08ef3ba9b3de9ad7dade9da70abce5e934\",\"clazz\":null}],\"merkleRoot\":null,\"quality\":520},{\"timestamp\":546546,\"index\":0,\"difficulty\":520,\"hash\":\"toto\",\"previousHash\":\"titi\",\"dataList\":[{\"data\":\"data1\",\"hash\":\"f284f74d4e3b10eb1aa16752eafa5bbb2a6c3e1875a1ac53520183fb6be19a4a\",\"clazz\":null},{\"data\":\"data2\",\"hash\":\"957d149e1bb62808611751a85220ca08ef3ba9b3de9ad7dade9da70abce5e934\",\"clazz\":null}],\"merkleRoot\":null,\"quality\":520},{\"timestamp\":546546,\"index\":0,\"difficulty\":520,\"hash\":\"toto\",\"previousHash\":\"titi\",\"dataList\":[{\"data\":\"data1\",\"hash\":\"f284f74d4e3b10eb1aa16752eafa5bbb2a6c3e1875a1ac53520183fb6be19a4a\",\"clazz\":null},{\"data\":\"data2\",\"hash\":\"957d149e1bb62808611751a85220ca08ef3ba9b3de9ad7dade9da70abce5e934\",\"clazz\":null}],\"merkleRoot\":null,\"quality\":520}]";
+	
+		List<Block> list = JsonMapper.jsonToBlockList(json);
+		
+		assertNotNull(list);
+		assertEquals(list.size(), 3);
+		assertEquals(list.getClass(), LinkedList.class);
+		System.out.println("Liste block pour json : ");
+		System.out.println(list);
+	}
 	
 }

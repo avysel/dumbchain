@@ -27,7 +27,7 @@ public class ChainCatchUpBuilder {
 	private Map<Long, List<Block>> pendingBlocks;
 
 	private ChainRequestor requestor;
-	
+
 	private boolean completed;
 
 	public ChainCatchUpBuilder(Blockchain blockchain) {
@@ -48,6 +48,8 @@ public class ChainCatchUpBuilder {
 	}
 
 	public void startCatchUp() {
+		
+		log.info("Start to catch up with chain");
 		requestor.requestBlocks();
 		while(!completed) {
 			try {
@@ -55,16 +57,18 @@ public class ChainCatchUpBuilder {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 			completed = tryBuildingChain();
 		}
+		log.info("Catch-up completed.");
 	}
 
 	public void addPendingBlocks(List<Block> blocks) {
+		if(blocks == null) return;
 		for(Block block : blocks) {
 			addPendingBlock(block);
 		}
-	}	
+	}
 
 	public void addPendingBlock(Block block) {
 
@@ -80,36 +84,41 @@ public class ChainCatchUpBuilder {
 
 		log.info("Try to build the chain.");
 
-		Long[] indexes = (Long[]) pendingBlocks.keySet().toArray();
-		Arrays.sort(indexes);
+		if(pendingBlocks != null && ! pendingBlocks.isEmpty()) {
 
-		for (int i = 0 ; i < indexes.length-1 ; i++) {
-			if(indexes[i] != indexes[i+1] - 1) {
-				log.info("Cannot build chain, missing block.");
+			Long[] indexes = (Long[]) pendingBlocks.keySet().toArray();
+			Arrays.sort(indexes);
+
+			for (int i = 0 ; i < indexes.length-1 ; i++) {
+				if(indexes[i] != indexes[i+1] - 1) {
+					log.info("Cannot build chain, missing block.");
+					return false;
+				}
+			}
+
+			log.info("All blocks are arrived, start building chain.");
+
+			List<Block> blocks = new LinkedList<Block>();
+			for (int i = 0 ; i < indexes.length ; i++) {
+				blocks.add(pendingBlocks.get(indexes[i]).get(0));
+			}		
+
+			ChainPart chainPart = new ChainPart();
+			chainPart.addBlocks(blocks);
+			try {
+				chain.addChainPart(chainPart);
+				blockchain.setInitialChain(chain);
+				log.info("Building completed !");
+				return true;
+			} catch (ChainIntegrityException e) {
+				e.printStackTrace();
+				log.warn("Error while building chain.");
 				return false;
 			}
 		}
-
-		log.info("All blocks are present, start building chain.");
-
-		List<Block> blocks = new LinkedList<Block>();
-		for (int i = 0 ; i < indexes.length ; i++) {
-			blocks.add(pendingBlocks.get(indexes[i]).get(0));
-		}		
-
-		ChainPart chainPart = new ChainPart();
-		chainPart.addBlocks(blocks);
-		try {
-			chain.addChainPart(chainPart);
-			blockchain.setInitialChain(chain);
-			log.info("Building completed !");
-			return true;
-		} catch (ChainIntegrityException e) {
-			e.printStackTrace();
-			log.warn("Error while building chain.");
+		else {
+			log.warn("No block received for catching up, chain can't be initialized");
 			return false;
 		}
-
 	}
-
 }

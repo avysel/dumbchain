@@ -238,13 +238,12 @@ public class NetworkManager {
 			break;		
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCK :
 			log.info("Get a catch up block");
-			List<Block> blocks = null;//JsonMapper.jsonToBlocks(bulk.getBulkData());
+			List<Block> blocks = JsonMapper.jsonToBlockList(bulk.getBulkData());
 			blockchain.addCatchUp(blocks);
 			break;
 		default: 
 			log.error("error incoming, unkown type");
 			break;
-
 		}
 	}
 

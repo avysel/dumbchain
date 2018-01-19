@@ -51,3 +51,6 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] Optimiser BD par utilisation d'un pool de connexions.
 - [x] Lancement du noeud avec minage ou non en ligne de commande
 
+### Refactor
+- [ ] Remettre au carré les NetworkMessage vs NetworkDataBulk
+

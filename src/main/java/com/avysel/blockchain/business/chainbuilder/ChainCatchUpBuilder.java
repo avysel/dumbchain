@@ -124,7 +124,7 @@ public class ChainCatchUpBuilder {
 			try {
 				chain.addChainPart(chainPart);
 				blockchain.setInitialChain(chain);
-				log.info("Building completed !");
+				log.info("Build completed !");
 				return true;
 			} catch (ChainIntegrityException e) {
 				e.printStackTrace();

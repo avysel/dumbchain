@@ -13,9 +13,9 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Gestion des données en attente (alimentation, piochage aléatoire)
 - [x] Minage de bloc et hachage
 - [x] Preuve de travail
-- [/] Reconstruction de la chaîne existante pour un nouveau noeud
-- [ ] Envoi de la chaîne à un nouveau noeud
-- [/] Gestion des blocks entrants
+- [x] Reconstruction de la chaîne existante pour un nouveau noeud
+- [x] Envoi de la chaîne à un nouveau noeud
+- [x] Gestion des blocks entrants
 
 ### Sécurité
 - [x] Vérification de l'intégrité de la chaîne par les hachages
@@ -27,7 +27,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Manager réseau qui fait le lien avec la chaîne en cours
 - [x] Agent UDP pour envoyer un broadcast de découverte de pairs
 - [x] Agent UDP qui traite les demandes de découvertes reçues
-- [/] Manager qui maintient les connexions avec les pairs connus
+- [x] Manager qui maintient les connexions avec les pairs connus
 - [x] Agent TCP client qui envoie les blocs créés
 - [x] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
 - [ ] S'assurer de ne pas traiter 2 fois le même message entrant
@@ -54,7 +54,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 ### Refactor / Autres
 - [ ] Remettre au carré les NetworkMessage vs NetworkDataBulk
-- [ ] Ajuster les niveaux de log
+- [x] Ajuster les niveaux de log
 - [ ] Finaliser TU
 - [ ] Javadoc
 

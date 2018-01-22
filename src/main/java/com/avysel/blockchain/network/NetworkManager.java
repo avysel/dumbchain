@@ -226,10 +226,6 @@ public class NetworkManager {
 			SingleData data = JsonMapper.jsonToData(bulk.getBulkData());
 			processIncomingData(data);
 			break;
-		case NetworkDataBulk.DATATYPE_CHAIN :
-			log.debug("Get a chain from network");
-			// TODO usefull ?
-			break;
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
 			log.debug("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());

@@ -214,7 +214,7 @@ public class NetworkManager {
 	 * @param bulk the incoming @DataBulk
 	 */
 	public void processIncoming(NetworkDataBulk bulk) {
-		log.info("BULK : "+bulk);
+		log.info("Incoming Bulk : "+bulk);
 		switch(bulk.getBulkType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
 			log.info("Get a block from network");

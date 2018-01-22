@@ -109,6 +109,8 @@ public class Miner {
 			
 		} while (! proof.checkCondition(block) ); // try again if pow is not checked
 
+		log.info("New block created : "+block);
+		
 		return block;
 	}
 

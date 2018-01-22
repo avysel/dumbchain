@@ -121,8 +121,6 @@ public class Blockchain {
 	 */
 	private void createGenesis() {
 		Block genesis = new Genesis();
-		genesis.setTimestamp(System.currentTimeMillis());
-		genesis.setHash(HashTools.calculateBlockHash(genesis));
 		chain.linkBlock(genesis);
 		genesis.setPreviousHash(null);
 	}

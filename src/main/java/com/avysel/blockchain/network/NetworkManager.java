@@ -17,7 +17,7 @@ import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.NetworkMessage;
-import com.avysel.blockchain.network.data.message.SendBlocksMessage;
+import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
 import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.network.server.NodeServer;
@@ -214,16 +214,15 @@ public class NetworkManager {
 	 * @param bulk the incoming @DataBulk
 	 */
 	public void processIncoming(NetworkDataBulk bulk) {
+		log.info("BULK : "+bulk);
 		switch(bulk.getBulkType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
 			log.info("Get a block from network");
-			log.info(bulk);
 			Block block = JsonMapper.jsonToBlock(bulk.getBulkData());
 			processIncomingBlock(block);
 			break;
 		case NetworkDataBulk.DATATYPE_DATA :
 			log.info("Get a data from network");
-			log.info(bulk);
 			SingleData data = JsonMapper.jsonToData(bulk.getBulkData());
 			processIncomingData(data);
 			break;
@@ -239,12 +238,13 @@ public class NetworkManager {
 			break;		
 		case NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST :
 			log.info("Incoming catch-up request");
+			// TODO use start index
 			blockchain.sendCatchUp(bulk.getSender());
 			break;				
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
-			log.info("Get a catch up block");
-			NetworkMessage message = JsonMapper.jsonToMessage(bulk.getBulkData());
-			List<Block> blocks = ((SendBlocksMessage)message).getBlocks();
+			log.info("Get catch up data");
+			CatchUpDataMessage message = JsonMapper.jsonToCatchUpDataMessage(bulk.getBulkData());
+			List<Block> blocks = message.getBlocks();
 			blockchain.addCatchUp(blocks);
 			break;
 		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :

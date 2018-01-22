@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
+import com.avysel.blockchain.network.data.message.CatchUpRequestMessage;
 import com.avysel.blockchain.network.data.message.NetworkMessage;
 import com.avysel.blockchain.network.peer.Peer;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -46,7 +48,7 @@ public class JsonMapper {
 			e1.printStackTrace();
 			return null;
 		}
-		
+
 		if(jsonData == null || jsonData.isEmpty()) return null;
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -55,7 +57,7 @@ public class JsonMapper {
 		mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
 
 		try {
-			object = mapper.readValue(jsonData, Block.class);
+			object = mapper.readValue(jsonData, clazz);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -65,7 +67,7 @@ public class JsonMapper {
 		}
 
 		return object;
-		
+
 	}
 
 	public static String blockListToJson(List<Block> list) {
@@ -94,7 +96,7 @@ public class JsonMapper {
 
 		return list;
 	}	
-	
+
 	public static Block jsonToBlock(String jsonData) {
 		Block block = new Block();
 
@@ -213,16 +215,16 @@ public class JsonMapper {
 	public static String messageToJson(NetworkMessage message) {
 		return genericToJson(message);
 	}
-	
-	public static NetworkMessage jsonToMessage(String jsonData, Class messageClass) {
-		NetworkMessage message;
+
+	public static CatchUpRequestMessage jsonToCatchUpRequestMessage(String jsonData) {
+		CatchUpRequestMessage message = null;
 
 		if(jsonData == null || jsonData.isEmpty()) return null;
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		try {
-			message = (Class.forName(messageClass.getName())) mapper.readValue(jsonData, messageClass);
+			message =  mapper.readValue(jsonData, CatchUpRequestMessage.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -233,4 +235,9 @@ public class JsonMapper {
 
 		return message;			
 	}
+	
+	public static CatchUpDataMessage jsonToCatchUpDataMessage(String jsonData) {
+		return (CatchUpDataMessage) jsonToGeneric(jsonData, CatchUpDataMessage.class);
+	}
+
 }

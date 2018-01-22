@@ -2,6 +2,7 @@ package com.avysel.blockchain.business.chainbuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import com.avysel.blockchain.network.peer.Peer;
  * Catch up with existing blockchain
  */
 public class ChainCatchUpBuilder {
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainBeginnerBuilder");
+	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder");
 
 	private static final int CATCH_UP_RETRY_DELAY = 1000;
 	private static final int CATCH_UP_MAX_DURATION= 10000;
@@ -40,6 +41,8 @@ public class ChainCatchUpBuilder {
 			this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
 
+		this.pendingBlocks = new HashMap<Long, List<Block>>();
+		
 		this.requestor = new ChainRequestor(this.blockchain);
 		this.completed = false;
 		this.empty = false;
@@ -99,7 +102,7 @@ public class ChainCatchUpBuilder {
 
 		if(pendingBlocks != null && ! pendingBlocks.isEmpty()) {
 
-			Long[] indexes = (Long[]) pendingBlocks.keySet().toArray();
+			Long[] indexes = (Long[]) pendingBlocks.keySet().toArray(new Long[pendingBlocks.keySet().size()]);
 			Arrays.sort(indexes);
 
 			for (int i = 0 ; i < indexes.length-1 ; i++) {

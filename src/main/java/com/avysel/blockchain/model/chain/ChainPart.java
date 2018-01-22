@@ -14,6 +14,10 @@ import com.avysel.blockchain.model.block.Block;
 public class ChainPart {
 	protected LinkedList<Block> blockList;
 	
+	public ChainPart() {
+		this.blockList = new LinkedList<Block>();
+	}
+	
 	public LinkedList<Block> getBlockList() {
 		return blockList;
 	}

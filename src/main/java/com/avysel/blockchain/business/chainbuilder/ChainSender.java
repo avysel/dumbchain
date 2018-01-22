@@ -6,7 +6,7 @@ import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
-import com.avysel.blockchain.network.data.message.SendBlocksMessage;
+import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
 import com.avysel.blockchain.network.peer.Peer;
 
 /**
@@ -34,7 +34,7 @@ public class ChainSender {
 
 			for (int i = 0 ; i < blockchain.getChain().size() ; i += MAX_BLOCKS_PER_BULK) {
 
-				SendBlocksMessage message = new SendBlocksMessage();
+				CatchUpDataMessage message = new CatchUpDataMessage();
 				List<Block> sublist = blockchain.getChain().getBlockList().subList(i+1, Math.min(MAX_BLOCKS_PER_BULK,blockchain.getChain().getBlockList().size() - i*MAX_BLOCKS_PER_BULK));
 				if(sublist != null) {
 					message.setBlocks(sublist);

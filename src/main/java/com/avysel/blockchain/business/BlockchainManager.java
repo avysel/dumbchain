@@ -96,7 +96,7 @@ public class BlockchainManager {
 	public static boolean checkBlockHash(Block block) {
 		String hash = HashTools.calculateBlockHash(block);
 		log.trace("Check hash for "+block.getIndex()+". Expected : "+hash+", found : "+block.getHash());
-		return hash.equals(block.getHash());
+		return block.isGenesis() || hash.equals(block.getHash());
 	}
 	
 	/**
@@ -107,9 +107,11 @@ public class BlockchainManager {
 	public static boolean checkBlockPrevious(ChainPart chain, Block block) {
 		Block previous = findBlockByHash(chain, block.getPreviousHash());
 		
-		if(!block.isGenesis())
+		if(!block.isGenesis() && !chain.getFirstBlock().equals(block))
 			log.trace("Check previous for "+block.getIndex()+". Expected : "+(block.getIndex()-1)+", found : "+previous.getIndex());
 		
-		return block.isGenesis() || (previous != null && previous.getIndex() == block.getIndex() -1);
+		return block.isGenesis() 
+				|| chain.getFirstBlock().equals(block) 
+				|| (previous != null && previous.getIndex() == block.getIndex() -1);
 	}
 }

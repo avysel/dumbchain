@@ -1,6 +1,6 @@
 package com.avysel.blockchain.network.data.message;
 
-public class GetBlocksMessage extends NetworkMessage {
+public class CatchUpRequestMessage extends NetworkMessage {
 	private long startIndex;
 
 	public long getStartIndex() {

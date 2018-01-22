@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.avysel.blockchain.model.block.Block;
 
-public class SendBlocksMessage extends NetworkMessage {
+public class CatchUpDataMessage extends NetworkMessage {
 	private long startIndex;
 	private long lastIndex;
 	private List<Block> blocks;
 	
-	public SendBlocksMessage() {
+	public CatchUpDataMessage() {
 		super();
 		blocks = new ArrayList<Block>();
 	}

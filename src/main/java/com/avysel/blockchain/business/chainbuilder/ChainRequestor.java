@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
-import com.avysel.blockchain.network.data.message.GetBlocksMessage;
+import com.avysel.blockchain.network.data.message.CatchUpRequestMessage;
 import com.avysel.blockchain.network.peer.Peer;
 
 /**
@@ -29,7 +29,7 @@ public class ChainRequestor {
 	public void requestBlocks() {
 		Peer peer = selectPeerToRequest();
 		if(peer != null) {
-			GetBlocksMessage message = new GetBlocksMessage();
+			CatchUpRequestMessage message = new CatchUpRequestMessage();
 			message.setStartIndex(blockchain.getLastIndex());
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST, message, peer);
 		}

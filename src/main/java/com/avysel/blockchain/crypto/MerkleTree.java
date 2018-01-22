@@ -3,7 +3,6 @@ package com.avysel.blockchain.crypto;
 import java.util.ArrayList;
 
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
 
 public class MerkleTree {
 	

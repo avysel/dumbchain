@@ -2,7 +2,6 @@ package com.avysel.blockchain.network.server;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -21,7 +20,6 @@ public class ClientProcessor implements Runnable {
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
 
 	private Socket socket;
-	//private PrintWriter writer = null;
 	private BufferedInputStream reader = null;
 	private NetworkManager network = null;
 
@@ -42,7 +40,6 @@ public class ClientProcessor implements Runnable {
 
 		String data = new String();
 		try {
-		//	writer = new PrintWriter(socket.getOutputStream());
 			reader = new BufferedInputStream(socket.getInputStream());
 			
 			InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
@@ -78,7 +75,6 @@ public class ClientProcessor implements Runnable {
 
 			// push data to network manager
 			network.processIncoming(bulk);
-
 		}
 	}
 

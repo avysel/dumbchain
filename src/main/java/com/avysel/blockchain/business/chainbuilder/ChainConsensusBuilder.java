@@ -100,7 +100,7 @@ public class ChainConsensusBuilder {
 
 		if(competitor != null) return RejectReason.COMPETITION;
 		if( ! incomingBlock.getPreviousHash().equals(lastBlock.getHash())) return RejectReason.PREVIOUS_HASH;
-		if( ! (incomingBlock.getIndex() == incomingBlock.getIndex() +1) ) return RejectReason.PREVIOUS_INDEX;
+		if( ! (incomingBlock.getIndex() == lastBlock.getIndex() +1) ) return RejectReason.PREVIOUS_INDEX;
 		return RejectReason.NONE;
 
 	}

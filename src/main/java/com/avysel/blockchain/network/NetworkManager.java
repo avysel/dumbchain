@@ -214,41 +214,41 @@ public class NetworkManager {
 	 * @param bulk the incoming @DataBulk
 	 */
 	public void processIncoming(NetworkDataBulk bulk) {
-		log.info("Incoming Bulk : "+bulk);
+		log.debug("Incoming Bulk : "+bulk);
 		switch(bulk.getBulkType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
-			log.info("Get a block from network");
+			log.debug("Get a block from network");
 			Block block = JsonMapper.jsonToBlock(bulk.getBulkData());
 			processIncomingBlock(block);
 			break;
 		case NetworkDataBulk.DATATYPE_DATA :
-			log.info("Get a data from network");
+			log.debug("Get a data from network");
 			SingleData data = JsonMapper.jsonToData(bulk.getBulkData());
 			processIncomingData(data);
 			break;
 		case NetworkDataBulk.DATATYPE_CHAIN :
-			log.info("Get a chain from network");
+			log.debug("Get a chain from network");
 			// TODO usefull ?
 			break;
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
-			log.info("A peer answered to hello, add it.");
+			log.debug("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;		
 		case NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST :
-			log.info("Incoming catch-up request");
+			log.debug("Incoming catch-up request");
 			// TODO use start index
 			blockchain.sendCatchUp(bulk.getSender());
 			break;				
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
-			log.info("Get catch up data");
+			log.debug("Get catch up data");
 			CatchUpDataMessage message = JsonMapper.jsonToCatchUpDataMessage(bulk.getBulkData());
 			List<Block> blocks = message.getBlocks();
 			blockchain.addCatchUp(blocks);
 			break;
 		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :
-			log.info("Get an empty catch-up");
+			log.debug("Get an empty catch-up");
 			blockchain.emptyCatchUp(bulk.getSender());
 			break;			
 		default: 

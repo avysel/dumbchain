@@ -54,7 +54,7 @@ public class PeerListener implements Runnable {
 
 		Thread t = new Thread(new Runnable(){
 			public void run(){
-				log.info("Peer listener starts runing ...");
+				log.debug("Peer listener starts runing.");
 
 				try {
 					while(running){
@@ -63,10 +63,10 @@ public class PeerListener implements Runnable {
 						byte[] buffer = new byte[8192];
 						DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
-						log.info("Wait for peer ...");
+						log.debug("Wait for peer.");
 						// wait for data
 						datagramSocket.receive(packet);
-						log.info("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
+						log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
 
 						// read
 						String str = new String(packet.getData());
@@ -97,7 +97,7 @@ public class PeerListener implements Runnable {
 			switch(bulk.getBulkType()) {
 
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
-				log.info("New peer on the network, add it.");
+				log.debug("New peer on the network, add it.");
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
 				peerManager.addPeer(peer);

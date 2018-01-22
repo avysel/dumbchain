@@ -75,7 +75,7 @@ public class ChainCatchUpBuilder {
 	}
 
 	public void emptyCatchUp(Peer peer) {
-		log.info("No chain to catch up.");
+		log.debug("No chain to catch up.");
 		empty = true;
 	}
 	
@@ -98,7 +98,7 @@ public class ChainCatchUpBuilder {
 
 	public boolean tryBuildingChain() {
 
-		log.info("Try to build the chain.");
+		log.debug("Try to build the chain.");
 
 		if(pendingBlocks != null && ! pendingBlocks.isEmpty()) {
 

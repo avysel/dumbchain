@@ -54,7 +54,7 @@ public class Miner {
 		log.info("Start miner.");
 		while(mining) {
 			Block block = mine();
-			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain size : "+blockchain.getChain().size());
+			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain height : "+blockchain.getChain().size());
 			log.debug(block);
 			
 			// send new block to blockchain
@@ -108,8 +108,6 @@ public class Miner {
 			difficulty ++;
 			
 		} while (! proof.checkCondition(block) ); // try again if pow is not checked
-
-		log.info("New block created : "+block);
 		
 		return block;
 	}

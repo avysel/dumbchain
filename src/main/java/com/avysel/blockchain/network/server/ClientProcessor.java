@@ -36,7 +36,7 @@ public class ClientProcessor implements Runnable {
 	 */
 	@Override
 	public void run() {
-		log.info("Start processing incoming client connection");
+		log.debug("Start processing incoming client connection");
 
 		// TODO verifier que toute la donnee est bien lue avant de la parser
 

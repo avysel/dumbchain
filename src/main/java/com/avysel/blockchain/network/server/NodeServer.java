@@ -53,7 +53,7 @@ public class NodeServer {
 
 		Thread t = new Thread(new Runnable(){
 			public void run(){
-				log.info("NodeServer starts runing ...");
+				log.debug("NodeServer starts runing.");
 				while(running){
 
 					try {
@@ -61,7 +61,7 @@ public class NodeServer {
 						Socket clientSocket = serverSocket.accept();
 
 						// new thread to process the connection
-						log.info("Incoming connection");                  
+						log.debug("Incoming connection");                  
 						Thread t = new Thread(new ClientProcessor(clientSocket, network));
 						t.start();
 
@@ -83,7 +83,7 @@ public class NodeServer {
 	}	
 
 	public void stop() {
-		log.info("Stop node server");
+		log.debug("Stop node server");
 		running = false;
 	}
 }

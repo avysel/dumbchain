@@ -27,7 +27,7 @@ public class NodeClient {
 	
 		// send data to all alive peers
 		List<Peer> peers = networkManager.getAlivePeers();
-		log.info("Nb alive peers : "+peers.size());
+		log.debug("Nb alive peers : "+peers.size());
 		for(Peer peer : peers) {
 			sendData(bulk, peer);
 		}
@@ -41,7 +41,7 @@ public class NodeClient {
 			log.error("No local peer, unable to set sender data");
 		}
 		
-		log.info("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getPort());
+		log.debug("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getPort());
 		
 		try {
 			// connect to distant peer's server part

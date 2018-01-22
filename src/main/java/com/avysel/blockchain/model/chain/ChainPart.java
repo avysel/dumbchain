@@ -66,17 +66,6 @@ public class ChainPart {
 	}
 	
 	/**
-	 * Remove a block from the chain, for example when a better block was received from the network.
-	 * Its following blocks are removed too.
-	 * @param block the starting point of sub chain to remove
-	 */
-	public List<Block> unlinkBlock(Block block) {
-		// TODO
-		// retourner la liste des blocks supprimés
-		return null;
-	}
-	
-	/**
 	 * Returns difficulty of @ChainPart (sum of difficulties of all @Blocks in the @ChainPart).
 	 * @return @ChainPart difficulty
 	 */

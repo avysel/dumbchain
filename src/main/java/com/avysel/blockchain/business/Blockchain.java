@@ -186,6 +186,7 @@ public class Blockchain {
 		}
 		if(incomingBlockAdded) {
 			log.info("An incoming block has been linked : "+ block);
+			log.debug("Chain : "+chain);
 		}
 		else {
 			// TODO something else to do ?
@@ -203,6 +204,8 @@ public class Blockchain {
 		// link block to current chain
 		getChain().linkBlock(block);
 
+		log.debug("Chain : "+chain);
+		
 		// send block to the network
 		network.sendBlock(block);
 	}

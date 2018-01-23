@@ -122,7 +122,7 @@ public class PeerManager {
 		Peer peer = findPeer(ip, port);
 		if(peer != null) {
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
-			log.info("Peer "+peer.toString()+" is marked as still alive");
+			log.debug("Peer "+peer.toString()+" is marked as still alive");
 		}
 		else {
 			log.warn("Peer "+ip+"/"+port+" is not found to be marked alive");

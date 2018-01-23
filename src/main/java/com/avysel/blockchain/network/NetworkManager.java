@@ -180,7 +180,7 @@ public class NetworkManager {
 	 * @param message the message object to send
 	 */
 	public void sendMessage(int bulkType, NetworkMessage message, Peer peer) {
-		log.info("Send a message to "+peer);
+		log.debug("Send a message to "+peer);
 		if (message != null) log.trace(message.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 

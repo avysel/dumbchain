@@ -18,7 +18,7 @@ public class ChainSender {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainSender");
 
-	private static final int MAX_BLOCKS_PER_BULK = 2;
+	private static final int MAX_BLOCKS_PER_BULK = 5;
 
 	private Blockchain blockchain;
 

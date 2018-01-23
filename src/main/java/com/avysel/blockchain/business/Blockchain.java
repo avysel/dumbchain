@@ -58,6 +58,8 @@ public class Blockchain {
 	// to catch-up with existing chain
 	private ChainCatchUpBuilder catchUpBuilder;
 
+	private boolean catchUpCompleted = false;
+	
 	public Blockchain() {
 		this.mining = true;
 		init();
@@ -176,6 +178,8 @@ public class Blockchain {
 	 * @param block the incoming block to add
 	 */
 	public void addIncomingBlock(Block block) {
+		if( ! catchUpCompleted ) return;
+		
 		boolean incomingBlockAdded;
 		try {
 			RejectReason rejectReason = consensusBuilder.processExternalBlock(block);
@@ -268,6 +272,7 @@ public class Blockchain {
 
 		catchUpBuilder = new ChainCatchUpBuilder(this);
 		catchUpBuilder.startCatchUp();
+		catchUpCompleted = true;
 	}
 
 	public void addCatchUp(List<Block> blocks) {

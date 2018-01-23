@@ -100,7 +100,7 @@ public class Miner {
 			log.debug("Hash : "+hash);
 			
 			block.setHash(hash);
-			block.setTimestamp(System.currentTimeMillis());
+			block.setTimestamp(System.currentTimeMillis()); // TODO use same timezone whatever the current node's timezone
 			block.setDifficulty(difficulty);
 
 			block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));

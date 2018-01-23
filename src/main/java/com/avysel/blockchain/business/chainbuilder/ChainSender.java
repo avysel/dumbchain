@@ -10,7 +10,6 @@ import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
 import com.avysel.blockchain.network.peer.Peer;
-import com.oracle.tools.packager.Log;
 
 /**
  * Send the current chain to a new node on the network
@@ -19,7 +18,7 @@ public class ChainSender {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainSender");
 	
-	private static final int MAX_BLOCKS_PER_BULK = 1;
+	private static final int MAX_BLOCKS_PER_BULK = 2;
 
 	private Blockchain blockchain;
 

@@ -30,7 +30,7 @@ public class PeerExplorer {
 	/**
 	 * Send a broadcast message to network to introduce itself as a new node
 	 */
-	public void wakeUp() {
+	public void hello() {
 
 		log.info("Local peer says hello.");
 
@@ -48,9 +48,14 @@ public class PeerExplorer {
 			String data = JsonMapper.bulkToJson(bulk);
 
 			// create and send packet // TODO listAllBroadcastAddresses
-			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.getBytes().length, NetworkManager.getBroadcastAddress(), NetworkManager.getBroadcastPort());
+			DatagramPacket packet = new DatagramPacket(
+					data.getBytes()
+					, data.getBytes().length
+					, NetworkManager.getBroadcastAddress()
+					, NetworkManager.getBroadcastPort()
+				);
 
-			log.info("Send connection request to network.");
+			log.debug("Send connection request to network.");
 			clientSocket.send(packet);
 
 			clientSocket.close();
@@ -61,9 +66,6 @@ public class PeerExplorer {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		finally {
-			// close ?
 		}
 	}
 }

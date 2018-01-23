@@ -55,6 +55,7 @@ public class Blockchain {
 	// build chain according to consensus rules
 	private ChainConsensusBuilder consensusBuilder;
 
+	// to catch-up with existing chain
 	private ChainCatchUpBuilder catchUpBuilder;
 
 	public Blockchain() {

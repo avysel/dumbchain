@@ -54,7 +54,7 @@ public class PeerManager {
 	}
 
 	public void start() {
-		peerExplorer.wakeUp();
+		peerExplorer.hello();
 		peerListener.start();
 	}
 

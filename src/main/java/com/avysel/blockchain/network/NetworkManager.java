@@ -52,11 +52,6 @@ public class NetworkManager {
 	 */
 	public static long DEFAULT_PEER_STILL_ALIVE = 3600;
 
-	/**
-	 * Maximum number of peers to a peer asking for connections.
-	 */
-	public static long DEFAULT_PEER_NUMBER_TO_SEND = 10;
-
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
 		server = new NodeServer(this);
@@ -199,7 +194,6 @@ public class NetworkManager {
 		try {
 			blockchain.addIncomingData(data);
 		} catch (InterruptedException e) {
-			// TODO what to do when data not added ?
 			e.printStackTrace();
 		}
 		log.info("Pool size after : "+blockchain.getDataPool().size());

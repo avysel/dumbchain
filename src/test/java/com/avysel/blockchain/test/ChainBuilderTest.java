@@ -1,5 +1,7 @@
 package com.avysel.blockchain.test;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Collections;
 
 import org.junit.Test;
@@ -21,7 +23,8 @@ public class ChainBuilderTest {
 			builder.addPendingBlock(b);
 		}
 		
-		builder.build();
+		ChainPart resultChain = builder.build();
+		assertNotNull(resultChain);
 	}
 
 }

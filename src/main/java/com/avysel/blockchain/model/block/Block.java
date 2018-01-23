@@ -172,7 +172,11 @@ public class Block {
 	}
 	
 	public boolean equals(Block otherBlock) {
-		return this.getHash().equals(otherBlock.getHash());
+		return ( this.getHash().equals(otherBlock.getHash())
+				&& this.getIndex() == otherBlock.getIndex()
+				&& this.getTimestamp() == otherBlock.getTimestamp()
+				&& this.getMerkleRoot().equals(otherBlock.getMerkleRoot())
+				);
 	}
 	
 	/**

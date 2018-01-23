@@ -15,6 +15,7 @@ public class ChainGenerator {
 			b.setPreviousHash("hash"+(i-1));
 			b.addData(new SingleData("data"+i));
 			b.setTimestamp(System.currentTimeMillis()+i);
+			b.setMerkleRoot("merkle"+i);
 			chain.getBlockList().add(b);
 		}
 		

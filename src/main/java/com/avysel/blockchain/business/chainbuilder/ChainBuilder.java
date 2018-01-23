@@ -39,10 +39,20 @@ public class ChainBuilder {
 		timeIndexedBlocks.put(block.getTimestamp(), block);
 	}
 
-	public void build() {
+	public ChainPart build() {
 		ChainPart byIndex = buildByIndex();
 		ChainPart byTime = buildByTimestamp();
 		ChainPart byHash = buildByHash();
+		
+		boolean indexTime = checkChainEquality(byIndex, byTime);
+		boolean indexHash = checkChainEquality(byIndex, byHash);
+		boolean timeHash = checkChainEquality(byTime, byHash);
+		
+		if( indexTime == indexHash == timeHash) {
+			return byIndex;
+		}
+		
+		return null;
 	}
 
 	private ChainPart buildByIndex() {
@@ -95,7 +105,19 @@ public class ChainBuilder {
 		return hashIndexedBlocks.get(hash);
 	}
 	
-	private boolean checkChainEquality(ChainPart chain1, ChainPart chain2, ChainPart chain3) {
+	private boolean checkChainEquality(ChainPart chain1, ChainPart chain2) {
+		
+		if (!(chain1 != null && chain2 != null)
+			||chain1 == null && chain2 != null 
+			|| chain1 != null && chain2 == null
+			|| chain1.size() != chain2.size())
+			return false;
+		
+		for (int i = 0 ; i < chain1.size() ; i ++ ) {
+			if( ! chain1.getBlockList().get(i).equals(chain2.getBlockList().get(i)))
+				return false;
+		}
+		
 		return true;
 	}
 }

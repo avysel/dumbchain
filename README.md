@@ -30,7 +30,6 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Manager qui maintient les connexions avec les pairs connus
 - [x] Agent TCP client qui envoie les blocs créés
 - [x] Agent TCP serveur qui reçoit les données et blocs depuis le réseau
-- [ ] S'assurer de ne pas traiter 2 fois le même message entrant
 - [ ] Chiffrer les données transmises
 
 ### Stockage

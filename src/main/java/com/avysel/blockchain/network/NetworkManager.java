@@ -45,6 +45,8 @@ public class NetworkManager {
 	//private static String broadcastAddress = "255.255.255.255";
 	private static String broadcastAddress = "127.0.0.1";
 
+	private static List<String> receivedBulks;
+
 	/**
 	 * Number of second from last contact with peer to consider it as still alive.
 	 */
@@ -61,6 +63,8 @@ public class NetworkManager {
 		client = new NodeClient(this);
 
 		peerManager = new PeerManager();
+
+		receivedBulks = new ArrayList<String>();
 	}
 
 	/**
@@ -185,7 +189,7 @@ public class NetworkManager {
 
 		client.sendData(bulk, peer);
 	}
-	
+
 	/**
 	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists
 	 * @param data the incoming SingleData
@@ -215,6 +219,16 @@ public class NetworkManager {
 	 */
 	public void processIncoming(NetworkDataBulk bulk) {
 		log.debug("Incoming Bulk : "+bulk);
+
+		// make sure we don't process twice the same message if got twice
+		if(receivedBulks.contains(bulk.getUid())) {
+			log.info("Incoming bulk already received.");
+			return;
+		}
+		else {
+			receivedBulks.add(bulk.getUid());
+		}
+		
 		switch(bulk.getBulkType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
 			log.debug("Get a block from network");

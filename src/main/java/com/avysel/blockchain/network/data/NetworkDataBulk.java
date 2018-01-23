@@ -1,5 +1,7 @@
 package com.avysel.blockchain.network.data;
 
+import java.util.UUID;
+
 import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.tools.JsonMapper;
 
@@ -42,6 +44,7 @@ public class NetworkDataBulk {
 	 */
 	public static final int MESSAGE_CATCH_UP_EMPTY = 304;
 	
+	private String uid;
 	private int bulkType;
 	private String bulkData;
 	
@@ -49,14 +52,19 @@ public class NetworkDataBulk {
 
 	public NetworkDataBulk() {
 		super();
+		this.uid = UUID.randomUUID().toString();
 	}	
 	
 	public NetworkDataBulk(int bulkType, String bulkData) {
-		super();
+		this();
 		this.bulkType = bulkType;
 		this.bulkData = bulkData;
 	}
 	
+	public String getUid() {
+		return uid;
+	}
+
 	public int getBulkType() {
 		return bulkType;
 	}

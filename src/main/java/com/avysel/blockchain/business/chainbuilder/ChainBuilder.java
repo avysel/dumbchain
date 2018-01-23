@@ -8,6 +8,9 @@ import java.util.TreeMap;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
 
+/**
+ * Try to build a chain from a set of blocks.
+ */
 public class ChainBuilder {
 
 	// blocks map, index = block hash

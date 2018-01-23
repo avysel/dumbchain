@@ -112,7 +112,7 @@ public class ChainCatchUpBuilder {
 				}
 			}
 
-			log.info("All blocks are arrived, start building chain.");
+			log.info("All blocks are arrived, start building chain with "+pendingBlocks.size()+" blocks");
 
 			List<Block> blocks = new LinkedList<Block>();
 			for (int i = 0 ; i < indexes.length ; i++) {

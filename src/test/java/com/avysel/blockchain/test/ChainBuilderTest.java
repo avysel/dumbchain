@@ -15,7 +15,7 @@ public class ChainBuilderTest {
 	@Test
 	public void testChainBuilder() {
 		ChainBuilder builder = new ChainBuilder();
-		ChainPart chain = ChainGenerator.createChain(10);
+		ChainPart chain = ChainGenerator.createChain(1000);
 		
 		Collections.shuffle(chain.getBlockList());
 		

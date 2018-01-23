@@ -204,6 +204,7 @@ public class Blockchain {
 		// link block to current chain
 		getChain().linkBlock(block);
 
+		log.info("Chain height : "+getChain().getLastIndex());
 		log.debug("Chain : "+chain);
 		
 		// send block to the network

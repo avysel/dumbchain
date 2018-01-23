@@ -34,10 +34,11 @@ public class PeerListener implements Runnable {
 
 	public void start() {
 		
-		int port = NetworkTool.getNextAvailablePort(NetworkManager.getBroadcastPort(), 1000);
+		int port = NetworkTool.getNextAvailablePort(NetworkManager.getBroadcastPort(), 10);
 		
 		try {
 			this.datagramSocket = new DatagramSocket(port);
+			log.info("Peer listener on port "+port);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

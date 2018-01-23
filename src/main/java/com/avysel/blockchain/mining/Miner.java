@@ -53,12 +53,13 @@ public class Miner {
 		// TODO put in a thread
 		log.info("Start miner.");
 		while(mining) {
-			Block block = mine();
-			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. Chain height : "+blockchain.getChain().size());
+			Block block = mine();	
+			
+			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool.");
 			log.debug(block);
 			
-			// send new block to blockchain
-			blockchain.addBlock(block);
+			// add block to blockchain
+			blockchain.addBlock(block);			
 		}
 		log.info("End miner.");
 		log.debug("Effort : "+blockchain.getChain().getEffort());		

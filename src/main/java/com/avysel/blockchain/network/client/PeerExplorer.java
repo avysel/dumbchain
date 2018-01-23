@@ -47,17 +47,19 @@ public class PeerExplorer {
 			bulk.setBulkData(peerData);
 			String data = JsonMapper.bulkToJson(bulk);
 
-			// create and send packet // TODO listAllBroadcastAddresses
-			DatagramPacket packet = new DatagramPacket(
-					data.getBytes()
-					, data.getBytes().length
-					, NetworkManager.getBroadcastAddress()
-					, NetworkManager.getBroadcastPort()
-				);
+			for(int i = 0 ; i < 10 ; i ++) {
 
-			log.debug("Send connection request to network.");
-			clientSocket.send(packet);
+				// create and send packet // TODO listAllBroadcastAddresses
+				DatagramPacket packet = new DatagramPacket(
+						data.getBytes()
+						, data.getBytes().length
+						, NetworkManager.getBroadcastAddress()
+						, NetworkManager.getBroadcastPort() + i
+						);
 
+				log.debug("Send connection request to network.");
+				clientSocket.send(packet);
+			}
 			clientSocket.close();
 
 		} catch (SocketException e) {

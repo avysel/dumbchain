@@ -36,11 +36,11 @@ public class ChainSender {
 		}
 		else {
 			log.info("Send chain to "+peer);
-			for (int i = 0 ; i < blockchain.getChain().getLastIndex() ; i += MAX_BLOCKS_PER_BULK) {
+			for (int i = 0 ; i < blockchain.getChain().getLastIndex() ; i ++) {
 				try {
 					CatchUpDataMessage message = new CatchUpDataMessage();
 					int from = i * MAX_BLOCKS_PER_BULK +1;
-					int to = Math.min( (i+1)*MAX_BLOCKS_PER_BULK +1, blockchain.getChain().getBlockList().size());					
+					int to = Math.min( (i+1)*MAX_BLOCKS_PER_BULK +1, blockchain.getChain().getBlockList().size());
 					List<Block> sublist = blockchain.getChain().getBlockList().subList(from, to);
 					if(sublist != null && !sublist.isEmpty()) {
 						message.setBlocks(sublist);
@@ -48,7 +48,7 @@ public class ChainSender {
 						message.setLastIndex(sublist.get(sublist.size()-1).getIndex());
 
 						blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS, message, peer);
-						log.info("Send "+sublist.size()+" blocks.");
+						log.info("Send "+sublist.size()+" block(s).");
 					}
 					
 					if(to == blockchain.getChain().getBlockList().size() ) {

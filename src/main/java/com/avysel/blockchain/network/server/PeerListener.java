@@ -71,7 +71,7 @@ public class PeerListener implements Runnable {
 
 						// read
 						String str = new String(packet.getData());
-						log.info(str);
+						log.debug(str);
 
 						processData(str);
 

@@ -2,6 +2,7 @@ package com.avysel.blockchain.network.client;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import com.avysel.blockchain.tools.JsonMapper;
 public class NodeClient {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.client.NodeClient");
-	
+
 	private Socket clientSocket;
 	private NetworkManager networkManager;
 
@@ -24,7 +25,7 @@ public class NodeClient {
 	}
 
 	public void sendDataToAllPeers(NetworkDataBulk bulk) {
-	
+
 		// send data to all alive peers
 		List<Peer> peers = networkManager.getAlivePeers();
 		log.debug("Nb alive peers : "+peers.size());
@@ -40,13 +41,18 @@ public class NodeClient {
 		else {
 			log.error("No local peer, unable to set sender data");
 		}
-		
+
 		log.debug("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getPort());
-		
+
 		try {
 			// connect to distant peer's server part
-			clientSocket = new Socket(peer.getIp(), peer.getPort());
-
+			try {
+				clientSocket = new Socket(peer.getIp(), peer.getPort());
+			}
+			catch(ConnectException e) {
+				e.printStackTrace();
+				// TODO remove peer
+			}
 			// send data
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
 			bos.write(JsonMapper.bulkToJson(bulk).getBytes());

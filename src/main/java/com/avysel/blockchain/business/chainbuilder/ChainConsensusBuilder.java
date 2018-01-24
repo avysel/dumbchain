@@ -18,6 +18,14 @@ import com.avysel.blockchain.model.data.SingleData;
  */
 public class ChainConsensusBuilder {
 
+	private static final int MAX_REJECTS_ALLOWED = 3;
+	
+	// number of blocks rejected by consensus (not rejects because of bad integrity)
+	private int nbRejected;
+	
+	// index of last linked block get from network
+	private long lastLinkedIndex;
+	
 	public enum RejectReason {
 		BLOCK_INTEGRITY,
 		PROOF_OF_WORK,
@@ -39,6 +47,7 @@ public class ChainConsensusBuilder {
 		if(blockchain != null) 
 			this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
+		this.nbRejected = 0;
 	}
 
 	/**
@@ -83,11 +92,13 @@ public class ChainConsensusBuilder {
 		if(RejectReason.NONE.equals(rejectReason)) {
 			// the incoming block can be easily added at the end of chain
 			chain.linkBlock(incomingBlock);
+			lastLinkedIndex = incomingBlock.getIndex();
 			cleanDataPool(incomingBlock);
 			return RejectReason.NONE;
 		}
 		else {
 			log.error("Incoming block cannot be added for some reasons : "+rejectReason);
+			nbRejected ++;
 			return rejectReason;
 		}
 	}
@@ -160,5 +171,15 @@ public class ChainConsensusBuilder {
 		else {
 			return block1;
 		}
+	}
+	
+	public void checkConsistency() {
+		// if too many rejects, there must be a problem, so start a new catch up from last linked block from network
+		if(nbRejected >= MAX_REJECTS_ALLOWED) {
+			blockchain.setCatchUpCompleted(false);
+			
+			start catch-up
+		}
+		
 	}
 }

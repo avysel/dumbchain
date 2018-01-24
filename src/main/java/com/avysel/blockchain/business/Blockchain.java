@@ -118,6 +118,14 @@ public class Blockchain {
 		}
 	}
 
+	public boolean isCatchUpCompleted() {
+		return catchUpCompleted;
+	}
+
+	public void setCatchUpCompleted(boolean catchUpCompleted) {
+		this.catchUpCompleted = catchUpCompleted;
+	}	
+	
 	/**
 	 * Create the genesis @Block and add it to the @Chain
 	 */
@@ -193,8 +201,10 @@ public class Blockchain {
 			log.debug("Chain : "+chain);
 		}
 		else {
-			// TODO something else to do ?
 			log.info("An incoming block has been rejected : "+block);
+			
+			// check if blockchain is not in a consistent state
+			consensusBuilder.checkConsistency();
 		}
 	}
 

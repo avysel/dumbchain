@@ -1,6 +1,5 @@
 package com.avysel.blockchain.model.chain;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,16 +62,10 @@ public class Chain extends ChainPart {
 
 			List<ISingleData> dataList = new LinkedList<ISingleData>();
 
-			Iterator<Block> lit = getBlockList().descendingIterator();
-			while(lit.hasNext()){
-				Block block = lit.next();
-				if(block.getIndex() >= startIndex) {
-					dataList.addAll(block.getDataList());
-					getBlockList().remove(block);
-				}
-				else {
-					break;
-				}
+			Block block = getBlockList().getLast();
+			while( block != null && block.getIndex() >= startIndex ) {
+				block = getBlockList().removeLast();
+				dataList.addAll(block.getDataList());
 			}
 
 			return dataList;

@@ -12,6 +12,7 @@ import com.avysel.blockchain.model.block.Block;
  * It contains the list of @Block, but contains no @Genesis. The @ChainPart is to be appended to an existing @Chain
  */
 public class ChainPart {
+	
 	private LinkedList<Block> blockList;
 
 	public ChainPart() {
@@ -19,7 +20,7 @@ public class ChainPart {
 	}
 
 	public LinkedList<Block> getBlockList() {
-		return blockList;
+		return (LinkedList<Block>) blockList;
 	}
 
 	public void setBlockList(LinkedList<Block> blockList) {
@@ -28,11 +29,11 @@ public class ChainPart {
 
 
 	public Block getFirstBlock() {
-		return blockList.getFirst();
+		return getBlockList().getFirst();
 	}
 
 	public Block getLastBlock() {
-		return blockList.getLast();
+		return getBlockList().getLast();
 	}	
 
 	public final void addBlocks(List<Block> blockList) {

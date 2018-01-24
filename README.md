@@ -58,3 +58,8 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] Javadoc
 - [ ] Synchroniser les collections
 
+
+### Limites
+- Si la condition de minage est trop facile a atteindre et que les blocs sont créés trop rapidement, chaque noeud fera avancer sa version de la chaine plus rapidement que le mécanisme de diffusion/concensus. La chaine sera alors dans un état incohérent.
+- Si plusieurs noeuds démarrent à vide en même temps, sans au moins un autre noeud déjà en route, ils débuteront chacun leur version de la chaine. La chaine sera alors dans un état incohérent.
+

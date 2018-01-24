@@ -10,6 +10,7 @@ import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.data.ISingleData;
 
@@ -20,16 +21,16 @@ public class ChainConsensusBuilder {
 
 	// how many blocks can be rejected before starting investigation on chain consistency
 	private static final int MAX_CONSECUTIVE_REJECTS_ALLOWED = 5;
-	
+
 	// number of blocks rejected by consensus (not rejects because of bad integrity)
 	private int nbConsecutiveRejects;
-	
+
 	// index of last linked block get from network
 	private long lastLinkedIndex;
-	
+
 	// is currently checking consistency ?
 	private boolean isCheckingConsistency;
-	
+
 	public enum RejectReason {
 		BLOCK_INTEGRITY,
 		PROOF_OF_WORK,
@@ -53,6 +54,7 @@ public class ChainConsensusBuilder {
 		this.blockchain = blockchain;
 		this.nbConsecutiveRejects = 0;
 		this.isCheckingConsistency = false;
+		this.lastLinkedIndex = -10;
 	}
 
 	/**
@@ -154,7 +156,7 @@ public class ChainConsensusBuilder {
 		// remove from data pool all block data
 		blockchain.getDataPool().removeAll(block.getDataList());
 	}
-	
+
 	/**
 	 * Check concistency of chain.
 	 * If too many blocks are rejected, the chain is probably forking.
@@ -162,17 +164,26 @@ public class ChainConsensusBuilder {
 	 */
 	public void checkConsistency() {
 		if(!isCheckingConsistency && nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
-			
+
 			isCheckingConsistency = true;
-			
+
 			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
 			
-			// remove local unsafe part
-			blockchain.unlink(lastLinkedIndex + 1);	
-			
-			// catch-up network existing safe part
-			blockchain.catchUp(lastLinkedIndex + 1);
-			
+			// if there is at least one block after the genesis
+			if(lastLinkedIndex > Genesis.GENESIS_INDEX) {
+				// remove local unsafe part
+				blockchain.unlink(lastLinkedIndex + 1);	
+				
+				// catch-up network existing safe part
+				blockchain.catchUp(lastLinkedIndex + 1);
+			}
+			else {
+				// catch-up from first block
+				blockchain.catchUp(1);
+			}
+
+
+
 			log.info("Consistency check completed.");
 			nbConsecutiveRejects = 0;
 			isCheckingConsistency = false;

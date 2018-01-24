@@ -94,6 +94,7 @@ public class ChainConsensusBuilder {
 			// the incoming block can be easily added at the end of chain
 			chain.linkBlock(incomingBlock);
 			lastLinkedIndex = incomingBlock.getIndex();
+			// remove included data from pool
 			cleanDataPool(incomingBlock);
 			nbConsecutiveRejects = 0;
 			return RejectReason.NONE;
@@ -150,11 +151,19 @@ public class ChainConsensusBuilder {
 		blockchain.getDataPool().removeAll(block.getDataList());
 	}
 	
-/*	public void checkConsistency() {
-		// if too many rejects, there must be a problem, so start a new catch up from last linked block from network
+	/**
+	 * Check concistency of chain.
+	 * If too many blocks are rejected, the chain is probably forking.
+	 * Rollback to last accepted block, and catch-up again.
+	 */
+	public void checkConsistency() {
 		if(nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
-			blockchain.unlink(lastLinkedIndex + 1);			
+			
+			// remove local unsafe part
+			blockchain.unlink(lastLinkedIndex + 1);	
+			
+			// catch-up network existing safe part
 			blockchain.catchUp(lastLinkedIndex + 1);
 		}
-	}*/
+	}
 }

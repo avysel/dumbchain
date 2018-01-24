@@ -56,4 +56,5 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Ajuster les niveaux de log
 - [ ] Finaliser TU
 - [ ] Javadoc
+- [ ] Synchroniser les collections
 

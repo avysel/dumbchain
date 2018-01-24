@@ -197,8 +197,8 @@ public class Blockchain {
 		else {
 			log.info("An incoming block has been rejected : "+block);
 
-			// check if blockchain is not in a consistent state
-			//consensusBuilder.checkConsistency();
+			// check if blockchain is not in an inconsistent state
+			consensusBuilder.checkConsistency();
 		}
 	}
 

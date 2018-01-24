@@ -17,6 +17,7 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.message.NetworkMessage;
@@ -116,14 +117,6 @@ public class Blockchain {
 			else
 				miner.stop();
 		}
-	}
-
-	public boolean isCatchUpCompleted() {
-		return catchUpCompleted;
-	}
-
-	public void setCatchUpCompleted(boolean catchUpCompleted) {
-		this.catchUpCompleted = catchUpCompleted;
 	}	
 	
 	/**
@@ -237,12 +230,21 @@ public class Blockchain {
 	}
 
 	/**
+	 * Remove from chain all blocks starting by startIndex (included). Data in blocks will be put back in data pool.
+	 * @param startIndex
+	 */
+	public void unlink(long startIndex) {
+		List<ISingleData> dataList = chain.unlinkBlock(startIndex);
+		getDataPool().addAll(dataList);
+	}
+	
+	/**
 	 * Starts the Blockchain (network listening and mining)
 	 */
 	public void start() {
 		log.info("Starting blockchain");
 		network.start();
-		catchUp();
+		catchUp(this.getLastIndex() + 1);
 		if(mining)
 			miner.start();
 	}
@@ -267,8 +269,10 @@ public class Blockchain {
 
 	/**
 	 * Catch up with existing chain
+	 * @param startIndex the index of first missing block
 	 */
-	private void catchUp() {
+	public void catchUp(long startIndex) {
+		catchUpCompleted = false;
 		/*
 		 * Wait for few peers connection
 		 * ask for how many blocks since this.chainHeight
@@ -281,7 +285,7 @@ public class Blockchain {
 		}
 
 		catchUpBuilder = new ChainCatchUpBuilder(this);
-		catchUpBuilder.startCatchUp();
+		catchUpBuilder.startCatchUp(startIndex);
 		catchUpCompleted = true;
 	}
 

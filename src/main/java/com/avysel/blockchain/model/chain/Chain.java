@@ -1,7 +1,11 @@
 package com.avysel.blockchain.model.chain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.block.Genesis;
+import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * The blockchain.
@@ -47,5 +51,11 @@ public class Chain extends ChainPart {
 		}
 		
 		blockList.add(block);
+	}
+	
+	public List<ISingleData> unlinkBlock(long startIndex) {
+		List<ISingleData> dataList = new LinkedList<ISingleData>();
+		//for()
+		return dataList;
 	}
 }

@@ -56,12 +56,12 @@ public class ChainCatchUpBuilder {
 		this.chainSize = chainSize;
 	}
 
-	public void startCatchUp() {
+	public void startCatchUp(long startIndex) {
 		log.info("Start to catch up with chain");
 		
 		long startTime = System.currentTimeMillis();
 		
-		requestor.requestBlocks();
+		requestor.requestBlocks(startIndex);
 		while( (!completed && ! empty) && (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
 			try {
 				Thread.sleep(CATCH_UP_RETRY_DELAY);

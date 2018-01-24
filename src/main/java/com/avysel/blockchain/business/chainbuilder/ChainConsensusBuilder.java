@@ -11,7 +11,7 @@ import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * Manage incoming blocks and deal with forks
@@ -123,8 +123,8 @@ public class ChainConsensusBuilder {
 
 
 	private boolean dataAlreadyInChain(Block incomingBlock) {
-		List<SingleData> dataList = incomingBlock.getDataList();
-		for(SingleData data : dataList) {
+		List<ISingleData> dataList = incomingBlock.getDataList();
+		for(ISingleData data : dataList) {
 			if(BlockchainManager.findBlockByData(chain, data.getHash()) != null)
 				return true;
 		}
@@ -174,14 +174,8 @@ public class ChainConsensusBuilder {
 	public void checkConsistency() {
 		// if too many rejects, there must be a problem, so start a new catch up from last linked block from network
 		if(nbRejected >= MAX_REJECTS_ALLOWED) {
-			blockchain.setCatchUpCompleted(false);
-			
-			unlink from last index
-			
-			start catch-up from last index
-			
-			blockchain.setCatchUpCompleted(true);
+			blockchain.unlink(lastLinkedIndex + 1);			
+			blockchain.catchUp(lastLinkedIndex + 1);
 		}
-		
 	}
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
 
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...
@@ -18,13 +18,13 @@ public class DataPool {
 	
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.DataPool");
 	
-	private LinkedBlockingQueue<SingleData> queue;
+	private LinkedBlockingQueue<ISingleData> queue;
 
 	public DataPool() {
-		queue = new LinkedBlockingQueue<SingleData>();
+		queue = new LinkedBlockingQueue<ISingleData>();
 	}
 
-	private LinkedBlockingQueue<SingleData> getDataPool() {
+	private LinkedBlockingQueue<ISingleData> getDataPool() {
 		return queue;
 	}
 
@@ -33,7 +33,7 @@ public class DataPool {
 	 * @param data the @SingleData to be added
 	 * @throws InterruptedException 
 	 */
-	public void addData(SingleData data) throws InterruptedException {
+	public void addData(ISingleData data) throws InterruptedException {
 		
 		if(!exists(data.getHash())) {
 			getDataPool().put(data);
@@ -49,16 +49,16 @@ public class DataPool {
 	 * Add a @List of @SingleData to the pending data list to be added in a @Block
 	 * @param dataList the @List of @SingleData to be added
 	 */	
-	public void addAll(List<SingleData> dataList) {
+	public void addAll(List<ISingleData> dataList) {
 		getDataPool().addAll(dataList);
 	}
 
-	public void removeAll(List<SingleData> dataList) {
+	public void removeAll(List<ISingleData> dataList) {
 		getDataPool().removeAll(dataList);
 	}
 	
-	public List<SingleData> getData(long quantity) {
-		List<SingleData> result = new ArrayList<SingleData>();
+	public List<ISingleData> getData(long quantity) {
+		List<ISingleData> result = new ArrayList<ISingleData>();
 		for(int i=0 ; i < quantity && !getDataPool().isEmpty() ; i++) {
 			result.add(getDataPool().poll());
 		}
@@ -69,8 +69,8 @@ public class DataPool {
 	 * Pick a random quantity of data in the list of pending data.
 	 * @return a @List<SingleData> that contains a random quantity of data
 	 */
-	public  List<SingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
-		List<SingleData> result = new ArrayList<SingleData>();
+	public  List<ISingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
+		List<ISingleData> result = new ArrayList<ISingleData>();
 		if(getDataPool().isEmpty()) return result;
 		
 		int quantity;
@@ -101,7 +101,7 @@ public class DataPool {
 
 	public String toString() {
 		StringBuffer result = new StringBuffer();
-		Iterator<SingleData> it = getDataPool().iterator();
+		Iterator<ISingleData> it = getDataPool().iterator();
 		while(it.hasNext())
 			result.append(it.next());
 		return result.toString();
@@ -113,7 +113,7 @@ public class DataPool {
 	 * @return true if a data with the same unique identifier is present in queue
 	 */
 	public boolean exists(String hash) {
-		Iterator<SingleData> it = getDataPool().iterator();
+		Iterator<ISingleData> it = getDataPool().iterator();
 		while(it.hasNext())
 			if(it.next().getHash().equals(hash))
 				return true;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /*
@@ -47,7 +47,7 @@ public class Block {
 	 * Add a @List of @SingleData to the @Block
 	 * @param dataList the data to add
 	 */ 
-	public void addAllData(List<SingleData> dataList) {
+	public void addAllData(List<ISingleData> dataList) {
 		this.getBlockData().getDataList().addAll(dataList);
 	}
 	
@@ -55,7 +55,7 @@ public class Block {
 	 * Add a @SingleData to the @Block
 	 * @param singleData the piece of data to add
 	 */
-	public void addData(SingleData singleData) {
+	public void addData(ISingleData singleData) {
 		this.getBlockData().getDataList().add(singleData);
 	}
 	
@@ -106,7 +106,7 @@ public class Block {
 		this.getBlockHeader().setDifficulty(difficulty);
 	}	
 	
-	public List<SingleData> getDataList() {
+	public List<ISingleData> getDataList() {
 		return this.getBlockData().getDataList();
 	}	
 	
@@ -142,8 +142,8 @@ public class Block {
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append("[");
-		List<SingleData> dataList = this.getDataList();
-		for(SingleData singleData : dataList) {
+		List<ISingleData> dataList = this.getDataList();
+		for(ISingleData singleData : dataList) {
 			builder.append(singleData.getData());
 			builder.append(", ");
 		}
@@ -193,7 +193,7 @@ public class Block {
 	public ArrayList<String> getDataHashesList() {
 		ArrayList<String> list = new ArrayList<String>();
 
-		Iterator<SingleData> it = getDataList().iterator();
+		Iterator<ISingleData> it = getDataList().iterator();
 		while(it.hasNext()) {
 			list.add(it.next().getHash());
 		}

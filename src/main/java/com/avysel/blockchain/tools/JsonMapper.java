@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
@@ -148,7 +149,7 @@ public class JsonMapper {
 		return genericToJson(data);
 	}
 
-	public static String dataListToJson(List<SingleData> dataList) {
+	public static String dataListToJson(List<ISingleData> dataList) {
 		String json = new String();
 
 		ObjectMapper mapper = new ObjectMapper();

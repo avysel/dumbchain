@@ -11,7 +11,7 @@ import com.avysel.blockchain.crypto.MerkleTree;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * The Miner creates Blocks with pending data. Each try of create a Block use a random quantity of data. If a Block can be created, it's linked to the Chain
@@ -79,7 +79,7 @@ public class Miner {
 	 */
 	public Block mine() {
 		Block block;
-		List<SingleData> dataList = new ArrayList<SingleData>();
+		List<ISingleData> dataList = new ArrayList<ISingleData>();
 
 		String hash;
 		long difficulty = 0;

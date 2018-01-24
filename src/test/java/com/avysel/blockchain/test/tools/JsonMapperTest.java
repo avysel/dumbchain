@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -103,7 +104,7 @@ public class JsonMapperTest {
 	
 	@Test
 	public void dataListToJson() {
-		List<SingleData> list = new ArrayList<SingleData>();
+		List<ISingleData> list = new ArrayList<ISingleData>();
 		list.add(data1);
 		list.add(data2);
 		

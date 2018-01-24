@@ -26,11 +26,11 @@ public class ChainRequestor {
 			return null;
 	}
 
-	public void requestBlocks() {
+	public void requestBlocks(long startIndex) {
 		Peer peer = selectPeerToRequest();
 		if(peer != null) {
 			CatchUpRequestMessage message = new CatchUpRequestMessage();
-			message.setStartIndex(blockchain.getLastIndex());
+			message.setStartIndex(startIndex);
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST, message, peer);
 		}
 	}

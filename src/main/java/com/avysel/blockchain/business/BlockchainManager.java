@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 
 /**
@@ -57,9 +58,9 @@ public class BlockchainManager {
 		if(dataHash == null) return null;
 		
 		for(Block block : chain.getBlockList()){
-			List<SingleData> dataList = block.getDataList();
+			List<ISingleData> dataList = block.getDataList();
 			if(dataList != null) {
-				for(SingleData data : dataList) {
+				for(ISingleData data : dataList) {
 					if(dataHash.equals(data.getHash()))
 						return block;
 				}

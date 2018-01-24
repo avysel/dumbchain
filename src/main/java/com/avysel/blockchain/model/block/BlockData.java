@@ -3,6 +3,7 @@ package com.avysel.blockchain.model.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 
 /**
@@ -11,26 +12,26 @@ import com.avysel.blockchain.model.data.SingleData;
  */
 public class BlockData {
 	
-	private List<SingleData> dataList;
+	private List<ISingleData> dataList;
 
 	public BlockData() {
 		super();
-		dataList = new ArrayList<SingleData>();
+		dataList = new ArrayList<ISingleData>();
 	}
 		
 	public BlockData(List<String> data) {
 		super();
-		dataList = new ArrayList<SingleData>();
+		dataList = new ArrayList<ISingleData>();
 		for(String s : data) {
 			dataList.add(new SingleData(s));
 		}
 	}	
 
-	public List<SingleData> getDataList() {
+	public List<ISingleData> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(List<SingleData> dataList) {
+	public void setDataList(List<ISingleData> dataList) {
 		this.dataList = dataList;
 	}
 	

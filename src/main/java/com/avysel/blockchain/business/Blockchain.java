@@ -59,8 +59,9 @@ public class Blockchain {
 	// to catch-up with existing chain
 	private ChainCatchUpBuilder catchUpBuilder;
 
+	// is catch-up completed (true) or still in progress (false)
 	private boolean catchUpCompleted = false;
-	
+
 	public Blockchain() {
 		this.mining = true;
 		init();
@@ -118,7 +119,7 @@ public class Blockchain {
 				miner.stop();
 		}
 	}	
-	
+
 	/**
 	 * Create the genesis @Block and add it to the @Chain
 	 */
@@ -180,7 +181,7 @@ public class Blockchain {
 	 */
 	public void addIncomingBlock(Block block) {
 		if( ! catchUpCompleted ) return;
-		
+
 		boolean incomingBlockAdded;
 		try {
 			RejectReason rejectReason = consensusBuilder.processExternalBlock(block);
@@ -195,7 +196,7 @@ public class Blockchain {
 		}
 		else {
 			log.info("An incoming block has been rejected : "+block);
-			
+
 			// check if blockchain is not in a consistent state
 			consensusBuilder.checkConsistency();
 		}
@@ -213,7 +214,7 @@ public class Blockchain {
 
 		log.info("Chain height : "+getChain().getLastIndex());
 		log.debug("Chain : "+chain);
-		
+
 		// send block to the network
 		network.sendBlock(block);
 	}
@@ -237,7 +238,7 @@ public class Blockchain {
 		List<ISingleData> dataList = chain.unlinkBlock(startIndex);
 		getDataPool().addAll(dataList);
 	}
-	
+
 	/**
 	 * Starts the Blockchain (network listening and mining)
 	 */
@@ -273,6 +274,7 @@ public class Blockchain {
 	 */
 	public void catchUp(long startIndex) {
 		catchUpCompleted = false;
+		miner.pauseMining();
 		/*
 		 * Wait for few peers connection
 		 * ask for how many blocks since this.chainHeight
@@ -285,27 +287,47 @@ public class Blockchain {
 		}
 
 		catchUpBuilder = new ChainCatchUpBuilder(this);
-		catchUpBuilder.startCatchUp(startIndex);
+		
+		if(catchUpBuilder.startCatchUp(startIndex)) {
+			consensusBuilder.setLastLinkedIndex(chain.getLastIndex());
+		}
+		else {
+			log.error("Catch-up failed.");
+		}
+		
 		catchUpCompleted = true;
+		miner.resumeMining();
 	}
 
+	/**
+	 * Add catch-up incomings blocks to catch-up builder
+	 * @param blocks
+	 */
 	public void addCatchUp(List<Block> blocks) {
 		catchUpBuilder.addPendingBlocks(blocks);
 	}
 
-	public void emptyCatchUp(Peer peer) {
-		catchUpBuilder.emptyCatchUp(peer);
+	/**
+	 * Notify catch-up builder that current chain is empty
+	 */
+	public void emptyCatchUp() {
+		catchUpBuilder.emptyCatchUp();
 	}
-	
+
 	public List<Peer> getPeers() {
 		return network.getAlivePeers();
 	}
 
-	public void sendCatchUp(Peer peer) {
+	/**
+	 * Send catch-up data to a peer
+	 * @param peer the peer to send catch-up data to
+	 * @param startIndex the index of first block to catch up
+	 */
+	public void sendCatchUp(Peer peer, long startIndex) {
 		ChainSender sender = new ChainSender(this);
-		sender.sendChainToPeer(peer);
+		sender.sendChainToPeer(peer, startIndex);
 	}
-	
+
 	public void sendMessage(int messageType, NetworkMessage message, Peer peer) {
 		network.sendMessage(messageType, message, peer);
 	}

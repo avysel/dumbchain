@@ -20,7 +20,7 @@ import com.avysel.blockchain.model.data.ISingleData;
 public class Miner {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.Miner");
-	
+
 	// mining or not ?
 	private boolean mining;
 
@@ -31,8 +31,10 @@ public class Miner {
 	/*private Chain chain;*/
 
 	private Blockchain blockchain;
-	
+
 	private IProof proof;
+
+	private boolean pauseMining;
 
 	/**
 	 * Creates the Miner
@@ -53,13 +55,15 @@ public class Miner {
 		// TODO put in a thread
 		log.info("Start miner.");
 		while(mining) {
-			Block block = mine();	
-			
-			log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool.");
-			log.debug(block);
-			
-			// add block to blockchain
-			blockchain.addBlock(block);			
+			if(! pauseMining) {
+				Block block = mine();	
+
+				log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool.");
+				log.debug(block);
+
+				// add block to blockchain
+				blockchain.addBlock(block);		
+			}
 		}
 		log.info("End miner.");
 		log.debug("Effort : "+blockchain.getChain().getEffort());		
@@ -84,33 +88,42 @@ public class Miner {
 		String hash;
 		long difficulty = 0;
 		do {
-			
-			block = new Block();	
-			// put unused data back to pending data
-			dataPool.addAll(dataList);
 
-			// clean current data set
-			block.cleanData();
+			block = new Block();
+			if( ! pauseMining ) {
+				
+				// put unused data back to pending data
+				dataPool.addAll(dataList);
 
-			// pick new dataset, blocking when pending data is empty
-			dataList = dataPool.getRandomData();
-			block.addAllData(dataList);
+				// clean current data set
+				block.cleanData();
 
-			hash = HashTools.calculateBlockHash(block);
+				// pick new dataset, blocking when pending data is empty
+				dataList = dataPool.getRandomData();
+				block.addAllData(dataList);
 
-			log.debug("Hash : "+hash);
-			
-			block.setHash(hash);
-			block.setTimestamp(System.currentTimeMillis()); // TODO use same timezone whatever the current node's timezone
-			block.setDifficulty(difficulty);
+				hash = HashTools.calculateBlockHash(block);
 
-			block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
-			
-			difficulty ++;
-			
+				log.debug("Hash : "+hash);
+
+				block.setHash(hash);
+				block.setTimestamp(System.currentTimeMillis()); // TODO use same timezone whatever the current node's timezone
+				block.setDifficulty(difficulty);
+
+				block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
+
+				difficulty ++;
+			}
 		} while (! proof.checkCondition(block) ); // try again if pow is not checked
-		
+
 		return block;
 	}
 
+	public void pauseMining() {
+		pauseMining = true;
+	}
+
+	public void resumeMining() {
+		pauseMining = false;
+	}
 }

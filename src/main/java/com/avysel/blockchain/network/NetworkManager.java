@@ -16,8 +16,9 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
-import com.avysel.blockchain.network.data.message.NetworkMessage;
 import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
+import com.avysel.blockchain.network.data.message.CatchUpRequestMessage;
+import com.avysel.blockchain.network.data.message.NetworkMessage;
 import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.network.peer.PeerManager;
 import com.avysel.blockchain.network.server.NodeServer;
@@ -242,18 +243,18 @@ public class NetworkManager {
 			break;		
 		case NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST :
 			log.debug("Incoming catch-up request");
-			// TODO use start index
-			blockchain.sendCatchUp(bulk.getSender());
+			CatchUpRequestMessage requestMessage = JsonMapper.jsonToCatchUpRequestMessage(bulk.getBulkData());
+			blockchain.sendCatchUp(bulk.getSender(), requestMessage.getStartIndex());
 			break;				
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
 			log.debug("Get catch up data");
-			CatchUpDataMessage message = JsonMapper.jsonToCatchUpDataMessage(bulk.getBulkData());
-			List<Block> blocks = message.getBlocks();
+			CatchUpDataMessage dataMessage = JsonMapper.jsonToCatchUpDataMessage(bulk.getBulkData());
+			List<Block> blocks = dataMessage.getBlocks();
 			blockchain.addCatchUp(blocks);
 			break;
 		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :
 			log.debug("Get an empty catch-up");
-			blockchain.emptyCatchUp(bulk.getSender());
+			blockchain.emptyCatchUp();
 			break;			
 		default: 
 			log.error("error incoming, unkown type : "+bulk.getBulkType());
@@ -270,7 +271,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Sets the Peer represening the current node
+	 * Sets the Peer representing the current node
 	 * @param localPeer the current node's Peer representation
 	 */
 	public void setLocalPeer(Peer localPeer) {

@@ -27,8 +27,8 @@ public class ChainSender {
 		this.blockchain = blockchain;
 	}
 
-	public void sendChainToPeer(Peer peer) {
-
+	public void sendChainToPeer(Peer peer, long startIndex) {
+		//TODO use startIndex
 		// no block to send, send an "empty" response message instead
 		if(this.blockchain.getLastIndex() == Genesis.GENESIS_INDEX) {
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY, null, peer);
@@ -50,7 +50,7 @@ public class ChainSender {
 						blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS, message, peer);
 						log.info("Send "+sublist.size()+" block(s).");
 					}
-					
+
 					if(to == blockchain.getChain().getBlockList().size() ) {
 						break;
 					}

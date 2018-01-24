@@ -1,5 +1,6 @@
 package com.avysel.blockchain.model.chain;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import com.avysel.blockchain.model.data.ISingleData;
  * It contains the list of @Block, starting with a @Genesis
  */
 public class Chain extends ChainPart {
-	
+
 	public Chain() {
 		super();
 	}
@@ -25,7 +26,9 @@ public class Chain extends ChainPart {
 	}
 
 	public void setGenesis(Block genesis) {
-		blockList.addFirst(genesis);
+		synchronized(getBlockList()) {
+			getBlockList().addFirst(genesis);
+		}
 	}
 
 	@Override
@@ -37,25 +40,36 @@ public class Chain extends ChainPart {
 			return Genesis.GENESIS_INDEX;
 		}
 	}	
-	
+
 	/**
 	 * Add a new @Block to the @Chain, and set @Block link data (previous hash ...). It also manages to add a @Block if it is the @Genesis @Block
 	 * @param block the @Block to add.
 	 */
 	@Override
 	public void linkBlock(Block block) {
-		
-		if( ! block.isGenesis()) {
-			block.setPreviousHash(getLastBlock().getHash());
-			block.setIndex(getLastIndex() + 1);
+		synchronized(getBlockList()) {
+			if( ! block.isGenesis()) {
+				block.setPreviousHash(getLastBlock().getHash());
+				block.setIndex(getLastIndex() + 1);
+			}
+
+			getBlockList().add(block);
 		}
-		
-		blockList.add(block);
 	}
-	
+
 	public List<ISingleData> unlinkBlock(long startIndex) {
-		List<ISingleData> dataList = new LinkedList<ISingleData>();
-		//for()
-		return dataList;
+
+		synchronized (getBlockList()) {
+
+			List<ISingleData> dataList = new LinkedList<ISingleData>();
+
+			Iterator<Block> lit = getBlockList().descendingIterator();
+			while(lit.hasNext() && lit.next().getIndex() >= startIndex ){
+				dataList.addAll(lit.next().getDataList());
+				getBlockList().remove(lit.next());
+			}
+
+			return dataList;
+		}
 	}
 }

@@ -104,6 +104,14 @@ public class ChainConsensusBuilder {
 		}
 	}
 
+	public long getLastLinkedIndex() {
+		return lastLinkedIndex;
+	}
+
+	public void setLastLinkedIndex(long lastLinkedIndex) {
+		this.lastLinkedIndex = lastLinkedIndex;
+	}
+
 	private RejectReason isSuitableNextBlock(Block incomingBlock) {
 		// can the block be added to the end of chain ?
 
@@ -139,36 +147,6 @@ public class ChainConsensusBuilder {
 	private void cleanDataPool(Block block) {
 		// remove from data pool all block data
 		blockchain.getDataPool().removeAll(block.getDataList());
-	}
-
-	/**
-	 * Put back to blockchain's data pool all given block's data. Use it when a block is to be unlinked from the chain.
-	 * @param block the block that is going to be unlinked from the chain
-	 */
-	private void putBackDataToPool(Block block) {
-		// put back in pool data of this block (because block is rejected)
-		blockchain.getDataPool().addAll(block.getDataList());
-	}
-
-	/**
-	 * Find out the best block among two blocks. 
-	 * The best block means the one that will be kept in the chain when two blocks have the same index 
-	 * because created at the same time by two different nodes
-	 * @param block1 the first block to compare, will be the best if the two blocks have the same quality
-	 * @param block2 the second block to compare, will be rejected if the two blocks have the same quality
-	 * @return the block, with the best quality among the two given blocks
-	 */
-	private Block bestBlock(Block block1, Block block2) {
-		// return the best block to keep among the two given blocks
-		if(block2 == null || block1.getQuality() > block2.getQuality()) {
-			return block1;
-		}
-		else if(block1 == null || block1.getQuality() < block2.getQuality()) {
-			return block2;
-		}
-		else {
-			return block1;
-		}
 	}
 	
 	public void checkConsistency() {

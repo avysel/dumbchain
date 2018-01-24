@@ -242,6 +242,7 @@ public class Blockchain {
 	 * @param startIndex
 	 */
 	public void unlink(long startIndex) {
+		log.debug("Unlink from "+startIndex);
 		List<ISingleData> dataList = chain.unlinkBlock(startIndex);
 		getDataPool().addAll(dataList);
 	}

@@ -64,9 +64,15 @@ public class Chain extends ChainPart {
 			List<ISingleData> dataList = new LinkedList<ISingleData>();
 
 			Iterator<Block> lit = getBlockList().descendingIterator();
-			while(lit.hasNext() && lit.next().getIndex() >= startIndex ){
-				dataList.addAll(lit.next().getDataList());
-				getBlockList().remove(lit.next());
+			while(lit.hasNext()){
+				Block block = lit.next();
+				if(block.getIndex() >= startIndex) {
+					dataList.addAll(block.getDataList());
+					getBlockList().remove(block);
+				}
+				else {
+					break;
+				}
 			}
 
 			return dataList;

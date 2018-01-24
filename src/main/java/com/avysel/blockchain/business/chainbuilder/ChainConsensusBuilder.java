@@ -27,6 +27,9 @@ public class ChainConsensusBuilder {
 	// index of last linked block get from network
 	private long lastLinkedIndex;
 	
+	// is currently checking consistency ?
+	private boolean isCheckingConsistency;
+	
 	public enum RejectReason {
 		BLOCK_INTEGRITY,
 		PROOF_OF_WORK,
@@ -49,6 +52,7 @@ public class ChainConsensusBuilder {
 			this.chain = blockchain.getChain();
 		this.blockchain = blockchain;
 		this.nbConsecutiveRejects = 0;
+		this.isCheckingConsistency = false;
 	}
 
 	/**
@@ -100,7 +104,7 @@ public class ChainConsensusBuilder {
 			return RejectReason.NONE;
 		}
 		else {
-			log.error("Incoming block cannot be added for some reasons : "+rejectReason);
+			log.error("XXXXXXXXXX Incoming block not linked : "+rejectReason);
 			nbConsecutiveRejects ++;
 			return rejectReason;
 		}
@@ -157,7 +161,9 @@ public class ChainConsensusBuilder {
 	 * Rollback to last accepted block, and catch-up again.
 	 */
 	public void checkConsistency() {
-		if(nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
+		if(!isCheckingConsistency && nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
+			
+			isCheckingConsistency = true;
 			
 			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
 			
@@ -166,6 +172,10 @@ public class ChainConsensusBuilder {
 			
 			// catch-up network existing safe part
 			blockchain.catchUp(lastLinkedIndex + 1);
+			
+			log.info("Consistency check completed.");
+			nbConsecutiveRejects = 0;
+			isCheckingConsistency = false;
 		}
 	}
 }

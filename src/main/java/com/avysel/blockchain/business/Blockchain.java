@@ -183,8 +183,9 @@ public class Blockchain {
 		if( ! catchUpCompleted ) return;
 
 		boolean incomingBlockAdded;
+		RejectReason rejectReason = null;
 		try {
-			RejectReason rejectReason = consensusBuilder.processExternalBlock(block);
+			rejectReason = consensusBuilder.processExternalBlock(block);
 			incomingBlockAdded = RejectReason.NONE.equals(rejectReason);
 		} catch (BlockIntegrityException e) {
 			incomingBlockAdded = false;
@@ -198,8 +199,13 @@ public class Blockchain {
 		else {
 			log.info("An incoming block has been rejected : "+block);
 
-			// check if blockchain is not in an inconsistent state
-			consensusBuilder.checkConsistency();
+			if(rejectReason != null 
+					&& (rejectReason == RejectReason.COMPETITION 
+					|| rejectReason == RejectReason.PREVIOUS_HASH 
+					|| rejectReason == RejectReason.PREVIOUS_INDEX)
+					)
+				// check if blockchain is not in an inconsistent state
+				consensusBuilder.checkConsistency();
 		}
 	}
 
@@ -288,14 +294,14 @@ public class Blockchain {
 		}
 
 		catchUpBuilder = new ChainCatchUpBuilder(this);
-		
+
 		if(catchUpBuilder.startCatchUp(startIndex)) {
 			consensusBuilder.setLastLinkedIndex(chain.getLastIndex());
 		}
 		else {
 			log.error("Catch-up failed.");
 		}
-		
+
 		catchUpCompleted = true;
 		miner.resumeMining();
 	}

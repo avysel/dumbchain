@@ -21,19 +21,19 @@ public class Miner {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.Miner");
 
-	// mining or not ?
-	private boolean mining;
+	// mining node or not ?
+	private boolean miningNode;
 
 	// the queue of pending data to be included in a Block
 	private DataPool dataPool;
 
-	// The current existing Chain
-	/*private Chain chain;*/
-
+	// the current blockchain
 	private Blockchain blockchain;
 
+	// the condition to validate a block
 	private IProof proof;
 
+	// mining is pending or running ?
 	private boolean pauseMining;
 
 	/**
@@ -42,7 +42,7 @@ public class Miner {
 	 * @param dataPool the queue to peek data
 	 */
 	public Miner(Blockchain blockchain, DataPool dataPool) {
-		mining = true;
+		miningNode = true;
 		this.dataPool = dataPool;
 		this.blockchain = blockchain;
 		this.proof = new ProofOfWork();
@@ -54,8 +54,12 @@ public class Miner {
 	public void start() {
 		// TODO put in a thread
 		log.info("Start miner.");
-		while(mining) {
+		// while mining blockchain node is running
+		while(miningNode) {
+		
+			// if mining is not pending
 			if(! pauseMining) {
+				// create new block
 				Block block = mine();	
 
 				log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. ("+block.getHash()+")");
@@ -73,7 +77,7 @@ public class Miner {
 	 * Stop mining
 	 */
 	public void stop() {
-		mining = false;
+		miningNode = false;
 	}
 
 

@@ -18,6 +18,7 @@ import com.avysel.blockchain.model.data.SingleData;
  */
 public class ChainConsensusBuilder {
 
+	// how many blocks can be rejected before starting investigation on chain consistency
 	private static final int MAX_REJECTS_ALLOWED = 3;
 	
 	// number of blocks rejected by consensus (not rejects because of bad integrity)
@@ -159,9 +160,6 @@ public class ChainConsensusBuilder {
 	 */
 	private Block bestBlock(Block block1, Block block2) {
 		// return the best block to keep among the two given blocks
-
-		// TODO verifier aussi la longueur de la chaine suivant le block
-
 		if(block2 == null || block1.getQuality() > block2.getQuality()) {
 			return block1;
 		}
@@ -178,7 +176,11 @@ public class ChainConsensusBuilder {
 		if(nbRejected >= MAX_REJECTS_ALLOWED) {
 			blockchain.setCatchUpCompleted(false);
 			
-			start catch-up
+			unlink from last index
+			
+			start catch-up from last index
+			
+			blockchain.setCatchUpCompleted(true);
 		}
 		
 	}

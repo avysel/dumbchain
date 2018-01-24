@@ -114,7 +114,7 @@ public class Miner {
 
 				difficulty ++;
 			}
-		} while (! proof.checkCondition(block) ); // try again if pow is not checked
+		} while (pauseMining || ! proof.checkCondition(block) ); // try again if pow is not checked
 
 		return block;
 	}

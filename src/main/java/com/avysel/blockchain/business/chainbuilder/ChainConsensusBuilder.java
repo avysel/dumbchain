@@ -163,6 +163,8 @@ public class ChainConsensusBuilder {
 	 * Rollback to last accepted block, and catch-up again.
 	 */
 	public void checkConsistency() {
+		// TODO a remanier
+		
 		if(!isCheckingConsistency && nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
 
 			isCheckingConsistency = true;
@@ -172,14 +174,14 @@ public class ChainConsensusBuilder {
 			// if there is at least one block after the genesis
 			if(lastLinkedIndex > Genesis.GENESIS_INDEX) {
 				// remove local unsafe part
-				blockchain.unlink(lastLinkedIndex + 1);	
+			//	blockchain.unlink(lastLinkedIndex + 1);	
 				
 				// catch-up network existing safe part
-				blockchain.catchUp(lastLinkedIndex + 1);
+			//	blockchain.catchUp(lastLinkedIndex + 1);
 			}
 			else {
 				// catch-up from first block
-				blockchain.catchUp(1);
+			//	blockchain.catchUp(1);
 			}
 
 
@@ -188,5 +190,6 @@ public class ChainConsensusBuilder {
 			nbConsecutiveRejects = 0;
 			isCheckingConsistency = false;
 		}
+		
 	}
 }

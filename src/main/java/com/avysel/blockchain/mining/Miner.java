@@ -58,7 +58,7 @@ public class Miner {
 			if(! pauseMining) {
 				Block block = mine();	
 
-				log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool.");
+				log.info("New block created with "+block.getDataList().size()+" data. "+dataPool.size() +" data in pool. ("+block.getHash()+")");
 				log.debug(block);
 
 				// add block to blockchain

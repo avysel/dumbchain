@@ -191,7 +191,8 @@ public class Blockchain {
 			e.printStackTrace();
 		}
 		if(incomingBlockAdded) {
-			log.info("An incoming block has been linked : "+ block);
+			log.info("<<<<<<<<<< Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
+			log.debug(block);
 			log.debug("Chain : "+chain);
 		}
 		else {

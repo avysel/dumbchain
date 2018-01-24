@@ -161,7 +161,7 @@ public class NetworkManager {
 	 * @param block the Block object to send
 	 */
 	public void sendBlock(Block block) {
-		log.info("Send a block to the network.");
+		log.info(">>>>>>>>>> Send a block to the network : "+block.getIndex());
 		log.trace(block.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 

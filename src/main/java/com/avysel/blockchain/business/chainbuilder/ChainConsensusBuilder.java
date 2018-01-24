@@ -159,6 +159,8 @@ public class ChainConsensusBuilder {
 	public void checkConsistency() {
 		if(nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
 			
+			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
+			
 			// remove local unsafe part
 			blockchain.unlink(lastLinkedIndex + 1);	
 			

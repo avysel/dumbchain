@@ -1,6 +1,5 @@
 package com.avysel.blockchain.crypto;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -25,19 +24,15 @@ public class HashTools {
 	 * @param text the data to hash
 	 * @return the SHA-256 hash for the given text
 	 */
-	public static String calculateHash(String text) {
+	public static String calculateHash(byte[] text) {
 		
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-			md.update(text.getBytes("UTF-8"));
+			md.update(text);
 			byte[] hash = md.digest();
 			
 			return bytesToHex(hash);
-
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return null;
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();

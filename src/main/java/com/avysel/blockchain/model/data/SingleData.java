@@ -22,7 +22,7 @@ public class SingleData implements ISingleData {
 	public SingleData(String data) {
 		this.data = data;
 		this.uuid = UUID.randomUUID().toString();
-		this.hash = HashTools.calculateHash(data+uuid);
+		this.hash = HashTools.calculateHash((data+uuid).getBytes());
 	}
 
 	public String getData() {

@@ -115,14 +115,12 @@ public class Block {
 	 * @return
 	 */
 	@JsonIgnore
-	public String getHashData() {
-		// TODO move to byte[] ?
-		// TODO use header data instead of data ?
+	public byte[] getHashData() {
 		StringBuffer hashData = new StringBuffer();
 		//hashData.append(this.getIndex());
 		//hashData.append(this.getTimestamp());
 		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
-		return hashData.toString();
+		return hashData.toString().getBytes();
 	}
 	
 	/**
@@ -130,11 +128,10 @@ public class Block {
 	 * @return
 	 */
 	@JsonIgnore	
-	public String getMerkleRootData() {
-		// TODO move to byte[] ?
+	public byte[] getMerkleRootData() {
 		StringBuffer hashData = new StringBuffer();
 		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
-		return hashData.toString();		
+		return hashData.toString().getBytes();		
 	}
 	
 	@JsonIgnore

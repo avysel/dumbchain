@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.model.data.SingleData;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
 		//setLogParameters();
 
 		Blockchain blockchain = new Blockchain();
-		processParams(args, blockchain);
+		blockchain.setParams(processParams(args));
 		log.info("Welcome to blockchain "+blockchain.toString());
 
 		initTestData(blockchain);
@@ -29,7 +30,7 @@ public class Main {
 
 	}
 
-	private static void setLogParameters() {
+/*	private static void setLogParameters() {
 		Logger logRoot = Logger.getRootLogger();
 		ConsoleAppender ca = new ConsoleAppender();
 		PatternLayout pattern = new PatternLayout();
@@ -40,20 +41,22 @@ public class Main {
 		logRoot.addAppender(ca);
 		logRoot.setLevel(Level.INFO);		
 	}
+*/
+	private static BlockchainParameters processParams(String[] args) {
 
-	private static void processParams(String[] args, Blockchain blockchain) {
-
+		BlockchainParameters params = new BlockchainParameters();
+		
 		for(int i = 0 ; i < args.length ; i ++) {
 			switch(args[i]) {
 			case "-mining":
 				String miningValue = args[++i];
 				if("1".equals(miningValue)) {
 					log.info("Start mining node");
-					blockchain.setMining(Blockchain.MINING);
+					params.setMiningNode(Blockchain.MINING);
 				}
 				else if ("0".equals(miningValue)) {
 					log.info("Start NOT mining node");
-					blockchain.setMining(Blockchain.NOT_MINING);
+					params.setMiningNode(Blockchain.NOT_MINING);
 				}
 				else {
 					log.error("Unknown value ' "+args[i]+"' for parameter -mining");
@@ -67,6 +70,8 @@ public class Main {
 				break;
 			}
 		}
+		
+		return params;
 	}
 
 	private static void initTestData(Blockchain blockchain) {

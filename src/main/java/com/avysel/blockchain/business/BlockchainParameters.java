@@ -1,10 +1,18 @@
 package com.avysel.blockchain.business;
 
-public class BlockchainParam {
+public class BlockchainParameters {
 	
 	private boolean miningNode;
 	private boolean canStartAlone;
 	private boolean useNetwork;
+	
+	public BlockchainParameters() {
+		
+		// init default
+		miningNode = true;
+		canStartAlone = true;
+		useNetwork = true;
+	}
 	
 	public boolean isMiningNode() {
 		return miningNode;

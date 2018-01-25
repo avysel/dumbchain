@@ -34,9 +34,7 @@ public class Blockchain {
 
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 
-
-	// is the current blockchain mining ? (default true, else only building chain by listening)
-	private boolean mining;
+	private BlockchainParameters params;
 
 	// unique identifier of blockchain node
 	private String nodeId;
@@ -63,13 +61,15 @@ public class Blockchain {
 	private boolean catchUpCompleted = false;
 
 	public Blockchain() {
-		this.mining = true;
 		init();
 	}
 
-	public Blockchain(boolean mining) {
-		this.mining = mining;
-		init();
+	public BlockchainParameters getParams() {
+		return params;
+	}
+
+	public void setParams(BlockchainParameters params) {
+		this.params = params;
 	}
 
 	private void init() {
@@ -106,13 +106,13 @@ public class Blockchain {
 		this.chain = chain;
 	}
 
-	public boolean isMining() {
-		return mining;
+	public boolean isMiningNode() {
+		return params.isMiningNode();
 	}
 
 	public void setMining(boolean mining) {
-		if(this.mining != mining) {
-			this.mining = mining;
+		if(this.isMiningNode() != mining) {
+			this.getParams().setMiningNode(mining);
 			if(mining)
 				miner.start();
 			else
@@ -254,7 +254,7 @@ public class Blockchain {
 		log.info("Starting blockchain");
 		network.start();
 		catchUp(this.getLastIndex() + 1);
-		if(mining)
+		if(isMiningNode())
 			miner.start();
 	}
 
@@ -271,7 +271,7 @@ public class Blockchain {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append('\n');
 		buffer.append("Node : ").append(this.nodeId).append('\n');
-		buffer.append("Mining : ").append(this.mining).append('\n');
+		buffer.append("Mining : ").append(this.isMiningNode()).append('\n');
 
 		return buffer.toString();
 	}

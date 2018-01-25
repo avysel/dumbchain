@@ -1,11 +1,6 @@
 package com.avysel.blockchain;
 
-import java.util.UUID;
-
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainParameters;
@@ -52,11 +47,11 @@ public class Main {
 				String miningValue = args[++i];
 				if("1".equals(miningValue)) {
 					log.info("Start mining node");
-					params.setMiningNode(BlockchainParameters.MINING);
+					params.setMiningNode(BlockchainParameters.MINING_YES);
 				}
 				else if ("0".equals(miningValue)) {
 					log.info("Start NOT mining node");
-					params.setMiningNode(BlockchainParameters.NOT_MINING);
+					params.setMiningNode(BlockchainParameters.MINING_NO);
 				}
 				else {
 					log.error("Unknown value ' "+args[i]+"' for parameter -mining");

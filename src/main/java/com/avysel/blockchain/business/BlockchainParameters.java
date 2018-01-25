@@ -2,6 +2,9 @@ package com.avysel.blockchain.business;
 
 public class BlockchainParameters {
 	
+	public static final boolean MINING = true;
+	public static final boolean NOT_MINING = false;	
+	
 	private boolean miningNode;
 	private boolean canStartAlone;
 	private boolean useNetwork;

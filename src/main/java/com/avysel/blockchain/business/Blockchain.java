@@ -29,9 +29,6 @@ import com.avysel.blockchain.network.peer.Peer;
  */
 public class Blockchain {
 
-	public static final boolean MINING = true;
-	public static final boolean NOT_MINING = false;
-
 	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
 
 	private BlockchainParameters params;

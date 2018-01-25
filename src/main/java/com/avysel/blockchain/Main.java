@@ -52,11 +52,11 @@ public class Main {
 				String miningValue = args[++i];
 				if("1".equals(miningValue)) {
 					log.info("Start mining node");
-					params.setMiningNode(Blockchain.MINING);
+					params.setMiningNode(BlockchainParameters.MINING);
 				}
 				else if ("0".equals(miningValue)) {
 					log.info("Start NOT mining node");
-					params.setMiningNode(Blockchain.NOT_MINING);
+					params.setMiningNode(BlockchainParameters.NOT_MINING);
 				}
 				else {
 					log.error("Unknown value ' "+args[i]+"' for parameter -mining");

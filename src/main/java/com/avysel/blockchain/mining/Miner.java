@@ -52,7 +52,6 @@ public class Miner {
 	 * Starts mining
 	 */
 	public void start() {
-		// TODO put in a thread
 		log.info("Start miner.");
 		// while mining blockchain node is running
 		while(miningNode) {

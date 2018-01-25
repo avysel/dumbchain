@@ -50,8 +50,8 @@ public class NodeClient {
 				clientSocket = new Socket(peer.getIp(), peer.getPort());
 			}
 			catch(ConnectException e) {
-				e.printStackTrace();
-				// TODO remove peer
+				log.debug("Connection failed, remove peer "+peer);
+				networkManager.removePeer(peer);
 			}
 			// send data
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());

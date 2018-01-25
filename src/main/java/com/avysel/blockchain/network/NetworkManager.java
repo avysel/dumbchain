@@ -297,4 +297,8 @@ public class NetworkManager {
 	public void markPeerAsAlive(String ip, int port) {
 		peerManager.markPeerAsAlive(ip, port);
 	}
+	
+	public void removePeer(Peer peer) {
+		peerManager.removePeer(peer);
+	}
 }

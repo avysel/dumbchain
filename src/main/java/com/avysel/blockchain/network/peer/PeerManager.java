@@ -66,14 +66,15 @@ public class PeerManager {
 	 * Add a Peer to the list of connected Peers
 	 * @param peer the Peer to add.
 	 */
-	public synchronized void addPeer(Peer peer) {
-
-		if(! isLocalPeer(peer) && ! peerExists(peer)) {
-			peersList.add(peer);
-			log.info("New peer added : "+peer);
-		}
-		else {
-			log.info("Skip adding peer : "+peer);
+	public void addPeer(Peer peer) {
+		synchronized(peersList) {
+			if(! isLocalPeer(peer) && ! peerExists(peer)) {
+				peersList.add(peer);
+				log.info("New peer added : "+peer);
+			}
+			else {
+				log.info("Skip adding peer : "+peer);
+			}
 		}
 	}
 
@@ -81,8 +82,10 @@ public class PeerManager {
 	 * Remove a Peer from the list of connected Peers.
 	 * @param peer the Peer to remove.
 	 */
-	public synchronized void removePeer(Peer peer) {
-		peersList.remove(peer);
+	public void removePeer(Peer peer) {
+		synchronized(peersList) {
+			peersList.remove(peer);
+		}
 	}
 
 	/**
@@ -94,8 +97,10 @@ public class PeerManager {
 		return this.localPeer.getUid().equals(peer.getUid());
 	}	
 
-	public synchronized boolean peerExists(Peer peer) {
-		return peersList.contains(peer);
+	public boolean peerExists(Peer peer) {
+		synchronized(peersList) {
+			return peersList.contains(peer);
+		}
 	}
 
 	/**
@@ -104,13 +109,15 @@ public class PeerManager {
 	 * @param port the port
 	 * @return the peer that is registered with given ip and port
 	 */
-	public synchronized Peer findPeer(String ip, int port) {
-		for(Peer peer : peersList) {
-			if(peer.getIp().equals(ip) && peer.getPort() == port) {
-				return peer;
+	public Peer findPeer(String ip, int port) {
+		synchronized(peersList) {
+			for(Peer peer : peersList) {
+				if(peer.getIp().equals(ip) && peer.getPort() == port) {
+					return peer;
+				}
 			}
+			return null;
 		}
-		return null;
 	}
 
 	/**
@@ -118,14 +125,16 @@ public class PeerManager {
 	 * @param ip
 	 * @param port
 	 */
-	public synchronized void markPeerAsAlive(String ip, int port) {
-		Peer peer = findPeer(ip, port);
-		if(peer != null) {
-			peer.setLastAliveTimestamp(System.currentTimeMillis());
-			log.debug("Peer "+peer.toString()+" is marked as still alive");
-		}
-		else {
-			log.warn("Peer "+ip+"/"+port+" is not found to be marked alive");
+	public void markPeerAsAlive(String ip, int port) {
+		synchronized(peersList) {
+			Peer peer = findPeer(ip, port);
+			if(peer != null) {
+				peer.setLastAliveTimestamp(System.currentTimeMillis());
+				log.debug("Peer "+peer.toString()+" is marked as still alive");
+			}
+			else {
+				log.warn("Peer "+ip+"/"+port+" is not found to be marked alive");
+			}
 		}
 	}
 
@@ -133,16 +142,18 @@ public class PeerManager {
 	 * Returns the list of peers we had contact with in less than NetworkManager.DEFAULT_PEER_STILL_ALIVE seconds ago.
 	 * @return the list of peers considered as still alive
 	 */
-	public synchronized List<Peer> getAlivePeers() {
-		List<Peer> alivePeers = new ArrayList<Peer>();
-		long currentTime = System.currentTimeMillis();
+	public List<Peer> getAlivePeers() {
+		synchronized(peersList) {
+			List<Peer> alivePeers = new ArrayList<Peer>();
+			long currentTime = System.currentTimeMillis();
 
-		for(Peer peer : peersList) {
-			if(currentTime - peer.getLastAliveTimestamp() < (NetworkManager.DEFAULT_PEER_STILL_ALIVE * 1000)) {
-				alivePeers.add(peer);
+			for(Peer peer : peersList) {
+				if(currentTime - peer.getLastAliveTimestamp() < (NetworkManager.DEFAULT_PEER_STILL_ALIVE * 1000)) {
+					alivePeers.add(peer);
+				}
 			}
-		}
 
-		return alivePeers;
+			return alivePeers;
+		}
 	}
 }

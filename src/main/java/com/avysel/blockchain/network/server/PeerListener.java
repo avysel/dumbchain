@@ -32,6 +32,9 @@ public class PeerListener implements Runnable {
 		this.peerManager = manager;
 	}
 
+	/**
+	 * Start listening network to handle peer's requests.
+	 */
 	public void start() {
 		
 		int port = NetworkTool.getNextAvailablePort(NetworkManager.getBroadcastPort(), 10);
@@ -48,7 +51,7 @@ public class PeerListener implements Runnable {
 	}
 
 	/**
-	 * Start listening network
+	 * Start listening network to handle peers requests.
 	 */
 	@Override
 	public void run() {
@@ -88,6 +91,10 @@ public class PeerListener implements Runnable {
 		t.start();
 	}	
 
+	/**
+	 * Process an incoming datagram packet got from a peer
+	 * @param packet the packet to process
+	 */
 	private void processData(DatagramPacket packet) {
 		if(packet == null || packet.getData() == null) return;
 		
@@ -111,11 +118,18 @@ public class PeerListener implements Runnable {
 		}
 	}
 
+	/**
+	 * Stop listening network and peers requests.
+	 */
 	public void stop() {
 		running = false;
 	}
 
 	
+	/**
+	 * Answer to hello request of a peer. We send it our ip/port/chain height.
+	 * @param peer the peer to anwser to.
+	 */
 	private void answerBack(Peer peer) {
 		// create network exploration request 
 		NetworkDataBulk bulk = new NetworkDataBulk();
@@ -136,6 +150,5 @@ public class PeerListener implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

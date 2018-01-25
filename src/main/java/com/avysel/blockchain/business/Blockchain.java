@@ -322,6 +322,10 @@ public class Blockchain {
 		catchUpBuilder.emptyCatchUp();
 	}
 
+	/**
+	 * Returns the list of peers connected to current node.
+	 * @return the list of peers connected to current node.
+	 */
 	public List<Peer> getPeers() {
 		return network.getAlivePeers();
 	}
@@ -336,6 +340,12 @@ public class Blockchain {
 		sender.sendChainToPeer(peer, startIndex);
 	}
 
+	/**
+	 * Send a message to a peer.
+	 * @param messageType the type of message.
+	 * @param message the message object.
+	 * @param peer the peer to send message to.
+	 */
 	public void sendMessage(int messageType, NetworkMessage message, Peer peer) {
 		network.sendMessage(messageType, message, peer);
 	}

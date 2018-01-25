@@ -68,12 +68,9 @@ public class PeerListener implements Runnable {
 						// wait for data
 						datagramSocket.receive(packet);
 						log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
+						log.debug(packet.getData().toString());
 
-						// read
-						String str = new String(packet.getData());
-						log.debug(str);
-
-						processData(str);
+						processData(packet);
 
 						//reinit buffer
 						packet.setLength(buffer.length);
@@ -91,8 +88,10 @@ public class PeerListener implements Runnable {
 		t.start();
 	}	
 
-	private void processData(String data) {
-		NetworkDataBulk bulk = JsonMapper.jsonToBulk(data);
+	private void processData(DatagramPacket packet) {
+		if(packet == null || packet.getData() == null) return;
+		
+		NetworkDataBulk bulk = JsonMapper.jsonToBulk(new String(packet.getData()));
 
 		if(bulk != null) {
 			switch(bulk.getBulkType()) {
@@ -101,11 +100,12 @@ public class PeerListener implements Runnable {
 				log.debug("New peer on the network, add it.");
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
+				peer.setIp(packet.getAddress().toString().replace("/",""));
 				peerManager.addPeer(peer);
 				answerBack(peer);
 				break;			
 			default:
-				log.warn("Unknown bulk : "+data);
+				log.warn("Unknown bulk : "+new String(packet.getData()));
 				break;
 			}
 		}

@@ -36,8 +36,6 @@ public class ClientProcessor implements Runnable {
 	public void run() {
 		log.debug("Start processing incoming client connection");
 
-		// TODO verifier que toute la donnee est bien lue avant de la parser
-
 		String data = new String();
 		try {
 			reader = new BufferedInputStream(socket.getInputStream());

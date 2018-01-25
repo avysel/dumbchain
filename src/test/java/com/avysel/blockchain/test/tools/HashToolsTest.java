@@ -13,7 +13,7 @@ public class HashToolsTest {
 	
 	@Test
 	public void testHash() {
-		String hash = HashTools.calculateHash(STRING_TO_HASH);	
+		String hash = HashTools.calculateHash(STRING_TO_HASH.getBytes());	
 
 		System.out.println(hash);
 		

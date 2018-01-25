@@ -101,7 +101,7 @@ public class Peer {
 	public static Peer initFromLocal() {
 		
 		Peer peer = new Peer();
-		peer.setIp("127.0.0.1"); // TODO use real ip
+		peer.setIp("127.0.0.1");
 		peer.setLastAliveTimestamp(System.currentTimeMillis());
 		peer.setPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());

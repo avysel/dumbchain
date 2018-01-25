@@ -112,14 +112,27 @@ public class ChainConsensusBuilder {
 		}
 	}
 
+	/**
+	 * Returns the index of last block got from network and successfully linked. It's considered as the last time the chain was obviously consistent.
+	 * @return the index of last block linked from network.
+	 */
 	public long getLastLinkedIndex() {
 		return lastLinkedIndex;
 	}
 
+	/**
+	 * Set index of the last block got from network and successfully linked
+	 * @param lastLinkedIndex the index
+	 */
 	public void setLastLinkedIndex(long lastLinkedIndex) {
 		this.lastLinkedIndex = lastLinkedIndex;
 	}
 
+	/**
+	 * Check if an incoming block can be linked to the end of the chain. It means that index and hash/previous hash are suitable.
+	 * @param incomingBlock the block we want to add to the chain.
+	 * @return RejectReason, enum code of the check result.
+	 */
 	private RejectReason isSuitableNextBlock(Block incomingBlock) {
 		// can the block be added to the end of chain ?
 
@@ -133,11 +146,21 @@ public class ChainConsensusBuilder {
 
 	}
 
+	/**
+	 * Search if a block with the same index already exists in the chain
+	 * @param incomingBlock the block we want to add
+	 * @return the block in the chain with same index as incoming block. Null if such a block does not exist.
+	 */
 	private Block findCompetitorInChain(Block incomingBlock) {
 		return BlockchainManager.findBlockByIndex(chain, incomingBlock.getIndex());
 	}
 
 
+	/**
+	 * Checks if an incoming blocks contains data that has already been included in a previous block.
+	 * @param incomingBlock the block we want to add.
+	 * @return true if such data exist, false otherwise.
+	 */
 	private boolean dataAlreadyInChain(Block incomingBlock) {
 		List<ISingleData> dataList = incomingBlock.getDataList();
 		for(ISingleData data : dataList) {
@@ -183,8 +206,6 @@ public class ChainConsensusBuilder {
 				// catch-up from first block
 			//	blockchain.catchUp(1);
 			}
-
-
 
 			log.info("Consistency check completed.");
 			nbConsecutiveRejects = 0;

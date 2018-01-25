@@ -294,10 +294,19 @@ public class NetworkManager {
 		return peerManager.getAlivePeers();
 	}
 
+	/**
+	 * Mark a peer as alive. It store the current timestamp as the last time this peer gaves us a sign of life.
+	 * @param ip the IP address of the peer.
+	 * @param port the listening port of the peer.
+	 */
 	public void markPeerAsAlive(String ip, int port) {
 		peerManager.markPeerAsAlive(ip, port);
 	}
 	
+	/**
+	 * Remove a peer from the peers list.
+	 * @param peer the peer to remove.
+	 */
 	public void removePeer(Peer peer) {
 		peerManager.removePeer(peer);
 	}

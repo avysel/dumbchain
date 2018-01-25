@@ -2,7 +2,6 @@ package com.avysel.blockchain.mining;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -114,7 +113,7 @@ public class Miner {
 				log.debug("Hash : "+hash);
 
 				block.setHash(hash);
-				// all creation timestamps based on GMT
+				// all block creation timestamps are based on GMT+0 timezone
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
 				block.setTimestamp(Timestamp.from(Instant.now()).getTime());
 				block.setDifficulty(difficulty);
@@ -128,10 +127,16 @@ public class Miner {
 		return block;
 	}
 
+	/**
+	 * Suspend mining. If a block is being mined, it will be dissmissed.
+	 */
 	public void pauseMining() {
 		pauseMining = true;
 	}
 
+	/**
+	 * Resume mining. Starts the mining of a new node.
+	 */
 	public void resumeMining() {
 		pauseMining = false;
 	}

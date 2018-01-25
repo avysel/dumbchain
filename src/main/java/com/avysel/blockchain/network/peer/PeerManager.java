@@ -45,19 +45,27 @@ public class PeerManager {
 		this.localPeer = localPeer;
 	}
 
-	public synchronized List<Peer> getPeersList() {
-		return peersList;
+	/**
+	 * Returns the list of peers to whom the local node is connected 
+	 * @return the list of connected peers
+	 */
+	public List<Peer> getPeersList() {
+		synchronized(peersList) {
+			return peersList;
+		}
 	}
 
-	public synchronized void setPeersList(List<Peer> peersList) {
-		this.peersList = peersList;
-	}
-
+	/**
+	 * Starts the peer manager. Broadcast a message to the network to notify presence of local node on the network. Then start listening to handle any peer's request.
+	 */
 	public void start() {
 		peerExplorer.hello();
 		peerListener.start();
 	}
 
+	/**
+	 * Stop peer manager. Stop listening peer's requests.
+	 */
 	public void stop() {
 		peerListener.stop();
 	}
@@ -93,10 +101,17 @@ public class PeerManager {
 	 * @param peer the Peer that is to be compared with local Peer.
 	 * @return true if the given Peer is the local Peer.
 	 */
-	public synchronized boolean isLocalPeer(Peer peer) {
-		return this.localPeer.getUid().equals(peer.getUid());
+	public boolean isLocalPeer(Peer peer) {
+		synchronized(localPeer) {
+			return this.localPeer.getUid().equals(peer.getUid());
+		}
 	}	
 
+	/**
+	 * Checks if a peer already exists it the local peers list.
+	 * @param peer the peer to check.
+	 * @return true if peer already exists, false otherwise.
+	 */
 	public boolean peerExists(Peer peer) {
 		synchronized(peersList) {
 			return peersList.contains(peer);

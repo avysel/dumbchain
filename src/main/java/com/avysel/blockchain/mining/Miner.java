@@ -1,7 +1,11 @@
 package com.avysel.blockchain.mining;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 
@@ -110,7 +114,9 @@ public class Miner {
 				log.debug("Hash : "+hash);
 
 				block.setHash(hash);
-				block.setTimestamp(System.currentTimeMillis()); // TODO use same timezone whatever the current node's timezone
+				// all creation timestamps based on GMT
+				TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+				block.setTimestamp(Timestamp.from(Instant.now()).getTime());
 				block.setDifficulty(difficulty);
 
 				block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));

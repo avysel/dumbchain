@@ -29,7 +29,7 @@ import com.avysel.blockchain.network.peer.Peer;
  */
 public class Blockchain {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.Blockchain");
+	private static Logger log = Logger.getLogger(Blockchain.class);
 
 	private BlockchainParameters params;
 

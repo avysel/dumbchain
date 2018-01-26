@@ -8,14 +8,13 @@ import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
 
 /**
  * Provides some operation on the Blockchain, such as finding a Block or checking Chain integrity.
  */
 public class BlockchainManager {
 	
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.BlockchainManager");
+	private static Logger log = Logger.getLogger(BlockchainManager.class);
 	
 	/**
 	 * Find a @Block with a given index

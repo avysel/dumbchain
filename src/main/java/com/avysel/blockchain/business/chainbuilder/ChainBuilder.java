@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
 
@@ -13,6 +15,8 @@ import com.avysel.blockchain.model.chain.ChainPart;
  */
 public class ChainBuilder {
 
+	private static Logger log = Logger.getLogger(ChainBuilder.class);
+	
 	// blocks map, index = block hash
 	private  HashMap<String, Block> hashIndexedBlocks;
 

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JsonMapper {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.tools.JsonMapper");
+	private static Logger log = Logger.getLogger(JsonMapper.class);
 
 	public static String genericToJson(Object o) {
 		String json = new String();

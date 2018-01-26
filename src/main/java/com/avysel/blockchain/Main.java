@@ -8,7 +8,7 @@ import com.avysel.blockchain.model.data.SingleData;
 
 public class Main {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.Main");
+	private static Logger log = Logger.getLogger(Main.class);
 
 	public static void main (String[] args) {
 

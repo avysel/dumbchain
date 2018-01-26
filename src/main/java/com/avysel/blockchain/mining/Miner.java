@@ -22,7 +22,7 @@ import com.avysel.blockchain.model.data.ISingleData;
  */
 public class Miner {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.Miner");
+	private static Logger log = Logger.getLogger(Miner.class);
 
 	// mining node or not ?
 	private boolean miningNode;

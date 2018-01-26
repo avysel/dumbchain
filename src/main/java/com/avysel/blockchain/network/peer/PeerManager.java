@@ -15,7 +15,7 @@ import com.avysel.blockchain.network.server.PeerListener;
  */
 public class PeerManager {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.peer.PeerManager");
+	private static Logger log = Logger.getLogger(PeerManager.class);
 	private Peer localPeer;
 	private PeerExplorer peerExplorer;
 	private PeerListener peerListener;

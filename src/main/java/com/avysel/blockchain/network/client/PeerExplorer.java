@@ -18,7 +18,7 @@ import com.avysel.blockchain.tools.JsonMapper;
  */
 public class PeerExplorer {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.client.PeerExplorer");
+	private static Logger log = Logger.getLogger(PeerExplorer.class);
 
 	private PeerManager peerManager;
 

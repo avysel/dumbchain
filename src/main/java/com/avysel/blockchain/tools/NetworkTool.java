@@ -7,7 +7,7 @@ import com.avysel.blockchain.network.peer.Peer;
 public class NetworkTool {
 
 	public static void send(String data, Peer to) {
-		
+		// TODO use
 	}
 	
 	public static int getNextAvailablePort(int startPort, int maxTries) {

@@ -19,7 +19,7 @@ import com.avysel.blockchain.model.chain.ChainPart;
  * Catch up with existing blockchain
  */
 public class ChainCatchUpBuilder {
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder");
+	private static Logger log = Logger.getLogger(ChainCatchUpBuilder.class);
 
 	private static final int CATCH_UP_RETRY_DELAY = 1000;
 	private static final int CATCH_UP_MAX_DURATION= 10000;

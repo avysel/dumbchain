@@ -17,7 +17,7 @@ import com.avysel.blockchain.tools.JsonMapper;
  */
 public class ClientProcessor implements Runnable {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.ClientProcessor");
+	private static Logger log = Logger.getLogger(ClientProcessor.class);
 
 	private Socket socket;
 	private BufferedInputStream reader = null;

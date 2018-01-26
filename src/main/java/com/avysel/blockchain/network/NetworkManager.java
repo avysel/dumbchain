@@ -32,7 +32,7 @@ import com.avysel.blockchain.tools.JsonMapper;
  */
 public class NetworkManager {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.NetworkManager");
+	private static Logger log = Logger.getLogger(NetworkManager.class);
 
 	private NodeServer server;
 	private NodeClient client;

@@ -15,7 +15,7 @@ import com.avysel.blockchain.tools.JsonMapper;
 
 public class NodeClient {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.client.NodeClient");
+	private static Logger log = Logger.getLogger(NodeClient.class);
 
 	private Socket clientSocket;
 	private NetworkManager networkManager;

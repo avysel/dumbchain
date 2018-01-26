@@ -16,7 +16,7 @@ import com.avysel.blockchain.model.data.ISingleData;
  */
 public class DataPool {
 	
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.mining.DataPool");
+	private static Logger log = Logger.getLogger(DataPool.class);
 	
 	private LinkedBlockingQueue<ISingleData> queue;
 

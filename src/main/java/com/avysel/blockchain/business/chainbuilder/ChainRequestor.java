@@ -2,6 +2,8 @@ package com.avysel.blockchain.business.chainbuilder;
 
 import java.util.Comparator;
 
+import org.apache.log4j.Logger;
+
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.CatchUpRequestMessage;
@@ -12,6 +14,8 @@ import com.avysel.blockchain.network.peer.Peer;
  */
 public class ChainRequestor {
 
+	private static Logger log = Logger.getLogger(ChainRequestor.class);
+	
 	private Blockchain blockchain;
 
 	public ChainRequestor(Blockchain blockchain) {

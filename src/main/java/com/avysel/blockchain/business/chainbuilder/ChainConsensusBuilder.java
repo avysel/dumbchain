@@ -19,6 +19,8 @@ import com.avysel.blockchain.model.data.ISingleData;
  */
 public class ChainConsensusBuilder {
 
+	private static Logger log = Logger.getLogger(ChainConsensusBuilder.class);
+	
 	// how many blocks can be rejected before starting investigation on chain consistency
 	private static final int MAX_CONSECUTIVE_REJECTS_ALLOWED = 5;
 
@@ -42,8 +44,6 @@ public class ChainConsensusBuilder {
 		OTHER,
 		NONE
 	};
-
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder");
 
 	private Blockchain blockchain;
 	private Chain chain;

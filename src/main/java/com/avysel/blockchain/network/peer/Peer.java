@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Peer {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.peer.Peer");
+	private static Logger log = Logger.getLogger(Peer.class);
 	
 	private String uid;
 	private String ip;

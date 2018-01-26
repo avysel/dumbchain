@@ -21,7 +21,7 @@ import com.avysel.blockchain.tools.NetworkTool;
  */
 public class PeerListener implements Runnable {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.network.server.PeerListener");
+	private static Logger log = Logger.getLogger(PeerListener.class);
 
 	private DatagramSocket datagramSocket;
 	private PeerManager peerManager;

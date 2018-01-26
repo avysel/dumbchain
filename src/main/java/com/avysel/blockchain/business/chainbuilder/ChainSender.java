@@ -16,7 +16,7 @@ import com.avysel.blockchain.network.peer.Peer;
  */
 public class ChainSender {
 
-	private static Logger log = Logger.getLogger("com.avysel.blockchain.business.chainbuilder.ChainSender");
+	private static Logger log = Logger.getLogger(ChainSender.class);
 
 	private static final int MAX_BLOCKS_PER_BULK = 5;
 

@@ -140,7 +140,7 @@ public class PeerListener implements Runnable {
 		// create and send packet to peer
 		Socket clientSocket;
 		try {
-			clientSocket = new Socket(peer.getIp(), peer.getPort());
+			clientSocket = new Socket(peer.getIp(), peer.getListeningPort());
 			log.info("Send back answer to peer's hello.");
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
 			bos.write(JsonMapper.bulkToJson(bulk).getBytes());

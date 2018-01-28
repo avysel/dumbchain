@@ -169,9 +169,10 @@ public class NetworkManager {
 	 * Gets data from network, transform it into @SingleData or @Block and add it to the @Blockchain
 	 * @param bulk the incoming @DataBulk
 	 */
-	public void processIncoming(NetworkDataBulk bulk, Peer sender) {
+	public void processIncoming(NetworkDataBulk bulk, String senderId) {
 		log.debug("Incoming Bulk : "+bulk);
-
+		if(bulk.getSender() != null)
+			markPeerAsAlive(bulk.getSender().getUid());
 		// make sure we don't process twice the same message if got twice
 		if(receivedBulks.contains(bulk.getUid())) {
 			log.info("Incoming bulk already received.");
@@ -195,7 +196,7 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
 			log.debug("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
-			peer.setIp(sender.getIp()); // sender only knows its local ip, change it to its public ip
+			peer.setIp(senderId); // sender only knows its local ip, change it to its public ip
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;		
@@ -254,11 +255,10 @@ public class NetworkManager {
 
 	/**
 	 * Mark a peer as alive. It store the current timestamp as the last time this peer gaves us a sign of life.
-	 * @param ip the IP address of the peer.
-	 * @param port the listening port of the peer.
+	 * @param peerId the ID of the peer.
 	 */
-	public void markPeerAsAlive(String ip, int port) {
-		peerManager.markPeerAsAlive(ip, port);
+	public void markPeerAsAlive(String peerId) {
+		peerManager.markPeerAsAlive(peerId);
 	}
 	
 	/**

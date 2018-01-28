@@ -124,10 +124,10 @@ public class PeerManager {
 	 * @param port the port
 	 * @return the peer that is registered with given ip and port
 	 */
-	public Peer findPeer(String ip, int port) {
+	public Peer findPeer(String peerId) {
 		synchronized(peersList) {
 			for(Peer peer : peersList) {
-				if(peer.getIp().equals(ip) && peer.getPort() == port) {
+				if(peer.getUid().equals(peerId)) {
 					return peer;
 				}
 			}
@@ -136,19 +136,18 @@ public class PeerManager {
 	}
 
 	/**
-	 * Store last contact time for the peer hosted at a given IP/port.
-	 * @param ip
-	 * @param port
+	 * Store last contact time for the peer.
+	 * @param peerId the ID of the peer.
 	 */
-	public void markPeerAsAlive(String ip, int port) {
+	public void markPeerAsAlive(String peerId) {
 		synchronized(peersList) {
-			Peer peer = findPeer(ip, port);
+			Peer peer = findPeer(peerId);
 			if(peer != null) {
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
 				log.debug("Peer "+peer.toString()+" is marked as still alive");
 			}
 			else {
-				log.warn("Peer "+ip+"/"+port+" is not found to be marked alive");
+				log.warn("Peer "+peerId+" is not found to be marked alive");
 			}
 		}
 	}

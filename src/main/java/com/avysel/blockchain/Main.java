@@ -57,8 +57,41 @@ public class Main {
 					log.error("Unknown value ' "+args[i]+"' for parameter -mining");
 				}
 				break;
+			case "-demoDataGenerator":
+				String dataGeneratorValue = args[++i];
+				if("1".equals(dataGeneratorValue)) {
+					log.info("Start demo data generator node");
+					params.setDemoDataGenerator(BlockchainParameters.DATA_GENERATOR_YES);
+				}
+				else if ("0".equals(dataGeneratorValue)) {
+					log.info("Start NOT demo data generator node");
+					params.setDemoDataGenerator(BlockchainParameters.DATA_GENERATOR_NO);
+				}
+				else {
+					log.error("Unknown value ' "+args[i]+"' for parameter -demoDataGenerator");
+				}
+				break;
+			case "-canStartAlone":
+				String canStartAlone = args[++i];
+				if("1".equals(canStartAlone)) {
+					log.info("Start node that can start alone.");
+					params.setCanStartAlone(BlockchainParameters.CAN_START_ALONE_YES);
+				}
+				else if ("0".equals(canStartAlone)) {
+					log.info("Start node that can't sart withour other peers.");
+					params.setCanStartAlone(BlockchainParameters.CAN_START_ALONE_NO);
+				}
+				else {
+					log.error("Unknown value ' "+args[i]+"' for parameter -canStartAlone");
+				}
+				break;
 			case "-help" :
-				System.out.println("Usage : \n\t -mining 1 for a mining node. \n\t -mining 0 for a not mining node.");
+				StringBuffer help = new StringBuffer();
+				help.append("Usage : ");
+				help.append("\n\n\t -mining 1 for a mining node. \n\t -mining 0 for a not mining node.");
+				help.append("\n\n\t -demoDataGenerator 1 for a demo data generator node. \n\t -demoDataGenerator 0 for a not demo data generator node.");
+				help.append("\n\n\t -canStartAlone 1 for a node that can start alone. \n\t -canStartAlone 0 for a node that cannot start without other peer.");
+				System.out.println(help.toString());
 				break;
 			default:
 				log.error("Unknown parameter : "+args[i]);

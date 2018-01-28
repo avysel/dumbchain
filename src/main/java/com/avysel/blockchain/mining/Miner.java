@@ -110,7 +110,7 @@ public class Miner {
 
 				hash = HashTools.calculateBlockHash(block);
 
-				log.debug("Hash : "+hash);
+				log.trace("Hash : "+hash);
 
 				block.setHash(hash);
 				// all block creation timestamps are based on GMT+0 timezone

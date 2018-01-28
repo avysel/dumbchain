@@ -55,15 +55,17 @@ public class PeerExplorer {
 			for(InetAddress addr : listAddresses) {
 				for(int i = 0 ; i < 10 ; i ++) {
 
+					int port = NetworkManager.getBroadcastPort() + i;
+					
 					// create and send packet // TODO listAllBroadcastAddresses
 					DatagramPacket packet = new DatagramPacket(
 							data.getBytes()
 							, data.getBytes().length
 							, addr
-							, NetworkManager.getBroadcastPort() + i
+							, port
 							);
 
-					log.debug("Send connection request to network.");
+					log.debug("Send connection request to network "+addr+":"+port);
 					clientSocket.send(packet);
 				}
 			}

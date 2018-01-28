@@ -42,12 +42,12 @@ public class NodeClient {
 			log.error("No local peer, unable to set sender data");
 		}
 
-		log.debug("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getPort());
+		log.debug("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getListeningPort());
 
 		try {
 			// connect to distant peer's server part
 			try {
-				clientSocket = new Socket(peer.getIp(), peer.getPort());
+				clientSocket = new Socket(peer.getIp(), peer.getListeningPort());
 			}
 			catch(ConnectException e) {
 				e.printStackTrace();
@@ -62,7 +62,7 @@ public class NodeClient {
 			clientSocket.close();
 
 		} catch (IOException e) {
-			log.error("Data not send to "+peer.getIp()+":"+peer.getPort());
+			log.error("Data not send to "+peer.getIp()+":"+peer.getListeningPort());
 			e.printStackTrace();
 		}
 	}

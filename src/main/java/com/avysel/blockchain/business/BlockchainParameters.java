@@ -10,10 +10,14 @@ public class BlockchainParameters {
 
 	public static final boolean USE_NETWORK_YES = true;
 	public static final boolean USE_NETWORK_NO = false;		
+
+	public static final boolean DATA_GENERATOR_YES = true;
+	public static final boolean DATA_GENERATOR_NO = false;		
 	
 	private boolean miningNode;
 	private boolean canStartAlone;
 	private boolean useNetwork;
+	private boolean demoDataGenerator;
 	
 	public BlockchainParameters() {
 		// init default
@@ -40,5 +44,10 @@ public class BlockchainParameters {
 	public void setUseNetwork(boolean useNetwork) {
 		this.useNetwork = useNetwork;
 	}
-
+	public boolean isDemoDataGenerator() {
+		return demoDataGenerator;
+	}
+	public void setDemoDataGenerator(boolean demoDataGenerator) {
+		this.demoDataGenerator = demoDataGenerator;
+	}
 }

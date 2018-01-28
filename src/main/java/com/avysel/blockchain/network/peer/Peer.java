@@ -16,7 +16,7 @@ public class Peer {
 	
 	private String uid;
 	private String ip;
-	private int port;
+	private int listeningPort;
 	private ServerSocket server;
 	private Socket client;
 	private long lastAliveTimestamp;
@@ -30,7 +30,7 @@ public class Peer {
 	public Peer(String ip, int port, long chainHeight) {
 		super();
 		this.ip = ip;
-		this.port = port;
+		this.listeningPort = port;
 		this.chainHeight = chainHeight;
 		this.lastAliveTimestamp = System.currentTimeMillis();
 	}
@@ -38,7 +38,7 @@ public class Peer {
 	public Peer(String ip, int port) {
 		super();
 		this.ip = ip;
-		this.port = port;
+		this.listeningPort = port;
 		this.uid = UUID.randomUUID().toString();
 		this.lastAliveTimestamp = System.currentTimeMillis();
 	}
@@ -55,11 +55,11 @@ public class Peer {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public int getPort() {
-		return port;
+	public int getListeningPort() {
+		return listeningPort;
 	}
-	public void setPort(int port) {
-		this.port = port;
+	public void setListeningPort(int port) {
+		this.listeningPort = port;
 	}
 	
 	@JsonIgnore
@@ -104,7 +104,7 @@ public class Peer {
 		Peer peer = new Peer();
 		peer.setIp(NetworkTool.getLocalIP());
 		peer.setLastAliveTimestamp(System.currentTimeMillis());
-		peer.setPort(NetworkManager.getServerListeningPort());
+		peer.setListeningPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());
 		
 		log.info("Init local peer : "+peer.toString());
@@ -113,7 +113,7 @@ public class Peer {
 	}
 	
 	public String toString() {
-		return this.ip+":"+this.port;
+		return this.ip+":"+this.listeningPort;
 	}
 	
 	public boolean equals(Peer otherPeer) {

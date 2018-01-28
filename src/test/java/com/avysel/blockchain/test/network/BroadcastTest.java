@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.tools.NetworkTool;
 
 public class BroadcastTest {
 
@@ -14,7 +14,7 @@ public class BroadcastTest {
 	public void broadcastAddress() {
 
 		try {
-			List<InetAddress> addresses = (new NetworkManager(null)).listAllBroadcastAddresses();
+			List<InetAddress> addresses = NetworkTool.listAllBroadcastAddresses();
 			
 			for(InetAddress addr : addresses) {
 				System.out.print(addr + " - ");

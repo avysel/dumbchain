@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
-import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
@@ -42,10 +41,6 @@ public class ClientProcessor implements Runnable {
 			reader = new BufferedInputStream(socket.getInputStream());
 
 			InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
-			Peer sender = new Peer();
-			sender.setIp(remote.getAddress().getHostAddress());
-			sender.setPort(remote.getPort());
-			network.markPeerAsAlive(sender.getIp(), sender.getPort());
 
 			while(socket != null && !socket.isClosed()) {
 
@@ -70,7 +65,7 @@ public class ClientProcessor implements Runnable {
 			NetworkDataBulk bulk = getDataBulk(data);
 			if(bulk != null) {
 				// push data to network manager
-				network.processIncoming(bulk, sender);
+				network.processIncoming(bulk, remote.getAddress().getHostAddress());
 			}		
 
 		} catch (IOException e) {

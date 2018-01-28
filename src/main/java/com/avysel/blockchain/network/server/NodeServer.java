@@ -1,7 +1,6 @@
 package com.avysel.blockchain.network.server;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -9,12 +8,12 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.peer.Peer;
+import com.avysel.blockchain.tools.NetworkTool;
 
 public class NodeServer {
 
 	private static Logger log = Logger.getLogger(NodeServer.class);
 	
-	private String host = "127.0.0.1";
 	private ServerSocket serverSocket;
 	private boolean running = true;
 	private NetworkManager network = null;
@@ -30,14 +29,14 @@ public class NodeServer {
 		try {
 			
 			// create server socket on a random available port
-			serverSocket = new ServerSocket(0, 100, InetAddress.getByName(host));
+			serverSocket = new ServerSocket(0/*, 100 , InetAddress.getByName(NetworkTool.getLocalIP())*/ );
 			
 			// store chosen port in current network configuration
 			NetworkManager.setServerListeningPort(serverSocket.getLocalPort());
 			
 			// creates a Peer that represent the current node, it contains uid, ip and listening port
 			network.setLocalPeer(Peer.initFromLocal());
-			log.info("Create node server for "+host+":"+NetworkManager.getServerListeningPort());
+			log.info("Create node server for "+NetworkTool.getLocalIP()+":"+NetworkManager.getServerListeningPort());
 		}
 		catch(IOException e) {
 			e.printStackTrace();

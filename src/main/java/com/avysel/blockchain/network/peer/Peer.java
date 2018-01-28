@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.network.NetworkManager;
+import com.avysel.blockchain.tools.NetworkTool;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Peer {
@@ -101,7 +102,7 @@ public class Peer {
 	public static Peer initFromLocal() {
 		
 		Peer peer = new Peer();
-		peer.setIp("127.0.0.1");
+		peer.setIp(NetworkTool.getLocalIP());
 		peer.setLastAliveTimestamp(System.currentTimeMillis());
 		peer.setPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());

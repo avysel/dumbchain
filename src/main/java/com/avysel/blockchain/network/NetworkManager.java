@@ -1,13 +1,7 @@
 package com.avysel.blockchain.network;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
@@ -43,8 +37,6 @@ public class NetworkManager {
 
 	private static int serverListeningPort = 0;
 	private static int broadcastPort = 45458;
-	//private static String broadcastAddress = "255.255.255.255";
-	private static String broadcastAddress = "127.0.0.1";
 
 	private static List<String> receivedBulks;
 
@@ -81,48 +73,13 @@ public class NetworkManager {
 	public static void setServerListeningPort(int port) {		serverListeningPort = port;	}
 
 	/**
-	 * Provides the InetAddress used to send broadcast hello message when a blockchain node is started
-	 * @return the InetAddress that represents broadcast IP address
-	 * @throws UnknownHostException
-	 */
-	public static InetAddress getBroadcastAddress() throws UnknownHostException {	
-		return InetAddress.getByName(broadcastAddress);	
-	}
-
-	/**
 	 * Provides the port used to send hello messages when a blockchain node is started
 	 * @return
 	 */
 	public static int getBroadcastPort() {		
 		return broadcastPort;	
 	}
-
-
-
-	/**
-	 * Provides all InetAddress that can be used on the current network to broadcast data
-	 * @return a List of broadcast InetAddress
-	 * @throws SocketException
-	 */
-	public List<InetAddress> listAllBroadcastAddresses() throws SocketException {
-		List<InetAddress> broadcastList = new ArrayList<>();
-		Enumeration<NetworkInterface> interfaces 
-		= NetworkInterface.getNetworkInterfaces();
-		while (interfaces.hasMoreElements()) {
-			NetworkInterface networkInterface = interfaces.nextElement();
-
-			if (networkInterface.isLoopback() || !networkInterface.isUp()) {
-				continue;
-			}
-
-			networkInterface.getInterfaceAddresses().stream() 
-			.map(a -> a.getBroadcast())
-			.filter(Objects::nonNull)
-			.forEach(broadcastList::add);
-		}
-		return broadcastList;
-	}	
-
+	
 	/**
 	 * Start network manager of blockchain node
 	 */
@@ -212,7 +169,7 @@ public class NetworkManager {
 	 * Gets data from network, transform it into @SingleData or @Block and add it to the @Blockchain
 	 * @param bulk the incoming @DataBulk
 	 */
-	public void processIncoming(NetworkDataBulk bulk) {
+	public void processIncoming(NetworkDataBulk bulk, Peer sender) {
 		log.debug("Incoming Bulk : "+bulk);
 
 		// make sure we don't process twice the same message if got twice
@@ -238,6 +195,7 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
 			log.debug("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
+			peer.setIp(sender.getIp()); // sender only knows its local ip, change it to its public ip
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;		

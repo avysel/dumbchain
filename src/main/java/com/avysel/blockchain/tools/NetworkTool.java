@@ -1,6 +1,15 @@
 package com.avysel.blockchain.tools;
 
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Objects;
+
 
 import com.avysel.blockchain.network.peer.Peer;
 
@@ -29,5 +38,46 @@ public class NetworkTool {
 		catch(Exception e) {
 			return true;
 		}
+	}
+	
+	public static String getLocalIP() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress() ;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String getBroadcastIP() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress() ;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Provides all InetAddress that can be used on the current network to broadcast data
+	 * @return a List of broadcast InetAddress
+	 * @throws SocketException
+	 */
+	public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
+		List<InetAddress> broadcastList = new ArrayList<>();
+		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+		while (interfaces.hasMoreElements()) {
+			NetworkInterface networkInterface = interfaces.nextElement();
+
+			if (networkInterface.isLoopback() || !networkInterface.isUp()) {
+				continue;
+			}
+
+			networkInterface.getInterfaceAddresses().stream() 
+			.map(a -> a.getBroadcast())
+			.filter(Objects::nonNull)
+			.forEach(broadcastList::add);
+		}
+		return broadcastList;
 	}
 }

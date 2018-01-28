@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
+import com.avysel.blockchain.network.peer.Peer;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
@@ -39,8 +40,12 @@ public class ClientProcessor implements Runnable {
 		String data = new String();
 		try {
 			reader = new BufferedInputStream(socket.getInputStream());
-			
+
 			InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
+			Peer sender = new Peer();
+			sender.setIp(remote.getAddress().getHostAddress());
+			sender.setPort(remote.getPort());
+			network.markPeerAsAlive(sender.getIp(), sender.getPort());
 
 			while(socket != null && !socket.isClosed()) {
 
@@ -52,6 +57,7 @@ public class ClientProcessor implements Runnable {
 				else {
 					socket.close();
 				}
+
 				String debug = "";
 				debug = "Thread : " + Thread.currentThread().getName() + ". ";
 				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
@@ -59,20 +65,16 @@ public class ClientProcessor implements Runnable {
 				debug += "\t -> Commande reçue : " + data + "\n";
 				log.trace("\n" + debug);
 			}
+
+			// read the data
+			NetworkDataBulk bulk = getDataBulk(data);
+			if(bulk != null) {
+				// push data to network manager
+				network.processIncoming(bulk, sender);
+			}		
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		// read the data
-		NetworkDataBulk bulk = getDataBulk(data);
-		if(bulk != null) {
-			if(bulk.getSender() != null) {
-				// keep in memory time of last contact for this peer
-				network.markPeerAsAlive(bulk.getSender().getIp(), bulk.getSender().getPort());
-			}
-
-			// push data to network manager
-			network.processIncoming(bulk);
 		}
 	}
 

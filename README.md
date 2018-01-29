@@ -65,11 +65,12 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - Si la condition de minage est trop facile a atteindre et que les blocs sont créés trop rapidement, chaque noeud fera avancer sa version de la chaine plus rapidement que le mécanisme de diffusion/concensus. La chaine sera alors dans un état incohérent.
 - Si plusieurs noeuds démarrent à vide en même temps, sans au moins un autre noeud déjà en route, ils débuteront chacun leur version de la chaine. La chaine sera alors dans un état incohérent.
 
-### Usage
+
+# Usage
 `java -jar poc-blockchain.jar -mining=1 -canStartAlone=0 -useNetwork=1 -demoDataGenerator=0`
 
 
-Regular use parameters : 
+### Regular use parameters : 
 
 **-help** displays this help menu.
 
@@ -82,7 +83,7 @@ Regular use parameters :
 **-useNetwork=1** for a node that listen to network to catch new data. (default) 
 **-useNetwork=0** for a node that doesn't listen to network to catch new data. (mining is therefore disabled)
 
-Demo parameters : 
+### Demo parameters : 
 
 **-demoDataGenerator=1** for a demo data generator node. 
 **-demoDataGenerator=0** for a no demo data generator node. (default)

@@ -43,14 +43,18 @@ public class Main {
 		BlockchainParameters params = new BlockchainParameters();
 		
 		for(int i = 0 ; i < args.length ; i ++) {
-			switch(args[i]) {
+			
+			String param = args[i];
+			String[] data = param.split(BlockchainParameters.SEPARATOR);
+			
+			switch(data[0]) {
 			case "-mining":
-				String miningValue = args[++i];
-				if("1".equals(miningValue)) {
+				String miningValue = data[1];
+				if(BlockchainParameters.ENABLED.equals(miningValue)) {
 					log.info("Start mining node");
 					params.setMiningNode(BlockchainParameters.MINING_YES);
 				}
-				else if ("0".equals(miningValue)) {
+				else if (BlockchainParameters.DISABLED.equals(miningValue)) {
 					log.info("Start NOT mining node");
 					params.setMiningNode(BlockchainParameters.MINING_NO);
 				}
@@ -59,12 +63,12 @@ public class Main {
 				}
 				break;
 			case "-demoDataGenerator":
-				String dataGeneratorValue = args[++i];
-				if("1".equals(dataGeneratorValue)) {
+				String dataGeneratorValue = data[1];
+				if(BlockchainParameters.ENABLED.equals(dataGeneratorValue)) {
 					log.info("Start demo data generator node");
 					params.setDemoDataGenerator(BlockchainParameters.DATA_GENERATOR_YES);
 				}
-				else if ("0".equals(dataGeneratorValue)) {
+				else if (BlockchainParameters.DISABLED.equals(dataGeneratorValue)) {
 					log.info("Start NOT demo data generator node");
 					params.setDemoDataGenerator(BlockchainParameters.DATA_GENERATOR_NO);
 				}
@@ -73,12 +77,12 @@ public class Main {
 				}
 				break;
 			case "-canStartAlone":
-				String canStartAlone = args[++i];
-				if("1".equals(canStartAlone)) {
+				String canStartAlone = data[1];
+				if(BlockchainParameters.ENABLED.equals(canStartAlone)) {
 					log.info("Start node that can start alone.");
 					params.setCanStartAlone(BlockchainParameters.CAN_START_ALONE_YES);
 				}
-				else if ("0".equals(canStartAlone)) {
+				else if (BlockchainParameters.DISABLED.equals(canStartAlone)) {
 					log.info("Start node that can't sart withour other peers.");
 					params.setCanStartAlone(BlockchainParameters.CAN_START_ALONE_NO);
 				}
@@ -87,12 +91,12 @@ public class Main {
 				}
 				break;
 			case "-useNetwork":
-				String useNetwork = args[++i];
-				if("1".equals(useNetwork)) {
+				String useNetwork = data[1];
+				if(BlockchainParameters.ENABLED.equals(useNetwork)) {
 					log.info("Start node that uses network.");
 					params.setUseNetwork(BlockchainParameters.USE_NETWORK_YES);
 				}
-				else if ("0".equals(useNetwork)) {
+				else if (BlockchainParameters.DISABLED.equals(useNetwork)) {
 					log.info("Start node that doesn't use network.");
 					params.setUseNetwork(BlockchainParameters.USE_NETWORK_NO);
 				}

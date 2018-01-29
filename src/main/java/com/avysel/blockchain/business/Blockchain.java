@@ -9,6 +9,7 @@ import com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
 import com.avysel.blockchain.business.chainbuilder.ChainSender;
+import com.avysel.blockchain.demo.RandomDataGenerator;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.DataPool;
@@ -255,8 +256,14 @@ public class Blockchain {
 		log.info("Starting blockchain");
 		network.start();
 		catchUp(this.getLastIndex() + 1);
-		if(isMiningNode())
+		
+		if(params.isDemoDataGenerator()) {
+			(new RandomDataGenerator(this)).start();
+		}
+		
+		if(isMiningNode()) {
 			miner.start();
+		}
 	}
 
 	/**

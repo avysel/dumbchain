@@ -16,7 +16,10 @@ public class RandomDataGenerator implements Runnable{
 
 	public void start() {
 		this.isRunning = true;
-		run();
+		Thread t = new Thread(this);
+		t.start();
+		// TODO how to make it run ?
+		
 	}
 	
 	public void stop() {

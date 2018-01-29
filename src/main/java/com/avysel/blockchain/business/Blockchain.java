@@ -18,7 +18,6 @@ import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.message.NetworkMessage;
 import com.avysel.blockchain.network.peer.Peer;
@@ -167,7 +166,7 @@ public class Blockchain {
 	 * @param data the incoming data
 	 * @throws InterruptedException when synchronize error occurs
 	 */
-	public void addIncomingData(SingleData data) throws InterruptedException {
+	public void addIncomingData(ISingleData data) throws InterruptedException {
 		dataPool.addData(data);
 	}
 
@@ -223,6 +222,11 @@ public class Blockchain {
 		network.sendBlock(block);
 	}
 
+	public void addData(ISingleData data) throws InterruptedException {
+		addIncomingData(data);
+		network.sendData(data);
+	}
+	
 	/**
 	 *  Add a subchain to the end of the current Blockchain.
 	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the Blockchain.

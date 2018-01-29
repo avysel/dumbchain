@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
@@ -100,7 +101,7 @@ public class NetworkManager {
 	 * Send a data to the network
 	 * @param data the SingleData object to send
 	 */
-	public void sendData(SingleData data) {
+	public void sendData(ISingleData data) {
 		log.info("Send a data to the network.");
 		log.trace(data.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();

@@ -8,9 +8,9 @@ import com.avysel.blockchain.model.block.Block;
 public class HashTools {
 
 	/**
-	 * Calculate the hash for a @Block
-	 * @param block the @Block to hash
-	 * @return the SHA-256 hash for the given @Block
+	 * Calculate the hash for a Block
+	 * @param block the Block to hash
+	 * @return the SHA-256 hash for the given Block
 	 */
 	public static String calculateBlockHash(Block block) {
 

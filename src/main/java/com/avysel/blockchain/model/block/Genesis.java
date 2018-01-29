@@ -3,8 +3,8 @@ package com.avysel.blockchain.model.block;
 import com.avysel.blockchain.model.data.SingleData;
 
 /**
- * The genesis @Block
- * The first @Block to be added in a @Chain.
+ * The genesis Block
+ * The first Block to be added in a Chain.
  */
 public class Genesis extends Block {
 	

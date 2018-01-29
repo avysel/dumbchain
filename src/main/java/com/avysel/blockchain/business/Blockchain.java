@@ -25,7 +25,7 @@ import com.avysel.blockchain.network.peer.Peer;
 
 /**
  * The main class of the Blockchain.
- * Contains a unique @Chain of @Blocks and provides available operations on it.
+ * Contains a unique Chain of Blocks and provides available operations on it.
  */
 public class Blockchain {
 
@@ -92,7 +92,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Create the @Chain and set a genesis @Block
+	 * Create the Chain and set a genesis Block
 	 */
 	private void createChain() {
 		chain = new Chain();
@@ -118,7 +118,7 @@ public class Blockchain {
 	}	
 
 	/**
-	 * Create the genesis @Block and add it to the @Chain
+	 * Create the genesis Block and add it to the Chain
 	 */
 	private void createGenesis() {
 		Block genesis = new Genesis();
@@ -140,7 +140,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Display the @Chain from last @Block to Genesis @Block
+	 * Display the Chain from last Block to Genesis Block
 	 */
 	public void display() {
 		Block currentBlock = chain.getLastBlock();
@@ -152,7 +152,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Load existing @Chain from database
+	 * Load existing Chain from database
 	 */
 	public void loadChain() {
 
@@ -224,9 +224,9 @@ public class Blockchain {
 	}
 
 	/**
-	 *  Add a subchain to the end of the current @Blockchain.
-	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the @Blockchain.
-	 *  The index of subchain's first @Block must be current's chain last @Block +1.
+	 *  Add a subchain to the end of the current Blockchain.
+	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the Blockchain.
+	 *  The index of subchain's first Block must be current's chain last Block +1.
 	 * @param subChain the subchain to add
 	 * @throws ChainIntegrityException if integrity of subchain or final chain is not verified
 	 */

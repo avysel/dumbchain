@@ -7,8 +7,8 @@ import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.model.data.SingleData;
 
 /**
- * The main content of of @Block.
- * It contains a @List of @SingleData
+ * The main content of Block.
+ * It contains a List of ISingleData
  */
 public class BlockData {
 	

@@ -29,8 +29,8 @@ public class DataPool {
 	}
 
 	/**
-	 * Add a new @SingleData to the pending data list to be added in a @Block
-	 * @param data the @SingleData to be added
+	 * Add a new SingleData to the pending data list to be added in a Block
+	 * @param data the SingleData to be added
 	 * @throws InterruptedException when a synchronization problem occurs
 	 */
 	public void addData(ISingleData data) throws InterruptedException {
@@ -46,8 +46,8 @@ public class DataPool {
 	}
 
 	/**
-	 * Add a @List of @SingleData to the pending data list to be added in a @Block
-	 * @param dataList the @List of @SingleData to be added
+	 * Add a List of SingleData to the pending data list to be added in a Block
+	 * @param dataList the List of SingleData to be added
 	 */	
 	public void addAll(List<ISingleData> dataList) {
 		getDataPool().addAll(dataList);

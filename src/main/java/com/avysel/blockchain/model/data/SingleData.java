@@ -6,8 +6,8 @@ import com.avysel.blockchain.crypto.HashTools;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * A piece of data that can be included in a @Block.
- * A @Block can contains several @SingleData.
+ * A piece of data that can be included in a Block.
+ * A Block can contains several SingleData.
  */
 public class SingleData implements ISingleData {
 	private String data;

@@ -12,7 +12,7 @@ import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
- * This class is used to handle a @NodeClient connection from another @Blockchain instance on the network to the local @NodeServer
+ * This class is used to handle a NodeClient connection from another Blockchain instance on the network to the local NodeServer
  *
  */
 public class ClientProcessor implements Runnable {

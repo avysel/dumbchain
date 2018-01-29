@@ -160,7 +160,8 @@ public class JsonMapperTest {
 
 	}
 	
-	@Test public void jsonToBlockList() {
+	@Test 
+	public void jsonToBlockList() {
 		String json = "[{\"timestamp\":546546,\"index\":0,\"difficulty\":520,\"hash\":\"toto\",\"previousHash\":\"titi\",\"dataList\":[{\"data\":\"data1\",\"hash\":\"f284f74d4e3b10eb1aa16752eafa5bbb2a6c3e1875a1ac53520183fb6be19a4a\",\"clazz\":null},{\"data\":\"data2\",\"hash\":\"957d149e1bb62808611751a85220ca08ef3ba9b3de9ad7dade9da70abce5e934\",\"clazz\":null}],\"merkleRoot\":null,\"quality\":520},{\"timestamp\":546546,\"index\":0,\"difficulty\":520,\"hash\":\"toto\",\"previousHash\":\"titi\",\"dataList\":[{\"data\":\"data1\",\"hash\":\"f284f74d4e3b10eb1aa16752eafa5bbb2a6c3e1875a1ac53520183fb6be19a4a\",\"clazz\":null},{\"data\":\"data2\",\"hash\":\"957d149e1bb62808611751a85220ca08ef3ba9b3de9ad7dade9da70abce5e934\",\"clazz\":null}],\"merkleRoot\":null,\"quality\":520},{\"timestamp\":546546,\"index\":0,\"difficulty\":520,\"hash\":\"toto\",\"previousHash\":\"titi\",\"dataList\":[{\"data\":\"data1\",\"hash\":\"f284f74d4e3b10eb1aa16752eafa5bbb2a6c3e1875a1ac53520183fb6be19a4a\",\"clazz\":null},{\"data\":\"data2\",\"hash\":\"957d149e1bb62808611751a85220ca08ef3ba9b3de9ad7dade9da70abce5e934\",\"clazz\":null}],\"merkleRoot\":null,\"quality\":520}]";
 	
 		List<Block> list = JsonMapper.jsonToBlockList(json);

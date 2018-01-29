@@ -9,7 +9,7 @@ import com.avysel.blockchain.model.block.Block;
 
 /**
  * A part of blockchain.
- * It contains the list of @Block, but contains no @Genesis. The @ChainPart is to be appended to an existing @Chain
+ * It contains the list of Block, but contains no Genesis. The ChainPart is to be appended to an existing Chain
  */
 public class ChainPart {
 	
@@ -41,8 +41,8 @@ public class ChainPart {
 	}
 
 	/**
-	 * Returns the index of last @Block added to the @ChainPart
-	 * @return the index of last @Block if exists, -1 otherwise.
+	 * Returns the index of last Block added to the ChainPart
+	 * @return the index of last Block if exists, -1 otherwise.
 	 */
 	public long getLastIndex() {
 		if(this.getLastBlock() != null) {
@@ -54,8 +54,8 @@ public class ChainPart {
 	}	
 
 	/**
-	 * Add a new @Block to the @Chain, and set @Block link data (previous hash ...). It does not manage the @Genesis @Block.
-	 * @param block the @Block to add
+	 * Add a new Block to the Chain, and set Block link data (previous hash ...). It does not manage the Genesis Block.
+	 * @param block the Block to add
 	 */
 	public void linkBlock(Block block) {
 

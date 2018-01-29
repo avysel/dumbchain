@@ -9,7 +9,7 @@ import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * The blockchain.
- * It contains the list of @Block, starting with a @Genesis
+ * It contains the list of Block, starting with a Genesis
  */
 public class Chain extends ChainPart {
 
@@ -41,8 +41,8 @@ public class Chain extends ChainPart {
 	}	
 
 	/**
-	 * Add a new @Block to the @Chain, and set @Block link data (previous hash ...). It also manages to add a @Block if it is the @Genesis @Block
-	 * @param block the @Block to add.
+	 * Add a new Block to the Chain, and set Block link data (previous hash ...). It also manages to add a Block if it is the Genesis Block
+	 * @param block the Block to add.
 	 */
 	@Override
 	public void linkBlock(Block block) {

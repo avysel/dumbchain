@@ -114,7 +114,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Send a @Block to the network
+	 * Send a Block to the network
 	 * @param block the Block object to send
 	 */
 	public void sendBlock(Block block) {

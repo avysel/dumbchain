@@ -12,12 +12,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 */
 /**
- * A @Block
- * Contains a list of @SingleData and all information used to identify the @Block and check its integrity
- */
-/**
- * @author avanryssel
- *
+ * A Block
+ * Contains a list of SingleData and all information used to identify the Block and check its integrity
  */
 public class Block {
 	
@@ -44,7 +40,7 @@ public class Block {
 	}
 
 	/**
-	 * Add a @List of @SingleData to the @Block
+	 * Add a List of ISingleData to the Block
 	 * @param dataList the data to add
 	 */ 
 	public void addAllData(List<ISingleData> dataList) {
@@ -52,7 +48,7 @@ public class Block {
 	}
 	
 	/**
-	 * Add a @SingleData to the @Block
+	 * Add a ISingleData to the Block
 	 * @param singleData the piece of data to add
 	 */
 	public void addData(ISingleData singleData) {

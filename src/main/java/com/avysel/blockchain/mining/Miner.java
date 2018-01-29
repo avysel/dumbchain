@@ -84,8 +84,8 @@ public class Miner {
 
 
 	/**
-	 * Create a @Block
-	 * @return a @Block that contains random data taken from @DataPool
+	 * Create a Block
+	 * @return a Block that contains random data taken from DataPool
 	 */
 	public Block mine() {
 		Block block;

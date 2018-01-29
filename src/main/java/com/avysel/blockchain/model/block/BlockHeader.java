@@ -1,8 +1,8 @@
 package com.avysel.blockchain.model.block;
 
 /**
- * The header of a @Block.
- * It contains all its metadata, used to identify a @Block and link it to other @Blocks
+ * The header of a Block.
+ * It contains all its metadata, used to identify a Block and link it to other Blocks
  */
 public class BlockHeader {
 	private long index;

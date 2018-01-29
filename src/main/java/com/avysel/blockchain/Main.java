@@ -15,6 +15,7 @@ public class Main {
 		//setLogParameters();
 
 		Blockchain blockchain = new Blockchain();
+		log.info(BlockchainParameters.getUsage());
 		blockchain.setParams(processParams(args));
 		log.info("Welcome to blockchain "+blockchain.toString());
 
@@ -85,13 +86,22 @@ public class Main {
 					log.error("Unknown value ' "+args[i]+"' for parameter -canStartAlone");
 				}
 				break;
+			case "-useNetwork":
+				String useNetwork = args[++i];
+				if("1".equals(useNetwork)) {
+					log.info("Start node that uses network.");
+					params.setUseNetwork(BlockchainParameters.USE_NETWORK_YES);
+				}
+				else if ("0".equals(useNetwork)) {
+					log.info("Start node that doesn't use network.");
+					params.setUseNetwork(BlockchainParameters.USE_NETWORK_NO);
+				}
+				else {
+					log.error("Unknown value ' "+args[i]+"' for parameter -useNetwork");
+				}
+				break;				
 			case "-help" :
-				StringBuffer help = new StringBuffer();
-				help.append("Usage : ");
-				help.append("\n\n\t -mining 1 for a mining node. \n\t -mining 0 for a not mining node.");
-				help.append("\n\n\t -demoDataGenerator 1 for a demo data generator node. \n\t -demoDataGenerator 0 for a not demo data generator node.");
-				help.append("\n\n\t -canStartAlone 1 for a node that can start alone. \n\t -canStartAlone 0 for a node that cannot start without other peer.");
-				System.out.println(help.toString());
+				System.out.println(BlockchainParameters.getUsage());
 				break;
 			default:
 				log.error("Unknown parameter : "+args[i]);

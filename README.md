@@ -15,7 +15,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Preuve de travail
 - [x] Reconstruction de la chaîne existante pour un nouveau noeud
 - [x] Envoi de la chaîne à un nouveau noeud
-- [x] Gestion des blocks entrants
+- [x] Gestion des blocks entrants (vérification d'intégrité, de continuité, d'unicité des données)
 
 ### Sécurité
 - [x] Vérification de l'intégrité de la chaîne par les hachages
@@ -42,22 +42,23 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] API d'ajout de données
 - [ ] Consultation des données
 - [ ] API consultation des données
-- [x] Possibilité de ne pas miner (pas de chaine stockée)
-- [ ] Possibilité de ne faire que créer des données (pas de minage, pas de chaine stockée)
+- [ ] Lancement du noeud avec création de données uniquement (pas de minage, pas de chaine stockée)
+- [x] Lancement du noeud avec minage ou non en ligne de commande
+- [ ] Lancement du noeud en mode génération de données de test seulement
+- [x] Possibilité ou non de lancement du noeud sans aucun pair connu
 
 ### Technique
 - [ ] Initialiser modules Java 9
 - [ ] Optimiser la recherche de block et de données avec un index
 - [ ] Optimiser BD par utilisation d'un pool de connexions.
-- [x] Lancement du noeud avec minage ou non en ligne de commande
-- [ ] Lancement du noeud en mode génération de données de test seulement.
+
 
 ### Refactor / Autres
 - [ ] Remettre au carré les NetworkMessage vs NetworkDataBulk
 - [x] Ajuster les niveaux de log
 - [ ] Finaliser TU
 - [ ] Javadoc
-- [ ] Synchroniser les collections
+- [x] Synchroniser les collections avec risque de concurrence
 
 
 ### Limites

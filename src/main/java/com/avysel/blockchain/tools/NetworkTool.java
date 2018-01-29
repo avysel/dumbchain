@@ -61,7 +61,7 @@ public class NetworkTool {
 	/**
 	 * Provides all InetAddress that can be used on the current network to broadcast data
 	 * @return a List of broadcast InetAddress
-	 * @throws SocketException
+	 * @throws SocketException when connection error occurs
 	 */
 	public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
 		List<InetAddress> broadcastList = new ArrayList<>();

@@ -111,8 +111,8 @@ public class Block {
 	}	
 	
 	/**
-	 * Return @String representation of data used to calculate @Block's hash
-	 * @return
+	 * Return String representation of data used to calculate Block's hash
+	 * @return bytes representation of data
 	 */
 	@JsonIgnore
 	public byte[] getHashData() {
@@ -125,7 +125,7 @@ public class Block {
 	
 	/**
 	 * Return string representation of data used to calculate block's merkle root
-	 * @return
+	 * @return bytes representation of data
 	 */
 	@JsonIgnore	
 	public byte[] getMerkleRootData() {
@@ -179,7 +179,7 @@ public class Block {
 	/**
 	 * Returns the quality of a block. 
 	 * Quality is used when two blocks are in competition to be added to the chain, the one with higher quality will be added, the other one will be rejected.
-	 * @return
+	 * @return the quality of the block
 	 */
 	public long getQuality() {
 		// TODO how to make it overridable or customisable ?

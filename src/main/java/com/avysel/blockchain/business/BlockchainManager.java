@@ -17,9 +17,10 @@ public class BlockchainManager {
 	private static Logger log = Logger.getLogger(BlockchainManager.class);
 	
 	/**
-	 * Find a @Block with a given index
+	 * Find a Block with a given index
+	 * @param chain the chain to explore
 	 * @param index the index to find
-	 * @return the @Block with the given index
+	 * @return the Block with the given index
 	 */
 	public static Block findBlockByIndex(ChainPart chain, long index) {
 	
@@ -31,9 +32,10 @@ public class BlockchainManager {
 	}
 	
 	/**
-	 * Find a @Block with a given hash
+	 * Find a Block with a given hash
+	 * @param chain the chain to explore
 	 * @param hash the hash
-	 * @return the @Block with the given hash
+	 * @return the Block with the given hash
 	 */
 	public static Block findBlockByHash(ChainPart chain, String hash) {
 		
@@ -50,7 +52,7 @@ public class BlockchainManager {
 	/**
 	 * Find the Block that contains the data identified by given data unique identifier
 	 * @param chain the Chain to explore
-	 * @param dataUniqueId the identifier of targeted data
+	 * @param dataHash the hash of targeted data
 	 * @return the Block that contains searched data
 	 */
 	public static Block findBlockByData(ChainPart chain, String dataHash) {
@@ -69,8 +71,9 @@ public class BlockchainManager {
 	}
 	
 	/**
-	 * Perform integrity check for the @Chain
-	 * @return true if @Chain integrity is good
+	 * Perform integrity check for the Chain
+	 * @param chain the chain to check
+	 * @return true if Chain integrity is good
 	 */
 	public static boolean checkChain(ChainPart chain) {
 		List<Block> blockList = chain.getBlockList();
@@ -89,9 +92,9 @@ public class BlockchainManager {
 	}
 	
 	/**
-	 * Perform integrity check for a @Block. Only checks @Block's hash
-	 * @param block the @Block to check
-	 * @return true if @Block's hash is the one expected
+	 * Perform integrity check for a Block. Only checks Block's hash
+	 * @param block the Block to check
+	 * @return true if Block's hash is the one expected
 	 */
 	public static boolean checkBlockHash(Block block) {
 		String hash = HashTools.calculateBlockHash(block);
@@ -100,9 +103,10 @@ public class BlockchainManager {
 	}
 	
 	/**
-	 * Perform integrity check for a @Block. Checks if @Block's parent is the one expected.
-	 * @param block the @Block to check
-	 * @return if @Block's parent is the one expected
+	 * Perform integrity check for a Block. Checks if Block's parent is the one expected.
+	 * @param chain the chain to check
+	 * @param block the Block to check
+	 * @return if Block's parent is the one expected
 	 */
 	public static boolean checkBlockPrevious(ChainPart chain, Block block) {
 		Block previous = findBlockByHash(chain, block.getPreviousHash());

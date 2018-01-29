@@ -164,8 +164,8 @@ public class Blockchain {
 
 	/**
 	 * Add a new data to be included in a block at one of the next mining.
-	 * @param data
-	 * @throws InterruptedException 
+	 * @param data the incoming data
+	 * @throws InterruptedException when synchronize error occurs
 	 */
 	public void addIncomingData(SingleData data) throws InterruptedException {
 		dataPool.addData(data);
@@ -227,8 +227,8 @@ public class Blockchain {
 	 *  Add a subchain to the end of the current @Blockchain.
 	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the @Blockchain.
 	 *  The index of subchain's first @Block must be current's chain last @Block +1.
-	 * @param subChain
-	 * @throws ChainIntegrityException 
+	 * @param subChain the subchain to add
+	 * @throws ChainIntegrityException if integrity of subchain or final chain is not verified
 	 */
 	public void addSubChain(ChainPart subChain) throws ChainIntegrityException {
 		this.getChain().addChainPart(subChain);
@@ -236,7 +236,7 @@ public class Blockchain {
 
 	/**
 	 * Remove from chain all blocks starting by startIndex (included). Data in blocks will be put back in data pool.
-	 * @param startIndex
+	 * @param startIndex the index of first block to remove
 	 */
 	public void unlink(long startIndex) {
 		log.debug("Unlink from "+startIndex);
@@ -306,7 +306,7 @@ public class Blockchain {
 
 	/**
 	 * Add catch-up incomings blocks to catch-up builder
-	 * @param blocks
+	 * @param blocks the list of blocks to add to the current chain to catch-up
 	 */
 	public void addCatchUp(List<Block> blocks) {
 		catchUpBuilder.addPendingBlocks(blocks);

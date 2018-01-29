@@ -31,7 +31,7 @@ public class DataPool {
 	/**
 	 * Add a new @SingleData to the pending data list to be added in a @Block
 	 * @param data the @SingleData to be added
-	 * @throws InterruptedException 
+	 * @throws InterruptedException when a synchronization problem occurs
 	 */
 	public void addData(ISingleData data) throws InterruptedException {
 		
@@ -67,7 +67,7 @@ public class DataPool {
 
 	/**
 	 * Pick a random quantity of data in the list of pending data.
-	 * @return a @List<SingleData> that contains a random quantity of data
+	 * @return a List that contains a random quantity of data
 	 */
 	public  List<ISingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
 		List<ISingleData> result = new ArrayList<ISingleData>();
@@ -109,7 +109,7 @@ public class DataPool {
 
 	/**
 	 * Allows to know if a given data is already present in the pending data.
-	 * @param uniqueId unique identifier of data to check if exists
+	 * @param hash hash of data to check if exists
 	 * @return true if a data with the same unique identifier is present in queue
 	 */
 	public boolean exists(String hash) {

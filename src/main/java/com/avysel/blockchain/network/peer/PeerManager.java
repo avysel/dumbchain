@@ -119,10 +119,9 @@ public class PeerManager {
 	}
 
 	/**
-	 * Find a peer by IP and port
-	 * @param ip the ip
-	 * @param port the port
-	 * @return the peer that is registered with given ip and port
+	 * Find a peer by id
+	 * @param peerId the if of wanted peer
+	 * @return the peer
 	 */
 	public Peer findPeer(String peerId) {
 		synchronized(peersList) {

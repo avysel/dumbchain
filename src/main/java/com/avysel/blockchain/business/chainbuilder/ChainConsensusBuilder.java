@@ -61,7 +61,7 @@ public class ChainConsensusBuilder {
 	 * Check if an incoming block can be added at the end of current chain of instead of an existing block.
 	 * @param incomingBlock the block to add
 	 * @return true if incoming block has been added or is already in the chain, false if it has been rejected
-	 * @throws BlockIntegrityException 
+	 * @throws BlockIntegrityException occurs when block integrity is not verified
 	 */
 	public RejectReason processExternalBlock(Block incomingBlock) throws BlockIntegrityException {
 

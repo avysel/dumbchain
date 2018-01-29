@@ -19,8 +19,8 @@ public class MerkleTree {
 	
 	/**
 	 * Compute the merkle root for a list of hashes
-	 * @param hashes
-	 * @return
+	 * @param hashes the list of hashes to "merkleize"
+	 * @return the merkle hash for the list of hashes
 	 */
 	public static String computeMerkleRoot(ArrayList<String> hashes) {
 		

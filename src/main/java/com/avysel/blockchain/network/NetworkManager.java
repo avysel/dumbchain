@@ -74,7 +74,7 @@ public class NetworkManager {
 
 	/**
 	 * Provides the port used to send hello messages when a blockchain node is started
-	 * @return
+	 * @return the broadcast port
 	 */
 	public static int getBroadcastPort() {		
 		return broadcastPort;	
@@ -130,7 +130,9 @@ public class NetworkManager {
 
 	/**
 	 * Send a NetworkMessage to a Peer
+	 * @param bulkType the type of bulk
 	 * @param message the message object to send
+	 * @param peer the recipient
 	 */
 	public void sendMessage(int bulkType, NetworkMessage message, Peer peer) {
 		log.debug("Send a message to "+peer);
@@ -166,10 +168,11 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Gets data from network, transform it into @SingleData or @Block and add it to the @Blockchain
-	 * @param bulk the incoming @DataBulk
+	 * Gets data from network, transform it into SingleData or Block and add it to the Blockchain
+	 * @param bulk the incoming DataBulk
+	 * @param senderIp IP address of sender node
 	 */
-	public void processIncoming(NetworkDataBulk bulk, String senderId) {
+	public void processIncoming(NetworkDataBulk bulk, String senderIp) {
 		log.debug("Incoming Bulk : "+bulk);
 		if(bulk.getSender() != null)
 			markPeerAsAlive(bulk.getSender().getUid());
@@ -196,7 +199,7 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
 			log.debug("A peer answered to hello, add it.");
 			Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
-			peer.setIp(senderId); // sender only knows its local ip, change it to its public ip
+			peer.setIp(senderIp); // sender only knows its local ip, change it to its public ip
 			peer.setLastAliveTimestamp(System.currentTimeMillis());
 			peerManager.addPeer(peer);
 			break;		
@@ -239,7 +242,7 @@ public class NetworkManager {
 
 	/**
 	 * Provides all Peers connected to current node.
-	 * @return
+	 * @return the list of all peers
 	 */
 	public List<Peer> getPeers() {
 		return peerManager.getPeersList();

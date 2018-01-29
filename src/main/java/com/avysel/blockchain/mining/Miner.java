@@ -41,7 +41,7 @@ public class Miner {
 
 	/**
 	 * Creates the Miner
-	 * @param chain the Chain that will gets new Blocks
+	 * @param blockchain the blockchain that will gets new Blocks
 	 * @param dataPool the queue to peek data
 	 */
 	public Miner(Blockchain blockchain, DataPool dataPool) {

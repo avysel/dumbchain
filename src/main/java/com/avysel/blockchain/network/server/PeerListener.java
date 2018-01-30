@@ -36,16 +36,21 @@ public class PeerListener implements Runnable {
 	 * Start listening network to handle peer's requests.
 	 */
 	public void start() {
-		
+
 		int port = NetworkTool.getNextAvailablePort(NetworkManager.getBroadcastPort(), 10);
-		
+
+		if(port < 0) {
+			log.error("Unable to find unused port.");
+			return;
+		}
+
 		try {
 			this.datagramSocket = new DatagramSocket(port);
 			log.info("Peer listener on port "+port);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-		
+
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -56,40 +61,34 @@ public class PeerListener implements Runnable {
 	@Override
 	public void run() {
 
-		Thread t = new Thread(new Runnable(){
-			public void run(){
-				log.debug("Peer listener starts runing.");
+		log.debug("Peer listener starts runing.");
 
-				try {
-					while(running){
+		try {
+			while(running){
 
-						//On s'occupe maintenant de l'objet paquet
-						byte[] buffer = new byte[8192];
-						DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+				//On s'occupe maintenant de l'objet paquet
+				byte[] buffer = new byte[8192];
+				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
-						log.debug("Wait for peer.");
-						// wait for data
-						datagramSocket.receive(packet);
-						log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
-						log.debug(packet.getData().toString());
+				log.debug("Wait for peer.");
+				// wait for data
+				datagramSocket.receive(packet);
+				log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
+				log.debug(packet.getData().toString());
 
-						processData(packet);
+				processData(packet);
 
-						//reinit buffer
-						packet.setLength(buffer.length);
+				//reinit buffer
+				packet.setLength(buffer.length);
 
-					}
-				} catch (SocketException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}					
 			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}					
+	}
 
-		});
-
-		t.start();
-	}	
 
 	/**
 	 * Process an incoming datagram packet got from a peer
@@ -97,7 +96,7 @@ public class PeerListener implements Runnable {
 	 */
 	private void processData(DatagramPacket packet) {
 		if(packet == null || packet.getData() == null) return;
-		
+
 		NetworkDataBulk bulk = JsonMapper.jsonToBulk(new String(packet.getData()));
 
 		if(bulk != null) {
@@ -125,7 +124,7 @@ public class PeerListener implements Runnable {
 		running = false;
 	}
 
-	
+
 	/**
 	 * Answer to hello request of a peer. We send it our ip/port/chain height.
 	 * @param peer the peer to anwser to.
@@ -136,7 +135,7 @@ public class PeerListener implements Runnable {
 		bulk.setBulkType(NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER);
 		String peerData = JsonMapper.peerToJson(peerManager.getLocalPeer());
 		bulk.setBulkData(peerData);	
-		
+
 		// create and send packet to peer
 		Socket clientSocket;
 		try {

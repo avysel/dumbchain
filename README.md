@@ -44,7 +44,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] API consultation des données
 - [ ] Lancement du noeud avec création de données uniquement (pas de minage, pas de chaine stockée)
 - [x] Lancement du noeud avec minage ou non en ligne de commande
-- [ ] Lancement du noeud en mode génération de données de test seulement
+- [x] Lancement du noeud en mode génération de données de test seulement
 - [x] Possibilité ou non de lancement du noeud sans aucun pair connu
 
 ### Technique

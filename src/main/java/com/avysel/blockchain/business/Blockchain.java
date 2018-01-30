@@ -103,10 +103,18 @@ public class Blockchain {
 		this.chain = chain;
 	}
 
+	/**
+	 * Returns if the current node can mine blocks
+	 * @return true if the node mines, false otherwise
+	 */
 	public boolean isMiningNode() {
 		return params.isMiningNode();
 	}
 
+	/**
+	 * Start/stop miner
+	 * @param mining true to (re)start miner, false to stop miner
+	 */
 	public void setMining(boolean mining) {
 		if(this.isMiningNode() != mining) {
 			this.getParams().setMiningNode(mining);
@@ -158,14 +166,18 @@ public class Blockchain {
 
 	}
 
+	/**
+	 * Returns the data pool of current blockchain
+	 * @return the data pool
+	 */
 	public DataPool getDataPool() {
 		return this.dataPool;
 	}
 
 	/**
-	 * Add a new data to be included in a block at one of the next mining.
+	 * Add a new data, coming from network, to be included in a block in one of the next mining.
 	 * @param data the incoming data
-	 * @throws InterruptedException when synchronize error occurs
+	 * @throws InterruptedException if synchronize error occurs
 	 */
 	public void addIncomingData(ISingleData data) throws InterruptedException {
 		dataPool.addData(data);
@@ -189,7 +201,7 @@ public class Blockchain {
 			e.printStackTrace();
 		}
 		if(incomingBlockAdded) {
-			log.info("<<<<<<<<<< Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
+			log.debug("Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
 			log.debug(block);
 			log.debug("Chain : "+chain);
 		}
@@ -219,15 +231,22 @@ public class Blockchain {
 		log.info("Chain height : "+getChain().getLastIndex());
 		log.debug("Chain : "+chain);
 
+
 		// send block to the network
 		network.sendBlock(block);
 	}
 
+	/**
+	 * Add a new data, created by current node, to the data pool, and send it to the newtork.
+	 * @param data the data to add
+	 * @throws InterruptedException if synchronization error occurs
+	 */
 	public void addData(ISingleData data) throws InterruptedException {
+		log.debug("Add new data : "+data);
 		addIncomingData(data);
 		network.sendData(data);
 	}
-	
+
 	/**
 	 *  Add a subchain to the end of the current Blockchain.
 	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the Blockchain.
@@ -254,13 +273,16 @@ public class Blockchain {
 	 */
 	public void start() {
 		log.info("Starting blockchain");
-		network.start();
-		catchUp(this.getLastIndex() + 1);
+
+		if(params.isUseNetwork()) {
+			network.start();
+			catchUp(this.getLastIndex() + 1);
+		}
 		
 		if(params.isDemoDataGenerator()) {
 			(new RandomDataGenerator(this)).start();
 		}
-		
+
 		if(isMiningNode()) {
 			miner.start();
 		}
@@ -291,11 +313,11 @@ public class Blockchain {
 	public void catchUp(long startIndex) {
 		catchUpCompleted = false;
 		miner.pauseMining();
+		
 		/*
 		 * Wait for few peers connection
 		 * ask for how many blocks since this.chainHeight
 		 */
-
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {

@@ -19,7 +19,7 @@ public class Main {
 		blockchain.setParams(processParams(args));
 		log.info("Welcome to blockchain "+blockchain.toString());
 
-		initTestData(blockchain);
+	//	initTestData(blockchain);
 
 		blockchain.start();
 		blockchain.display();			

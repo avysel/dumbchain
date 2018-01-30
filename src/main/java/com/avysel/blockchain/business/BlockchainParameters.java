@@ -28,7 +28,7 @@ public class BlockchainParameters {
 		miningNode = MINING_YES;
 		canStartAlone = CAN_START_ALONE_YES;
 		useNetwork = USE_NETWORK_YES;
-		demoDataGenerator = DATA_GENERATOR_NO;
+		demoDataGenerator = DATA_GENERATOR_YES;
 	}
 	
 	public boolean isMiningNode() {

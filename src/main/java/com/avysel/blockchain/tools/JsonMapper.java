@@ -145,7 +145,7 @@ public class JsonMapper {
 		return data;
 	}
 
-	public static String dataToJson(SingleData data) {
+	public static String dataToJson(ISingleData data) {
 		return genericToJson(data);
 	}
 

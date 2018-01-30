@@ -80,7 +80,7 @@ public class NetworkManager {
 	public static int getBroadcastPort() {		
 		return broadcastPort;	
 	}
-	
+
 	/**
 	 * Start network manager of blockchain node
 	 */
@@ -102,13 +102,13 @@ public class NetworkManager {
 	 * @param data the SingleData object to send
 	 */
 	public void sendData(ISingleData data) {
-		log.info("Send a data to the network.");
+		log.info(">>>>> Send a data to the network.");
 		log.trace(data.toString());
 		NetworkDataBulk bulk = new NetworkDataBulk();
 
 		// create network packet
 		bulk.setBulkType(NetworkDataBulk.DATATYPE_DATA);
-		bulk.setBulkData(data.getData());
+		bulk.setBulkData(JsonMapper.dataToJson(data));
 
 		// send to all connected peers
 		client.sendDataToAllPeers(bulk);
@@ -151,13 +151,16 @@ public class NetworkManager {
 	 * @param data the incoming SingleData
 	 */
 	private void processIncomingData(SingleData data) {
-		log.info("Pool size before : "+blockchain.getDataPool().size());
-		try {
-			blockchain.addIncomingData(data);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		log.info(" <<<<< Incoming data : "+ data);
+		synchronized(blockchain.getDataPool()) {
+			log.debug("Pool size before : "+blockchain.getDataPool().size());
+			try {
+				blockchain.addIncomingData(data);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			log.debug("Pool size after : "+blockchain.getDataPool().size());
 		}
-		log.info("Pool size after : "+blockchain.getDataPool().size());
 	}
 
 	/**
@@ -165,6 +168,7 @@ public class NetworkManager {
 	 * @param data the incoming Block
 	 */
 	private void processIncomingBlock(Block block) {
+		log.info(" <<<<<<<<<< Incoming block : "+ block.getIndex() + " ("+block.getHash()+")");
 		blockchain.addIncomingBlock(block);
 	}
 
@@ -185,7 +189,7 @@ public class NetworkManager {
 		else {
 			receivedBulks.add(bulk.getUid());
 		}
-		
+
 		switch(bulk.getBulkType()) {
 		case NetworkDataBulk.DATATYPE_BLOCK :
 			log.debug("Get a block from network");
@@ -195,6 +199,7 @@ public class NetworkManager {
 		case NetworkDataBulk.DATATYPE_DATA :
 			log.debug("Get a data from network");
 			SingleData data = JsonMapper.jsonToData(bulk.getBulkData());
+			log.debug(data);
 			processIncomingData(data);
 			break;
 		case NetworkDataBulk.MESSAGE_PEER_HELLO_ANSWER :
@@ -264,7 +269,7 @@ public class NetworkManager {
 	public void markPeerAsAlive(String peerId) {
 		peerManager.markPeerAsAlive(peerId);
 	}
-	
+
 	/**
 	 * Remove a peer from the peers list.
 	 * @param peer the peer to remove.

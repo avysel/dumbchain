@@ -59,8 +59,8 @@ public class Miner {
 		// while mining blockchain node is running
 		while(miningNode) {
 		
-			// if mining is not pending
-			if(! pauseMining) {
+			// if mining is not pending, and enough data in pool
+			if(! pauseMining && dataPool.size() > 0) {
 				// create new block
 				Block block = mine();	
 

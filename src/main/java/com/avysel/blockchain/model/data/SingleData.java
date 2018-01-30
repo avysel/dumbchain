@@ -17,6 +17,8 @@ public class SingleData implements ISingleData {
 
 	public SingleData() {
 		super();
+		this.uuid = UUID.randomUUID().toString();
+		this.hash = HashTools.calculateHash((data+uuid).getBytes());
 	}
 
 	public SingleData(String data) {

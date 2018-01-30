@@ -37,8 +37,7 @@ public class DataPool {
 		
 		if(!exists(data.getHash())) {
 			getDataPool().put(data);
-			log.info("New data in pool");
-			log.debug(data);
+			log.info("New data in pool : "+data);
 		}
 		else {
 			log.warn("Data "+data.getHash()+" already exists");

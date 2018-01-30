@@ -18,6 +18,8 @@ public class DataPool {
 
 	private static Logger log = Logger.getLogger(DataPool.class);
 
+	private static final int MAX_DATA_IN_BLOCK = 100;
+	
 	private LinkedBlockingQueue<ISingleData> queue;
 
 	public DataPool() {
@@ -76,11 +78,13 @@ public class DataPool {
 		int quantity;
 		do {
 			// random quantity of data to take in pending data (no more than half of remaining)
-			if(getDataPool().size() > 1)
-				quantity = new Random().nextInt(getDataPool().size() / 2) + 1;
+			/*if(getDataPool().size() > 1)
+				quantity = new Random().nextInt(Math.min(MAX_DATA_IN_BLOCK, getDataPool().size() / 2 ));
 			else
 				quantity = 1;
-
+*/
+			quantity = Math.min(getDataPool().size(), MAX_DATA_IN_BLOCK);
+			
 			// if enough data, take it
 			if(quantity <= getDataPool().size()) {
 				for(int i=0 ; i < quantity ; i++) {

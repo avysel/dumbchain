@@ -95,3 +95,4 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - Comment utiliser l'arbre de merkle pour vérifier la présence d'une donnée.
 - Faut-il garantir l'ordre des données dans un bloc ? si oui comment ?
 - Faut-il faire un catch-up du pool de données ?
+- Comment piocher des données dans le pool pour miner un block ?

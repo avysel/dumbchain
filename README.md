@@ -59,6 +59,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] Finaliser TU
 - [ ] Javadoc
 - [x] Synchroniser les collections avec risque de concurrence
+- [x] Contrôle qualité du code (PMD)
 
 
 ### Limites

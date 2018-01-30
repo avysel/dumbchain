@@ -12,7 +12,7 @@ public class BlockHeader {
 	private long timestamp;
 	private long difficulty;
 	
-	public BlockHeader(String previousHash, String merkleRoot, long timestamp, long nonce, long difficulty) {
+	public BlockHeader(String previousHash, String merkleRoot, long timestamp, long difficulty) {
 		super();
 		this.previousHash = previousHash;
 		this.merkleRoot = merkleRoot;

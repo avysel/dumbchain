@@ -76,7 +76,7 @@ public class DataPool {
 		int quantity;
 		do {
 			// random quantity of data to take in pending data (no more than half of remaining)
-			quantity = (new Random()).nextInt(getDataPool().size() / 2) +1;
+			quantity = new Random().nextInt(getDataPool().size() / 2) +1;
 
 			// if enough data, take it
 			if(quantity <= getDataPool().size()) {

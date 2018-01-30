@@ -41,6 +41,7 @@ public class ChainBuilder {
 	}	
 
 	public void addPendingBlock(Block block) {
+		log.debug("Add pending block : "+block);
 		hashIndexedBlocks.put(block.getHash(), block);
 		indexIndexedBlocks.put(block.getIndex(), block);
 		timeIndexedBlocks.put(block.getTimestamp(), block);

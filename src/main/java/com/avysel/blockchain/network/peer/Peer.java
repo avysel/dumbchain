@@ -112,11 +112,18 @@ public class Peer {
 		return peer;
 	}
 	
+	@Override
 	public String toString() {
 		return this.ip+":"+this.listeningPort;
 	}
 	
 	public boolean equals(Peer otherPeer) {
 		return this.uid.equals(otherPeer.getUid());
+	}
+	
+	@Override
+	public int hashCode() {
+		return uid.hashCode() * ip.hashCode() * Integer.valueOf(listeningPort).hashCode();
+
 	}
 }

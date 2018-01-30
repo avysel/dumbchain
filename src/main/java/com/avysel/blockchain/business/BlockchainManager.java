@@ -116,6 +116,6 @@ public class BlockchainManager {
 		
 		return block.isGenesis() 
 				|| chain.getFirstBlock().equals(block) 
-				|| (previous != null && previous.getIndex() == block.getIndex() -1);
+				|| previous != null && previous.getIndex() == block.getIndex() -1;
 	}
 }

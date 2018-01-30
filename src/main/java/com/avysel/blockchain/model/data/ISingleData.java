@@ -8,11 +8,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	)
 public interface ISingleData {
 	
-	public String getData();
+	String getData();
 
-	public String getHash();
+	String getHash();
 
-	public Class getClazz();
+	Class getClazz();
 
-	public String toString();
+	String toString();
 }

@@ -31,7 +31,7 @@ public class MerkleTree {
 		
 		while(hashes.size() > 1) {
 			// if odd number of items, duplicate last item
-			if((hashes.size() % 2) != 0) {
+			if(hashes.size() % 2 != 0) {
 				hashes.add(hashes.get(hashes.size()-1));
 			}
 			

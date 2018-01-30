@@ -69,7 +69,7 @@ public class ChainCatchUpBuilder {
 		requestor.requestBlocks(startIndex);
 		
 		// wait to get catch up data or build successfull
-		while( (completed!=CatchUpResult.CATCH_UP_SUCCESSFUL && ! getEmptyDataResult) && (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
+		while( completed != CatchUpResult.CATCH_UP_SUCCESSFUL && ! getEmptyDataResult && (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
 			
 			// wait a few time bewteen two tries
 			try {

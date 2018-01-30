@@ -10,7 +10,6 @@ import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
 import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.block.Genesis;
 import com.avysel.blockchain.model.chain.Chain;
 import com.avysel.blockchain.model.data.ISingleData;
 
@@ -195,17 +194,17 @@ public class ChainConsensusBuilder {
 			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
 			
 			// if there is at least one block after the genesis
-			if(lastLinkedIndex > Genesis.GENESIS_INDEX) {
+	/*		if(lastLinkedIndex > Genesis.GENESIS_INDEX) {
 				// remove local unsafe part
-			//	blockchain.unlink(lastLinkedIndex + 1);	
+				blockchain.unlink(lastLinkedIndex + 1);	
 				
 				// catch-up network existing safe part
-			//	blockchain.catchUp(lastLinkedIndex + 1);
+				blockchain.catchUp(lastLinkedIndex + 1);
 			}
 			else {
 				// catch-up from first block
-			//	blockchain.catchUp(1);
-			}
+				blockchain.catchUp(1);
+			}*/
 
 			log.info("Consistency check completed.");
 			nbConsecutiveRejects = 0;

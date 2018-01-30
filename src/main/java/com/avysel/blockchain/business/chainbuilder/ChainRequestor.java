@@ -35,6 +35,7 @@ public class ChainRequestor {
 		if(peer != null) {
 			CatchUpRequestMessage message = new CatchUpRequestMessage();
 			message.setStartIndex(startIndex);
+			log.debug("Send chain request message : "+message);
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST, message, peer);
 		}
 	}

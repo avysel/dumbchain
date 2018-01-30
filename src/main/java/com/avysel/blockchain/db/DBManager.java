@@ -38,6 +38,7 @@ public class DBManager {
 		}
 		try {
 			// Use the db in here....
+			System.out.println(db != null);
 		} finally {
 			// Make sure you close the db to shutdown the 
 			// database and avoid resource leaks.

@@ -7,10 +7,7 @@ import java.util.List;
 import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-/*
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-*/
+
 /**
  * A Block
  * Contains a list of SingleData and all information used to identify the Block and check its integrity
@@ -64,25 +61,21 @@ public class Block {
 	public String getPreviousHash() {
 		return this.getBlockHeader().getPreviousHash();
 	}
-	
 	public String getHash() {
 		return this.getBlockHeader().getHash();
 	}
 	public void setHash(String hash) {
 		this.getBlockHeader().setHash(hash);
 	}
-	
 	public void setPreviousHash(String hash) {
 		this.getBlockHeader().setPreviousHash(hash);
-	}	
-
+	}
 	public long getIndex() {
 		return this.getBlockHeader().getIndex();
 	}
 	public void setIndex(long index) {
 		this.getBlockHeader().setIndex(index);
 	}
-
 	public String getMerkleRoot() {
 		return this.getBlockHeader().getMerkleRoot();
 	}
@@ -101,7 +94,6 @@ public class Block {
 	public void setDifficulty(long difficulty) {
 		this.getBlockHeader().setDifficulty(difficulty);
 	}	
-	
 	public List<ISingleData> getDataList() {
 		return this.getBlockData().getDataList();
 	}	
@@ -117,17 +109,6 @@ public class Block {
 		//hashData.append(this.getTimestamp());
 		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
 		return hashData.toString().getBytes();
-	}
-	
-	/**
-	 * Return string representation of data used to calculate block's merkle root
-	 * @return bytes representation of data
-	 */
-	@JsonIgnore	
-	public byte[] getMerkleRootData() {
-		StringBuffer hashData = new StringBuffer();
-		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
-		return hashData.toString().getBytes();		
 	}
 	
 	@JsonIgnore
@@ -182,6 +163,10 @@ public class Block {
 		return getDifficulty();
 	}
 
+	/**
+	 * Returns the list of hashes of all block's data
+	 * @return list of data hashes
+	 */
 	@JsonIgnore
 	public ArrayList<String> getDataHashesList() {
 		ArrayList<String> list = new ArrayList<String>();

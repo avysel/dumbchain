@@ -88,3 +88,9 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 **-demoDataGenerator=1** for a demo data generator node. 
 **-demoDataGenerator=0** for a no demo data generator node. (default)
+
+
+# Questions en cours (à répondre, et appliquer dans le code)
+- Quelles données d'un bloc utiliser pour calculer le hash ?
+- Comment utiliser l'arbre de merkle pour vérifier la présence d'une donnée.
+- Faut-il garantir l'ordre des données dans un bloc ? si oui comment ?

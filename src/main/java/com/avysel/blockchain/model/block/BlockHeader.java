@@ -60,6 +60,4 @@ public class BlockHeader {
 	protected void setDifficulty(long difficulty) {
 		this.difficulty = difficulty;
 	}
-	
-	
 }

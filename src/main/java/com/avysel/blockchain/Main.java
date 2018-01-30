@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainParameters;
-import com.avysel.blockchain.model.data.SingleData;
 
 public class Main {
 
@@ -12,32 +11,18 @@ public class Main {
 
 	public static void main (String[] args) {
 
-		//setLogParameters();
-
 		Blockchain blockchain = new Blockchain();
+		
 		log.info(BlockchainParameters.getUsage());
+		
 		blockchain.setParams(processParams(args));
+		
 		log.info("Welcome to blockchain "+blockchain.toString());
-
-	//	initTestData(blockchain);
 
 		blockchain.start();
 		blockchain.display();			
-
 	}
 
-/*	private static void setLogParameters() {
-		Logger logRoot = Logger.getRootLogger();
-		ConsoleAppender ca = new ConsoleAppender();
-		PatternLayout pattern = new PatternLayout();
-		pattern.setConversionPattern(UUID.randomUUID().toString().substring(0, 6)+ ":%d{ISO8601} - %-5p [%c] - %m%n");
-		ca.setName("console");
-		ca.setLayout(pattern);
-		ca.activateOptions();
-		logRoot.addAppender(ca);
-		logRoot.setLevel(Level.INFO);		
-	}
-*/
 	private static BlockchainParameters processParams(String[] args) {
 
 		BlockchainParameters params = new BlockchainParameters();
@@ -116,7 +101,7 @@ public class Main {
 		return params;
 	}
 
-	private static void initTestData(Blockchain blockchain) {
+/*	private static void initTestData(Blockchain blockchain) {
 		for(int i = 1 ; i < 100 ; i++) {
 			try {
 				blockchain.addIncomingData(new SingleData("data"+i));
@@ -124,5 +109,18 @@ public class Main {
 				e.printStackTrace();
 			}
 		}		
-	}
+	}*/
+	
+	/*	private static void setLogParameters() {
+	Logger logRoot = Logger.getRootLogger();
+	ConsoleAppender ca = new ConsoleAppender();
+	PatternLayout pattern = new PatternLayout();
+	pattern.setConversionPattern(UUID.randomUUID().toString().substring(0, 6)+ ":%d{ISO8601} - %-5p [%c] - %m%n");
+	ca.setName("console");
+	ca.setLayout(pattern);
+	ca.activateOptions();
+	logRoot.addAppender(ca);
+	logRoot.setLevel(Level.INFO);		
+}
+*/	
 }

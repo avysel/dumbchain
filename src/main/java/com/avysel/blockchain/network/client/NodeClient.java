@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -44,24 +45,26 @@ public class NodeClient {
 
 		log.debug("Sending data "+bulk+" to "+peer.getIp()+":"+peer.getListeningPort());
 
+		// connect to distant peer's server part
 		try {
-			// connect to distant peer's server part
-			try {
-				clientSocket = new Socket(peer.getIp(), peer.getListeningPort());
-			}
-			catch(ConnectException e) {
-				e.printStackTrace();
-				/*log.debug("Connection failed, remove peer "+peer);
-				networkManager.removePeer(peer);*/
-			}
+			clientSocket = new Socket(peer.getIp(), peer.getListeningPort());
+
 			// send data
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
 			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
 			bos.flush();
 			bos.close();
 			clientSocket.close();
-
-		} catch (IOException e) {
+		}
+		catch(ConnectException e) {
+			log.error("Connection failed, connection error, remove peer "+peer);
+			networkManager.removePeer(peer);
+		}
+		catch(SocketException e) {
+			log.error("Connection failed, socket error, remove peer "+peer);
+			networkManager.removePeer(peer);
+		}
+		catch (IOException e) {
 			log.error("Data not send to "+peer.getIp()+":"+peer.getListeningPort());
 			e.printStackTrace();
 		}

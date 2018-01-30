@@ -15,7 +15,7 @@ public class RandomDataGenerator implements Runnable {
 	private boolean isRunning;
 	private Blockchain blockchain;
 
-	private static final int TIME_BETWEEN_TWO_DATA = 5000;
+	private static final int TIME_BETWEEN_TWO_DATA = 500;
 	
 	public RandomDataGenerator(Blockchain blockchain) {
 		this.blockchain = blockchain;

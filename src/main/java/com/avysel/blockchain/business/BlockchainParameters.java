@@ -44,7 +44,7 @@ public class BlockchainParameters {
 		this.canStartAlone = canStartAlone;
 	}
 	public boolean isUseNetwork() {
-		return miningNode && useNetwork;
+		return useNetwork;
 	}
 	public void setUseNetwork(boolean useNetwork) {
 		this.useNetwork = useNetwork;

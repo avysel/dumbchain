@@ -15,9 +15,9 @@ import com.avysel.blockchain.model.data.ISingleData;
  * It uses a synchronized queue, fed by the network and consumed by the Miner.
  */
 public class DataPool {
-	
+
 	private static Logger log = Logger.getLogger(DataPool.class);
-	
+
 	private LinkedBlockingQueue<ISingleData> queue;
 
 	public DataPool() {
@@ -34,10 +34,10 @@ public class DataPool {
 	 * @throws InterruptedException when a synchronization problem occurs
 	 */
 	public void addData(ISingleData data) throws InterruptedException {
-		
+
 		if(!exists(data.getHash())) {
 			getDataPool().put(data);
-			log.info("New data in pool : "+data);
+			log.debug("New data in pool : "+data);
 		}
 		else {
 			log.warn("Data "+data.getHash()+" already exists");
@@ -55,7 +55,7 @@ public class DataPool {
 	public void removeAll(List<ISingleData> dataList) {
 		getDataPool().removeAll(dataList);
 	}
-	
+
 	public List<ISingleData> getData(long quantity) {
 		List<ISingleData> result = new ArrayList<ISingleData>();
 		for(int i=0 ; i < quantity && !getDataPool().isEmpty() ; i++) {
@@ -70,12 +70,16 @@ public class DataPool {
 	 */
 	public  List<ISingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
 		List<ISingleData> result = new ArrayList<ISingleData>();
-		if(getDataPool().isEmpty()) return result;
 		
+		if(getDataPool().isEmpty()) return result;
+
 		int quantity;
 		do {
 			// random quantity of data to take in pending data (no more than half of remaining)
-			quantity = new Random().nextInt(getDataPool().size() / 2) +1;
+			if(getDataPool().size() > 1)
+				quantity = new Random().nextInt(getDataPool().size() / 2) + 1;
+			else
+				quantity = 1;
 
 			// if enough data, take it
 			if(quantity <= getDataPool().size()) {
@@ -83,7 +87,7 @@ public class DataPool {
 					result.add(getDataPool().poll());
 				}
 			}
-			
+
 			// if not enough data, try again (wait for a suitable quantity, or for the queue to be filled)
 		} while(quantity > getDataPool().size());
 

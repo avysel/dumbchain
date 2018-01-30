@@ -151,7 +151,7 @@ public class NetworkManager {
 	 * @param data the incoming SingleData
 	 */
 	private void processIncomingData(SingleData data) {
-		log.info(" <<<<< Incoming data : "+ data);
+		log.info("<<<<< Incoming data : "+ data);
 		synchronized(blockchain.getDataPool()) {
 			log.debug("Pool size before : "+blockchain.getDataPool().size());
 			try {
@@ -168,7 +168,7 @@ public class NetworkManager {
 	 * @param data the incoming Block
 	 */
 	private void processIncomingBlock(Block block) {
-		log.info(" <<<<<<<<<< Incoming block : "+ block.getIndex() + " ("+block.getHash()+")");
+		log.info("<<<<<<<<<< Incoming block : "+ block.getIndex() + " ("+block.getHash()+")");
 		blockchain.addIncomingBlock(block);
 	}
 

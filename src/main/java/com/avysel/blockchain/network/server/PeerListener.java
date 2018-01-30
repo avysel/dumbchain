@@ -76,7 +76,7 @@ public class PeerListener implements Runnable {
 				log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
 				log.debug(packet.getData().toString());
 
-				processData(packet);
+				processPacket(packet);
 
 				//reinit buffer
 				packet.setLength(buffer.length);
@@ -94,7 +94,7 @@ public class PeerListener implements Runnable {
 	 * Process an incoming datagram packet got from a peer
 	 * @param packet the packet to process
 	 */
-	private void processData(DatagramPacket packet) {
+	private void processPacket(DatagramPacket packet) {
 		if(packet == null || packet.getData() == null) return;
 
 		NetworkDataBulk bulk = JsonMapper.jsonToBulk(new String(packet.getData()));

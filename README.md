@@ -42,7 +42,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] API d'ajout de données
 - [ ] Consultation des données
 - [ ] API consultation des données
-- [ ] Lancement du noeud avec création de données uniquement (pas de minage, pas de chaine stockée)
+- [ ] Lancement du noeud avec création de données uniquement (pas de minage, pas de stockage de chaine ?)
 - [x] Lancement du noeud avec minage ou non en ligne de commande
 - [x] Lancement du noeud en mode génération de données de test seulement
 - [x] Possibilité ou non de lancement du noeud sans aucun pair connu
@@ -75,13 +75,13 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 **-help** displays this help menu.
 
-**-mining=1** for a mining node. (default) 
+**-mining=1** for a mining node. (default)
 **-mining=0** for a not mining node.
 
-**-canStartAlone=1** for a node that can start alone. (default) 
+**-canStartAlone=1** for a node that can start alone. (default)
 **-canStartAlone=0** for a node that cannot start without other peer.
 
-**-useNetwork=1** for a node that listen to network to catch new data. (default) 
+**-useNetwork=1** for a node that listen to network to catch new data. (default)
 **-useNetwork=0** for a node that doesn't listen to network to catch new data. (mining is therefore disabled)
 
 ### Demo parameters : 

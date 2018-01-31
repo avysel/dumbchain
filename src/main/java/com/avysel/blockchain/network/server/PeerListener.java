@@ -25,11 +25,13 @@ public class PeerListener implements Runnable {
 
 	private DatagramSocket datagramSocket;
 	private PeerManager peerManager;
+	private NetworkManager networkManager;
 	private boolean running = true;
 
-	public PeerListener(PeerManager manager) {
+	public PeerListener(PeerManager manager, NetworkManager networkManager) {
 		super();
 		this.peerManager = manager;
+		this.networkManager = networkManager;
 	}
 
 	/**
@@ -100,10 +102,16 @@ public class PeerListener implements Runnable {
 		NetworkDataBulk bulk = JsonMapper.jsonToBulk(new String(packet.getData()));
 
 		if(bulk != null) {
+			
+			if(!networkManager.canProcessBulk(bulk.getUid())) {
+				return;
+			}
+			
 			switch(bulk.getBulkType()) {
 
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
 				log.debug("New peer on the network, add it.");
+				log.info("bulk id :"+bulk.getUid());
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
 				peer.setIp(packet.getAddress().toString().replace("/",""));

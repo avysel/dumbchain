@@ -51,7 +51,7 @@ public class NetworkManager {
 		server = new NodeServer(this);
 		client = new NodeClient(this);
 
-		peerManager = new PeerManager();
+		peerManager = new PeerManager(this);
 
 		receivedBulks = new ArrayList<String>();
 	}
@@ -181,13 +181,10 @@ public class NetworkManager {
 		log.debug("Incoming Bulk : "+bulk);
 		if(bulk.getSender() != null)
 			markPeerAsAlive(bulk.getSender().getUid());
+		
 		// make sure we don't process twice the same message if got twice
-		if(receivedBulks.contains(bulk.getUid())) {
-			log.info("Incoming bulk already received.");
+		if(!canProcessBulk(bulk.getUid())) {
 			return;
-		}
-		else {
-			receivedBulks.add(bulk.getUid());
 		}
 
 		switch(bulk.getBulkType()) {
@@ -276,5 +273,21 @@ public class NetworkManager {
 	 */
 	public void removePeer(Peer peer) {
 		peerManager.removePeer(peer);
+	}
+	
+	/**
+	 * Check if a network bulk has not been received twice, and can be processed.
+	 * @param bulkId the bulk ID
+	 * @return true if the bulk can be processed, false if it has already been received.
+	 */
+	public boolean canProcessBulk(String bulkId) {
+		if(receivedBulks.contains(bulkId)) {
+			log.debug("Incoming bulk already received : "+bulkId);
+			return false;
+		}
+		else {
+			receivedBulks.add(bulkId);
+			return true;
+		}
 	}
 }

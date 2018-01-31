@@ -23,10 +23,11 @@ public class PeerManager {
 	private List<Peer> peersList = new ArrayList<Peer>();
 
 
-	public PeerManager() {
+	public PeerManager(NetworkManager networkManager) {
 		super();
-		peerExplorer = new PeerExplorer(this);
-		peerListener = new PeerListener(this);	
+		this.peerExplorer = new PeerExplorer(this);
+		this.peerListener = new PeerListener(this, networkManager);	
+		
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class PeerManager {
 				log.info("New peer added : "+peer);
 			}
 			else {
-				log.info("Skip adding peer : "+peer);
+				log.debug("Skip adding peer : "+peer);
 			}
 		}
 	}

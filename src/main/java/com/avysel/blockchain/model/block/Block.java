@@ -105,8 +105,8 @@ public class Block {
 	@JsonIgnore
 	public byte[] getHashData() {
 		StringBuffer hashData = new StringBuffer();
-		//hashData.append(this.getIndex());
-		//hashData.append(this.getTimestamp());
+		hashData.append(this.getDifficulty());
+		hashData.append(this.getTimestamp());
 		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
 		return hashData.toString().getBytes();
 	}

@@ -107,7 +107,7 @@ public class Peer {
 		peer.setListeningPort(NetworkManager.getServerListeningPort());
 		peer.setUid(UUID.randomUUID().toString());
 		
-		log.info("Init local peer : "+peer.toString());
+		log.debug("Init local peer : "+peer.toString());
 		
 		return peer;
 	}

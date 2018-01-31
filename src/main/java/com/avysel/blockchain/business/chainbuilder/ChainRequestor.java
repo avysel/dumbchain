@@ -23,6 +23,11 @@ public class ChainRequestor {
 		this.blockchain = blockchain;
 	}
 
+	/**
+	 * Select the peer to use to request the chain.
+	 * The peer with the higher chain will be selected.
+	 * @return the peer with the higer chain, to request catch-up data
+	 */
 	private Peer selectPeerToRequest() {
 		if(blockchain.getPeers() != null &&  ! blockchain.getPeers().isEmpty())
 			return blockchain.getPeers().stream().max(Comparator.comparing(Peer::getChainHeight)).get();
@@ -30,6 +35,10 @@ public class ChainRequestor {
 			return null;
 	}
 
+	/**
+	 * Send a request to a peer to catch-up with current shared chain.
+	 * @param startIndex index of first requested block
+	 */
 	public void requestBlocks(long startIndex) {
 		Peer peer = selectPeerToRequest();
 		if(peer != null) {

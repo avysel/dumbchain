@@ -24,6 +24,7 @@ public class PeerExplorer {
 	private static Logger log = Logger.getLogger(PeerExplorer.class);
 
 	private PeerManager peerManager;
+	
 
 	public PeerExplorer(PeerManager manager) {
 		super();
@@ -38,7 +39,6 @@ public class PeerExplorer {
 		log.info("Local peer says hello.");
 
 		try {
-
 			DatagramSocket clientSocket = new DatagramSocket();
 			// create broadcast socket
 			clientSocket.setBroadcast(true);
@@ -51,7 +51,7 @@ public class PeerExplorer {
 			String data = JsonMapper.bulkToJson(bulk);
 
 			List<InetAddress> listAddresses = NetworkTool.listAllBroadcastAddresses();
-
+			
 			for(InetAddress addr : listAddresses) {
 				for(int i = 0 ; i < 10 ; i ++) {
 

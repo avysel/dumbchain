@@ -3,7 +3,6 @@ package com.avysel.blockchain.mining;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
@@ -11,15 +10,13 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.model.data.ISingleData;
 
 /**
- * Used to store the list of pending data. This class provides some operation on it, such as add data, pick random data ...
+ * Used to store the list of pending data. This class provides some operation on it, such as add data, pick data ...
  * It uses a synchronized queue, fed by the network and consumed by the Miner.
  */
 public class DataPool {
 
 	private static Logger log = Logger.getLogger(DataPool.class);
 
-	private static final int MAX_DATA_IN_BLOCK = 100;
-	
 	private LinkedBlockingQueue<ISingleData> queue;
 
 	public DataPool() {
@@ -67,33 +64,24 @@ public class DataPool {
 	}
 
 	/**
-	 * Pick a random quantity of data in the list of pending data.
-	 * @return a List that contains a random quantity of data
+	 * Pick a quantity of data in the list of pending data.
+	 * @param quantity the number of data to pick. If pool size is lower than expected quantity, all remaining data will be picked up.
+	 * @return a List of data
 	 */
-	public  List<ISingleData> getRandomData() { // TODO how to use the "blocking" feature of this queue when reading ?
+	public  List<ISingleData> pickData(int quantity) {
 		List<ISingleData> result = new ArrayList<ISingleData>();
-		
+
 		if(getDataPool().isEmpty()) return result;
 
-		int quantity;
-		do {
-			// random quantity of data to take in pending data (no more than half of remaining)
-			/*if(getDataPool().size() > 1)
-				quantity = new Random().nextInt(Math.min(MAX_DATA_IN_BLOCK, getDataPool().size() / 2 ));
-			else
-				quantity = 1;
-*/
-			quantity = Math.min(getDataPool().size(), MAX_DATA_IN_BLOCK);
-			
-			// if enough data, take it
-			if(quantity <= getDataPool().size()) {
-				for(int i=0 ; i < quantity ; i++) {
-					result.add(getDataPool().poll());
-				}
-			}
+		// pick no more than pool size
+		quantity = Math.min(getDataPool().size(), quantity);
 
-			// if not enough data, try again (wait for a suitable quantity, or for the queue to be filled)
-		} while(quantity > getDataPool().size());
+		// if enough data, take it
+		if(quantity <= getDataPool().size()) {
+			for(int i=0 ; i < quantity ; i++) {
+				result.add(getDataPool().poll());
+			}
+		}
 
 		return result;
 	}

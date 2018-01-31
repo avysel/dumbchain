@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import com.avysel.blockchain.model.block.Block;
 
 public class HashTools {
-
+	
 	/**
 	 * Calculate the hash for a Block
 	 * @param block the Block to hash

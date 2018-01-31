@@ -40,6 +40,11 @@ public class Miner {
 	private boolean pauseMining;
 
 	/**
+	 * Maximum number of data to include in a block
+	 */
+	private static final int MAX_DATA_IN_BLOCK = 10;
+
+	/**
 	 * Creates the Miner
 	 * @param blockchain the blockchain that will gets new Blocks
 	 * @param dataPool the queue to peek data
@@ -88,37 +93,29 @@ public class Miner {
 	 * @return a Block that contains random data taken from DataPool
 	 */
 	public Block mine() {
-		Block block;
+		Block block = new Block();
 		List<ISingleData> dataList = new ArrayList<ISingleData>();
 
+		// pick new dataset, blocking when pending data is empty
+		dataList = dataPool.pickData(MAX_DATA_IN_BLOCK);
+		block.addAllData(dataList);	
+		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
+		
 		String hash;
 		long difficulty = 0;
-		do {
-
-			block = new Block();
+		do { 
 			if( ! pauseMining ) {
+
+				// all block creation timestamps are based on GMT+0 timezone
+				TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+				block.setTimestamp(Timestamp.from(Instant.now()).getTime());
+				block.setDifficulty(difficulty);				
 				
-				// put unused data back to pending data
-				dataPool.addAll(dataList);
-
-				// clean current data set
-				block.cleanData();
-
-				// pick new dataset, blocking when pending data is empty
-				dataList = dataPool.getRandomData();
-				block.addAllData(dataList);
-
 				hash = HashTools.calculateBlockHash(block);
 
 				log.trace("Hash : "+hash);
 
 				block.setHash(hash);
-				// all block creation timestamps are based on GMT+0 timezone
-				TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
-				block.setTimestamp(Timestamp.from(Instant.now()).getTime());
-				block.setDifficulty(difficulty);
-
-				block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
 
 				difficulty ++;
 			}

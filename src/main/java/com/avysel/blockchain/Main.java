@@ -8,14 +8,15 @@ import com.avysel.blockchain.business.BlockchainParameters;
 public class Main {
 
 	private static Logger log = Logger.getLogger(Main.class);
-
+	
 	public static void main (String[] args) {
 
 		Blockchain blockchain = new Blockchain();
 		
 		log.info(BlockchainParameters.getUsage());
 		
-		blockchain.setParams(processParams(args));
+		BlockchainParameters params = processParams(args);
+		blockchain.setParams(params);
 		
 		log.info("Welcome to blockchain "+blockchain.toString());
 

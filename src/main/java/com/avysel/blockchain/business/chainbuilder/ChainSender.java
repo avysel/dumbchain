@@ -46,8 +46,8 @@ public class ChainSender {
 					CatchUpDataMessage message = new CatchUpDataMessage();
 					
 					// get subchain of MAX_BLOCKS_PER_BULK (or less, if less elements remain) elements
-					int from = (int)startIndex + i * MAX_BLOCKS_PER_BULK;
-					int to = (int)startIndex + Math.min( (i+1)*MAX_BLOCKS_PER_BULK, blockchain.getChain().getBlockList().size());
+					int from = i * MAX_BLOCKS_PER_BULK + 1;
+					int to = Math.min( (i+1)*MAX_BLOCKS_PER_BULK + 1, blockchain.getChain().getBlockList().size());
 					List<Block> sublist = blockchain.getChain().getBlockList().subList(from, to);
 					
 					// add the previously selected blocks in the message

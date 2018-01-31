@@ -65,6 +65,13 @@ public class NetworkTool {
 	 */
 	public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
 		List<InetAddress> broadcastList = new ArrayList<>();
+		try {
+			broadcastList.add(InetAddress.getByName("127.0.0.1"));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		
+		/*
 		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 		while (interfaces.hasMoreElements()) {
 			NetworkInterface networkInterface = interfaces.nextElement();
@@ -77,7 +84,7 @@ public class NetworkTool {
 			.map(a -> a.getBroadcast())
 			.filter(Objects::nonNull)
 			.forEach(broadcastList::add);
-		}
+		}*/
 		return broadcastList;
 	}
 }

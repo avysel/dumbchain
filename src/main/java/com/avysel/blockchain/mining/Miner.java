@@ -42,7 +42,7 @@ public class Miner {
 	/**
 	 * Maximum number of data to include in a block
 	 */
-	private static final int MAX_DATA_IN_BLOCK = 10;
+	private static final int MAX_DATA_IN_BLOCK = 100;
 
 	/**
 	 * Creates the Miner

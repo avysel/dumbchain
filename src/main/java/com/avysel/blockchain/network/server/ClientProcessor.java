@@ -36,17 +36,17 @@ public class ClientProcessor implements Runnable {
 	public void run() {
 		log.debug("Start processing incoming client connection");
 
-		String data = new String();
+		String data = "";
 		try {
 			reader = new BufferedInputStream(socket.getInputStream());
 
 			InetSocketAddress remote = (InetSocketAddress) socket.getRemoteSocketAddress();
 
-			while(socket != null && !socket.isClosed()) {
+			while(!socket.isClosed()) {
 
 				// get data from client socket				
 				String tmp = read();
-				if(tmp != null && !tmp.isEmpty()) {
+				if(!tmp.isEmpty()) {
 					data += tmp;
 				}
 				else {

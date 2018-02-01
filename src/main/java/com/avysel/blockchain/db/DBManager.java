@@ -19,10 +19,14 @@ public class DBManager {
 	
 	private DB db;
 
+	public DBManager() {
+		db = null;
+	}
+	
 	private void createDir() {
 		File directory = new File(DB_DIR_PATH);
-		if(!directory.exists()) {
-			directory.mkdir();
+		if(!directory.exists() && !directory.mkdir()) {
+			System.out.println("Error while creating DB file");
 		}
 	}
 	
@@ -43,7 +47,8 @@ public class DBManager {
 			// Make sure you close the db to shutdown the 
 			// database and avoid resource leaks.
 			try {
-				db.close();
+				if(db != null)
+					db.close();
 			} catch (IOException e) {
 
 				e.printStackTrace();

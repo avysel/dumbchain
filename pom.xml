@@ -134,20 +134,27 @@
 					<configLocation>${basedir}/src/main/resources/checkstyle.xml</configLocation>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId> 
-				<version>1.0.0</version> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<threshold>Low</threshold>
+					<effort>Default</effort>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.9.0</version>
-				<configuration>
-					<linkXRef>true</linkXRef>
-					<sourceEncoding>UTF-8</sourceEncoding>
-					<minimumTokens>100</minimumTokens>
-					<targetJdk>1.8</targetJdk>
-				</configuration>
+				<!-- <reportSets> <reportSet> <reports> <report>pmd</report> </reports> 
+					</reportSet> </reportSets> <configuration> <linkXRef>true</linkXRef> <sourceEncoding>UTF-8</sourceEncoding> 
+					<minimumTokens>100</minimumTokens> <targetJdk>1.8</targetJdk> </configuration> -->
 				<!-- <executions> <execution> <phase>compile</phase> <goals> <goal>check</goal> 
 					<goal>cpd-check</goal> </goals> </execution> </executions> -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</reporting>

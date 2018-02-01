@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -112,7 +113,7 @@ public class Block {
 		hashData.append(this.getDifficulty());
 		hashData.append(this.getTimestamp());
 		hashData.append(JsonMapper.dataListToJson(this.getDataList()));
-		return hashData.toString().getBytes();
+		return hashData.toString().getBytes(BlockchainParameters.DEFAULT_CHARSET);
 	}
 	
 	@JsonIgnore
@@ -149,11 +150,14 @@ public class Block {
 		return builder.toString();
 	}
 	
-	public boolean equals(Block otherBlock) {
-		return  this.getHash().equals(otherBlock.getHash())
-				&& this.getIndex() == otherBlock.getIndex()
-				&& this.getTimestamp() == otherBlock.getTimestamp()
-				&& this.getMerkleRoot().equals(otherBlock.getMerkleRoot()
+	public boolean equals(Object otherBlock) {
+		
+		if(!(otherBlock instanceof Block)) return false;
+		
+		return  this.getHash().equals(((Block)otherBlock).getHash())
+				&& this.getIndex() == ((Block)otherBlock).getIndex()
+				&& this.getTimestamp() == ((Block)otherBlock).getTimestamp()
+				&& this.getMerkleRoot().equals(((Block)otherBlock).getMerkleRoot()
 				);
 	}
 	

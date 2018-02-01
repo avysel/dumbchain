@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.PeerManager;
@@ -59,8 +60,8 @@ public class PeerExplorer {
 					
 					// create and send packet // TODO listAllBroadcastAddresses
 					DatagramPacket packet = new DatagramPacket(
-							data.getBytes()
-							, data.getBytes().length
+							data.getBytes(BlockchainParameters.DEFAULT_CHARSET)
+							, data.getBytes(BlockchainParameters.DEFAULT_CHARSET).length
 							, addr
 							, port
 							);

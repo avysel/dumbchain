@@ -94,10 +94,10 @@ public class Miner {
 	 */
 	public Block mine() {
 		Block block = new Block();
-		List<ISingleData> dataList = new ArrayList<ISingleData>();
-
+		
 		// pick new dataset, blocking when pending data is empty
-		dataList = dataPool.pickData(MAX_DATA_IN_BLOCK);
+		List<ISingleData> dataList = dataPool.pickData(MAX_DATA_IN_BLOCK);
+
 		block.addAllData(dataList);	
 		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
 		

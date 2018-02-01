@@ -77,10 +77,6 @@ public class Peer {
 	public void setClient(Socket client) {
 		this.client = client;
 	}
-	@Override
-	public boolean equals(Object peer) {
-		return this.uid.equals(((Peer) peer).getUid());
-	}
 
 	@JsonIgnore
 	public long getLastAliveTimestamp() {
@@ -117,8 +113,9 @@ public class Peer {
 		return this.ip+":"+this.listeningPort;
 	}
 	
-	public boolean equals(Peer otherPeer) {
-		return this.uid.equals(otherPeer.getUid());
+	@Override
+	public boolean equals(Object otherPeer) {
+		return otherPeer != null && otherPeer instanceof Peer && this.uid.equals(((Peer)otherPeer).getUid());
 	}
 	
 	@Override

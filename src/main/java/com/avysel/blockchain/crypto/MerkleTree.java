@@ -2,6 +2,7 @@ package com.avysel.blockchain.crypto;
 
 import java.util.ArrayList;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.model.block.Block;
 
 public class MerkleTree {
@@ -42,7 +43,7 @@ public class MerkleTree {
 					String hash1 = hashes.get(i);
 					String hash2 = hashes.get(i+1);
 					String concatenatedHashes = hash1.concat(hash2);
-					String digest = HashTools.calculateHash(concatenatedHashes.getBytes());
+					String digest = HashTools.calculateHash(concatenatedHashes.getBytes(BlockchainParameters.DEFAULT_CHARSET));
 					tmpHashes.add(digest);
 				}
 

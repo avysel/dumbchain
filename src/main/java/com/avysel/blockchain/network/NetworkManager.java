@@ -39,12 +39,12 @@ public class NetworkManager {
 	private static int serverListeningPort = 0;
 	private static int broadcastPort = 45458;
 
-	private static List<String> receivedBulks;
+	private List<String> receivedBulks;
 
 	/**
 	 * Number of second from last contact with peer to consider it as still alive.
 	 */
-	public static long DEFAULT_PEER_STILL_ALIVE = 3600;
+	public final static long DEFAULT_PEER_STILL_ALIVE = 3600;
 
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;

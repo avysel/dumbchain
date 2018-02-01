@@ -76,7 +76,7 @@ public class PeerListener implements Runnable {
 				// wait for data
 				datagramSocket.receive(packet);
 				log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
-				log.debug(packet.getData().toString());
+				log.debug(new String(packet.getData()));
 
 				processPacket(packet);
 

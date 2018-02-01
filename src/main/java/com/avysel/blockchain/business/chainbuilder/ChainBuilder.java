@@ -33,7 +33,7 @@ public class ChainBuilder {
 		timeIndexedBlocks = new TreeMap<Long, Block>(new LongComparator());
 	}
 
-	private class LongComparator implements Comparator<Long> {
+	private static class LongComparator implements Comparator<Long> {
 		@Override
 		public int compare(Long o1, Long o2) {
 			return o1.compareTo(o2);
@@ -116,8 +116,6 @@ public class ChainBuilder {
 	private boolean checkChainEquality(ChainPart chain1, ChainPart chain2) {
 		
 		if (!(chain1 != null && chain2 != null)
-			||chain1 == null && chain2 != null 
-			|| chain1 != null && chain2 == null
 			|| chain1.size() != chain2.size())
 			return false;
 		

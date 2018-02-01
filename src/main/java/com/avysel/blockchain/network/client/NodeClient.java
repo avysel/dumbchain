@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
@@ -51,7 +52,7 @@ public class NodeClient {
 
 			// send data
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
-			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
+			bos.write(JsonMapper.bulkToJson(bulk).getBytes(BlockchainParameters.DEFAULT_CHARSET));
 			bos.flush();
 			bos.close();
 			clientSocket.close();

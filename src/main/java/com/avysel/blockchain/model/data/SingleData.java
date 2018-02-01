@@ -2,6 +2,7 @@ package com.avysel.blockchain.model.data;
 
 import java.util.UUID;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.crypto.HashTools;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,13 +19,14 @@ public class SingleData implements ISingleData {
 	public SingleData() {
 		super();
 		this.uuid = UUID.randomUUID().toString();
-		this.hash = HashTools.calculateHash((data+uuid).getBytes());
+		this.hash = HashTools.calculateHash((data+uuid).getBytes(BlockchainParameters.DEFAULT_CHARSET));
+		this.data = null;
 	}
 
 	public SingleData(String data) {
 		this.data = data;
 		this.uuid = UUID.randomUUID().toString();
-		this.hash = HashTools.calculateHash((data+uuid).getBytes());
+		this.hash = HashTools.calculateHash((data+uuid).getBytes(BlockchainParameters.DEFAULT_CHARSET));
 	}
 
 	public String getData() {

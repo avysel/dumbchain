@@ -1,6 +1,11 @@
 package com.avysel.blockchain.business;
 
+import java.nio.charset.Charset;
+
 public class BlockchainParameters {
+	
+	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+	
 	
 	public static final String SEPARATOR = "=";
 	public static final String ENABLED = "1";

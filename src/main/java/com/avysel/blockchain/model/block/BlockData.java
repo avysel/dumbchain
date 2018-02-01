@@ -12,6 +12,7 @@ import com.avysel.blockchain.model.data.SingleData;
  */
 public class BlockData {
 	
+	// data list if the block
 	private List<ISingleData> dataList;
 
 	public BlockData() {

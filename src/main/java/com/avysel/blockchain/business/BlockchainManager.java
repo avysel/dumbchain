@@ -17,10 +17,10 @@ public class BlockchainManager {
 	private static Logger log = Logger.getLogger(BlockchainManager.class);
 	
 	/**
-	 * Find a Block with a given index
-	 * @param chain the chain to explore
-	 * @param index the index to find
-	 * @return the Block with the given index
+	 * Find a Block with a given index.
+	 * @param chain the chain to explore.
+	 * @param index the index to find.
+	 * @return the Block with the given index.
 	 */
 	public static Block findBlockByIndex(ChainPart chain, long index) {
 	
@@ -32,10 +32,10 @@ public class BlockchainManager {
 	}
 	
 	/**
-	 * Find a Block with a given hash
-	 * @param chain the chain to explore
-	 * @param hash the hash
-	 * @return the Block with the given hash
+	 * Find a Block with a given hash.
+	 * @param chain the chain to explore.
+	 * @param hash the hash.
+	 * @return the Block with the given hash.
 	 */
 	public static Block findBlockByHash(ChainPart chain, String hash) {
 		
@@ -50,10 +50,10 @@ public class BlockchainManager {
 	}	
 	
 	/**
-	 * Find the Block that contains the data identified by given data unique identifier
-	 * @param chain the Chain to explore
-	 * @param dataHash the hash of targeted data
-	 * @return the Block that contains searched data
+	 * Find the Block that contains the data identified by given data unique identifier.
+	 * @param chain the Chain to explore.
+	 * @param dataHash the hash of targeted data.
+	 * @return the Block that contains searched data.
 	 */
 	public static Block findBlockByData(ChainPart chain, String dataHash) {
 		if(dataHash == null) return null;
@@ -71,9 +71,9 @@ public class BlockchainManager {
 	}
 	
 	/**
-	 * Perform integrity check for the Chain
-	 * @param chain the chain to check
-	 * @return true if Chain integrity is good
+	 * Perform integrity check for the Chain.
+	 * @param chain the chain to check.
+	 * @return true if Chain integrity is good.
 	 */
 	public static boolean checkChain(ChainPart chain) {
 		List<Block> blockList = chain.getBlockList();

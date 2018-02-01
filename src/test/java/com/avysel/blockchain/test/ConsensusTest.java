@@ -24,7 +24,7 @@ public class ConsensusTest {
 
 	@Test
 	public void init() {
-		for(int i = 1 ; i < 100 ; i++)
+		for(int i=1;i<100;i++)
 			try {
 				manager.addIncomingData(new SingleData("data"+i));
 			} catch (InterruptedException e) {
@@ -32,7 +32,7 @@ public class ConsensusTest {
 			}
 
 
-		for(int i = 100 ; i < 200 ; i++)
+		for(int i=100;i<200;i++)
 			try {
 				pool.addData(new SingleData("data"+i));
 			} catch (InterruptedException e) {
@@ -44,7 +44,7 @@ public class ConsensusTest {
 		Block incomingBlock = null;
 		long size = manager.getChain().size();
 		// add some valid blocks
-		for(int i = 0 ; i < 5 ; i++) {
+		for(int i=0;i<5;i++) {
 			incomingBlock = miner.mine();
 			manager.addIncomingBlock(incomingBlock);
 

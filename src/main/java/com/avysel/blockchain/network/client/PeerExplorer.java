@@ -53,7 +53,7 @@ public class PeerExplorer {
 			List<InetAddress> listAddresses = NetworkTool.listAllBroadcastAddresses();
 			
 			for(InetAddress addr : listAddresses) {
-				for(int i = 0 ; i < 10 ; i ++) {
+				for(int i = 0;i<10;i++) {
 
 					int port = NetworkManager.getBroadcastPort() + i;
 					

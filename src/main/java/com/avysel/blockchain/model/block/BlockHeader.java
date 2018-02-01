@@ -5,11 +5,23 @@ package com.avysel.blockchain.model.block;
  * It contains all its metadata, used to identify a Block and link it to other Blocks
  */
 public class BlockHeader {
+	
+	// the index of block in the chain
 	private long index;
+	
+	// the hash of block, computed according the proof of work or similar
 	private String hash;
+	
+	// the hash of previous block in chain
 	private String previousHash;
+	
+	// merkle root of block data
 	private String merkleRoot;
+	
+	// block creation timestamp
 	private long timestamp;
+	
+	// number of tries to get a suitable hash for this block
 	private long difficulty;
 	
 	public BlockHeader(String previousHash, String merkleRoot, long timestamp, long difficulty) {

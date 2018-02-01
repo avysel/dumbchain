@@ -61,12 +61,16 @@ public class BlockchainParameters {
 		help.append("Usage : ");
 		help.append("\n\n\tRegular use parameters : ");
 		help.append("\n\n\t -help displays this help menu.");
-		help.append("\n\n\t -mining=1 for a mining node. (default) \n\t -mining=0 for a not mining node.");
-		help.append("\n\n\t -canStartAlone=1 for a node that can start alone. (default) \n\t -canStartAlone=0 for a node that cannot start without other peer.");
-		help.append("\n\n\t -useNetwork=1 for a node that listen to network to catch new data. (default) \n\t -useNetwork=0 for a node that doesn't listen to network to catch new data. (mining is therefore disabled)");
+		help.append("\n\n\t -mining=1 for a mining node (default).")
+		.append("\n\t -mining=0 for a not mining node.");
+		help.append("\n\n\t -canStartAlone=1 for a node that can start alone (default).")
+		.append("\n\t -canStartAlone=0 for a node that cannot start without other peer.");
+		help.append("\n\n\t -useNetwork=1 for a node that listen to network to catch new data (default).")
+		.append("\n\t -useNetwork=0 for a node that doesn't listen to network to catch new data. (mining is therefore disabled)");
 		
 		help.append("\n\n\tDemo parameters : ");
-		help.append("\n\n\t -demoDataGenerator=1 for a demo data generator node. \n\t -demoDataGenerator=0 for a no demo data generator node. (default)");
+		help.append("\n\n\t -demoDataGenerator=1 for a demo data generator node.")
+		.append("\n\t -demoDataGenerator=0 for a no demo data generator node. (default)");
 		return help.toString();
 	}
 }

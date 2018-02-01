@@ -55,7 +55,7 @@ public class Blockchain {
 	private ChainCatchUpBuilder catchUpBuilder;
 
 	// is catch-up completed (true) or still in progress (false)
-	private boolean catchUpCompleted = false;
+	private boolean catchUpCompleted;
 
 	public Blockchain() {
 		init();
@@ -76,12 +76,13 @@ public class Blockchain {
 		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
-		this.consensusBuilder = new ChainConsensusBuilder(this);		
+		this.consensusBuilder = new ChainConsensusBuilder(this);
+		this.catchUpCompleted = false;
 	}
 
 	/**
 	 * Returns the unique ID of the current Blockchain node.
-	 * @return unique ID of this node
+	 * @return unique ID of this node.
 	 */
 	public String getNodeId() {
 		return nodeId;
@@ -92,7 +93,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Create the Chain and set a genesis Block
+	 * Create the Chain and set a genesis Block.
 	 */
 	private void createChain() {
 		chain = new Chain();
@@ -104,16 +105,16 @@ public class Blockchain {
 	}
 
 	/**
-	 * Returns if the current node can mine blocks
-	 * @return true if the node mines, false otherwise
+	 * Returns if the current node can mine blocks.
+	 * @return true if the node mines, false otherwise.
 	 */
 	public boolean isMiningNode() {
 		return params.isMiningNode();
 	}
 
 	/**
-	 * Start/stop miner
-	 * @param mining true to (re)start miner, false to stop miner
+	 * Start/stop miner.
+	 * @param mining true to (re)start miner, false to stop miner.
 	 */
 	public void setMining(boolean mining) {
 		if(this.isMiningNode() != mining) {
@@ -126,7 +127,7 @@ public class Blockchain {
 	}	
 
 	/**
-	 * Create the genesis Block and add it to the Chain
+	 * Create the genesis Block and add it to the Chain.
 	 */
 	private void createGenesis() {
 		Block genesis = new Genesis();
@@ -135,20 +136,19 @@ public class Blockchain {
 	}
 
 	/**
-	 * Gets the Block index of last Block linked at the end of the Chain
-	 * @return the last Block index
+	 * Gets the Block index of last Block linked at the end of the Chain.
+	 * @return the last Block index.
 	 */
 	public long getLastIndex() {
 		if(this.getChain().getLastBlock() != null) {
 			return this.getChain().getLastBlock().getIndex();
-		}
-		else {
+		} else {
 			return Genesis.GENESIS_INDEX;
 		}
 	}
 
 	/**
-	 * Display the Chain from last Block to Genesis Block
+	 * Display the Chain from last Block to Genesis Block.
 	 */
 	public void display() {
 		Block currentBlock = chain.getLastBlock();
@@ -160,15 +160,15 @@ public class Blockchain {
 	}
 
 	/**
-	 * Load existing Chain from database
+	 * Load existing Chain from database.
 	 */
 	public void loadChain() {
 
 	}
 
 	/**
-	 * Returns the data pool of current blockchain
-	 * @return the data pool
+	 * Returns the data pool of current blockchain.
+	 * @return the data pool.
 	 */
 	public DataPool getDataPool() {
 		return this.dataPool;
@@ -176,8 +176,8 @@ public class Blockchain {
 
 	/**
 	 * Add a new data, coming from network, to be included in a block in one of the next mining.
-	 * @param data the incoming data
-	 * @throws InterruptedException if synchronize error occurs
+	 * @param data the incoming data.
+	 * @throws InterruptedException if synchronize error occurs.
 	 */
 	public void addIncomingData(ISingleData data) throws InterruptedException {
 		dataPool.addData(data);
@@ -186,7 +186,7 @@ public class Blockchain {
 	/**
 	 * Add a new block to be linked at the end of the chain. 
 	 * A consensus calculation will be performed if the incoming block has a local competitor.
-	 * @param block the incoming block to add
+	 * @param block the incoming block to add.
 	 */
 	public void addIncomingBlock(Block block) {
 		if( ! catchUpCompleted ) return;
@@ -200,12 +200,12 @@ public class Blockchain {
 			incomingBlockAdded = false;
 			e.printStackTrace();
 		}
+		
 		if(incomingBlockAdded) {
 			log.debug("Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
 			log.debug(block);
 			log.debug("Chain : "+chain);
-		}
-		else {
+		} else {
 			log.info("An incoming block has been rejected : "+block);
 
 			if(rejectReason != null 
@@ -221,7 +221,7 @@ public class Blockchain {
 	/**
 	 * Add a block to the blockchain.
 	 * Link the new block to the existing chain and send this block to the network.
-	 * @param block the block to add
+	 * @param block the block to add.
 	 */
 	public void addBlock(Block block) {
 
@@ -238,8 +238,8 @@ public class Blockchain {
 
 	/**
 	 * Add a new data, created by current node, to the data pool, and send it to the newtork.
-	 * @param data the data to add
-	 * @throws InterruptedException if synchronization error occurs
+	 * @param data the data to add.
+	 * @throws InterruptedException if synchronization error occurs.
 	 */
 	public void addData(ISingleData data) throws InterruptedException {
 		log.debug("Add new data : "+data);
@@ -251,8 +251,8 @@ public class Blockchain {
 	 *  Add a subchain to the end of the current Blockchain.
 	 *  Use this method when a subchain is obtained with mining or by the network, and is to be appended to the Blockchain.
 	 *  The index of subchain's first Block must be current's chain last Block +1.
-	 * @param subChain the subchain to add
-	 * @throws ChainIntegrityException if integrity of subchain or final chain is not verified
+	 * @param subChain the subchain to add.
+	 * @throws ChainIntegrityException if integrity of subchain or final chain is not verified.
 	 */
 	public void addSubChain(ChainPart subChain) throws ChainIntegrityException {
 		this.getChain().addChainPart(subChain);
@@ -260,7 +260,7 @@ public class Blockchain {
 
 	/**
 	 * Remove from chain all blocks starting by startIndex (included). Data in blocks will be put back in data pool.
-	 * @param startIndex the index of first block to remove
+	 * @param startIndex the index of first block to remove.
 	 */
 	public void unlink(long startIndex) {
 		log.debug("Unlink from "+startIndex);
@@ -269,7 +269,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Starts the Blockchain (network listening and mining)
+	 * Starts the Blockchain (network listening and mining).
 	 */
 	public void start() {
 		log.info("Starting blockchain");
@@ -289,7 +289,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Stops the Blockchain (network listening and mining)
+	 * Stops the Blockchain (network listening and mining).
 	 */
 	public void stop() {
 		log.info("Stopping blockchain");
@@ -307,8 +307,8 @@ public class Blockchain {
 	}
 
 	/**
-	 * Catch up with existing chain
-	 * @param startIndex the index of first missing block
+	 * Catch up with existing chain.
+	 * @param startIndex the index of first missing block.
 	 */
 	public void catchUp(long startIndex) {
 		catchUpCompleted = false;
@@ -328,8 +328,7 @@ public class Blockchain {
 
 		if(catchUpBuilder.startCatchUp(startIndex)) {
 			consensusBuilder.setLastLinkedIndex(chain.getLastIndex());
-		}
-		else {
+		} else {
 			log.error("Catch-up failed.");
 		}
 
@@ -338,15 +337,15 @@ public class Blockchain {
 	}
 
 	/**
-	 * Add catch-up incomings blocks to catch-up builder
-	 * @param blocks the list of blocks to add to the current chain to catch-up
+	 * Add catch-up incomings blocks to catch-up builder.
+	 * @param blocks the list of blocks to add to the current chain to catch-up.
 	 */
 	public void addCatchUp(List<Block> blocks) {
 		catchUpBuilder.addPendingBlocks(blocks);
 	}
 
 	/**
-	 * Notify catch-up builder that current chain is empty
+	 * Notify catch-up builder that current chain is empty.
 	 */
 	public void emptyCatchUp() {
 		catchUpBuilder.emptyCatchUp();
@@ -361,9 +360,9 @@ public class Blockchain {
 	}
 
 	/**
-	 * Send catch-up data to a peer
-	 * @param peer the peer to send catch-up data to
-	 * @param startIndex the index of first block to catch up
+	 * Send catch-up data to a peer.
+	 * @param peer the peer to send catch-up data to.
+	 * @param startIndex the index of first block to catch up.
 	 */
 	public void sendCatchUp(Peer peer, long startIndex) {
 		ChainSender sender = new ChainSender(this);

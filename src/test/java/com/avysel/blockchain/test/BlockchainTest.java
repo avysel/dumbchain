@@ -16,7 +16,7 @@ public class BlockchainTest {
 		
 	/*	Blockchain manager = new Blockchain();
 		
-		for(int i = 1 ; i < 100 ; i++)
+		for(int i=1;i<100;i++)
 			try {
 				manager.addIncomingData(new SingleData("data"+i));
 			} catch (InterruptedException e) {

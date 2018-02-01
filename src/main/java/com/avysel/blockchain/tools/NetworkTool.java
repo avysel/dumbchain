@@ -20,7 +20,7 @@ public class NetworkTool {
 	}
 	
 	public static int getNextAvailablePort(int startPort, int maxTries) {
-		for(int p = startPort ; p < startPort + maxTries ; p++) {
+		for(int p = startPort;p < startPort + maxTries;p++) {
 			if(!isPortInUse(p)) {
 				return p;
 			}
@@ -65,13 +65,7 @@ public class NetworkTool {
 	 */
 	public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
 		List<InetAddress> broadcastList = new ArrayList<>();
-		try {
-			broadcastList.add(InetAddress.getByName("127.0.0.1"));
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
 		
-		/*
 		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 		while (interfaces.hasMoreElements()) {
 			NetworkInterface networkInterface = interfaces.nextElement();
@@ -84,7 +78,16 @@ public class NetworkTool {
 			.map(a -> a.getBroadcast())
 			.filter(Objects::nonNull)
 			.forEach(broadcastList::add);
-		}*/
+		}
+		
+		try {
+			broadcastList.clear();
+			String ip = "127"+"."+"0"+"."+"0"+"."+"1";
+			broadcastList.add(InetAddress.getByName(ip));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		
 		return broadcastList;
 	}
 }

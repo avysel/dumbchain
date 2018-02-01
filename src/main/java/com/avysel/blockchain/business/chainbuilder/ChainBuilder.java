@@ -56,7 +56,7 @@ public class ChainBuilder {
 		boolean indexHash = checkChainEquality(byIndex, byHash);
 		boolean timeHash = checkChainEquality(byTime, byHash);
 		
-		if( indexTime == indexHash == timeHash) {
+		if(indexTime == indexHash == timeHash) {
 			return byIndex;
 		}
 		
@@ -88,7 +88,7 @@ public class ChainBuilder {
 		}
 		// get the block with no parent
 		Block firstBlock = hashIndexedBlocks.entrySet().stream()
-				.filter( map -> getBlockByHash(map.getValue().getPreviousHash()) == null )
+				.filter(map -> getBlockByHash(map.getValue().getPreviousHash()) == null)
 				.findFirst().get().getValue();
 
 		chain.getBlockList().add(firstBlock);
@@ -121,8 +121,8 @@ public class ChainBuilder {
 			|| chain1.size() != chain2.size())
 			return false;
 		
-		for (int i = 0 ; i < chain1.size() ; i ++ ) {
-			if( ! chain1.getBlockList().get(i).equals(chain2.getBlockList().get(i)))
+		for (int i = 0;i < chain1.size();i++) {
+			if(!chain1.getBlockList().get(i).equals(chain2.getBlockList().get(i)))
 				return false;
 		}
 		

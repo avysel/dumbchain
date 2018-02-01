@@ -57,7 +57,7 @@ public class DataPool {
 
 	public List<ISingleData> getData(long quantity) {
 		List<ISingleData> result = new ArrayList<ISingleData>();
-		for(int i=0 ; i < quantity && !getDataPool().isEmpty() ; i++) {
+		for(int i=0;i < quantity && !getDataPool().isEmpty();i++) {
 			result.add(getDataPool().poll());
 		}
 		return result;
@@ -78,7 +78,7 @@ public class DataPool {
 
 		// if enough data, take it
 		if(quantity <= getDataPool().size()) {
-			for(int i=0 ; i < quantity ; i++) {
+			for(int i=0;i < quantity;i++) {
 				result.add(getDataPool().poll());
 			}
 		}

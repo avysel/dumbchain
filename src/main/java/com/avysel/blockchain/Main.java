@@ -28,7 +28,7 @@ public class Main {
 
 		BlockchainParameters params = new BlockchainParameters();
 		
-		for(int i = 0 ; i < args.length ; i ++) {
+		for(int i=0;i < args.length;i++) {
 			
 			String param = args[i];
 			String[] data = param.split(BlockchainParameters.SEPARATOR);
@@ -103,7 +103,7 @@ public class Main {
 	}
 
 /*	private static void initTestData(Blockchain blockchain) {
-		for(int i = 1 ; i < 100 ; i++) {
+		for(int i=1;i < 100;i++) {
 			try {
 				blockchain.addIncomingData(new SingleData("data"+i));
 			} catch (InterruptedException e) {

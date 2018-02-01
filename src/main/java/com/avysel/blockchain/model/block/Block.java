@@ -23,6 +23,10 @@ public class Block {
 		blockData = new BlockData();
 	}
 	
+	/**
+	 * Return if the block is the chain genesis
+	 * @return true if the block is the chain genesis, false otherwise
+	 */
 	@JsonIgnore
 	public boolean isGenesis() {
 		return false;

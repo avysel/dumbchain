@@ -119,7 +119,7 @@ public class ChainCatchUpBuilder {
 			Long[] indexes = (Long[]) pendingBlocks.keySet().toArray(new Long[pendingBlocks.keySet().size()]);
 			Arrays.sort(indexes);
 
-			for (int i = 0 ; i < indexes.length-1 ; i++) {
+			for (int i = 0;i < indexes.length-1;i++) {
 				if(indexes[i] != indexes[i+1] - 1) {
 					log.info("Cannot build chain, missing block."+indexes[i]+" -> "+indexes[i+1]);
 					return CatchUpResult.CATCH_UP_FAILED;
@@ -130,7 +130,7 @@ public class ChainCatchUpBuilder {
 
 			// link blocks for each index
 			List<Block> blocks = new LinkedList<Block>();
-			for (int i = 0 ; i < indexes.length ; i++) {
+			for (int i = 0;i < indexes.length;i++) {
 				blocks.add(pendingBlocks.get(indexes[i]).get(0));
 			}		
 

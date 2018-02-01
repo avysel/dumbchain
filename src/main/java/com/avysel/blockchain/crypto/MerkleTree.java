@@ -38,7 +38,7 @@ public class MerkleTree {
 
 				// concatenate and hash the hashes 2 at a time
 				ArrayList<String> tmpHashes = new ArrayList<String>();
-				for(int i = 0 ; i < hashes.size() ; i += 2) {
+				for(int i = 0;i < hashes.size();i+=2) {
 					String hash1 = hashes.get(i);
 					String hash2 = hashes.get(i+1);
 					String concatenatedHashes = hash1.concat(hash2);

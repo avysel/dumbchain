@@ -41,7 +41,7 @@ public class ChainSender {
 		}
 		else {
 			log.info("Send chain to "+peer);
-			for (int i = 0 ; i < blockchain.getChain().getLastIndex() ; i ++) {
+			for (int i = 0;i < blockchain.getChain().getLastIndex();i++) {
 				try {
 					CatchUpDataMessage message = new CatchUpDataMessage();
 					

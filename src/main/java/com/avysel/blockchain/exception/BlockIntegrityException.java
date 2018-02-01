@@ -1,7 +1,7 @@
 package com.avysel.blockchain.exception;
 
 /**
- * Thrown when Block integrity is not respected
+ * Thrown when Block integrity is not respected.
  */
 public class BlockIntegrityException extends Exception {
 

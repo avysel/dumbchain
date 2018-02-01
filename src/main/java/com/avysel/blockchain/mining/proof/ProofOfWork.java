@@ -2,6 +2,9 @@ package com.avysel.blockchain.mining.proof;
 
 import com.avysel.blockchain.model.block.Block;
 
+/**
+ * Proof of stake condition to validate a block.
+ */
 public class ProofOfWork implements IProof {
 
 	@Override
@@ -10,7 +13,7 @@ public class ProofOfWork implements IProof {
 		String hash = block.getHash();
 		long difficulty = block.getDifficulty();
 
-		return hash.startsWith("000000") || difficulty > 1000000 && hash.startsWith("0000") ;
+		return hash.startsWith("000000") || difficulty > 1000000 && hash.startsWith("0000");
 	}
 
 }

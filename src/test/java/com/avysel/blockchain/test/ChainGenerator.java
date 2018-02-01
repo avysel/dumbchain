@@ -4,9 +4,9 @@ import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.SingleData;
 
-public class ChainGenerator {
+public final class ChainGenerator {
 	
-	public ChainGenerator() {}
+	private ChainGenerator() {}
 	
 	public static ChainPart createChain(int nbBlocks) {
 		ChainPart chain = new ChainPart();

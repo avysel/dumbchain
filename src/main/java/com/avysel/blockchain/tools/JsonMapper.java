@@ -21,11 +21,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-public class JsonMapper {
+public final class JsonMapper {
 
 	private static Logger log = Logger.getLogger(JsonMapper.class);
 
-	public JsonMapper() {}
+	private JsonMapper() {}
 	
 	public static String genericToJson(Object o) {
 		String json = new String();

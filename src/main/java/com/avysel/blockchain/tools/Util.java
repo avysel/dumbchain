@@ -5,9 +5,9 @@ import com.avysel.blockchain.model.block.Block;
 /**
  * Provides some useful methods.
  */
-public class Util {
+public final class Util {
 	
-	public Util() {}
+	private Util() {}
 	
 	/**
 	 * Get a bytes array from a string.

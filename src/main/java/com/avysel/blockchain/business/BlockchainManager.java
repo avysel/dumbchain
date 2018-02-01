@@ -12,9 +12,11 @@ import com.avysel.blockchain.model.data.ISingleData;
 /**
  * Provides some operation on the Blockchain, such as finding a Block or checking Chain integrity.
  */
-public class BlockchainManager {
+public final class BlockchainManager {
 	
 	private static Logger log = Logger.getLogger(BlockchainManager.class);
+	
+	private BlockchainManager() {}
 	
 	/**
 	 * Find a Block with a given index.

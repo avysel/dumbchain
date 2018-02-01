@@ -20,7 +20,7 @@ public class NetworkTool {
 	}
 	
 	public static int getNextAvailablePort(int startPort, int maxTries) {
-		for(int p = startPort;p < startPort + maxTries;p++) {
+		for(int p = startPort; p < startPort + maxTries; p++) {
 			if(!isPortInUse(p)) {
 				return p;
 			}
@@ -35,23 +35,14 @@ public class NetworkTool {
 			s.close();
 			return false;
 		}
-		catch(Exception e) {
+		catch(SocketException e) {
 			return true;
 		}
 	}
 	
 	public static String getLocalIP() {
 		try {
-			return InetAddress.getLocalHost().getHostAddress() ;
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static String getBroadcastIP() {
-		try {
-			return InetAddress.getLocalHost().getHostAddress() ;
+			return InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			return null;

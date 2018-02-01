@@ -14,26 +14,26 @@ public class DBTest {
 	private static Block testBlock = new Block();
 	private static SingleData testData = new SingleData();
 	
-	private final static String testHash = "hhhhh";
-	private final static long testDifficulty = 456;
-	private final static long testIndex = 5;
-	private final static String testMerkleRoot = "4545465dddd";
-	private final static String testPreviousHash = "54f56ds4f5qf";
-	private final static long testTimestamp = System.currentTimeMillis();
-	private final static String testDataData = "Test Data";
-	private final static String testDataHash = UUID.randomUUID().toString();
+	private final static String TestHash = "hhhhh";
+	private final static long TestDifficulty = 456;
+	private final static long TestIndex = 5;
+	private final static String TestMerkleRoot = "4545465dddd";
+	private final static String TestPreviousHash = "54f56ds4f5qf";
+	private final static long TestTimestamp = System.currentTimeMillis();
+	private final static String TestDataData = "Test Data";
+	private final static String TestDataHash = UUID.randomUUID().toString();
 	
 	@BeforeClass
 	public static void init() {
-		testBlock.setHash(DBTest.testHash);
-		testBlock.setDifficulty(DBTest.testDifficulty);
-		testBlock.setIndex(DBTest.testIndex);
-		testBlock.setMerkleRoot(DBTest.testMerkleRoot);
-		testBlock.setPreviousHash(DBTest.testPreviousHash);
-		testBlock.setTimestamp(DBTest.testTimestamp);
+		testBlock.setHash(DBTest.TestHash);
+		testBlock.setDifficulty(DBTest.TestDifficulty);
+		testBlock.setIndex(DBTest.TestIndex);
+		testBlock.setMerkleRoot(DBTest.TestMerkleRoot);
+		testBlock.setPreviousHash(DBTest.TestPreviousHash);
+		testBlock.setTimestamp(DBTest.TestTimestamp);
 		
-		testData.setData(DBTest.testDataData);
-		testData.setHash(DBTest.testDataHash);
+		testData.setData(DBTest.TestDataData);
+		testData.setHash(DBTest.TestDataHash);
 	}
 	
 	@Test

@@ -5,10 +5,13 @@ import com.avysel.blockchain.model.chain.ChainPart;
 import com.avysel.blockchain.model.data.SingleData;
 
 public class ChainGenerator {
+	
+	public ChainGenerator() {}
+	
 	public static ChainPart createChain(int nbBlocks) {
 		ChainPart chain = new ChainPart();
 		
-		for (int i=1;i<=nbBlocks;i++ ) {
+		for (int i=1; i<=nbBlocks; i++) {
 			Block b = new Block();
 			b.setHash("hash"+i);
 			b.setIndex(i);

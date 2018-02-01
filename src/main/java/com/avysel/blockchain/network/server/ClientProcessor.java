@@ -12,7 +12,7 @@ import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 
 /**
- * This class is used to handle a NodeClient connection from another Blockchain instance on the network to the local NodeServer
+ * This class is used to handle a NodeClient connection from another Blockchain instance on the network to the local NodeServer.
  *
  */
 public class ClientProcessor implements Runnable {
@@ -20,8 +20,8 @@ public class ClientProcessor implements Runnable {
 	private static Logger log = Logger.getLogger(ClientProcessor.class);
 
 	private Socket socket;
-	private BufferedInputStream reader = null;
-	private NetworkManager network = null;
+	private BufferedInputStream reader;
+	private NetworkManager network;
 
 	public ClientProcessor(Socket clientSocket, NetworkManager network){
 		socket = clientSocket;
@@ -29,7 +29,7 @@ public class ClientProcessor implements Runnable {
 	}	
 
 	/**
-	 * Creates a thread that process a client connection to the current node's socket
+	 * Creates a thread that process a client connection to the current node's socket.
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
@@ -84,14 +84,12 @@ public class ClientProcessor implements Runnable {
 		byte[] b = new byte[4096];
 		try {
 			stream = reader.read(b);
-			if(stream != -1 ) {
+			if(stream != -1) {
 				data = new String(b, 0, stream);
 			}
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		catch(StringIndexOutOfBoundsException e) {
+		} catch (StringIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
 

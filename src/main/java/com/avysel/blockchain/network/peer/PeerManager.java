@@ -31,7 +31,7 @@ public class PeerManager {
 	}
 
 	/**
-	 * Returns the Peer representing the current node
+	 * Returns the Peer representing the current node.
 	 * @return the local Peer
 	 */
 	public Peer getLocalPeer() {
@@ -39,7 +39,7 @@ public class PeerManager {
 	}
 
 	/**
-	 * Sets the Peer representing the current node
+	 * Sets the Peer representing the current node.
 	 * @param localPeer the current node's Peer representation
 	 */
 	public void setLocalPeer(Peer localPeer) {
@@ -47,7 +47,7 @@ public class PeerManager {
 	}
 
 	/**
-	 * Returns the list of peers to whom the local node is connected 
+	 * Returns the list of peers to whom the local node is connected.
 	 * @return the list of connected peers
 	 */
 	public List<Peer> getPeersList() {
@@ -57,7 +57,8 @@ public class PeerManager {
 	}
 
 	/**
-	 * Starts the peer manager. Broadcast a message to the network to notify presence of local node on the network. Then start listening to handle any peer's request.
+	 * Starts the peer manager. Broadcast a message to the network to notify presence of local node on the network. 
+	 * Then start listening to handle any peer's request.
 	 */
 	public void start() {
 		peerExplorer.hello();
@@ -80,8 +81,7 @@ public class PeerManager {
 			if(! isLocalPeer(peer) && ! peerExists(peer)) {
 				peersList.add(peer);
 				log.info("New peer added : "+peer);
-			}
-			else {
+			} else {
 				log.debug("Skip adding peer : "+peer);
 			}
 		}
@@ -120,7 +120,7 @@ public class PeerManager {
 	}
 
 	/**
-	 * Find a peer by id
+	 * Find a peer by id.
 	 * @param peerId the if of wanted peer
 	 * @return the peer
 	 */
@@ -145,8 +145,7 @@ public class PeerManager {
 			if(peer != null) {
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
 				log.debug("Peer "+peer.toString()+" is marked as still alive");
-			}
-			else {
+			} else {
 				log.warn("Peer "+peerId+" is not found to be marked alive");
 			}
 		}

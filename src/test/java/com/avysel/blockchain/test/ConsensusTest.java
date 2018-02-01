@@ -24,7 +24,7 @@ public class ConsensusTest {
 
 	@Test
 	public void init() {
-		for(int i=1;i<100;i++)
+		for(int i=1; i<100; i++)
 			try {
 				manager.addIncomingData(new SingleData("data"+i));
 			} catch (InterruptedException e) {
@@ -32,7 +32,7 @@ public class ConsensusTest {
 			}
 
 
-		for(int i=100;i<200;i++)
+		for(int i=100; i<200; i++)
 			try {
 				pool.addData(new SingleData("data"+i));
 			} catch (InterruptedException e) {
@@ -44,24 +44,24 @@ public class ConsensusTest {
 		Block incomingBlock = null;
 		long size = manager.getChain().size();
 		// add some valid blocks
-		for(int i=0;i<5;i++) {
+		for(int i=0; i<5; i++) {
 			incomingBlock = miner.mine();
 			manager.addIncomingBlock(incomingBlock);
 
-			assertEquals(++size , manager.getChain().size());		
+			assertEquals(++size, manager.getChain().size());		
 		}
 
 		size = manager.getChain().size();
 		// add twice the same block, should be rejected
 		manager.addIncomingBlock(incomingBlock);
-		assertEquals(size , manager.getChain().size());			
+		assertEquals(size, manager.getChain().size());			
 
 		size = manager.getChain().size();
 		// add a block with wrong hash, should be rejected
 		Block incomingBlock2 = miner.mine();
 		incomingBlock2.setHash("45454");
 		manager.addIncomingBlock(incomingBlock2);
-		assertEquals(size , manager.getChain().size());		
+		assertEquals(size, manager.getChain().size());		
 
 		size = manager.getChain().size();
 		// add a block with wrong proof of work, should be rejected
@@ -69,7 +69,7 @@ public class ConsensusTest {
 		block3.addData(new SingleData("data00"));
 		block3.setHash(HashTools.calculateBlockHash(block3));
 		manager.addIncomingBlock(block3);
-		assertEquals(size , manager.getChain().size());		
+		assertEquals(size, manager.getChain().size());		
 
 		manager.display();	
 		assertEquals(true, BlockchainManager.checkChain(manager.getChain()));

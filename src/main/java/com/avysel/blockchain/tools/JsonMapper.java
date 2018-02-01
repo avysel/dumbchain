@@ -25,6 +25,8 @@ public class JsonMapper {
 
 	private static Logger log = Logger.getLogger(JsonMapper.class);
 
+	public JsonMapper() {}
+	
 	public static String genericToJson(Object o) {
 		String json = new String();
 

@@ -16,7 +16,7 @@ public class NodeServer implements Runnable {
 
 	private ServerSocket serverSocket;
 	private boolean running = true;
-	private NetworkManager network = null;
+	private NetworkManager network;
 
 	public NodeServer(NetworkManager network) {
 		this.network = network;
@@ -28,7 +28,7 @@ public class NodeServer implements Runnable {
 	public void start() {
 		try {
 			// create server socket on a random available port
-			serverSocket = new ServerSocket(0/*, 100 , InetAddress.getByName(NetworkTool.getLocalIP())*/ );
+			serverSocket = new ServerSocket(0/*, 100 , InetAddress.getByName(NetworkTool.getLocalIP())*/);
 
 			// store chosen port in current network configuration
 			NetworkManager.setServerListeningPort(serverSocket.getLocalPort());
@@ -36,8 +36,7 @@ public class NodeServer implements Runnable {
 			// creates a Peer that represent the current node, it contains uid, ip and listening port
 			network.setLocalPeer(Peer.initFromLocal());
 			log.info("Create node server for "+NetworkTool.getLocalIP()+":"+NetworkManager.getServerListeningPort());
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Thread t = new Thread(this);
@@ -45,7 +44,7 @@ public class NodeServer implements Runnable {
 	}
 
 	/**
-	 * Start listening network
+	 * Start listening network.
 	 */
 	public void run() {
 

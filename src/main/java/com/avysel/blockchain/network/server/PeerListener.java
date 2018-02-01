@@ -17,7 +17,7 @@ import com.avysel.blockchain.tools.JsonMapper;
 import com.avysel.blockchain.tools.NetworkTool;
 
 /**
- * Listen to the network to catch new peers connection requests, then add new peers to NetworkManager's peers collection
+ * Listen to the network to catch new peers connection requests, then add new peers to NetworkManager's peers collection.
  */
 public class PeerListener implements Runnable {
 
@@ -93,7 +93,7 @@ public class PeerListener implements Runnable {
 
 
 	/**
-	 * Process an incoming datagram packet got from a peer
+	 * Process an incoming datagram packet got from a peer.
 	 * @param packet the packet to process
 	 */
 	private void processPacket(DatagramPacket packet) {
@@ -114,7 +114,7 @@ public class PeerListener implements Runnable {
 				log.info("bulk id :"+bulk.getUid());
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
-				peer.setIp(packet.getAddress().toString().replace("/",""));
+				peer.setIp(packet.getAddress().toString().replace("/", ""));
 				peerManager.addPeer(peer);
 				answerBack(peer);
 				break;			

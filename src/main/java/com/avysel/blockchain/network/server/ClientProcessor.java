@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
@@ -85,7 +86,7 @@ public class ClientProcessor implements Runnable {
 		try {
 			stream = reader.read(b);
 			if(stream != -1) {
-				data = new String(b, 0, stream);
+				data = new String(b, 0, stream, BlockchainParameters.DEFAULT_CHARSET);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -9,6 +9,7 @@ import java.net.SocketException;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.peer.Peer;
@@ -76,7 +77,7 @@ public class PeerListener implements Runnable {
 				// wait for data
 				datagramSocket.receive(packet);
 				log.debug("Get a packet from "+packet.getAddress()+":"+packet.getPort()+". Is it a peer ?");
-				log.debug(new String(packet.getData()));
+				log.debug(new String(packet.getData(), BlockchainParameters.DEFAULT_CHARSET));
 
 				processPacket(packet);
 
@@ -99,7 +100,7 @@ public class PeerListener implements Runnable {
 	private void processPacket(DatagramPacket packet) {
 		if(packet == null || packet.getData() == null) return;
 
-		NetworkDataBulk bulk = JsonMapper.jsonToBulk(new String(packet.getData()));
+		NetworkDataBulk bulk = JsonMapper.jsonToBulk(new String(packet.getData(), BlockchainParameters.DEFAULT_CHARSET));
 
 		if(bulk != null) {
 			
@@ -119,7 +120,7 @@ public class PeerListener implements Runnable {
 				answerBack(peer);
 				break;			
 			default:
-				log.warn("Unknown bulk : "+new String(packet.getData()));
+				log.warn("Unknown bulk : "+new String(packet.getData(), BlockchainParameters.DEFAULT_CHARSET));
 				break;
 			}
 		}
@@ -150,7 +151,7 @@ public class PeerListener implements Runnable {
 			clientSocket = new Socket(peer.getIp(), peer.getListeningPort());
 			log.info("Send back answer to peer's hello.");
 			BufferedOutputStream bos = new BufferedOutputStream(clientSocket.getOutputStream());
-			bos.write(JsonMapper.bulkToJson(bulk).getBytes());
+			bos.write(JsonMapper.bulkToJson(bulk).getBytes(BlockchainParameters.DEFAULT_CHARSET));
 			bos.flush();	
 			bos.close();
 			clientSocket.close();

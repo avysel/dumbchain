@@ -1,5 +1,6 @@
 package com.avysel.blockchain.business.chainbuilder;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,10 @@ public class ChainBuilder {
 		timeIndexedBlocks = new TreeMap<Long, Block>(new LongComparator());
 	}
 
-	private static class LongComparator implements Comparator<Long> {
+	private static class LongComparator implements Comparator<Long>, Serializable {
+
+		private static final long serialVersionUID = 6814680580996967443L;
+
 		@Override
 		public int compare(Long o1, Long o2) {
 			return o1.compareTo(o2);

@@ -3,6 +3,7 @@ package com.avysel.blockchain.model.block;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.model.data.ISingleData;
@@ -150,17 +151,6 @@ public class Block {
 		return builder.toString();
 	}
 	
-	public boolean equals(Object otherBlock) {
-		
-		if(!(otherBlock instanceof Block)) return false;
-		
-		return  this.getHash().equals(((Block)otherBlock).getHash())
-				&& this.getIndex() == ((Block)otherBlock).getIndex()
-				&& this.getTimestamp() == ((Block)otherBlock).getTimestamp()
-				&& this.getMerkleRoot().equals(((Block)otherBlock).getMerkleRoot()
-				);
-	}
-	
 	/**
 	 * Returns the quality of a block. 
 	 * Quality is used when two blocks are in competition to be added to the chain, the one with higher quality will be added, the other one will be rejected.
@@ -187,4 +177,20 @@ public class Block {
 		return list;
 	}	
 	
+	@Override
+	public boolean equals(Object otherBlock) {
+		
+		if(!(otherBlock instanceof Block)) return false;
+		
+		return  this.getHash().equals(((Block)otherBlock).getHash())
+				&& this.getIndex() == ((Block)otherBlock).getIndex()
+				&& this.getTimestamp() == ((Block)otherBlock).getTimestamp()
+				&& this.getMerkleRoot().equals(((Block)otherBlock).getMerkleRoot()
+				);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this);
+	}
 }

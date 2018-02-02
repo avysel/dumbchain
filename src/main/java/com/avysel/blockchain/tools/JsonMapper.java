@@ -28,7 +28,7 @@ public final class JsonMapper {
 	private JsonMapper() {}
 	
 	public static String genericToJson(Object o) {
-		String json = new String();
+		String json = "";
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
@@ -152,7 +152,7 @@ public final class JsonMapper {
 	}
 
 	public static String dataListToJson(List<ISingleData> dataList) {
-		String json = new String();
+		String json = "";
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);

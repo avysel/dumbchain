@@ -46,8 +46,8 @@ public class RandomDataGenerator implements Runnable {
 	public void run() {
 		while(isRunning) {
 			
-			SingleData data = new SingleData();
-			data.setData("data"+System.currentTimeMillis());
+			SingleData data = new SingleData("data"+System.currentTimeMillis());
+
 			log.debug("New random data created : "+data);
 			try {
 				blockchain.addData(data);

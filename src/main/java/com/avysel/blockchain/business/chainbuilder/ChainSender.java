@@ -18,8 +18,6 @@ public class ChainSender {
 
 	private static Logger log = Logger.getLogger(ChainSender.class);
 
-	private static final int MAX_BLOCKS_PER_BULK = 5;
-
 	private Blockchain blockchain;
 
 	public ChainSender(Blockchain blockchain) {

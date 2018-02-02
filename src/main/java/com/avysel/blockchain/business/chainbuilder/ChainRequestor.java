@@ -16,6 +16,9 @@ public class ChainRequestor {
 
 	private static Logger log = Logger.getLogger(ChainRequestor.class);
 	
+	/**
+	 * The blockchain
+	 */
 	private Blockchain blockchain;
 
 	/**

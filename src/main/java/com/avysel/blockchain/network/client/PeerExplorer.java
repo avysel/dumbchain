@@ -24,9 +24,11 @@ public class PeerExplorer {
 
 	private static Logger log = Logger.getLogger(PeerExplorer.class);
 
+	/**
+	 * The peer manager.
+	 */
 	private PeerManager peerManager;
 	
-
 	public PeerExplorer(PeerManager manager) {
 		super();
 		this.peerManager = manager;

@@ -16,8 +16,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class Block {
 	
-	protected BlockHeader blockHeader;
-	protected BlockData blockData;
+	private BlockHeader blockHeader;
+	private BlockData blockData;
 	
 	public Block() {
 		super();

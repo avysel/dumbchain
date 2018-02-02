@@ -15,6 +15,8 @@ import com.avysel.blockchain.network.peer.Peer;
 
 public class NetworkTool {
 
+	private NetworkTool() {}
+	
 	public static void send(String data, Peer to) {
 		// TODO use
 	}

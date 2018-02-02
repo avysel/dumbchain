@@ -8,6 +8,7 @@ import java.util.TimeZone;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.crypto.HashTools;
@@ -38,10 +39,7 @@ public class Miner {
 	// mining is pending or running ?
 	private boolean pauseMining;
 
-	/**
-	 * Maximum number of data to include in a block
-	 */
-	private static final int MAX_DATA_IN_BLOCK = 100;
+
 
 	/**
 	 * Creates the Miner
@@ -95,7 +93,7 @@ public class Miner {
 		Block block = new Block();
 		
 		// pick new dataset, blocking when pending data is empty
-		List<ISingleData> dataList = dataPool.pickData(MAX_DATA_IN_BLOCK);
+		List<ISingleData> dataList = dataPool.pickData(BlockchainParameters.MAX_DATA_IN_BLOCK);
 
 		block.addAllData(dataList);	
 		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));

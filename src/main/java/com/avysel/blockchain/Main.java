@@ -9,6 +9,8 @@ public class Main {
 
 	private static Logger log = Logger.getLogger(Main.class);
 	
+	private Main() {}
+	
 	/**
 	 * Starts the blockchain.
 	 * @param args parameters.

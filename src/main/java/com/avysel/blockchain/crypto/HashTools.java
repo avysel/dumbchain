@@ -8,7 +8,7 @@ import com.avysel.blockchain.business.block.Block;
 public class HashTools {
 	
 	/**
-	 * Calculate the hash for a Block
+	 * Calculate the hash for a Block.
 	 * @param block the Block to hash
 	 * @return the SHA-256 hash for the given Block
 	 */
@@ -20,7 +20,7 @@ public class HashTools {
 	}
 	
 	/**
-	 * Calculate the hash for a text data
+	 * Calculate the hash for a text data.
 	 * @param text the data to hash
 	 * @return the SHA-256 hash for the given text
 	 */
@@ -51,7 +51,7 @@ public class HashTools {
 	}
 	
 	/**
-	 * Check data integrity according to checksum hash
+	 * Check data integrity according to checksum hash.
 	 * @param hash the checksum of data
 	 * @param data the data to check
 	 * @return true if integrity of data is ok

@@ -14,14 +14,14 @@ public class DBTest {
 	private static Block testBlock = new Block();
 	private static SingleData testData = new SingleData("");
 	
-	private final static String TEST_HASH = "hhhhh";
-	private final static long TEST_DIFFICULTY = 456;
-	private final static long TEST_INDEX = 5;
-	private final static String TEST_MERKLE_ROOT = "4545465dddd";
-	private final static String TEST_PREVIOUS_HASH = "54f56ds4f5qf";
-	private final static long TEST_TIMESTAMP = System.currentTimeMillis();
-	private final static String TEST_DATA_DATA = "Test Data";
-	private final static String TEST_DATA_HASH = UUID.randomUUID().toString();
+	private static final String TEST_HASH = "hhhhh";
+	private static final long TEST_DIFFICULTY = 456;
+	private static final long TEST_INDEX = 5;
+	private static final String TEST_MERKLE_ROOT = "4545465dddd";
+	private static final String TEST_PREVIOUS_HASH = "54f56ds4f5qf";
+	private static final long TEST_TIMESTAMP = System.currentTimeMillis();
+	private static final String TEST_DATA_DATA = "Test Data";
+	private static final String TEST_DATA_HASH = UUID.randomUUID().toString();
 	
 	@BeforeClass
 	public static void init() {

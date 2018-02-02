@@ -12,9 +12,19 @@ public class RandomDataGenerator implements Runnable {
 
 	private static Logger log = Logger.getLogger(RandomDataGenerator.class);
 	
+	/**
+	 * Data generator is running ?
+	 */
 	private boolean isRunning;
+	
+	/**
+	 * The blockchain to be fed wirt generated data. 
+	 */
 	private Blockchain blockchain;
 
+	/**
+	 * Sleeping time bewteen two data creation.
+	 */
 	private static final int TIME_BETWEEN_TWO_DATA = 500;
 	
 	public RandomDataGenerator(Blockchain blockchain) {
@@ -22,7 +32,7 @@ public class RandomDataGenerator implements Runnable {
 	}
 
 	/**
-	 * Start random data generation
+	 * Start random data generation.
 	 */
 	public void start() {
 		log.info("Start Random data generator");
@@ -32,16 +42,13 @@ public class RandomDataGenerator implements Runnable {
 	}
 	
 	/**
-	 * Stop random data generation
+	 * Stop random data generation.
 	 */
 	public void stop() {
 		log.info("Stop Random data generator");
 		this.isRunning = false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public void run() {
 		while(isRunning) {
@@ -60,7 +67,7 @@ public class RandomDataGenerator implements Runnable {
 	}
 	
 	/**
-	 * Pause current thread
+	 * Pause current thread.
 	 * @param time pause duration in milliseconds
 	 */
 	private void wait(int time) {

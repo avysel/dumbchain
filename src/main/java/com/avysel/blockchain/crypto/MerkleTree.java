@@ -5,21 +5,33 @@ import java.util.ArrayList;
 import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.business.block.Block;
 
+/**
+ * Merkle tree tools.
+ */
 public class MerkleTree {
 
 
-	public boolean checkTree(/* ? */) {
-		return true;
+	/**
+	 * Check block merkle root.
+	 * @param block the block to be checked.
+	 * @return true if integrity of data is checked, false otherwise.
+	 */
+	public boolean checkBlockMerkleRoot(Block block) {
+		return true; // TODO
 	}
 
 
-
+	/**
+	 * Calculate the merkle root for a block, based on block's data.
+	 * @param block the block
+	 * @return the block's merkle tree
+	 */
 	public static String computeMerkleRoot(Block block) {
 		return computeMerkleRoot(block.getDataHashesList());
 	}
 
 	/**
-	 * Compute the merkle root for a list of hashes
+	 * Compute the merkle root for a list of hashes.
 	 * @param hashes the list of hashes to "merkleize"
 	 * @return the merkle hash for the list of hashes
 	 */
@@ -39,7 +51,7 @@ public class MerkleTree {
 
 				// concatenate and hash the hashes 2 at a time
 				ArrayList<String> tmpHashes = new ArrayList<String>();
-				for(int i = 0;i < hashes.size();i+=2) {
+				for(int i=0; i < hashes.size(); i+=2) {
 					String hash1 = hashes.get(i);
 					String hash2 = hashes.get(i+1);
 					String concatenatedHashes = hash1.concat(hash2);
@@ -49,8 +61,7 @@ public class MerkleTree {
 
 				// the list of new hashes is saved to be processed again
 				hashes = tmpHashes;
-			}
-			catch(NullPointerException e) {
+			} catch(NullPointerException e) {
 				e.printStackTrace();
 			}
 		}

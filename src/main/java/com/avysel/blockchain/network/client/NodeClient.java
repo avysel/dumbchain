@@ -39,8 +39,7 @@ public class NodeClient {
 	public void sendData(NetworkDataBulk bulk, Peer peer) {
 		if(networkManager.getLocalPeer() != null) {
 			bulk.setSender(networkManager.getLocalPeer());
-		}
-		else {
+		} else {
 			log.error("No local peer, unable to set sender data");
 		}
 
@@ -56,16 +55,13 @@ public class NodeClient {
 			bos.flush();
 			bos.close();
 			clientSocket.close();
-		}
-		catch(ConnectException e) {
+		} catch(ConnectException e) {
 			log.error("Connection failed, connection error, remove peer "+peer);
 			networkManager.removePeer(peer);
-		}
-		catch(SocketException e) {
+		} catch(SocketException e) {
 			log.error("Connection failed, socket error, remove peer "+peer);
 			networkManager.removePeer(peer);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			log.error("Data not send to "+peer.getIp()+":"+peer.getListeningPort());
 			e.printStackTrace();
 		}

@@ -28,7 +28,7 @@ public class ChainSender {
 	}
 
 	/**
-	 * Sends the current chain to a peer
+	 * Sends the current chain to a peer.
 	 * @param peer the requestor peer
 	 * @param startIndex index of the first bloc to send
 	 */
@@ -38,36 +38,30 @@ public class ChainSender {
 		if(this.blockchain.getLastIndex() == Genesis.GENESIS_INDEX) {
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY, null, peer);
 			log.debug("Send empty catch-up response to "+peer);
-		}
-		else {
+		} else {
 			log.info("Send chain to "+peer);
-			for (int i = 0;i < blockchain.getChain().getLastIndex();i++) {
-				try {
-					CatchUpDataMessage message = new CatchUpDataMessage();
-					
-					// get subchain of MAX_BLOCKS_PER_BULK (or less, if less elements remain) elements
-					int from = i * MAX_BLOCKS_PER_BULK + 1;
-					int to = Math.min( (i+1)*MAX_BLOCKS_PER_BULK + 1, blockchain.getChain().getBlockList().size());
-					List<Block> sublist = blockchain.getChain().getBlockList().subList(from, to);
-					
-					// add the previously selected blocks in the message
-					if(sublist != null && !sublist.isEmpty()) {
-						message.setBlocks(sublist);
-						message.setStartIndex(sublist.get(0).getIndex());
-						message.setLastIndex(sublist.get(sublist.size()-1).getIndex());
+			for (int i = 0; i < blockchain.getChain().getLastIndex(); i++) {
+				CatchUpDataMessage message = new CatchUpDataMessage();
 
-						// send the group of blocks to the requestor peer
-						blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS, message, peer);
-						log.info("Send "+sublist.size()+" block(s).");
-					}
+				// get subchain of MAX_BLOCKS_PER_BULK (or less, if less elements remain) elements
+				int from = i * MAX_BLOCKS_PER_BULK + 1;
+				int to = Math.min( (i+1)*MAX_BLOCKS_PER_BULK + 1, blockchain.getChain().getBlockList().size());
+				List<Block> sublist = blockchain.getChain().getBlockList().subList(from, to);
 
-					// if last sent block is the last block of chain, stop
-					if(to == blockchain.getChain().getBlockList().size() ) {
-						break;
-					}
+				// add the previously selected blocks in the message
+				if(sublist != null && !sublist.isEmpty()) {
+					message.setBlocks(sublist);
+					message.setStartIndex(sublist.get(0).getIndex());
+					message.setLastIndex(sublist.get(sublist.size()-1).getIndex());
+
+					// send the group of blocks to the requestor peer
+					blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS, message, peer);
+					log.info("Send "+sublist.size()+" block(s).");
 				}
-				catch(Exception e) {
-					e.printStackTrace();
+
+				// if last sent block is the last block of chain, stop
+				if(to == blockchain.getChain().getBlockList().size()) {
+					break;
 				}
 			}
 		}

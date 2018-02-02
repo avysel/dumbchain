@@ -10,7 +10,7 @@ import com.avysel.blockchain.network.data.message.CatchUpRequestMessage;
 import com.avysel.blockchain.network.peer.Peer;
 
 /**
- * Used by a new node on the network to request other nodes to send the current chain 
+ * Used by a new node on the network to request other nodes to send the current chain.
  */
 public class ChainRequestor {
 
@@ -18,6 +18,10 @@ public class ChainRequestor {
 	
 	private Blockchain blockchain;
 
+	/**
+	 * Create a ChainRequestor for the blockchain
+	 * @param blockchain the blockchain to be build by ChainRequestor
+	 */
 	public ChainRequestor(Blockchain blockchain) {
 		super();
 		this.blockchain = blockchain;
@@ -29,7 +33,7 @@ public class ChainRequestor {
 	 * @return the peer with the higer chain, to request catch-up data
 	 */
 	private Peer selectPeerToRequest() {
-		if(blockchain.getPeers() != null &&  ! blockchain.getPeers().isEmpty())
+		if(blockchain.getPeers() != null &&  !blockchain.getPeers().isEmpty())
 			return blockchain.getPeers().stream().max(Comparator.comparing(Peer::getChainHeight)).get();
 		else
 			return null;

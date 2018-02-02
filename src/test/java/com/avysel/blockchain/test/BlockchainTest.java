@@ -1,12 +1,6 @@
 package com.avysel.blockchain.test;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
-import com.avysel.blockchain.business.Blockchain;
-import com.avysel.blockchain.business.BlockchainManager;
-import com.avysel.blockchain.business.data.SingleData;
 
 public class BlockchainTest {
 

@@ -6,6 +6,10 @@ public class BlockchainParameters {
 	
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	
+	/**
+	 * Maximum number of data to include in a block
+	 */
+	public static final int MAX_DATA_IN_BLOCK = 500;	
 	
 	public static final String SEPARATOR = "=";
 	public static final String ENABLED = "1";

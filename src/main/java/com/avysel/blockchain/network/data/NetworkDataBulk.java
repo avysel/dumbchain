@@ -30,17 +30,17 @@ public class NetworkDataBulk {
 	public static final int MESSAGE_PEER_HELLO_ANSWER = 301;
 	
 	/**
-	 * This bulk contains an message from a new node requesting catch up of data it doesn't has
+	 * This bulk contains an message from a new node requesting catch up of data it doesn't has.
 	 */
 	public static final int MESSAGE_CATCH_UP_REQUEST = 302;
 	
 	/**
-	 * This bulk contains an message from a node sending data to a new node for catch-up
+	 * This bulk contains an message from a node sending data to a new node for catch-up.
 	 */
 	public static final int MESSAGE_CATCH_UP_BLOCKS = 303;	
 	
 	/**
-	 * This bulk contains an message from a node send to a new node that there is nothing to catch-up
+	 * This bulk contains an message from a node send to a new node that there is nothing to catch-up.
 	 */
 	public static final int MESSAGE_CATCH_UP_EMPTY = 304;
 	

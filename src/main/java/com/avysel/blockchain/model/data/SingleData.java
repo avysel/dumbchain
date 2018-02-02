@@ -16,12 +16,12 @@ public class SingleData implements ISingleData {
 	private String hash;
 	private Class clazz;
 
-	/*public SingleData() {
+	public SingleData() {
 		super();
 		this.uuid = UUID.randomUUID().toString();
 		this.hash = HashTools.calculateHash((data+uuid).getBytes(BlockchainParameters.DEFAULT_CHARSET));
 		this.data = null;
-	}*/
+	}
 
 	public SingleData(String data) {
 		this.data = data;

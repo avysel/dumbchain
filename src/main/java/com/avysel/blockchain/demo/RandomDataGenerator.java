@@ -3,7 +3,7 @@ package com.avysel.blockchain.demo;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.data.SingleData;
 
 /**
  * A simulator to generate random data and send it to the network.

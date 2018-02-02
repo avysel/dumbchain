@@ -1,6 +1,6 @@
-package com.avysel.blockchain.model.block;
+package com.avysel.blockchain.business.block;
 
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.data.SingleData;
 
 /**
  * The genesis Block

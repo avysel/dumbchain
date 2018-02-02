@@ -8,12 +8,12 @@ import java.util.TimeZone;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.crypto.MerkleTree;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * The Miner creates Blocks with pending data. Each try of create a Block use a random quantity of data. If a Block can be created, it's linked to the Chain

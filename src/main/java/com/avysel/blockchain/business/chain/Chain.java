@@ -1,11 +1,11 @@
-package com.avysel.blockchain.model.chain;
+package com.avysel.blockchain.business.chain;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.block.Genesis;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.block.Genesis;
+import com.avysel.blockchain.business.data.ISingleData;
 
 /**
  * The blockchain.

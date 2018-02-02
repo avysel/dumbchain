@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.data.ISingleData;
+import com.avysel.blockchain.business.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
 import com.avysel.blockchain.network.data.message.CatchUpRequestMessage;

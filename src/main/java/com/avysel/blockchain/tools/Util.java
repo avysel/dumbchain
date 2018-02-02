@@ -1,7 +1,7 @@
 package com.avysel.blockchain.tools;
 
 import com.avysel.blockchain.business.BlockchainParameters;
-import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.business.block.Block;
 
 /**
  * Provides some useful methods.

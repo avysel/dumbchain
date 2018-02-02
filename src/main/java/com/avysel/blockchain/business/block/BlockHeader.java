@@ -1,4 +1,4 @@
-package com.avysel.blockchain.model.block;
+package com.avysel.blockchain.business.block;
 
 /**
  * The header of a Block.

@@ -3,7 +3,7 @@ package com.avysel.blockchain.crypto;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.business.block.Block;
 
 public class HashTools {
 	

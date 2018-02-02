@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
 
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.data.ISingleData;
 
 /**
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick data ...

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.crypto.HashTools;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * Provides some operation on the Blockchain, such as finding a Block or checking Chain integrity.

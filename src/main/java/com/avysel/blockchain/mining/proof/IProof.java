@@ -1,6 +1,6 @@
 package com.avysel.blockchain.mining.proof;
 
-import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.business.block.Block;
 
 /**
  * Condition to validate a block.

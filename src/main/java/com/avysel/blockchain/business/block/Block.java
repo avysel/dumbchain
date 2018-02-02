@@ -1,4 +1,4 @@
-package com.avysel.blockchain.model.block;
+package com.avysel.blockchain.business.block;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.avysel.blockchain.business.BlockchainParameters;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

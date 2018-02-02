@@ -3,7 +3,7 @@ package com.avysel.blockchain.crypto;
 import java.util.ArrayList;
 
 import com.avysel.blockchain.business.BlockchainParameters;
-import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.business.block.Block;
 
 public class MerkleTree {
 

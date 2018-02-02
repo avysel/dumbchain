@@ -1,8 +1,8 @@
 package com.avysel.blockchain.test;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
+import com.avysel.blockchain.business.data.SingleData;
 
 public final class ChainGenerator {
 	

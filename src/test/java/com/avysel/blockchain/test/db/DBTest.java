@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.data.SingleData;
 import com.avysel.blockchain.db.DBManager;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.SingleData;
 
 public class DBTest {
 

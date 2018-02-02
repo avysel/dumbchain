@@ -1,10 +1,10 @@
-package com.avysel.blockchain.model.block;
+package com.avysel.blockchain.business.block;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.data.ISingleData;
+import com.avysel.blockchain.business.data.SingleData;
 
 /**
  * The main content of Block.

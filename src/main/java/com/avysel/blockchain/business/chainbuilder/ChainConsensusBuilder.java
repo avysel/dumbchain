@@ -6,12 +6,12 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.Chain;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * Manage incoming blocks and deal with forks

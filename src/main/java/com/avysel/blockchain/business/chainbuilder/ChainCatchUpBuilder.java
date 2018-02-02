@@ -10,10 +10,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.Chain;
+import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.exception.ChainIntegrityException;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.chain.ChainPart;
 
 /**
  * Catch up with existing blockchain

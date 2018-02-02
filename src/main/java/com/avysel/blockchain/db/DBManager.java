@@ -7,9 +7,9 @@ import java.io.IOException;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
+import com.avysel.blockchain.business.data.SingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.avysel.blockchain.tools.Util;
 

@@ -123,7 +123,7 @@ public class ChainBuilder {
 			|| chain1.size() != chain2.size())
 			return false;
 		
-		for (int i = 0;i < chain1.size();i++) {
+		for (int i = 0; i<chain1.size(); i++) {
 			if(!chain1.getBlockList().get(i).equals(chain2.getBlockList().get(i)))
 				return false;
 		}

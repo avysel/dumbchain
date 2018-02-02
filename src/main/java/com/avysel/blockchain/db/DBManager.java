@@ -15,7 +15,7 @@ import com.avysel.blockchain.tools.Util;
 
 public class DBManager {
 
-	private static String DB_DIR_PATH = "C:\\Developpement\\leveldb";
+	private static final String DB_DIR_PATH = "C:\\Developpement\\leveldb";
 	
 	private DB db;
 

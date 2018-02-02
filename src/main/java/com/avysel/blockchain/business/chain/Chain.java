@@ -34,8 +34,7 @@ public class Chain extends ChainPart {
 	public long getLastIndex() {
 		if(this.getLastBlock() != null) {
 			return this.getLastBlock().getIndex();
-		}
-		else {
+		} else {
 			return Genesis.GENESIS_INDEX;
 		}
 	}	
@@ -47,7 +46,7 @@ public class Chain extends ChainPart {
 	@Override
 	public void linkBlock(Block block) {
 		synchronized(getBlockList()) {
-			if( ! block.isGenesis()) {
+			if(!block.isGenesis()) {
 				block.setPreviousHash(getLastBlock().getHash());
 				block.setIndex(getLastIndex() + 1);
 			}
@@ -63,7 +62,7 @@ public class Chain extends ChainPart {
 			List<ISingleData> dataList = new LinkedList<ISingleData>();
 
 			Block block = getBlockList().getLast();
-			while( block != null && block.getIndex() >= startIndex ) {
+			while(block != null && block.getIndex() >= startIndex) {
 				block = getBlockList().removeLast();
 				dataList.addAll(block.getDataList());
 			}

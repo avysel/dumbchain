@@ -189,7 +189,7 @@ public class Blockchain {
 	 * @param block the incoming block to add.
 	 */
 	public void addIncomingBlock(Block block) {
-		if( ! catchUpCompleted ) return;
+		if(!catchUpCompleted) return;
 
 		boolean incomingBlockAdded;
 		RejectReason rejectReason = null;

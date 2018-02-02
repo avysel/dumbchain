@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import com.avysel.blockchain.network.peer.Peer;
 
-public class NetworkTool {
+public final class NetworkTool {
 
 	private NetworkTool() {}
 	
@@ -36,8 +36,7 @@ public class NetworkTool {
 			DatagramSocket s = new DatagramSocket(portNumber);
 			s.close();
 			return false;
-		}
-		catch(SocketException e) {
+		} catch(SocketException e) {
 			return true;
 		}
 	}
@@ -52,7 +51,7 @@ public class NetworkTool {
 	}
 	
 	/**
-	 * Provides all InetAddress that can be used on the current network to broadcast data
+	 * Provides all InetAddress that can be used on the current network to broadcast data.
 	 * @return a List of broadcast InetAddress
 	 * @throws SocketException when connection error occurs
 	 */

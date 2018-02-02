@@ -28,7 +28,7 @@ public class DataPool {
 	}
 
 	/**
-	 * Add a new SingleData to the pending data list to be added in a Block
+	 * Add a new SingleData to the pending data list to be added in a Block.
 	 * @param data the SingleData to be added
 	 * @throws InterruptedException when a synchronization problem occurs
 	 */
@@ -37,8 +37,7 @@ public class DataPool {
 		if(!exists(data.getHash())) {
 			getDataPool().put(data);
 			log.debug("New data in pool : "+data);
-		}
-		else {
+		} else {
 			log.warn("Data "+data.getHash()+" already exists");
 		}
 	}
@@ -57,7 +56,7 @@ public class DataPool {
 
 	public List<ISingleData> getData(long quantity) {
 		List<ISingleData> result = new ArrayList<ISingleData>();
-		for(int i=0;i < quantity && !getDataPool().isEmpty();i++) {
+		for(int i=0; i<quantity && !getDataPool().isEmpty(); i++) {
 			result.add(getDataPool().poll());
 		}
 		return result;
@@ -78,7 +77,7 @@ public class DataPool {
 
 		// if enough data, take it
 		if(quantity <= getDataPool().size()) {
-			for(int i=0;i < quantity;i++) {
+			for(int i=0; i<quantity; i++) {
 				result.add(getDataPool().poll());
 			}
 		}
@@ -114,5 +113,4 @@ public class DataPool {
 				return true;
 		return false;
 	}
-
 }

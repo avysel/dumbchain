@@ -19,7 +19,7 @@ public class ChainRequestor {
 	private Blockchain blockchain;
 
 	/**
-	 * Create a ChainRequestor for the blockchain
+	 * Create a ChainRequestor for the blockchain.
 	 * @param blockchain the blockchain to be build by ChainRequestor
 	 */
 	public ChainRequestor(Blockchain blockchain) {

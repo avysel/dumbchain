@@ -41,14 +41,13 @@ public class ChainPart {
 	}
 
 	/**
-	 * Returns the index of last Block added to the ChainPart
+	 * Returns the index of last Block added to the ChainPart.
 	 * @return the index of last Block if exists, -1 otherwise.
 	 */
 	public long getLastIndex() {
 		if(this.getLastBlock() != null) {
 			return this.getLastBlock().getIndex();
-		}
-		else {
+		} else {
 			return -1;
 		}
 	}	
@@ -59,7 +58,7 @@ public class ChainPart {
 	 */
 	public void linkBlock(Block block) {
 
-		if(! block.isGenesis()) {
+		if(!block.isGenesis()) {
 			block.setPreviousHash(getLastBlock().getHash());
 			block.setIndex(getLastIndex() + 1);
 			blockList.add(block);
@@ -84,19 +83,19 @@ public class ChainPart {
 	}
 
 	/**
-	 * Add a chain to the end of the current chain
+	 * Add a chain to the end of the current chain.
 	 * @param chainPart the chain to add to current chain
 	 * @throws ChainIntegrityException occurs when chain integrity is not verified
 	 */
 	public void addChainPart(ChainPart chainPart) throws ChainIntegrityException {
 
 		// chain part must have a good integrity
-		if( ! BlockchainManager.checkChain(chainPart) ) {
+		if(!BlockchainManager.checkChain(chainPart)) {
 			throw new ChainIntegrityException("ChainPart is corrupted");
 		}
 
 		// two parts of chain must be linkable (index must follow each other)
-		if( chainPart.getFirstBlock().getIndex() != this.getLastBlock().getIndex() +1 ) {
+		if(chainPart.getFirstBlock().getIndex() != this.getLastBlock().getIndex() +1) {
 			throw new ChainIntegrityException("ChainPart cannot be linked, wrong index");
 		}
 
@@ -107,24 +106,27 @@ public class ChainPart {
 		this.addBlocks(chainPart.getBlockList());
 
 		// check the result
-		if( ! BlockchainManager.checkChain(this) ) {
+		if(!BlockchainManager.checkChain(this)) {
 			throw new ChainIntegrityException("Result is corrupted");
 		}
 	}
 
+	/**
+	 * Returns ChainPart size (number of blocks).
+	 * @return chain part size.
+	 */
 	public long size() {
 		synchronized(getBlockList()) {
 			if(this.getBlockList() != null) {
 				return getBlockList().size();
-			}
-			else {
+			} else {
 				return 0;
 			}
 		}
 	}
 
 	/**
-	 * Returns the quality of the chain part
+	 * Returns the quality of the chain part.
 	 * The quality is used when two ChainParts are candidates to be appended to the BlockChain. The one with higher effort is the one that will be appended.
 	 * @return chain(s quality
 	 */

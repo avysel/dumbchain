@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainParameters;
 
-public class Main {
+public final class Main {
 
 	private static Logger log = Logger.getLogger(Main.class);
 	
@@ -34,7 +34,7 @@ public class Main {
 
 		BlockchainParameters params = new BlockchainParameters();
 		
-		for(int i=0;i < args.length;i++) {
+		for(int i=0; i<args.length; i++) {
 			
 			String param = args[i];
 			String[] data = param.split(BlockchainParameters.SEPARATOR);

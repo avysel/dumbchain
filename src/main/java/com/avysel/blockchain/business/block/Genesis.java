@@ -9,17 +9,17 @@ import com.avysel.blockchain.business.data.SingleData;
 public class Genesis extends Block {
 	
 	/**
-	 * Genesis index
+	 * Genesis index.
 	 */
 	public static final long GENESIS_INDEX = 0;
 	
 	/**
-	 * Genesis label data
+	 * Genesis label data.
 	 */
 	public static final String GENESIS_LABEL = "Genesis";
 	
 	/**
-	 * Genesis hash
+	 * Genesis hash.
 	 */
 	public static final String GENESIS_HASH = "0072d9ff21065fd058e0e0e12f3ae9068593ca4220764557a7c36ccda9ef7017";
 	

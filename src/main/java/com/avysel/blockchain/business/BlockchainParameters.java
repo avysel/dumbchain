@@ -2,12 +2,15 @@ package com.avysel.blockchain.business;
 
 import java.nio.charset.Charset;
 
+/** 
+ * Parameters for blockchain.
+ */
 public class BlockchainParameters {
 	
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	
 	/**
-	 * Maximum number of data to include in a block
+	 * Maximum number of data to include in a block.
 	 */
 	public static final int MAX_DATA_IN_BLOCK = 500;	
 	

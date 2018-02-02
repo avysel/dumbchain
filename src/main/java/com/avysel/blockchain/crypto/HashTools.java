@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import com.avysel.blockchain.business.block.Block;
 
 /**
- * Tools to caculate hashes
+ * Tools to caculate hashes.
  */
 public class HashTools {
 	
@@ -45,7 +45,7 @@ public class HashTools {
 	
 	/**
 	 * Transform a bytes array into String.
-	 * @param hash the bytes array
+	 * @param bytes the bytes array
 	 * @return the string
 	 */
 	private static String bytesToHex(byte[] bytes) {

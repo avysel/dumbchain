@@ -43,7 +43,7 @@ public class DataPool {
 	}
 
 	/**
-	 * Add a List of SingleData to the pending data list to be added in a Block
+	 * Add a List of SingleData to the pending data list to be added in a Block.
 	 * @param dataList the List of SingleData to be added
 	 */	
 	public void addAll(List<ISingleData> dataList) {
@@ -86,7 +86,7 @@ public class DataPool {
 	}
 
 	/**
-	 * Returns the number of remaining pending data
+	 * Returns the number of remaining pending data.
 	 * @return the size of pending data list
 	 */
 	public int size() {

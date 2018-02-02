@@ -48,12 +48,16 @@ public class NetworkManager {
 
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
-		NetworkManager.serverListeningPort = 0;
-		NetworkManager.broadcastPort = 45458;		
+		NetworkManager.setServerListeningPort(0);
+		NetworkManager.setBroadcastPort(45458);	
 		server = new NodeServer(this);
 		client = new NodeClient(this);
 		peerManager = new PeerManager(this);
 		receivedBulks = new ArrayList<String>();		
+	}
+
+	private static void setBroadcastPort(int broadcastPort) {
+		NetworkManager.broadcastPort = broadcastPort;
 	}
 
 	/**

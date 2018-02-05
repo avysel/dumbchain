@@ -18,22 +18,24 @@ import com.avysel.blockchain.tools.JsonMapper;
 import com.avysel.blockchain.tools.NetworkTool;
 
 /**
- * Broadcast connection request trough network, expected distant peer's answer and create connections
+ * Broadcast connection request trough network, expected distant peer's answer and create connections.
  */
 public class PeerExplorer {
 
 	private static Logger log = Logger.getLogger(PeerExplorer.class);
 
+	/**
+	 * The peer manager.
+	 */
 	private PeerManager peerManager;
 	
-
 	public PeerExplorer(PeerManager manager) {
 		super();
 		this.peerManager = manager;
 	}	
 
 	/**
-	 * Send a broadcast message to network to introduce itself as a new node
+	 * Send a broadcast message to network to introduce itself as a new node.
 	 */
 	public void hello() {
 
@@ -54,16 +56,16 @@ public class PeerExplorer {
 			List<InetAddress> listAddresses = NetworkTool.listAllBroadcastAddresses();
 			
 			for(InetAddress addr : listAddresses) {
-				for(int i = 0;i<10;i++) {
+				for(int i=0; i<10; i++) {
 
 					int port = NetworkManager.getBroadcastPort() + i;
 					
 					// create and send packet // TODO listAllBroadcastAddresses
 					DatagramPacket packet = new DatagramPacket(
-							data.getBytes(BlockchainParameters.DEFAULT_CHARSET)
-							, data.getBytes(BlockchainParameters.DEFAULT_CHARSET).length
-							, addr
-							, port
+							data.getBytes(BlockchainParameters.DEFAULT_CHARSET),
+							data.getBytes(BlockchainParameters.DEFAULT_CHARSET).length,
+							addr,
+							port
 							);
 
 					log.debug("Send connection request to network "+addr+":"+port);

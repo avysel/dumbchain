@@ -6,9 +6,9 @@ import java.util.Collections;
 
 import org.junit.Test;
 
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.chainbuilder.ChainBuilder;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
 
 public class ChainBuilderTest {
 

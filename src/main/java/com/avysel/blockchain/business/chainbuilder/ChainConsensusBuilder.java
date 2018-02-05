@@ -6,15 +6,15 @@ import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.Chain;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.data.ISingleData;
 
 /**
- * Manage incoming blocks and deal with forks
+ * Manage incoming blocks and deal with forks.
  */
 public class ChainConsensusBuilder {
 
@@ -67,7 +67,7 @@ public class ChainConsensusBuilder {
 		if(incomingBlock == null) return RejectReason.OTHER;
 
 		// integrity of block has to be ok
-		if( ! BlockchainManager.checkBlockHash(incomingBlock))	{
+		if(!BlockchainManager.checkBlockHash(incomingBlock))	{
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because of wrong hash.");
 			return RejectReason.BLOCK_INTEGRITY;
 		}
@@ -103,10 +103,9 @@ public class ChainConsensusBuilder {
 			cleanDataPool(incomingBlock);
 			nbConsecutiveRejects = 0;
 			return RejectReason.NONE;
-		}
-		else {
+		} else {
 			log.error("XXXXXXXXXX Incoming block not linked : "+rejectReason);
-			nbConsecutiveRejects ++;
+			nbConsecutiveRejects++;
 			return rejectReason;
 		}
 	}
@@ -120,7 +119,7 @@ public class ChainConsensusBuilder {
 	}
 
 	/**
-	 * Set index of the last block got from network and successfully linked
+	 * Set index of the last block got from network and successfully linked.
 	 * @param lastLinkedIndex the index
 	 */
 	public void setLastLinkedIndex(long lastLinkedIndex) {
@@ -138,15 +137,21 @@ public class ChainConsensusBuilder {
 		Block competitor = findCompetitorInChain(incomingBlock);
 		Block lastBlock = chain.getLastBlock();
 
-		if(competitor != null) return RejectReason.COMPETITION;
-		if( ! incomingBlock.getPreviousHash().equals(lastBlock.getHash())) return RejectReason.PREVIOUS_HASH;
-		if( ! (incomingBlock.getIndex() == lastBlock.getIndex() +1) ) return RejectReason.PREVIOUS_INDEX;
+		if(competitor != null) 
+			return RejectReason.COMPETITION;
+		
+		if(!incomingBlock.getPreviousHash().equals(lastBlock.getHash())) 
+			return RejectReason.PREVIOUS_HASH;
+		
+		if(!(incomingBlock.getIndex() == lastBlock.getIndex() +1)) 
+			return RejectReason.PREVIOUS_INDEX;
+		
 		return RejectReason.NONE;
 
 	}
 
 	/**
-	 * Search if a block with the same index already exists in the chain
+	 * Search if a block with the same index already exists in the chain.
 	 * @param incomingBlock the block we want to add
 	 * @return the block in the chain with same index as incoming block. Null if such a block does not exist.
 	 */
@@ -209,6 +214,5 @@ public class ChainConsensusBuilder {
 			nbConsecutiveRejects = 0;
 			isCheckingConsistency = false;
 		}
-		
 	}
 }

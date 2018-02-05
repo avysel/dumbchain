@@ -1,4 +1,4 @@
-package com.avysel.blockchain.model.block;
+package com.avysel.blockchain.business.block;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Objects;
 
 import com.avysel.blockchain.business.BlockchainParameters;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * A Block
+ * A Block.
  * Contains a list of SingleData and all information used to identify the Block and check its integrity
  */
 public class Block {
 	
-	protected BlockHeader blockHeader;
-	protected BlockData blockData;
+	private BlockHeader blockHeader;
+	private BlockData blockData;
 	
 	public Block() {
 		super();
@@ -26,7 +26,7 @@ public class Block {
 	}
 	
 	/**
-	 * Return if the block is the chain genesis
+	 * Return if the block is the chain genesis.
 	 * @return true if the block is the chain genesis, false otherwise
 	 */
 	@JsonIgnore
@@ -43,7 +43,7 @@ public class Block {
 	}
 
 	/**
-	 * Add a List of ISingleData to the Block
+	 * Add a List of ISingleData to the Block.
 	 * @param dataList the data to add
 	 */ 
 	public void addAllData(List<ISingleData> dataList) {
@@ -51,7 +51,7 @@ public class Block {
 	}
 	
 	/**
-	 * Add a ISingleData to the Block
+	 * Add a ISingleData to the Block.
 	 * @param singleData the piece of data to add
 	 */
 	public void addData(ISingleData singleData) {
@@ -59,7 +59,7 @@ public class Block {
 	}
 	
 	/**
-	 * Remove all data 
+	 * Remove all data.
 	 */
 	public void cleanData() {
 		this.getBlockData().getDataList().clear();
@@ -105,7 +105,7 @@ public class Block {
 	}	
 	
 	/**
-	 * Return String representation of data used to calculate Block's hash
+	 * Return String representation of data used to calculate Block's hash.
 	 * @return bytes representation of data
 	 */
 	@JsonIgnore
@@ -162,7 +162,7 @@ public class Block {
 	}
 
 	/**
-	 * Returns the list of hashes of all block's data
+	 * Returns the list of hashes of all block's data.
 	 * @return list of data hashes
 	 */
 	@JsonIgnore

@@ -2,10 +2,22 @@ package com.avysel.blockchain.business;
 
 import java.nio.charset.Charset;
 
+/** 
+ * Parameters for blockchain.
+ */
 public class BlockchainParameters {
 	
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	
+	/**
+	 * Maximum number of data to include in a block.
+	 */
+	public static final int MAX_DATA_IN_BLOCK = 500;	
+	
+	/**
+	 * Maximum number of block that can be sent in a message when sent blocks for catch-up.
+	 */
+	public static final int MAX_BLOCKS_PER_BULK = 5;	
 	
 	public static final String SEPARATOR = "=";
 	public static final String ENABLED = "1";

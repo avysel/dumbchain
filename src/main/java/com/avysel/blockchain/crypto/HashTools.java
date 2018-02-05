@@ -3,12 +3,15 @@ package com.avysel.blockchain.crypto;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.business.block.Block;
 
+/**
+ * Tools to caculate hashes.
+ */
 public class HashTools {
 	
 	/**
-	 * Calculate the hash for a Block
+	 * Calculate the hash for a Block.
 	 * @param block the Block to hash
 	 * @return the SHA-256 hash for the given Block
 	 */
@@ -20,7 +23,7 @@ public class HashTools {
 	}
 	
 	/**
-	 * Calculate the hash for a text data
+	 * Calculate the hash for a text data.
 	 * @param text the data to hash
 	 * @return the SHA-256 hash for the given text
 	 */
@@ -40,10 +43,15 @@ public class HashTools {
 		}		
 	}
 	
-	private static String bytesToHex(byte[] hash) {
+	/**
+	 * Transform a bytes array into String.
+	 * @param bytes the bytes array
+	 * @return the string
+	 */
+	private static String bytesToHex(byte[] bytes) {
 	    StringBuffer hexString = new StringBuffer();
-	    for (int i = 0; i < hash.length; i++) {
-	    String hex = Integer.toHexString(0xff & hash[i]);
+	    for (int i = 0; i<bytes.length; i++) {
+	    String hex = Integer.toHexString(0xff & bytes[i]);
 	    if(hex.length() == 1) hexString.append('0');
 	        hexString.append(hex);
 	    }
@@ -51,7 +59,7 @@ public class HashTools {
 	}
 	
 	/**
-	 * Check data integrity according to checksum hash
+	 * Check data integrity according to checksum hash.
 	 * @param hash the checksum of data
 	 * @param data the data to check
 	 * @return true if integrity of data is ok

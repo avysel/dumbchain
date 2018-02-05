@@ -73,12 +73,12 @@ public class PeerManager {
 	}
 
 	/**
-	 * Add a Peer to the list of connected Peers
+	 * Add a Peer to the list of connected Peers.
 	 * @param peer the Peer to add.
 	 */
 	public void addPeer(Peer peer) {
 		synchronized(peersList) {
-			if(! isLocalPeer(peer) && ! peerExists(peer)) {
+			if(!isLocalPeer(peer) && !peerExists(peer)) {
 				peersList.add(peer);
 				log.info("New peer added : "+peer);
 			} else {

@@ -1,4 +1,4 @@
-package com.avysel.blockchain.model.data;
+package com.avysel.blockchain.business.data;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

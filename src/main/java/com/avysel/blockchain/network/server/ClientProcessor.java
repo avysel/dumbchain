@@ -49,8 +49,7 @@ public class ClientProcessor implements Runnable {
 				String tmp = read();
 				if(!tmp.isEmpty()) {
 					data += tmp;
-				}
-				else {
+				} else {
 					socket.close();
 				}
 
@@ -75,7 +74,7 @@ public class ClientProcessor implements Runnable {
 	}
 
 	/**
-	 * Reads raw data from stream
+	 * Reads raw data from stream.
 	 * @return data String that contains raw data read from stream
 	 * @throws IOException
 	 */
@@ -98,7 +97,7 @@ public class ClientProcessor implements Runnable {
 	}
 
 	/**
-	 * Convert raw data from network to NetworkDataBulk object
+	 * Convert raw data from network to NetworkDataBulk object.
 	 * @param data the string read from network
 	 * @return the NetworkDataBulk object created from raw data
 	 */

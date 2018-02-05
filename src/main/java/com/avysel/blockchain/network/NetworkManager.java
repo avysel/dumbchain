@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.ISingleData;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.data.ISingleData;
+import com.avysel.blockchain.business.data.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.CatchUpDataMessage;
@@ -36,28 +36,32 @@ public class NetworkManager {
 
 	private Blockchain blockchain;
 
-	private static int serverListeningPort = 0;
-	private static int broadcastPort = 45458;
+	private static int serverListeningPort;
+	private static int broadcastPort;
 
 	private List<String> receivedBulks;
 
 	/**
 	 * Number of second from last contact with peer to consider it as still alive.
 	 */
-	public final static long DEFAULT_PEER_STILL_ALIVE = 3600;
+	public static final long DEFAULT_PEER_STILL_ALIVE = 3600;
 
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
+		NetworkManager.setServerListeningPort(0);
+		NetworkManager.setBroadcastPort(45458);	
 		server = new NodeServer(this);
 		client = new NodeClient(this);
-
 		peerManager = new PeerManager(this);
+		receivedBulks = new ArrayList<String>();		
+	}
 
-		receivedBulks = new ArrayList<String>();
+	private static void setBroadcastPort(int broadcastPort) {
+		NetworkManager.broadcastPort = broadcastPort;
 	}
 
 	/**
-	 * Provides the port used by current server
+	 * Provides the port used by current server.
 	 * @return the server port
 	 */
 	public static int getServerListeningPort() {	
@@ -68,13 +72,15 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Set the listening port of the current server
+	 * Set the listening port of the current server.
 	 * @param port the port
 	 */
-	public static void setServerListeningPort(int port) {		serverListeningPort = port;	}
+	public static void setServerListeningPort(int port) {
+		serverListeningPort = port;	
+	}
 
 	/**
-	 * Provides the port used to send hello messages when a blockchain node is started
+	 * Provides the port used to send hello messages when a blockchain node is started.
 	 * @return the broadcast port
 	 */
 	public static int getBroadcastPort() {		
@@ -82,7 +88,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Start network manager of blockchain node
+	 * Start network manager of blockchain node.
 	 */
 	public void start() {
 		server.start();
@@ -90,7 +96,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Stop network manager of blockchain node
+	 * Stop network manager of blockchain node.
 	 */
 	public void stop() {
 		server.stop();
@@ -98,7 +104,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Send a data to the network
+	 * Send a data to the network.
 	 * @param data the SingleData object to send
 	 */
 	public void sendData(ISingleData data) {
@@ -115,7 +121,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Send a Block to the network
+	 * Send a Block to the network.
 	 * @param block the Block object to send
 	 */
 	public void sendBlock(Block block) {
@@ -130,7 +136,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Send a NetworkMessage to a Peer
+	 * Send a NetworkMessage to a Peer.
 	 * @param bulkType the type of bulk
 	 * @param message the message object to send
 	 * @param peer the recipient
@@ -147,7 +153,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists
+	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists.
 	 * @param data the incoming SingleData
 	 */
 	private void processIncomingData(SingleData data) {
@@ -165,7 +171,7 @@ public class NetworkManager {
 
 	/**
 	 * Process an incoming Block received from the network. Add it to the Chain according to rules about consensus and forks.
-	 * @param data the incoming Block
+	 * @param block the incoming Block
 	 */
 	private void processIncomingBlock(Block block) {
 		log.info("<<<<<<<<<< Incoming block : "+ block.getIndex() + " ("+block.getHash()+")");
@@ -173,7 +179,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Gets data from network, transform it into SingleData or Block and add it to the Blockchain
+	 * Gets data from network, transform it into SingleData or Block and add it to the Blockchain.
 	 * @param bulk the incoming DataBulk
 	 * @param senderIp IP address of sender node
 	 */
@@ -228,7 +234,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Returns the Peer representing the current node
+	 * Returns the Peer representing the current node.
 	 * @return the local Peer
 	 */
 	public Peer getLocalPeer() {
@@ -236,7 +242,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Sets the Peer representing the current node
+	 * Sets the Peer representing the current node.
 	 * @param localPeer the current node's Peer representation
 	 */
 	public void setLocalPeer(Peer localPeer) {
@@ -284,8 +290,7 @@ public class NetworkManager {
 		if(receivedBulks.contains(bulkId)) {
 			log.debug("Incoming bulk already received : "+bulkId);
 			return false;
-		}
-		else {
+		} else {
 			receivedBulks.add(bulkId);
 			return true;
 		}

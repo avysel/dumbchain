@@ -1,4 +1,4 @@
-package com.avysel.blockchain.model.data;
+package com.avysel.blockchain.business.data;
 
 import java.util.UUID;
 
@@ -18,9 +18,6 @@ public class SingleData implements ISingleData {
 
 	public SingleData() {
 		super();
-		this.uuid = UUID.randomUUID().toString();
-		this.hash = HashTools.calculateHash((data+uuid).getBytes(BlockchainParameters.DEFAULT_CHARSET));
-		this.data = null;
 	}
 
 	public SingleData(String data) {

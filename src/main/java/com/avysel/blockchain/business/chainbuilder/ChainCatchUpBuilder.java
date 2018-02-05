@@ -10,13 +10,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.Chain;
+import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.exception.ChainIntegrityException;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.chain.ChainPart;
 
 /**
- * Catch up with existing blockchain
+ * Catch up with existing blockchain.
  */
 public class ChainCatchUpBuilder {
 	private static Logger log = Logger.getLogger(ChainCatchUpBuilder.class);
@@ -69,7 +69,9 @@ public class ChainCatchUpBuilder {
 		requestor.requestBlocks(startIndex);
 		
 		// wait to get catch up data or build successfull
-		while( completed != CatchUpResult.CATCH_UP_SUCCESSFUL && ! getEmptyDataResult && (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
+		while(completed != CatchUpResult.CATCH_UP_SUCCESSFUL 
+				&& !getEmptyDataResult 
+				&& (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
 			
 			// wait a few time bewteen two tries
 			try {
@@ -113,13 +115,13 @@ public class ChainCatchUpBuilder {
 
 		log.debug("Try to build the chain.");
 
-		if(pendingBlocks != null && ! pendingBlocks.isEmpty()) {
+		if(pendingBlocks != null && !pendingBlocks.isEmpty()) {
 
 			// check if all indexes are present
 			Long[] indexes = (Long[]) pendingBlocks.keySet().toArray(new Long[pendingBlocks.keySet().size()]);
 			Arrays.sort(indexes);
 
-			for (int i = 0;i < indexes.length-1;i++) {
+			for (int i = 0; i<indexes.length-1; i++) {
 				if(indexes[i] != indexes[i+1] - 1) {
 					log.info("Cannot build chain, missing block."+indexes[i]+" -> "+indexes[i+1]);
 					return CatchUpResult.CATCH_UP_FAILED;
@@ -130,7 +132,7 @@ public class ChainCatchUpBuilder {
 
 			// link blocks for each index
 			List<Block> blocks = new LinkedList<Block>();
-			for (int i = 0;i < indexes.length;i++) {
+			for (int i=0; i<indexes.length; i++) {
 				blocks.add(pendingBlocks.get(indexes[i]).get(0));
 			}		
 
@@ -148,8 +150,7 @@ public class ChainCatchUpBuilder {
 				log.warn("Error while building chain.");
 				return CatchUpResult.CATCH_UP_FAILED;
 			}
-		}
-		else {
+		} else {
 			log.warn("No block received for catching up, chain can't be initialized");
 			return CatchUpResult.CATCH_UP_EMPTY;
 		}

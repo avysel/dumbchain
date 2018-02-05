@@ -5,20 +5,20 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.block.Genesis;
+import com.avysel.blockchain.business.chain.Chain;
+import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.business.chainbuilder.ChainSender;
 import com.avysel.blockchain.demo.RandomDataGenerator;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.mining.DataPool;
 import com.avysel.blockchain.mining.Miner;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.block.Genesis;
-import com.avysel.blockchain.model.chain.Chain;
-import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.network.NetworkManager;
 import com.avysel.blockchain.network.data.message.NetworkMessage;
 import com.avysel.blockchain.network.peer.Peer;
@@ -196,7 +196,7 @@ public class Blockchain {
 	 * @param block the incoming block to add.
 	 */
 	public void addIncomingBlock(Block block) {
-		if( ! catchUpCompleted ) return;
+		if(!catchUpCompleted) return;
 
 		boolean incomingBlockAdded;
 		RejectReason rejectReason = null;

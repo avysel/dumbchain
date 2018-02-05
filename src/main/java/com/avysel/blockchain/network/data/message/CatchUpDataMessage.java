@@ -3,7 +3,7 @@ package com.avysel.blockchain.network.data.message;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avysel.blockchain.model.block.Block;
+import com.avysel.blockchain.business.block.Block;
 
 public class CatchUpDataMessage extends NetworkMessage {
 	private long startIndex;

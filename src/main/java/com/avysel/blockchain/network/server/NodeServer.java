@@ -23,7 +23,7 @@ public class NodeServer implements Runnable {
 	}
 
 	/**
-	 * Create the server socket and start listening network
+	 * Create the server socket and start listening network.
 	 */
 	public void start() {
 		try {

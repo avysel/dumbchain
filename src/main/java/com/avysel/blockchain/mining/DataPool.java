@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
 
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.data.ISingleData;
 
 /**
  * Used to store the list of pending data. This class provides some operation on it, such as add data, pick data ...
@@ -28,7 +28,7 @@ public class DataPool {
 	}
 
 	/**
-	 * Add a new SingleData to the pending data list to be added in a Block
+	 * Add a new SingleData to the pending data list to be added in a Block.
 	 * @param data the SingleData to be added
 	 * @throws InterruptedException when a synchronization problem occurs
 	 */
@@ -37,14 +37,13 @@ public class DataPool {
 		if(!exists(data.getHash())) {
 			getDataPool().put(data);
 			log.debug("New data in pool : "+data);
-		}
-		else {
+		} else {
 			log.warn("Data "+data.getHash()+" already exists");
 		}
 	}
 
 	/**
-	 * Add a List of SingleData to the pending data list to be added in a Block
+	 * Add a List of SingleData to the pending data list to be added in a Block.
 	 * @param dataList the List of SingleData to be added
 	 */	
 	public void addAll(List<ISingleData> dataList) {
@@ -57,7 +56,7 @@ public class DataPool {
 
 	public List<ISingleData> getData(long quantity) {
 		List<ISingleData> result = new ArrayList<ISingleData>();
-		for(int i=0;i < quantity && !getDataPool().isEmpty();i++) {
+		for(int i=0; i<quantity && !getDataPool().isEmpty(); i++) {
 			result.add(getDataPool().poll());
 		}
 		return result;
@@ -78,7 +77,7 @@ public class DataPool {
 
 		// if enough data, take it
 		if(quantity <= getDataPool().size()) {
-			for(int i=0;i < quantity;i++) {
+			for(int i=0; i<quantity; i++) {
 				result.add(getDataPool().poll());
 			}
 		}
@@ -87,7 +86,7 @@ public class DataPool {
 	}
 
 	/**
-	 * Returns the number of remaining pending data
+	 * Returns the number of remaining pending data.
 	 * @return the size of pending data list
 	 */
 	public int size() {
@@ -114,5 +113,4 @@ public class DataPool {
 				return true;
 		return false;
 	}
-
 }

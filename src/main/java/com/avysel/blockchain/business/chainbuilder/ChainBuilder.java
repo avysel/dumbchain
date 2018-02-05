@@ -8,8 +8,8 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
 
 /**
  * Try to build a chain from a set of blocks.
@@ -123,7 +123,7 @@ public class ChainBuilder {
 			|| chain1.size() != chain2.size())
 			return false;
 		
-		for (int i = 0;i < chain1.size();i++) {
+		for (int i = 0; i<chain1.size(); i++) {
 			if(!chain1.getBlockList().get(i).equals(chain2.getBlockList().get(i)))
 				return false;
 		}

@@ -8,12 +8,13 @@ import java.util.TimeZone;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.BlockchainParameters;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.crypto.MerkleTree;
 import com.avysel.blockchain.mining.proof.IProof;
 import com.avysel.blockchain.mining.proof.ProofOfWork;
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.data.ISingleData;
 
 /**
  * The Miner creates Blocks with pending data. Each try of create a Block use a random quantity of data. If a Block can be created, it's linked to the Chain
@@ -38,13 +39,10 @@ public class Miner {
 	// mining is pending or running ?
 	private boolean pauseMining;
 
-	/**
-	 * Maximum number of data to include in a block
-	 */
-	private static final int MAX_DATA_IN_BLOCK = 100;
+
 
 	/**
-	 * Creates the Miner
+	 * Creates the Miner.
 	 * @param blockchain the blockchain that will gets new Blocks
 	 * @param dataPool the queue to peek data
 	 */
@@ -56,7 +54,7 @@ public class Miner {
 	}
 
 	/**
-	 * Starts mining
+	 * Starts mining.
 	 */
 	public void start() {
 		log.info("Start miner.");
@@ -64,7 +62,7 @@ public class Miner {
 		while(miningNode) {
 		
 			// if mining is not pending, and enough data in pool
-			if(! pauseMining && dataPool.size() > 0) {
+			if(!pauseMining && dataPool.size() > 0) {
 				// create new block
 				Block block = mine();	
 
@@ -80,7 +78,7 @@ public class Miner {
 	}
 
 	/**
-	 * Stop mining
+	 * Stop mining.
 	 */
 	public void stop() {
 		miningNode = false;
@@ -88,14 +86,14 @@ public class Miner {
 
 
 	/**
-	 * Create a Block
+	 * Create a Block.
 	 * @return a Block that contains random data taken from DataPool
 	 */
 	public Block mine() {
 		Block block = new Block();
 		
 		// pick new dataset, blocking when pending data is empty
-		List<ISingleData> dataList = dataPool.pickData(MAX_DATA_IN_BLOCK);
+		List<ISingleData> dataList = dataPool.pickData(BlockchainParameters.MAX_DATA_IN_BLOCK);
 
 		block.addAllData(dataList);	
 		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
@@ -103,7 +101,7 @@ public class Miner {
 		String hash;
 		long difficulty = 0;
 		do { 
-			if( ! pauseMining ) {
+			if(!pauseMining) {
 
 				// all block creation timestamps are based on GMT+0 timezone
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
@@ -116,9 +114,9 @@ public class Miner {
 
 				block.setHash(hash);
 
-				difficulty ++;
+				difficulty++;
 			}
-		} while (pauseMining || ! proof.checkCondition(block) ); // try again if pow is not checked
+		} while (pauseMining || !proof.checkCondition(block)); // try again if pow is not checked
 
 		return block;
 	}

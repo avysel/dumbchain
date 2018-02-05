@@ -7,9 +7,9 @@ import java.io.IOException;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.avysel.blockchain.tools.Util;
 
@@ -55,7 +55,7 @@ public class DBManager {
 
 	public void putChain(ChainPart chain) {
 		DB db = openDB();
-		db.put(Util.bytes(chain.getHash()), Util.bytes(chain));
+		//db.put(Util.bytes(chain.getHash()), Util.bytes(chain));
 		closeDB(db);
 	}
 

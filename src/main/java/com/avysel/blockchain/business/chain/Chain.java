@@ -1,11 +1,11 @@
-package com.avysel.blockchain.model.chain;
+package com.avysel.blockchain.business.chain;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import com.avysel.blockchain.model.block.Block;
-import com.avysel.blockchain.model.block.Genesis;
-import com.avysel.blockchain.model.data.ISingleData;
+import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.block.Genesis;
+import com.avysel.blockchain.business.data.ISingleData;
 
 /**
  * The blockchain.
@@ -34,8 +34,7 @@ public class Chain extends ChainPart {
 	public long getLastIndex() {
 		if(this.getLastBlock() != null) {
 			return this.getLastBlock().getIndex();
-		}
-		else {
+		} else {
 			return Genesis.GENESIS_INDEX;
 		}
 	}	
@@ -47,7 +46,7 @@ public class Chain extends ChainPart {
 	@Override
 	public void linkBlock(Block block) {
 		synchronized(getBlockList()) {
-			if( ! block.isGenesis()) {
+			if(!block.isGenesis()) {
 				block.setPreviousHash(getLastBlock().getHash());
 				block.setIndex(getLastIndex() + 1);
 			}
@@ -63,7 +62,7 @@ public class Chain extends ChainPart {
 			List<ISingleData> dataList = new LinkedList<ISingleData>();
 
 			Block block = getBlockList().getLast();
-			while( block != null && block.getIndex() >= startIndex ) {
+			while(block != null && block.getIndex() >= startIndex) {
 				block = getBlockList().removeLast();
 				dataList.addAll(block.getDataList());
 			}

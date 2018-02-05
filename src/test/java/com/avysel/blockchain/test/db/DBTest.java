@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import com.avysel.blockchain.db.DBManager;
 import com.avysel.blockchain.model.block.Block;
@@ -34,28 +35,26 @@ public class DBTest {
 		
 		testData.setData(DBTest.TEST_DATA_DATA);
 		testData.setHash(DBTest.TEST_DATA_HASH);
+		
+		testBlock.addData(testData);
 	}
 	
 	@Test
 	public void writeBlockTest() {
 		DBManager db = new DBManager();
 		db.putBlock(testBlock);
-	}
-	
-	@Test
-	public void readBlockTest() {
 		
+		Block block = db.getBlock(testBlock.getHash());
+		
+		assertEquals(block, testBlock);
 	}
 	
-	@Test
+	
+/*	@Test
 	public void writeDataTest() {
 		DBManager db = new DBManager();
 		db.putData(testData);		
 	}
-	
-	@Test
-	public void readDataTest() {
-		
-	}
+	*/
 	
 }

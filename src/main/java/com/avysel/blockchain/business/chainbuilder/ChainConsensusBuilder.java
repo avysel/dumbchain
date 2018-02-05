@@ -185,7 +185,6 @@ public class ChainConsensusBuilder {
 	 * Rollback to last accepted block, and catch-up again.
 	 */
 	public void checkConsistency() {
-		// TODO a remanier
 		
 		if(!isCheckingConsistency && nbConsecutiveRejects >= MAX_CONSECUTIVE_REJECTS_ALLOWED) {
 
@@ -193,18 +192,18 @@ public class ChainConsensusBuilder {
 
 			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
 			
-			// if there is at least one block after the genesis
-	/*		if(lastLinkedIndex > Genesis.GENESIS_INDEX) {
-				// remove local unsafe part
-				blockchain.unlink(lastLinkedIndex + 1);	
-				
-				// catch-up network existing safe part
-				blockchain.catchUp(lastLinkedIndex + 1);
-			}
-			else {
-				// catch-up from first block
-				blockchain.catchUp(1);
-			}*/
+			
+			/*
+			 * TODO à remanier
+			 * Idee : chaque block est ajouté au chainbuilder (miné et incoming)
+			 * A chaque erreur de cohérence détectée (définir : quand a t on une erreur de cohérence), on essaie de lancher le chain builder
+			 * Le chain builder doit etre modifié pour essayer de construire la plus grande chaine
+			 * Le chaine builder peut ne conserver les blocks que depuis un certain index (définir : comment choisir le block du départ de l'historique
+			 * 
+			 * Si une plus grande chain est construite, on repart à partir de ça
+			 * 
+			 */
+			
 
 			log.info("Consistency check completed.");
 			nbConsecutiveRejects = 0;

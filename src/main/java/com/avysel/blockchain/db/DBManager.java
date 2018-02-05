@@ -9,79 +9,80 @@ import org.iq80.leveldb.Options;
 
 import com.avysel.blockchain.model.block.Block;
 import com.avysel.blockchain.model.chain.ChainPart;
-import com.avysel.blockchain.model.data.SingleData;
+import com.avysel.blockchain.model.data.ISingleData;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.avysel.blockchain.tools.Util;
 
 public class DBManager {
 
 	private static String DB_DIR_PATH = "C:\\Developpement\\leveldb";
-	
-	private DB db;
+
 
 	public DBManager() {
-		db = null;
+
 	}
-	
+
 	private void createDir() {
 		File directory = new File(DB_DIR_PATH);
 		if(!directory.exists() && !directory.mkdir()) {
 			System.out.println("Error while creating DB file");
 		}
 	}
-	
-	public void openDB() {
+
+	public DB openDB() {
 		Options options = new Options();
 		options.createIfMissing(true);
+		DB db = null;
+
 		try {
 			createDir();
 			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
-		try {
-			// Use the db in here....
-			System.out.println(db != null);
-		} finally {
-			// Make sure you close the db to shutdown the 
-			// database and avoid resource leaks.
-			try {
-				if(db != null)
-					db.close();
-			} catch (IOException e) {
 
-				e.printStackTrace();
-			}
-		}	
+		return db;
+	}
+
+	private void closeDB(DB db) {
+		try {
+			if(db != null)
+				db.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public void putChain(ChainPart chain) {
-		
+		DB db = openDB();
+		db.put(Util.bytes(chain.getHash()), Util.bytes(chain));
+		closeDB(db);
 	}
 
 	public void putBlock(Block block) {
-		openDB();
+		DB db = openDB();
 		db.put(Util.bytes(block.getHash()), Util.bytes(block));
+		closeDB(db);
 	}
 
-	public void putData(SingleData data) {
-
+	public void putData(ISingleData data) {
+		DB db = openDB();
 	}
 
 	public ChainPart getChain() {
+		DB db = openDB();
 		return null;
 	}
 
 	public Block getBlock(String hash) {
-		openDB();
+		DB db = openDB();
 		String sBlock = Util.string(db.get(Util.bytes(hash)));
 		return JsonMapper.jsonToBlock(sBlock);
 	}
 
-	public SingleData getData() {
+	public ISingleData getData(String uid) {
+		DB db = openDB();
 		return null;
 	}
-	
-	
+
 }

@@ -160,9 +160,16 @@ public class Blockchain {
 	}
 
 	/**
+	 * Save blockcaing
+	 */
+	public void save() {
+		
+	}
+	
+	/**
 	 * Load existing Chain from database.
 	 */
-	public void loadChain() {
+	public void load() {
 
 	}
 

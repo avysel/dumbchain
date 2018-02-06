@@ -21,10 +21,10 @@ public class ChainBuilder {
 	private static Logger log = Logger.getLogger(ChainBuilder.class);
 
 	// blocks map, index = block hash
-	private  HashMap<String, Block> hashIndexedBlocks;
+	private HashMap<String, Block> hashIndexedBlocks;
 
 	// blocks map, sorted by index value
-	private  TreeMap<Long, List<Block>> indexIndexedBlocks;
+	private TreeMap<Long, List<Block>> indexIndexedBlocks;
 
 	// blocks map, sorted by increasing creation timestamp
 	private TreeMap<Long, Block> timeIndexedBlocks;
@@ -60,23 +60,16 @@ public class ChainBuilder {
 	}
 
 	public ChainPart build() {
-		//ChainPart byIndex = buildByIndex();
 		ChainPart byTime = buildByTimestamp();
 		ChainPart byHash = buildByHash();
 
-		//boolean indexTime = checkChainEquality(byIndex, byTime);
-		//boolean indexHash = checkChainEquality(byIndex, byHash);
 		boolean timeHash = checkChainEquality(byTime, byHash);
 
-		if(/*indexTime == indexHash == */timeHash) {
+		if(timeHash) {
 			return byHash;
 		}
 
 		return null;
-	}
-
-	private ChainPart buildByIndex() {
-		return null;//buildByMap(indexIndexedBlocks);
 	}
 
 	private ChainPart buildByTimestamp() {
@@ -165,9 +158,14 @@ public class ChainBuilder {
 				}
 			}
 		}
-		
+
 		if (possibleChains.size() == 0)
 			possibleChains.add(currentChain);
 		return possibleChains.stream().max(Comparator.comparing(ChainPart::size)).get();
+	}
+	
+	public ChainPart resolveFork(ChainPart currentChain, ChainPart targetChain) {
+		
+		return null;
 	}
 }

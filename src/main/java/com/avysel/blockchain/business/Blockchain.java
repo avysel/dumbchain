@@ -160,7 +160,7 @@ public class Blockchain {
 	}
 
 	/**
-	 * Save blockcaing
+	 * Save blockchain.
 	 */
 	public void save() {
 		

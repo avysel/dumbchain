@@ -160,11 +160,16 @@ public class ChainPart implements Cloneable {
 	}
 
 	/**
-	 * Provides a deep clone of this ChainPart instance.
+	 * Provides a deep clone of this ChainPart instance. 
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
 	public ChainPart clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 		String serializedChainPart = JsonMapper.chainToJson(this) ;
 		ChainPart deserializedChainPart = JsonMapper.jsonToChain(serializedChainPart);
 		return deserializedChainPart;

@@ -8,6 +8,7 @@ import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.chain.Chain;
+import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.mining.proof.IProof;
@@ -19,6 +20,8 @@ import com.avysel.blockchain.mining.proof.ProofOfWork;
 public class ChainConsensusBuilder {
 
 	private static Logger log = Logger.getLogger(ChainConsensusBuilder.class);
+	
+	private ChainBuilder builder;
 	
 	// how many blocks can be rejected before starting investigation on chain consistency
 	private static final int MAX_CONSECUTIVE_REJECTS_ALLOWED = 5;
@@ -50,6 +53,7 @@ public class ChainConsensusBuilder {
 	public ChainConsensusBuilder(Blockchain blockchain) {
 		if(blockchain != null) 
 			this.chain = blockchain.getChain();
+		this.builder = new ChainBuilder();
 		this.blockchain = blockchain;
 		this.nbConsecutiveRejects = 0;
 		this.isCheckingConsistency = false;
@@ -66,6 +70,9 @@ public class ChainConsensusBuilder {
 
 		if(incomingBlock == null) return RejectReason.OTHER;
 
+		// store block in case of chain re-building is needed
+		builder.addPendingBlock(incomingBlock);
+		
 		// integrity of block has to be ok
 		if(!BlockchainManager.checkBlockHash(incomingBlock))	{
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because of wrong hash.");
@@ -197,6 +204,8 @@ public class ChainConsensusBuilder {
 
 			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
 			
+			ChainPart reBuiltChain = builder.buildLongestChain(null);
+			ChainPart finalChain = builder.resolveFork(blockchain.getChain(), reBuiltChain);
 			
 			/*
 			 * TODO à remanier

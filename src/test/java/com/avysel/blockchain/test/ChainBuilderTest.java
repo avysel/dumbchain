@@ -1,5 +1,6 @@
 package com.avysel.blockchain.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Collections;
@@ -9,7 +10,6 @@ import org.junit.Test;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.chainbuilder.ChainBuilder;
-
 public class ChainBuilderTest {
 
 	@Test
@@ -126,6 +126,10 @@ public class ChainBuilderTest {
 		ChainPart result = builder.buildLongestChain(chain);
 		System.out.println("=== Result ===");
 		result.debugDisplay();
+		
+		assertNotNull(result);
+		assertEquals(result.size(), 7);
+		assertEquals(result.getLastBlock().getHash(), b12.getHash());
 	}
 	
 }

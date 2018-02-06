@@ -52,17 +52,24 @@ public class ChainBuilder {
 	 */
 	public void addPendingBlock(Block block) {
 		log.debug("Add pending block : "+block);
-		hashIndexedBlocks.put(block.getHash(), block);
 
-		List<Block> indexedBlocks = indexIndexedBlocks.get(block.getIndex());
-		if(indexedBlocks == null)
-			indexedBlocks = new ArrayList<Block>();
-		indexedBlocks.add(block);
-		indexIndexedBlocks.put(block.getIndex(), indexedBlocks);
+		synchronized(hashIndexedBlocks) {
+			hashIndexedBlocks.put(block.getHash(), block);
+		}
 
-		timeIndexedBlocks.put(block.getTimestamp(), block);
+		synchronized(indexIndexedBlocks) {
+			List<Block> indexedBlocks = indexIndexedBlocks.get(block.getIndex());
+			if(indexedBlocks == null)
+				indexedBlocks = new ArrayList<Block>();
+			indexedBlocks.add(block);
+			indexIndexedBlocks.put(block.getIndex(), indexedBlocks);
+		}
+
+		synchronized(timeIndexedBlocks) {
+			timeIndexedBlocks.put(block.getTimestamp(), block);
+		}
 	}
-	
+
 	/**
 	 * Try to build a chain according to hashes/previous hashes, and timestamp.
 	 * @return a chain composed of blocks stored in the builder, if tries based on hashes and timestamps give consistent result. Null otherwise.
@@ -85,13 +92,15 @@ public class ChainBuilder {
 	 * @return a timestamp ordered chain
 	 */
 	private ChainPart buildByTimestamp() {
-		ChainPart chain = new ChainPart();
-		if(timeIndexedBlocks != null && !timeIndexedBlocks.isEmpty()) {
-			for (Map.Entry<Long, Block> entry : timeIndexedBlocks.entrySet()) {
-				chain.getBlockList().add(entry.getValue());
+		synchronized(timeIndexedBlocks) {
+			ChainPart chain = new ChainPart();
+			if(timeIndexedBlocks != null && !timeIndexedBlocks.isEmpty()) {
+				for (Map.Entry<Long, Block> entry : timeIndexedBlocks.entrySet()) {
+					chain.getBlockList().add(entry.getValue());
+				}
 			}
+			return chain;
 		}
-		return chain;
 	}
 
 	/**
@@ -99,31 +108,33 @@ public class ChainBuilder {
 	 * @return a chain composed of blocks linked by their hash.
 	 */
 	private ChainPart buildByHash() {
-		ChainPart chain = new ChainPart();
-		if(hashIndexedBlocks == null || hashIndexedBlocks.isEmpty()) {
-			return chain;
-		}
-		// get the block with no parent
-		Block firstBlock = hashIndexedBlocks.entrySet().stream()
-				.filter(map -> getBlockByHash(map.getValue().getPreviousHash()) == null)
-				.findFirst().get().getValue();
+		synchronized(hashIndexedBlocks) {
+			ChainPart chain = new ChainPart();
+			if(hashIndexedBlocks == null || hashIndexedBlocks.isEmpty()) {
+				return chain;
+			}
+			// get the block with no parent
+			Block firstBlock = hashIndexedBlocks.entrySet().stream()
+					.filter(map -> getBlockByHash(map.getValue().getPreviousHash()) == null)
+					.findFirst().get().getValue();
 
-		chain.getBlockList().add(firstBlock);
+			chain.getBlockList().add(firstBlock);
 
-		Block current = firstBlock;
-		boolean found = true;
-		while (found) {
-			found = false;
-			for (Map.Entry<String, Block> entry : hashIndexedBlocks.entrySet()) {
-				if(entry.getValue().getPreviousHash().equals(current.getHash())) {
-					chain.getBlockList().add(entry.getValue());
-					current = entry.getValue();
-					found = true;
+			Block current = firstBlock;
+			boolean found = true;
+			while (found) {
+				found = false;
+				for (Map.Entry<String, Block> entry : hashIndexedBlocks.entrySet()) {
+					if(entry.getValue().getPreviousHash().equals(current.getHash())) {
+						chain.getBlockList().add(entry.getValue());
+						current = entry.getValue();
+						found = true;
+					}
 				}
 			}
-		}
 
-		return chain;
+			return chain;
+		}
 	}
 
 	/**
@@ -160,36 +171,37 @@ public class ChainBuilder {
 	 * @return a chain composed of the start chain completed with the longest chain possible built with blocks stored in builder.
 	 */
 	public ChainPart buildLongestChain(ChainPart currentChain) {
-		if(currentChain == null)
-			currentChain = new ChainPart();
+		synchronized(indexIndexedBlocks) {
+			if(currentChain == null)
+				currentChain = new ChainPart();
 
-		Block lastBlock = currentChain.getLastBlock();
-		long index;
-		if(lastBlock != null)
-			index = lastBlock.getIndex();
-		else 
-			index = 0;
+			Block lastBlock = currentChain.getLastBlock();
+			long index;
+			if(lastBlock != null)
+				index = lastBlock.getIndex();
+			else 
+				index = 0;
 
-		List<Block> nextBlocks = indexIndexedBlocks.get(index + 1);
-		List<ChainPart> possibleChains = new ArrayList<ChainPart>();
-		if(nextBlocks != null) {
-			// for every block with next index ...
-			for (Block nextBlock : nextBlocks) {
-				if(nextBlock.getIndex() == lastBlock.getIndex() + 1
-						&& nextBlock.getPreviousHash().equals(lastBlock.getHash())) {
-					// ... try to build a new chain by appending this block to the current chain
-					ChainPart possibleChain = currentChain.clone();				
-					possibleChain.addBlock(nextBlock);
-					possibleChain.debugDisplay();
-					// then continue to explore next levels
-					possibleChains.add(buildLongestChain(possibleChain));
+			List<Block> nextBlocks = indexIndexedBlocks.get(index + 1);
+			List<ChainPart> possibleChains = new ArrayList<ChainPart>();
+			if(nextBlocks != null) {
+				// for every block with next index ...
+				for (Block nextBlock : nextBlocks) {
+					if(nextBlock.getIndex() == lastBlock.getIndex() + 1
+							&& nextBlock.getPreviousHash().equals(lastBlock.getHash())) {
+						// ... try to build a new chain by appending this block to the current chain
+						ChainPart possibleChain = currentChain.clone();				
+						possibleChain.addBlock(nextBlock);
+						possibleChain.debugDisplay();
+						// then continue to explore next levels
+						possibleChains.add(buildLongestChain(possibleChain));
+					}
 				}
 			}
+
+			if (possibleChains.size() == 0)
+				possibleChains.add(currentChain);
+			return possibleChains.stream().max(Comparator.comparing(ChainPart::size)).get();
 		}
-
-		if (possibleChains.size() == 0)
-			possibleChains.add(currentChain);
-		return possibleChains.stream().max(Comparator.comparing(ChainPart::size)).get();
 	}
-
 }

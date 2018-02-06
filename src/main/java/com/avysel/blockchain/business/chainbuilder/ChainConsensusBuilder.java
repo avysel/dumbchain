@@ -80,7 +80,7 @@ public class ChainConsensusBuilder {
 		}
 
 		// block has to respect proof of work
-		IProof proof = new ProofOfWork();
+		IProof proof = new ProofOfWork(); // TODO inject instead of instanciate
 		if(!proof.checkCondition(incomingBlock)) {
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because it doesn't respect proof of work condition.");
 			return RejectReason.PROOF_OF_WORK;
@@ -209,7 +209,7 @@ public class ChainConsensusBuilder {
 			/*
 			 * TODO à remanier
 			 * Idee : chaque block est ajouté au chainbuilder (miné et incoming)
-			 * A chaque erreur de cohérence détectée (définir : quand a t on une erreur de cohérence), on essaie de lancher le chain builder
+			 * A chaque erreur de cohérence détectée (définir : quand a t on une erreur de cohérence), on essaie de lancer le chain builder
 			 * Le chain builder doit etre modifié pour essayer de construire la plus grande chaine
 			 * Le chaine builder peut ne conserver les blocks que depuis un certain index (définir : comment choisir le block du départ de l'historique
 			 * 

@@ -205,7 +205,6 @@ public class ChainConsensusBuilder {
 			log.info("Bad consistency, unlink and catch-up after "+lastLinkedIndex);
 			
 			ChainPart reBuiltChain = builder.buildLongestChain(null);
-			ChainPart finalChain = builder.resolveFork(blockchain.getChain(), reBuiltChain);
 			
 			/*
 			 * TODO à remanier

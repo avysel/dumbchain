@@ -46,6 +46,10 @@ public class ChainBuilder {
 		}
 	}	
 
+	/**
+	 * Add a block to the builder.
+	 * @param block the block to add.
+	 */
 	public void addPendingBlock(Block block) {
 		log.debug("Add pending block : "+block);
 		hashIndexedBlocks.put(block.getHash(), block);
@@ -58,7 +62,11 @@ public class ChainBuilder {
 
 		timeIndexedBlocks.put(block.getTimestamp(), block);
 	}
-
+	
+	/**
+	 * Try to build a chain according to hashes/previous hashes, and timestamp.
+	 * @return a chain composed of blocks stored in the builder, if tries based on hashes and timestamps give consistent result. Null otherwise.
+	 */
 	public ChainPart build() {
 		ChainPart byTime = buildByTimestamp();
 		ChainPart byHash = buildByHash();
@@ -72,20 +80,24 @@ public class ChainBuilder {
 		return null;
 	}
 
+	/**
+	 * Try to build a chain by ordering blocks according to their creation timestamp, based on all blocks stored in the builder.
+	 * @return a timestamp ordered chain
+	 */
 	private ChainPart buildByTimestamp() {
-		return buildByMap(timeIndexedBlocks);
-	}
-
-	private ChainPart buildByMap(TreeMap<Long, Block> map) {
 		ChainPart chain = new ChainPart();
-		if(map != null && !map.isEmpty()) {
-			for (Map.Entry<Long, Block> entry : map.entrySet()) {
+		if(timeIndexedBlocks != null && !timeIndexedBlocks.isEmpty()) {
+			for (Map.Entry<Long, Block> entry : timeIndexedBlocks.entrySet()) {
 				chain.getBlockList().add(entry.getValue());
 			}
 		}
-		return chain;		
+		return chain;
 	}
 
+	/**
+	 * Try to build a chain by linking blocks according to their hashes/previous hashes, based on all blocks stored in the builder.
+	 * @return a chain composed of blocks linked by their hash.
+	 */
 	private ChainPart buildByHash() {
 		ChainPart chain = new ChainPart();
 		if(hashIndexedBlocks == null || hashIndexedBlocks.isEmpty()) {
@@ -114,10 +126,21 @@ public class ChainBuilder {
 		return chain;
 	}
 
+	/**
+	 * Get a block for a given hash, among all blocks stored in the builder.
+	 * @param hash the hash.
+	 * @return the block with given hash.
+	 */
 	private Block getBlockByHash(String hash) {
 		return hashIndexedBlocks.get(hash);
 	}
 
+	/**
+	 * Check if two chains are equals (composed of same blocks, in same order).
+	 * @param chain1 the first chain to compare.
+	 * @param chain2 the second chain to compare.
+	 * @return true if the two chains are equals, false otherwise.
+	 */
 	private boolean checkChainEquality(ChainPart chain1, ChainPart chain2) {
 
 		if (!(chain1 != null && chain2 != null)
@@ -131,6 +154,11 @@ public class ChainBuilder {
 		return true;
 	}
 
+	/**
+	 * Try to build the longest chain, starting from a start chain, completed with blocks stored in ChainBuilder.
+	 * @param currentChain the start chain
+	 * @return a chain composed of the start chain completed with the longest chain possible built with blocks stored in builder.
+	 */
 	public ChainPart buildLongestChain(ChainPart currentChain) {
 		if(currentChain == null)
 			currentChain = new ChainPart();
@@ -163,9 +191,5 @@ public class ChainBuilder {
 			possibleChains.add(currentChain);
 		return possibleChains.stream().max(Comparator.comparing(ChainPart::size)).get();
 	}
-	
-	public ChainPart resolveFork(ChainPart currentChain, ChainPart targetChain) {
-		
-		return null;
-	}
+
 }

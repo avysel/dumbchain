@@ -156,6 +156,7 @@ public class Block {
 	 * Quality is used when two blocks are in competition to be added to the chain, the one with higher quality will be added, the other one will be rejected.
 	 * @return the quality of the block
 	 */
+	@JsonIgnore
 	public long getQuality() {
 		// TODO how to make it overridable or customisable ?
 		return getDifficulty();

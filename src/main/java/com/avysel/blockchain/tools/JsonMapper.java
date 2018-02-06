@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.business.data.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
@@ -243,4 +244,28 @@ public final class JsonMapper {
 		return (CatchUpDataMessage) jsonToGeneric(jsonData, CatchUpDataMessage.class);
 	}
 
+	public static String chainToJson(ChainPart chain) {
+		return genericToJson(chain);
+	}
+	
+	public static ChainPart jsonToChain(String jsonData) {
+		ChainPart chain = null;
+
+		if(jsonData == null || jsonData.isEmpty()) return null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		try {
+			chain =  mapper.readValue(jsonData, ChainPart.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return chain;			
+	}
+	
 }

@@ -20,7 +20,7 @@ import com.avysel.blockchain.mining.proof.ProofOfWork;
  * The Miner creates Blocks with pending data. Each try of create a Block use a random quantity of data. If a Block can be created, it's linked to the Chain
  *  and sent to the network. If a Block can't be created with peeked data, creation is canceled, data is put back to pending data, and a new try is started.
  */
-public class Miner {
+public class Miner implements Runnable {
 
 	private static Logger log = Logger.getLogger(Miner.class);
 
@@ -57,6 +57,11 @@ public class Miner {
 	 * Starts mining.
 	 */
 	public void start() {
+		new Thread(this).start();
+	}
+
+	@Override
+	public void run() {
 		log.info("Start miner.");
 		// while mining blockchain node is running
 		while(miningNode) {
@@ -76,7 +81,7 @@ public class Miner {
 		log.info("End miner.");
 		log.debug("Effort : "+blockchain.getChain().getEffort());		
 	}
-
+	
 	/**
 	 * Stop mining.
 	 */

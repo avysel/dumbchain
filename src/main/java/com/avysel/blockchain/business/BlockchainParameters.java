@@ -7,6 +7,14 @@ import java.nio.charset.Charset;
  */
 public class BlockchainParameters {
 	
+	public class Constants {
+		public static final boolean MINING_YES = true;
+		public static final boolean MINING_NO = false;	
+
+		public static final boolean DATA_GENERATOR_YES = true;
+		public static final boolean DATA_GENERATOR_NO = false;		
+	}
+	
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	
 	/**
@@ -19,33 +27,19 @@ public class BlockchainParameters {
 	 */
 	public static final int MAX_BLOCKS_PER_BULK = 5;	
 	
-	public static final String SEPARATOR = "=";
-	public static final String ENABLED = "1";
-	public static final String DISABLED = "0";
-	
-	public static final boolean MINING_YES = true;
-	public static final boolean MINING_NO = false;	
-	
-	public static final boolean CAN_START_ALONE_YES = true;
-	public static final boolean CAN_START_ALONE_NO = false;	
-
-	public static final boolean USE_NETWORK_YES = true;
-	public static final boolean USE_NETWORK_NO = false;		
-
-	public static final boolean DATA_GENERATOR_YES = true;
-	public static final boolean DATA_GENERATOR_NO = false;		
+	/**
+	 * Number of last blocks that are considered as unsafe because they still can be unlinked 
+	 * and replaced by other blocks due to consensus.
+	 */
+	public static final int UNSAFE_HEIGTH = 5;
 	
 	private boolean miningNode;
-	private boolean canStartAlone;
-	private boolean useNetwork;
 	private boolean demoDataGenerator;
 	
 	public BlockchainParameters() {
 		// init default
-		miningNode = MINING_YES;
-		canStartAlone = CAN_START_ALONE_YES;
-		useNetwork = USE_NETWORK_YES;
-		demoDataGenerator = DATA_GENERATOR_YES;
+		miningNode = Constants.MINING_YES;
+		demoDataGenerator = Constants.DATA_GENERATOR_YES;
 	}
 	
 	public boolean isMiningNode() {
@@ -53,18 +47,6 @@ public class BlockchainParameters {
 	}
 	public void setMiningNode(boolean miningNode) {
 		this.miningNode = miningNode;
-	}
-	public boolean isCanStartAlone() {
-		return canStartAlone;
-	}
-	public void setCanStartAlone(boolean canStartAlone) {
-		this.canStartAlone = canStartAlone;
-	}
-	public boolean isUseNetwork() {
-		return useNetwork;
-	}
-	public void setUseNetwork(boolean useNetwork) {
-		this.useNetwork = useNetwork;
 	}
 	public boolean isDemoDataGenerator() {
 		return demoDataGenerator;
@@ -80,10 +62,6 @@ public class BlockchainParameters {
 		help.append("\n\n\t -help displays this help menu.");
 		help.append("\n\n\t -mining=1 for a mining node (default).")
 		.append("\n\t -mining=0 for a not mining node.");
-		help.append("\n\n\t -canStartAlone=1 for a node that can start alone (default).")
-		.append("\n\t -canStartAlone=0 for a node that cannot start without other peer.");
-		help.append("\n\n\t -useNetwork=1 for a node that listen to network to catch new data (default).")
-		.append("\n\t -useNetwork=0 for a node that doesn't listen to network to catch new data. (mining is therefore disabled)");
 		
 		help.append("\n\n\tDemo parameters : ");
 		help.append("\n\n\t -demoDataGenerator=1 for a demo data generator node.")

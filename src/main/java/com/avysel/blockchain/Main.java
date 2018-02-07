@@ -30,6 +30,10 @@ public final class Main {
 		blockchain.display();			
 	}
 
+	public static final String SEPARATOR = "=";
+	public static final String ENABLED = "1";
+	public static final String DISABLED = "0";	
+	
 	private static BlockchainParameters processParams(String[] args) {
 
 		BlockchainParameters params = new BlockchainParameters();
@@ -37,57 +41,33 @@ public final class Main {
 		for(int i=0; i<args.length; i++) {
 			
 			String param = args[i];
-			String[] data = param.split(BlockchainParameters.SEPARATOR);
+			String[] data = param.split(SEPARATOR);
 			
 			switch(data[0]) {
 			case "-mining":
 				String miningValue = data[1];
-				if(BlockchainParameters.ENABLED.equals(miningValue)) {
+				if(ENABLED.equals(miningValue)) {
 					log.info("Start mining node");
-					params.setMiningNode(BlockchainParameters.MINING_YES);
-				} else if (BlockchainParameters.DISABLED.equals(miningValue)) {
+					params.setMiningNode(BlockchainParameters.Constants.MINING_YES);
+				} else if (DISABLED.equals(miningValue)) {
 					log.info("Start NOT mining node");
-					params.setMiningNode(BlockchainParameters.MINING_NO);
+					params.setMiningNode(BlockchainParameters.Constants.MINING_NO);
 				} else {
 					log.error("Unknown value ' "+args[i]+"' for parameter -mining");
 				}
 				break;
 			case "-demoDataGenerator":
 				String dataGeneratorValue = data[1];
-				if(BlockchainParameters.ENABLED.equals(dataGeneratorValue)) {
+				if(ENABLED.equals(dataGeneratorValue)) {
 					log.info("Start demo data generator node");
-					params.setDemoDataGenerator(BlockchainParameters.DATA_GENERATOR_YES);
-				} else if (BlockchainParameters.DISABLED.equals(dataGeneratorValue)) {
+					params.setDemoDataGenerator(BlockchainParameters.Constants.DATA_GENERATOR_YES);
+				} else if (DISABLED.equals(dataGeneratorValue)) {
 					log.info("Start NOT demo data generator node");
-					params.setDemoDataGenerator(BlockchainParameters.DATA_GENERATOR_NO);
+					params.setDemoDataGenerator(BlockchainParameters.Constants.DATA_GENERATOR_NO);
 				} else {
 					log.error("Unknown value ' "+args[i]+"' for parameter -demoDataGenerator");
 				}
-				break;
-			case "-canStartAlone":
-				String canStartAlone = data[1];
-				if(BlockchainParameters.ENABLED.equals(canStartAlone)) {
-					log.info("Start node that can start alone.");
-					params.setCanStartAlone(BlockchainParameters.CAN_START_ALONE_YES);
-				} else if (BlockchainParameters.DISABLED.equals(canStartAlone)) {
-					log.info("Start node that can't sart withour other peers.");
-					params.setCanStartAlone(BlockchainParameters.CAN_START_ALONE_NO);
-				} else {
-					log.error("Unknown value ' "+args[i]+"' for parameter -canStartAlone");
-				}
-				break;
-			case "-useNetwork":
-				String useNetwork = data[1];
-				if(BlockchainParameters.ENABLED.equals(useNetwork)) {
-					log.info("Start node that uses network.");
-					params.setUseNetwork(BlockchainParameters.USE_NETWORK_YES);
-				} else if (BlockchainParameters.DISABLED.equals(useNetwork)) {
-					log.info("Start node that doesn't use network.");
-					params.setUseNetwork(BlockchainParameters.USE_NETWORK_NO);
-				} else {
-					log.error("Unknown value ' "+args[i]+"' for parameter -useNetwork");
-				}
-				break;				
+				break;			
 			case "-help" :
 				System.out.println(BlockchainParameters.getUsage());
 				break;

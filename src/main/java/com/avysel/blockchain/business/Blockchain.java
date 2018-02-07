@@ -163,9 +163,9 @@ public class Blockchain {
 	 * Save blockchain.
 	 */
 	public void save() {
-		
+
 	}
-	
+
 	/**
 	 * Load existing Chain from database.
 	 */
@@ -207,7 +207,7 @@ public class Blockchain {
 			incomingBlockAdded = false;
 			e.printStackTrace();
 		}
-		
+
 		if(incomingBlockAdded) {
 			log.debug("Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
 			log.debug(block);
@@ -281,11 +281,9 @@ public class Blockchain {
 	public void start() {
 		log.info("Starting blockchain");
 
-		if(params.isUseNetwork()) {
-			network.start();
-			catchUp(this.getLastIndex() + 1);
-		}
-		
+		network.start();
+		catchUp(this.getLastIndex() + 1);
+
 		if(params.isDemoDataGenerator()) {
 			(new RandomDataGenerator(this)).start();
 		}
@@ -320,7 +318,7 @@ public class Blockchain {
 	public void catchUp(long startIndex) {
 		catchUpCompleted = false;
 		miner.pauseMining();
-		
+
 		/*
 		 * Wait for few peers connection
 		 * ask for how many blocks since this.chainHeight

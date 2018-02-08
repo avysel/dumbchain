@@ -12,8 +12,9 @@ import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
-import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.business.chainbuilder.ChainSender;
+import com.avysel.blockchain.business.data.ISingleData;
+import com.avysel.blockchain.db.DBManager;
 import com.avysel.blockchain.demo.RandomDataGenerator;
 import com.avysel.blockchain.exception.BlockIntegrityException;
 import com.avysel.blockchain.exception.ChainIntegrityException;
@@ -48,6 +49,8 @@ public class Blockchain {
 	// data network input/output
 	private NetworkManager network;
 
+	private DBManager dbManager;
+
 	// build chain according to consensus rules
 	private ChainConsensusBuilder consensusBuilder;
 
@@ -76,6 +79,7 @@ public class Blockchain {
 		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
+		this.dbManager = new DBManager();
 		this.consensusBuilder = new ChainConsensusBuilder(this);
 		this.catchUpCompleted = false;
 	}
@@ -163,14 +167,28 @@ public class Blockchain {
 	 * Save blockchain.
 	 */
 	public void save() {
-
+		dbManager.putChain(this.getNodeId(), this.getChain());
 	}
 
 	/**
 	 * Load existing Chain from database.
 	 */
 	public void load() {
+		log.info("Start loading from DB");
 
+		String nodeId = dbManager.getStoredNodeId();
+		if(nodeId != null) {
+			this.nodeId = nodeId;
+			Chain loadedChain = dbManager.getChain(this.getNodeId());
+			if(loadedChain != null) {
+				this.chain = loadedChain;
+				log.info("Local chain has been loaded, starting from index "+chain.getLastIndex());
+			} else {
+				log.info("No chain found for local node.");
+			}
+		} else {
+			log.info("No local chain to load.");
+		}
 	}
 
 	/**
@@ -281,8 +299,10 @@ public class Blockchain {
 	public void start() {
 		log.info("Starting blockchain");
 
+		load();
+
 		network.start();
-		catchUp(this.getLastIndex() + 1);
+		catchUp(this.getLastIndex());
 
 		if(params.isDemoDataGenerator()) {
 			(new RandomDataGenerator(this)).start();
@@ -313,9 +333,9 @@ public class Blockchain {
 
 	/**
 	 * Catch up with existing chain.
-	 * @param startIndex the index of first missing block.
+	 * @param lastIndex the index of last known block.
 	 */
-	public void catchUp(long startIndex) {
+	public void catchUp(long lastIndex) {
 		catchUpCompleted = false;
 		miner.pauseMining();
 
@@ -331,13 +351,15 @@ public class Blockchain {
 
 		catchUpBuilder = new ChainCatchUpBuilder(this);
 
-		if(catchUpBuilder.startCatchUp(startIndex)) {
+		if(catchUpBuilder.startCatchUp(lastIndex)) {
 			consensusBuilder.setLastLinkedIndex(chain.getLastIndex());
 		} else {
 			log.error("Catch-up failed.");
 		}
 
 		catchUpCompleted = true;
+		save();
+
 		miner.resumeMining();
 	}
 

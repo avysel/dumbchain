@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.block.Block;
+import com.avysel.blockchain.business.chain.Chain;
 import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.business.data.SingleData;
@@ -248,15 +249,35 @@ public final class JsonMapper {
 		return genericToJson(chain);
 	}
 	
-	public static ChainPart jsonToChain(String jsonData) {
-		ChainPart chain = null;
+	public static ChainPart jsonToChainPart(String jsonData) {
+		ChainPart chainPart = null;
 
 		if(jsonData == null || jsonData.isEmpty()) return null;
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
 		try {
-			chain =  mapper.readValue(jsonData, ChainPart.class);
+			chainPart =  mapper.readValue(jsonData, ChainPart.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return chainPart;			
+	}
+
+	public static Chain jsonToChain(String jsonData) {
+		Chain chain = null;
+
+		if(jsonData == null || jsonData.isEmpty()) return null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+		try {
+			chain =  mapper.readValue(jsonData, Chain.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -266,6 +287,6 @@ public final class JsonMapper {
 		}
 
 		return chain;			
-	}
+	}	
 	
 }

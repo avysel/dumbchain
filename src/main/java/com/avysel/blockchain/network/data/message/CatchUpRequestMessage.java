@@ -1,14 +1,14 @@
 package com.avysel.blockchain.network.data.message;
 
 public class CatchUpRequestMessage extends NetworkMessage {
-	private long startIndex;
+	private long lastIndex;
 
-	public long getStartIndex() {
-		return startIndex;
+	public long getLastIndex() {
+		return lastIndex;
 	}
 
-	public void setStartIndex(long startIndex) {
-		this.startIndex = startIndex;
+	public void setLastIndex(long startIndex) {
+		this.lastIndex = startIndex;
 	}
 	
 }

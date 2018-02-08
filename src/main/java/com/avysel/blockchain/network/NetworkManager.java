@@ -215,7 +215,7 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST :
 			log.debug("Incoming catch-up request");
 			CatchUpRequestMessage requestMessage = JsonMapper.jsonToCatchUpRequestMessage(bulk.getBulkData());
-			blockchain.sendCatchUp(bulk.getSender(), requestMessage.getStartIndex());
+			blockchain.sendCatchUp(bulk.getSender(), requestMessage.getLastIndex());
 			break;				
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
 			log.debug("Get catch up data");

@@ -5,11 +5,10 @@ import java.io.File;
 import java.io.IOException;
 
 import org.iq80.leveldb.DB;
+import org.iq80.leveldb.DBException;
 import org.iq80.leveldb.Options;
 
-import com.avysel.blockchain.business.block.Block;
-import com.avysel.blockchain.business.chain.ChainPart;
-import com.avysel.blockchain.business.data.ISingleData;
+import com.avysel.blockchain.business.chain.Chain;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.avysel.blockchain.tools.Util;
 
@@ -17,9 +16,12 @@ public class DBManager {
 
 	private static String DB_DIR_PATH = "C:\\Developpement\\leveldb";
 
+	private static String BLOCKCHAIN_ID_FIELD_KEY = "localNodeId";
+
+	private DB db;
 
 	public DBManager() {
-
+		db = null;
 	}
 
 	private void createDir() {
@@ -29,60 +31,85 @@ public class DBManager {
 		}
 	}
 
-	public DB openDB() {
+	public void openDB() {
+		if(db != null) return;
 		Options options = new Options();
 		options.createIfMissing(true);
-		DB db = null;
-
 		try {
 			createDir();
 			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return db;
 	}
 
-	private void closeDB(DB db) {
+	private void closeDB() {
 		try {
 			if(db != null)
 				db.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
-	public void putChain(ChainPart chain) {
-		DB db = openDB();
-		//db.put(Util.bytes(chain.getHash()), Util.bytes(chain));
-		closeDB(db);
+	public String getStoredNodeId() {
+		openDB();
+
+		byte[] nodeId = db.get(Util.bytes(BLOCKCHAIN_ID_FIELD_KEY));
+		closeDB();
+
+		return Util.string(nodeId);
 	}
+
+	public void putChain(String nodeId, Chain chain) {
+		openDB();
+		
+		byte[] nodeIdBytes = Util.bytes(nodeId);
+		byte[] chainBytes = Util.bytes(chain);
+		try {
+		db.put(nodeIdBytes, chainBytes);
+		} catch(DBException dbe) {
+			dbe.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		closeDB();
+	}
+
+	public Chain getChain(String nodeId) {
+		openDB();
+		if(nodeId != null) {
+			String jsonData = Util.string(db.get(Util.bytes(nodeId)));
+			Chain chain = JsonMapper.jsonToChain(jsonData);
+			closeDB();
+			return chain;
+		}
+		closeDB();
+		return null;
+	}	
+	
+	/*
 
 	public void putBlock(Block block) {
-		DB db = openDB();
+		openDB();
 		db.put(Util.bytes(block.getHash()), Util.bytes(block));
-		closeDB(db);
+		closeDB();
 	}
 
 	public void putData(ISingleData data) {
-		DB db = openDB();
-	}
-
-	public ChainPart getChain() {
-		DB db = openDB();
-		return null;
+		openDB();
 	}
 
 	public Block getBlock(String hash) {
-		DB db = openDB();
+		openDB();
 		String sBlock = Util.string(db.get(Util.bytes(hash)));
+		closeDB();
 		return JsonMapper.jsonToBlock(sBlock);
 	}
 
 	public ISingleData getData(String uid) {
-		DB db = openDB();
+		openDB();
 		return null;
 	}
-
+*/
 }

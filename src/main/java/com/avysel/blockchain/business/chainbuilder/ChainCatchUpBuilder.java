@@ -60,13 +60,13 @@ public class ChainCatchUpBuilder {
 		this.chainSize = chainSize;
 	}
 
-	public boolean startCatchUp(long startIndex) {
+	public boolean startCatchUp(long lastIndex) {
 		log.info("Start to catch up with chain");
 		
 		long startTime = System.currentTimeMillis();
 		
 		// send catch cup request
-		requestor.requestBlocks(startIndex);
+		requestor.requestBlocks(lastIndex);
 		
 		// wait to get catch up data or build successfull
 		while(completed != CatchUpResult.CATCH_UP_SUCCESSFUL 

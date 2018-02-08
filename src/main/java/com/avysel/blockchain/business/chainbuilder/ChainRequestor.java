@@ -44,13 +44,13 @@ public class ChainRequestor {
 
 	/**
 	 * Send a request to a peer to catch-up with current shared chain.
-	 * @param startIndex index of first requested block
+	 * @param lastIndex index of last known block
 	 */
-	public void requestBlocks(long startIndex) {
+	public void requestBlocks(long lastIndex) {
 		Peer peer = selectPeerToRequest();
 		if(peer != null) {
 			CatchUpRequestMessage message = new CatchUpRequestMessage();
-			message.setStartIndex(startIndex);
+			message.setLastIndex(lastIndex);
 			log.debug("Send chain request message : "+message);
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_REQUEST, message, peer);
 		}

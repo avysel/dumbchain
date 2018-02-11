@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
-import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.block.Genesis;
 import com.avysel.blockchain.network.data.NetworkDataBulk;

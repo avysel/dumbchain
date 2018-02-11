@@ -33,9 +33,9 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [ ] Chiffrer les données transmises
 
 ### Stockage
-- [ ] Couche de persistance LevelDB pour la chaîne.
-- [ ] Stockage en temps réel
-- [ ] Chargement au démarrage
+- [x] Couche de persistance LevelDB pour la chaîne.
+- [x] Stockage en temps réel
+- [x] Chargement au démarrage
 
 ### Utilisation
 - [ ] Création de données

@@ -67,7 +67,7 @@ public class Miner implements Runnable {
 		while(miningNode) {
 		
 			// if mining is not pending, and enough data in pool
-			if(!pauseMining && dataPool.size() > 0) {
+			if(!pauseMining && dataPool.size() > BlockchainParameters.MIN_DATA_IN_BLOCK) {
 				// create new block
 				Block block = mine();	
 

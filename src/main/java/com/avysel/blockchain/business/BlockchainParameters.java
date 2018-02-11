@@ -16,6 +16,11 @@ public class BlockchainParameters {
 	}
 	
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
+	/**
+	 * Minimum number of data to include in a block.
+	 */
+	public static final int MIN_DATA_IN_BLOCK = 50;	
 	
 	/**
 	 * Maximum number of data to include in a block.

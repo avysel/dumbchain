@@ -112,7 +112,7 @@ public class PeerListener implements Runnable {
 
 			case NetworkDataBulk.MESSAGE_PEER_HELLO :
 				log.debug("New peer on the network, add it.");
-				log.info("bulk id :"+bulk.getUid());
+				log.debug("bulk id :"+bulk.getUid());
 				Peer peer = JsonMapper.jsonToPeer(bulk.getBulkData());
 				peer.setLastAliveTimestamp(System.currentTimeMillis());
 				peer.setIp(packet.getAddress().toString().replace("/", ""));

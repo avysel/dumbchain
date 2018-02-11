@@ -16,13 +16,14 @@ public final class Main {
 	 * @param args parameters.
 	 */
 	public static void main(String[] args) {
-
-		Blockchain blockchain = new Blockchain();
+		
+		
 		
 		log.info(BlockchainParameters.getUsage());
 		
 		BlockchainParameters params = processParams(args);
-		blockchain.setParams(params);
+		
+		Blockchain blockchain = new Blockchain(params);
 		
 		log.info("Welcome to blockchain "+blockchain.toString());
 
@@ -36,7 +37,7 @@ public final class Main {
 	
 	private static BlockchainParameters processParams(String[] args) {
 
-		BlockchainParameters params = new BlockchainParameters();
+		BlockchainParameters params = new BlockchainParameters(null);
 		
 		for(int i=0; i<args.length; i++) {
 			
@@ -53,7 +54,7 @@ public final class Main {
 					log.info("Start NOT mining node");
 					params.setMiningNode(BlockchainParameters.Constants.MINING_NO);
 				} else {
-					log.error("Unknown value ' "+args[i]+"' for parameter -mining");
+					log.error("Unknown value ' "+data[1]+"' for parameter -mining");
 				}
 				break;
 			case "-demoDataGenerator":
@@ -65,14 +66,17 @@ public final class Main {
 					log.info("Start NOT demo data generator node");
 					params.setDemoDataGenerator(BlockchainParameters.Constants.DATA_GENERATOR_NO);
 				} else {
-					log.error("Unknown value ' "+args[i]+"' for parameter -demoDataGenerator");
+					log.error("Unknown value ' "+data[1]+"' for parameter -demoDataGenerator");
 				}
 				break;			
 			case "-help" :
 				System.out.println(BlockchainParameters.getUsage());
 				break;
+			case "-properties" :
+				params.loadProperties(data[1]);
+				break;				
 			default:
-				log.error("Unknown parameter : "+args[i]);
+				log.error("Unknown parameter : "+data[0]);
 				break;
 			}
 		}

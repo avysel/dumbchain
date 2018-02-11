@@ -22,7 +22,6 @@ public class ChainCatchUpBuilder {
 	private static Logger log = Logger.getLogger(ChainCatchUpBuilder.class);
 
 	private static final int CATCH_UP_RETRY_DELAY = 1000;
-	private static final int CATCH_UP_MAX_DURATION= 10000;
 	
 	private Blockchain blockchain;
 	private Chain chain;
@@ -71,7 +70,7 @@ public class ChainCatchUpBuilder {
 		// wait to get catch up data or build successfull
 		while(completed != CatchUpResult.CATCH_UP_SUCCESSFUL 
 				&& !getEmptyDataResult 
-				&& (System.currentTimeMillis() - startTime) <= CATCH_UP_MAX_DURATION) {
+				&& (System.currentTimeMillis() - startTime) <= blockchain.getParams().getProperties().getWaitForCatchupTime()) {
 			
 			// wait a few time bewteen two tries
 			try {

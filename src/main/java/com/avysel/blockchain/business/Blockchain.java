@@ -61,6 +61,13 @@ public class Blockchain {
 	private boolean catchUpCompleted;
 
 	public Blockchain() {
+		// init with default parameters
+		this.params = new BlockchainParameters();
+		init();
+	}
+	
+	public Blockchain(BlockchainParameters params) {
+		this.params = params;
 		init();
 	}
 
@@ -73,7 +80,7 @@ public class Blockchain {
 	}
 
 	private void init() {
-		this.dbManager = new DBManager();
+		this.dbManager = new DBManager(getParams().getProperties().getDbPath());
 		initNodeId(); 
 		this.chain = new Chain();
 		createChain();
@@ -357,7 +364,7 @@ public class Blockchain {
 		 * ask for how many blocks since this.chainHeight
 		 */
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(getParams().getProperties().getWaitForPeersTime());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

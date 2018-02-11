@@ -8,7 +8,6 @@ import java.util.TimeZone;
 import org.apache.log4j.Logger;
 
 import com.avysel.blockchain.business.Blockchain;
-import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.crypto.HashTools;
@@ -67,7 +66,7 @@ public class Miner implements Runnable {
 		while(miningNode) {
 		
 			// if mining is not pending, and enough data in pool
-			if(!pauseMining && dataPool.size() > BlockchainParameters.MIN_DATA_IN_BLOCK) {
+			if(!pauseMining && dataPool.size() > blockchain.getParams().getProperties().getMinDataInBlock()) {
 				// create new block
 				Block block = mine();	
 
@@ -98,7 +97,7 @@ public class Miner implements Runnable {
 		Block block = new Block();
 		
 		// pick new dataset, blocking when pending data is empty
-		List<ISingleData> dataList = dataPool.pickData(BlockchainParameters.MAX_DATA_IN_BLOCK);
+		List<ISingleData> dataList = dataPool.pickData(blockchain.getParams().getProperties().getMaxDataInBlock());
 
 		block.addAllData(dataList);	
 		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
@@ -121,7 +120,7 @@ public class Miner implements Runnable {
 
 				difficulty++;
 			}
-		} while (pauseMining || !proof.checkCondition(block)); // try again if pow is not checked
+		} while (pauseMining || !proof.checkCondition(blockchain.getParams(), block)); // try again if pow is not checked
 
 		return block;
 	}

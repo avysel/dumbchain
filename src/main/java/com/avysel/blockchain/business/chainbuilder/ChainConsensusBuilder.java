@@ -77,7 +77,7 @@ public class ChainConsensusBuilder {
 
 		// block has to respect proof of work
 		IProof proof = new ProofOfWork(); // TODO inject instead of instanciate
-		if(!proof.checkCondition(incomingBlock)) {
+		if(!proof.checkCondition(blockchain.getParams(), incomingBlock)) {
 			log.warn("Incoming block "+incomingBlock.getHash()+" rejected because it doesn't respect proof of work condition.");
 			return RejectReason.PROOF_OF_WORK;
 		}

@@ -13,18 +13,18 @@ import com.avysel.blockchain.tools.Util;
 
 public class DBManager {
 
-	private static String DB_DIR_PATH = "C:\\Developpement\\leveldb";
-
+	private String dirName;
 	private static String BLOCKCHAIN_ID_FIELD_KEY = "localNodeId";
 
 	private DB db;
 
-	public DBManager() {
+	public DBManager(String dirName) {
 		db = null;
+		this.dirName = dirName;
 	}
 
 	private void createDir() {
-		File directory = new File(DB_DIR_PATH);
+		File directory = new File(this.dirName);
 		if(!directory.exists() && !directory.mkdir()) {
 			System.out.println("Error while creating DB file");
 		}
@@ -36,7 +36,7 @@ public class DBManager {
 		options.createIfMissing(true);
 		try {
 			createDir();
-			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+			db = factory.open(new File(this.dirName), options);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,7 +57,7 @@ public class DBManager {
 		options.createIfMissing(true);
 		DB db = null;
 		try {
-			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+			db = factory.open(new File(this.dirName), options);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -84,7 +84,7 @@ public class DBManager {
 		options.createIfMissing(true);
 		DB db = null;
 		try {
-			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+			db = factory.open(new File(this.dirName), options);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class DBManager {
 		options.createIfMissing(true);
 		DB db = null;
 		try {
-			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+			db = factory.open(new File(this.dirName), options);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +137,7 @@ public class DBManager {
 		options.createIfMissing(true);
 		DB db = null;
 		try {
-			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+			db = factory.open(new File(this.dirName), options);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

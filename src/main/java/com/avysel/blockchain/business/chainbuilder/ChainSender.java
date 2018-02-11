@@ -47,8 +47,8 @@ public class ChainSender {
 				message.setSenderNodeId(this.blockchain.getNodeId());
 
 				// get subchain of MAX_BLOCKS_PER_BULK (or less, if less elements remain) elements
-				int from = i * BlockchainParameters.MAX_BLOCKS_PER_BULK + 1;
-				int to = Math.min((i+1)*BlockchainParameters.MAX_BLOCKS_PER_BULK + 1, blockchain.getChain().getBlockList().size());
+				int from = i * blockchain.getParams().getProperties().getMaxBlocksInBulk() + 1;
+				int to = Math.min((i+1)*blockchain.getParams().getProperties().getMaxBlocksInBulk() + 1, blockchain.getChain().getBlockList().size());
 				List<Block> sublist = blockchain.getChain().getBlockList().subList(from, to);
 
 				// add the previously selected blocks in the message

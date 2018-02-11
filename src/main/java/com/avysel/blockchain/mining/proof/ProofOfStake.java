@@ -1,5 +1,6 @@
 package com.avysel.blockchain.mining.proof;
 
+import com.avysel.blockchain.business.BlockchainParameters;
 import com.avysel.blockchain.business.block.Block;
 
 /**
@@ -8,7 +9,7 @@ import com.avysel.blockchain.business.block.Block;
 public class ProofOfStake implements IProof {
 
 	@Override
-	public boolean checkCondition(Block block) {
+	public boolean checkCondition(BlockchainParameters params, Block block) {
 		
 		return false;
 	}

@@ -13,7 +13,7 @@ public class ProofOfWork implements IProof {
 		String hash = block.getHash();
 		long difficulty = block.getDifficulty();
 
-		return hash.startsWith("00000") || difficulty > 1000000 && hash.startsWith("0000");
+		return hash.startsWith("0000") || difficulty > 1000000 && hash.startsWith("000");
 	}
 
 }

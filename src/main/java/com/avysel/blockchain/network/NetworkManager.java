@@ -187,7 +187,7 @@ public class NetworkManager {
 		log.debug("Incoming Bulk : "+bulk);
 		if(bulk.getSender() != null)
 			markPeerAsAlive(bulk.getSender().getUid());
-		
+
 		// make sure we don't process twice the same message if got twice
 		if(!canProcessBulk(bulk.getUid())) {
 			return;
@@ -220,8 +220,11 @@ public class NetworkManager {
 		case NetworkDataBulk.MESSAGE_CATCH_UP_BLOCKS :
 			log.debug("Get catch up data");
 			CatchUpDataMessage dataMessage = JsonMapper.jsonToCatchUpDataMessage(bulk.getBulkData());
-			List<Block> blocks = dataMessage.getBlocks();
-			blockchain.addCatchUp(blocks);
+			if(!dataMessage.getSenderNodeId().equals(blockchain.getNodeId())) {
+				// just in case the current node send chain to himself ...
+				List<Block> blocks = dataMessage.getBlocks();
+				blockchain.addCatchUp(blocks);
+			}
 			break;
 		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :
 			log.debug("Get an empty catch-up");
@@ -280,7 +283,7 @@ public class NetworkManager {
 	public void removePeer(Peer peer) {
 		peerManager.removePeer(peer);
 	}
-	
+
 	/**
 	 * Check if a network bulk has not been received twice, and can be processed.
 	 * @param bulkId the bulk ID

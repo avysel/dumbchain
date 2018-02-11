@@ -237,6 +237,8 @@ public class Blockchain {
 		}
 
 		if(incomingBlockAdded) {
+			// save new chain
+			save();
 			log.debug("Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
 			log.debug(block);
 			log.debug("Chain : "+chain);
@@ -266,9 +268,11 @@ public class Blockchain {
 		log.info("Chain height : "+getChain().getLastIndex());
 		log.debug("Chain : "+chain);
 
-
 		// send block to the network
 		network.sendBlock(block);
+		
+		// save new chain
+		save();
 	}
 
 	/**

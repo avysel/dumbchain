@@ -6,6 +6,9 @@ import java.util.List;
 import com.avysel.blockchain.business.block.Block;
 
 public class CatchUpDataMessage extends NetworkMessage {
+	
+	private String senderNodeId;
+	
 	private long startIndex;
 	private long lastIndex;
 	private List<Block> blocks;
@@ -33,4 +36,10 @@ public class CatchUpDataMessage extends NetworkMessage {
 	public void setBlocks(List<Block> blocks) {
 		this.blocks = blocks;
 	}
+	public String getSenderNodeId() {
+		return senderNodeId;
+	}
+	public void setSenderNodeId(String senderNodeId) {
+		this.senderNodeId = senderNodeId;
+	}	
 }

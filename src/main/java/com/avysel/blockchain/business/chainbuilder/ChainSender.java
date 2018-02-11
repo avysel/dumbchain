@@ -44,6 +44,7 @@ public class ChainSender {
 			log.info("Send chain to "+peer);
 			for (int i = 0; i < blockchain.getChain().getLastIndex(); i++) {
 				CatchUpDataMessage message = new CatchUpDataMessage();
+				message.setSenderNodeId(this.blockchain.getNodeId());
 
 				// get subchain of MAX_BLOCKS_PER_BULK (or less, if less elements remain) elements
 				int from = i * BlockchainParameters.MAX_BLOCKS_PER_BULK + 1;

@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
 import com.avysel.blockchain.business.block.Block;
-import com.avysel.blockchain.business.chain.Chain;
 import com.avysel.blockchain.business.chain.ChainPart;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.exception.BlockIntegrityException;
@@ -48,11 +47,8 @@ public class ChainConsensusBuilder {
 	};
 
 	private Blockchain blockchain;
-	private Chain chain;
 
 	public ChainConsensusBuilder(Blockchain blockchain) {
-		if(blockchain != null) 
-			this.chain = blockchain.getChain();
 		this.builder = new ChainBuilder();
 		this.blockchain = blockchain;
 		this.nbConsecutiveRejects = 0;
@@ -87,7 +83,7 @@ public class ChainConsensusBuilder {
 		}
 
 		// block can't already exist in the chain
-		Block existingBlock = BlockchainManager.findBlockByHash(chain, incomingBlock.getHash());
+		Block existingBlock = BlockchainManager.findBlockByHash(blockchain.getChain(), incomingBlock.getHash());
 		if(existingBlock != null) {
 			// The block is already in chain
 			log.info("The incoming block is already in chain");
@@ -104,7 +100,7 @@ public class ChainConsensusBuilder {
 
 		if(RejectReason.NONE.equals(rejectReason)) {
 			// the incoming block can be easily added at the end of chain
-			chain.linkBlock(incomingBlock);
+			blockchain.getChain().linkBlock(incomingBlock);
 			lastLinkedIndex = incomingBlock.getIndex();
 			// remove included data from pool
 			cleanDataPool(incomingBlock);
@@ -142,13 +138,15 @@ public class ChainConsensusBuilder {
 		// can the block be added to the end of chain ?
 
 		Block competitor = findCompetitorInChain(incomingBlock);
-		Block lastBlock = chain.getLastBlock();
+		Block lastBlock = blockchain.getChain().getLastBlock();
 
 		if(competitor != null) 
 			return RejectReason.COMPETITION;
 		
-		if(!incomingBlock.getPreviousHash().equals(lastBlock.getHash())) 
+		if(!incomingBlock.getPreviousHash().equals(lastBlock.getHash())) {
+			log.debug("Expected hash (last hash) : "+lastBlock.getHash()+". Got (incoming previous) : "+incomingBlock.getPreviousHash());
 			return RejectReason.PREVIOUS_HASH;
+		}
 		
 		if(!(incomingBlock.getIndex() == lastBlock.getIndex() +1)) 
 			return RejectReason.PREVIOUS_INDEX;
@@ -163,7 +161,7 @@ public class ChainConsensusBuilder {
 	 * @return the block in the chain with same index as incoming block. Null if such a block does not exist.
 	 */
 	private Block findCompetitorInChain(Block incomingBlock) {
-		return BlockchainManager.findBlockByIndex(chain, incomingBlock.getIndex());
+		return BlockchainManager.findBlockByIndex(blockchain.getChain(), incomingBlock.getIndex());
 	}
 
 
@@ -175,7 +173,7 @@ public class ChainConsensusBuilder {
 	private boolean dataAlreadyInChain(Block incomingBlock) {
 		List<ISingleData> dataList = incomingBlock.getDataList();
 		for(ISingleData data : dataList) {
-			if(BlockchainManager.findBlockByData(chain, data.getHash()) != null)
+			if(BlockchainManager.findBlockByData(blockchain.getChain(), data.getHash()) != null)
 				return true;
 		}
 		return false;

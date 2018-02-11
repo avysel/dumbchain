@@ -91,8 +91,8 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 
 # Questions en cours (à répondre, et appliquer dans le code)
-- Quelles données d'un bloc utiliser pour calculer le hash ?
+- Quelles données d'un bloc utiliser pour calculer le hash ? (actuellement : timestamp, nombre d'iteration de hash et données)
 - Comment utiliser l'arbre de merkle pour vérifier la présence d'une donnée.
-- Faut-il garantir l'ordre des données dans un bloc ? si oui comment ?
+- Faut-il garantir l'ordre des données dans un bloc ?
 - Faut-il faire un catch-up du pool de données ?
-- Comment piocher des données dans le pool pour miner un block ?
+- Comment piocher des données dans le pool pour miner un block ? (actuellement, prises dans l'ordre d'arrivée, minimum 50, maximum 500)

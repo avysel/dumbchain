@@ -34,20 +34,26 @@ public class ChainSender {
 	 * @param startIndex index of the first bloc to send
 	 */
 	public void sendChainToPeer(Peer peer, long startIndex) {
-		//TODO use startIndex
 		// no block to send, send an "empty" response message instead
-		if(this.blockchain.getLastIndex() == Genesis.GENESIS_INDEX) {
+		if(blockchain.getLastIndex() == Genesis.GENESIS_INDEX
+			|| 	blockchain.getLastIndex() == startIndex) {
 			blockchain.sendMessage(NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY, null, peer);
-			log.debug("Send empty catch-up response to "+peer);
+			log.info("Send empty catch-up response to "+peer);
 		} else {
 			log.info("Send chain to "+peer);
+			
 			for (int i = 0; i < blockchain.getChain().getLastIndex(); i++) {
 				CatchUpDataMessage message = new CatchUpDataMessage();
 				message.setSenderNodeId(this.blockchain.getNodeId());
 
 				// get subchain of MAX_BLOCKS_PER_BULK (or less, if less elements remain) elements
-				int from = i * blockchain.getParams().getProperties().getMaxBlocksInBulk() + 1;
-				int to = Math.min((i+1)*blockchain.getParams().getProperties().getMaxBlocksInBulk() + 1, blockchain.getChain().getBlockList().size());
+				int from = i * blockchain.getParams().getProperties().getMaxBlocksInBulk() + (int)startIndex+1;
+				//int to = Math.min((i+1)*blockchain.getParams().getProperties().getMaxBlocksInBulk() + 1, blockchain.getChain().getBlockList().size());
+				
+				
+				int to = Math.min(from + blockchain.getParams().getProperties().getMaxBlocksInBulk()
+						, (int)blockchain.getChain().size());
+				
 				List<Block> sublist = blockchain.getChain().getBlockList().subList(from, to);
 
 				// add the previously selected blocks in the message

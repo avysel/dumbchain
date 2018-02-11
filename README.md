@@ -75,18 +75,25 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 **-help** displays this help menu.
 
+
 **-mining=1** for a mining node. (default)
+
 **-mining=0** for a not mining node.
 
+
 **-canStartAlone=1** for a node that can start alone. (default)
+
 **-canStartAlone=0** for a node that cannot start without other peer.
 
+
 **-useNetwork=1** for a node that listen to network to catch new data. (default)
+
 **-useNetwork=0** for a node that doesn't listen to network to catch new data. (mining is therefore disabled)
 
 ### Demo parameters : 
 
-**-demoDataGenerator=1** for a demo data generator node. 
+**-demoDataGenerator=1** for a demo data generator node.
+
 **-demoDataGenerator=0** for a no demo data generator node. (default)
 
 

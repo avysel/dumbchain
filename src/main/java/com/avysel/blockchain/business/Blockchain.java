@@ -89,8 +89,7 @@ public class Blockchain {
 		
 		if(nodeId != null) {
 			this.nodeId = nodeId;
-		}
-		else { 
+		} else { 
 			this.nodeId = UUID.randomUUID().toString();
 			dbManager.storeNodeId(this.nodeId);
 		}

@@ -7,7 +7,9 @@ import java.nio.charset.Charset;
  */
 public class BlockchainParameters {
 	
-	public class Constants {
+	public static class Constants {
+		private Constants() {}
+		
 		public static final boolean MINING_YES = true;
 		public static final boolean MINING_NO = false;	
 

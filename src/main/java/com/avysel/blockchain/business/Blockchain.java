@@ -73,17 +73,29 @@ public class Blockchain {
 	}
 
 	private void init() {
-		this.nodeId = UUID.randomUUID().toString();
+		this.dbManager = new DBManager();
+		initNodeId(); 
 		this.chain = new Chain();
 		createChain();
 		this.dataPool = new DataPool();
 		this.miner = new Miner(this, dataPool);
 		this.network = new NetworkManager(this);
-		this.dbManager = new DBManager();
 		this.consensusBuilder = new ChainConsensusBuilder(this);
 		this.catchUpCompleted = false;
 	}
 
+	private void initNodeId() {
+		String nodeId = dbManager.getStoredNodeId();
+		
+		if(nodeId != null) {
+			this.nodeId = nodeId;
+		}
+		else { 
+			this.nodeId = UUID.randomUUID().toString();
+			dbManager.storeNodeId(this.nodeId);
+		}
+	}
+	
 	/**
 	 * Returns the unique ID of the current Blockchain node.
 	 * @return unique ID of this node.
@@ -176,9 +188,7 @@ public class Blockchain {
 	public void load() {
 		log.info("Start loading from DB");
 
-		String nodeId = dbManager.getStoredNodeId();
-		if(nodeId != null) {
-			this.nodeId = nodeId;
+		if(this.getNodeId() != null) {
 			Chain loadedChain = dbManager.getChain(this.getNodeId());
 			if(loadedChain != null) {
 				this.chain = loadedChain;

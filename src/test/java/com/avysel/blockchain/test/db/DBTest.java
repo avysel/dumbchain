@@ -1,14 +1,15 @@
 package com.avysel.blockchain.test.db;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.UUID;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
+import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.data.SingleData;
-import com.avysel.blockchain.db.DBManager;
 
 public class DBTest {
 
@@ -24,6 +25,8 @@ public class DBTest {
 	private static final String TEST_DATA_DATA = "Test Data";
 	private static final String TEST_DATA_HASH = UUID.randomUUID().toString();
 	
+	private static Blockchain blockchain;
+	
 	@BeforeClass
 	public static void init() {
 		testBlock.setHash(DBTest.TEST_HASH);
@@ -37,9 +40,12 @@ public class DBTest {
 		testData.setHash(DBTest.TEST_DATA_HASH);
 		
 		testBlock.addData(testData);
+		
+		blockchain = new Blockchain();
+		blockchain.addBlock(testBlock);
 	}
 	
-	@Test
+/*	@Test
 	public void writeBlockTest() {
 		DBManager db = new DBManager();
 		db.putBlock(testBlock);
@@ -48,13 +54,23 @@ public class DBTest {
 		
 		assertEquals(block, testBlock);
 	}
-	
-	
-/*	@Test
-	public void writeDataTest() {
-		DBManager db = new DBManager();
-		db.putData(testData);		
+*/	
+	@Test
+	public void testSaveLoadChain() {
+		
+		String nodeId = blockchain.getNodeId();
+		long size = blockchain.getChain().size();
+		String hash = blockchain.getChain().getLastBlock().getHash();
+		
+		blockchain.save();
+		
+		
+		blockchain = new Blockchain();
+		
+		blockchain.load();
+		
+		assertEquals(nodeId, blockchain.getNodeId());
+		assertEquals(size, blockchain.getChain().size());
+		assertEquals(hash, blockchain.getChain().getLastBlock().getHash());
 	}
-	*/
-	
 }

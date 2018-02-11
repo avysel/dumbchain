@@ -6,6 +6,7 @@ import java.util.List;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.block.Genesis;
 import com.avysel.blockchain.business.data.ISingleData;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The blockchain.
@@ -17,6 +18,7 @@ public class Chain extends ChainPart {
 		super();
 	}
 
+	@JsonIgnore
 	public Block getGenesis() {
 		if(getFirstBlock().isGenesis())
 			return getFirstBlock();
@@ -31,6 +33,7 @@ public class Chain extends ChainPart {
 	}
 
 	@Override
+	@JsonIgnore
 	public long getLastIndex() {
 		if(this.getLastBlock() != null) {
 			return this.getLastBlock().getIndex();

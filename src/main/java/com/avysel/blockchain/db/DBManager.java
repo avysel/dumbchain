@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.iq80.leveldb.DB;
-import org.iq80.leveldb.DBException;
 import org.iq80.leveldb.Options;
 
 import com.avysel.blockchain.business.chain.Chain;
@@ -52,44 +51,119 @@ public class DBManager {
 		}
 	}
 
+	public void storeNodeId(String nodeId) {
+
+		Options options = new Options();
+		options.createIfMissing(true);
+		DB db = null;
+		try {
+			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+
+			byte[] nodeIdKeyBytes = Util.bytes(BLOCKCHAIN_ID_FIELD_KEY);
+			byte[] nodeIdBytes = Util.bytes(nodeId);		
+			db.put(nodeIdKeyBytes, nodeIdBytes);
+
+		} finally {
+			try {
+				if(db != null)
+					db.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}	
+
 	public String getStoredNodeId() {
-		openDB();
 
-		byte[] nodeId = db.get(Util.bytes(BLOCKCHAIN_ID_FIELD_KEY));
-		closeDB();
+		Options options = new Options();
+		options.createIfMissing(true);
+		DB db = null;
+		try {
+			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		return Util.string(nodeId);
+		try {
+
+			byte[] nodeId = db.get(Util.bytes(BLOCKCHAIN_ID_FIELD_KEY));
+			return Util.string(nodeId);
+
+		} finally {
+			try {
+				if(db != null)
+					db.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 
 	public void putChain(String nodeId, Chain chain) {
-		openDB();
-		
-		byte[] nodeIdBytes = Util.bytes(nodeId);
-		byte[] chainBytes = Util.bytes(chain);
+
+		Options options = new Options();
+		options.createIfMissing(true);
+		DB db = null;
 		try {
-		db.put(nodeIdBytes, chainBytes);
-		} catch(DBException dbe) {
-			dbe.printStackTrace();
-		} catch(Exception e) {
+			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		closeDB();
+
+		try {
+
+			byte[] nodeIdBytes = Util.bytes(nodeId);
+			byte[] chainBytes = Util.bytes(chain);
+			db.put(nodeIdBytes, chainBytes);
+
+		} finally {
+			try {
+				if(db != null)
+					db.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public Chain getChain(String nodeId) {
-		openDB();
-		if(nodeId != null) {
-			String jsonData = Util.string(db.get(Util.bytes(nodeId)));
-			Chain chain = JsonMapper.jsonToChain(jsonData);
-			closeDB();
-			return chain;
+
+		Options options = new Options();
+		options.createIfMissing(true);
+		DB db = null;
+		try {
+			db = factory.open(new File(DBManager.DB_DIR_PATH), options);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		closeDB();
+
+		try {
+
+			if(nodeId != null) {
+				String jsonData = Util.string(db.get(Util.bytes(nodeId)));
+				Chain chain = JsonMapper.jsonToChain(jsonData);
+				closeDB();
+				return chain;
+			}
+
+		} finally {
+			try {
+				if(db != null)
+					db.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}		
+
 		return null;
-	}	
+	}
 	
 	/*
-
 	public void putBlock(Block block) {
 		openDB();
 		db.put(Util.bytes(block.getHash()), Util.bytes(block));
@@ -110,6 +184,6 @@ public class DBManager {
 	public ISingleData getData(String uid) {
 		openDB();
 		return null;
-	}
-*/
+	}*/
+
 }

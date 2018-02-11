@@ -9,6 +9,8 @@ import com.avysel.blockchain.exception.ChainIntegrityException;
 import com.avysel.blockchain.tools.JsonMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jdk.internal.jline.internal.Log;
+
 /**
  * A part of blockchain.
  * It contains the list of Block, but contains no Genesis. The ChainPart is to be appended to an existing Chain

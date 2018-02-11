@@ -66,7 +66,7 @@ public class Miner implements Runnable {
 		while(miningNode) {
 		
 			// if mining is not pending, and enough data in pool
-			if(!pauseMining && dataPool.size() > blockchain.getParams().getProperties().getMinDataInBlock()) {
+			if(!pauseMining && dataPool.size() > blockchain.getParams().getMinDataInBlock()) {
 				// create new block
 				Block block = mine();	
 
@@ -97,7 +97,7 @@ public class Miner implements Runnable {
 		Block block = new Block();
 		
 		// pick new dataset, blocking when pending data is empty
-		List<ISingleData> dataList = dataPool.pickData(blockchain.getParams().getProperties().getMaxDataInBlock());
+		List<ISingleData> dataList = dataPool.pickData(blockchain.getParams().getMaxDataInBlock());
 
 		block.addAllData(dataList);	
 		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));

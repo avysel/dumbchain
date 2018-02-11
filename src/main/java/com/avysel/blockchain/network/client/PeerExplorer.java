@@ -60,7 +60,7 @@ public class PeerExplorer {
 
 					int port = NetworkManager.getBroadcastPort() + i;
 					
-					// create and send packet // TODO listAllBroadcastAddresses
+					// create and send packet
 					DatagramPacket packet = new DatagramPacket(
 							data.getBytes(BlockchainParameters.DEFAULT_CHARSET),
 							data.getBytes(BlockchainParameters.DEFAULT_CHARSET).length,

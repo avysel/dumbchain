@@ -72,6 +72,7 @@ public final class NetworkTool {
 			.forEach(broadcastList::add);
 		}
 		
+		// TODO remove after debug
 		try {
 			broadcastList.clear();
 			String ip = "127"+"."+"0"+"."+"0"+"."+"1";

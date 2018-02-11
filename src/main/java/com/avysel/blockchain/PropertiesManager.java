@@ -18,6 +18,7 @@ public class PropertiesManager {
 	private int waitForPeersTime;
 	private int waitForCatchupTime;
 	private String dbPath;
+	private int peerListeningPort;
 
 	public static final class Keys {
 		public static final String min_data_in_block="min_data_in_block";
@@ -30,6 +31,7 @@ public class PropertiesManager {
 		public static final String wait_for_peers_time="wait_for_peers_time";
 		public static final String wait_for_catchup_time="wait_for_catchup_time";
 		public static final String db_path="db_path";
+		public static final String peer_listening_port="network.peer_listening_port";
 	}
 
 	public PropertiesManager() {
@@ -90,6 +92,7 @@ public class PropertiesManager {
 		this.waitForPeersTime = Integer.parseInt(getProperty(Keys.wait_for_peers_time));
 		this.waitForCatchupTime = Integer.parseInt(getProperty(Keys.wait_for_catchup_time));
 		this.dbPath	= getProperty(Keys.db_path);
+		this.peerListeningPort = Integer.parseInt(getProperty(Keys.peer_listening_port));
 	}
 	
 	public void writeProperties() {
@@ -200,5 +203,17 @@ public class PropertiesManager {
 
 	public void setDbPath(String dbPath) {
 		this.dbPath = dbPath;
+	}
+
+	public int getPeerListeningPort() {
+		return peerListeningPort;
+	}
+
+	public void setPeerListeningPort(int peerListeningPort) {
+		this.peerListeningPort = peerListeningPort;
+	}
+
+	public void setProofOfWorkPrefix(String proofOfWorkPrefix) {
+		this.proofOfWorkPrefix = proofOfWorkPrefix;
 	}
 }

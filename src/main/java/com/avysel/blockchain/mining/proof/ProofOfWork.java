@@ -14,9 +14,9 @@ public class ProofOfWork implements IProof {
 		String hash = block.getHash();
 		long difficulty = block.getDifficulty();
 
-		return hash.startsWith(params.getProperties().getProofOfWorkPrefix()) 
-				|| difficulty > params.getProperties().getFallbackProofOfWorkStep() 
-				&& hash.startsWith(params.getProperties().getFallbackProofOfWorkPrefix());
+		return hash.startsWith(params.getProofOfWorkPrefix()) 
+				|| difficulty > params.getFallbackProofOfWorkStep() 
+				&& hash.startsWith(params.getFallbackProofOfWorkPrefix());
 	}
 
 }

@@ -80,7 +80,7 @@ public class Blockchain {
 	}
 
 	private void init() {
-		this.dbManager = new DBManager(getParams().getProperties().getDbPath());
+		this.dbManager = new DBManager(getParams().getDbPath());
 		initNodeId(); 
 		this.chain = new Chain();
 		createChain();
@@ -364,7 +364,7 @@ public class Blockchain {
 		 * ask for how many blocks since this.chainHeight
 		 */
 		try {
-			Thread.sleep(getParams().getProperties().getWaitForPeersTime());
+			Thread.sleep(getParams().getWaitForPeersTime());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

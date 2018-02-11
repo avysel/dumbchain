@@ -70,7 +70,7 @@ public class ChainCatchUpBuilder {
 		// wait to get catch up data or build successfull
 		while(completed != CatchUpResult.CATCH_UP_SUCCESSFUL 
 				&& !getEmptyDataResult 
-				&& (System.currentTimeMillis() - startTime) <= blockchain.getParams().getProperties().getWaitForCatchupTime()) {
+				&& (System.currentTimeMillis() - startTime) <= blockchain.getParams().getWaitForCatchupTime()) {
 			
 			// wait a few time bewteen two tries
 			try {

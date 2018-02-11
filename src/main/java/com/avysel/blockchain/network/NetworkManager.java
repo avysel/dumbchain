@@ -49,7 +49,7 @@ public class NetworkManager {
 	public NetworkManager(Blockchain blockchain) {
 		this.blockchain = blockchain;
 		NetworkManager.setServerListeningPort(0);
-		NetworkManager.setBroadcastPort(45458);	
+		NetworkManager.setBroadcastPort(blockchain.getParams().getPeerListeningPort());	
 		server = new NodeServer(this);
 		client = new NodeClient(this);
 		peerManager = new PeerManager(this);

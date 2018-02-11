@@ -74,4 +74,66 @@ public class BlockchainParameters {
 	public void loadProperties(String fileName) {
 		properties.load(fileName);
 	}
+
+	/**
+	 * Minimum number of data to include in a block.
+	 * @return Minimum number of data to include in a block.
+	 */	
+	public int getMinDataInBlock() {
+		return properties.getMinDataInBlock();
+	}
+
+	/**
+	 * Maximum number of data to include in a block.
+	 * @return Maximum number of data to include in a block.
+	 */		
+	public int getMaxDataInBlock() {
+		return properties.getMaxDataInBlock();
+	}
+
+	/**
+	 * Maximum number of block that can be sent in a message when sent blocks for catch-up.
+	 * @return Maximum number of block that can be sent in a message when sent blocks for catch-up.
+	 */		
+	public int getMaxBlocksInBulk() {
+		return properties.getMaxBlocksInBulk();
+	}
+
+	/**
+	 * Number of last blocks that are considered as unsafe because they still can be unlinked 
+	 * and replaced by other blocks due to consensus.
+	 * @return Number of last blocks that are considered as unsafe because they still can be unlinked 
+	 * and replaced by other blocks due to consensus.
+	 */
+	public long getUnsafeHeight() {
+		return properties.getUnsafeHeight();
+	}
+
+	public String getProofOfWorkPrefix() {
+		return properties.getProofOfWorkPrefix();
+	}
+
+	public int getFallbackProofOfWorkStep() {
+		return properties.getFallbackProofOfWorkStep();
+	}
+
+	public String getFallbackProofOfWorkPrefix() {
+		return properties.getFallbackProofOfWorkPrefix();
+	}
+
+	public int getWaitForPeersTime() {
+		return properties.getWaitForPeersTime();
+	}
+
+	public int getWaitForCatchupTime() {
+		return properties.getWaitForCatchupTime();
+	}
+
+	public String getDbPath() {
+		return properties.getDbPath();
+	}
+
+	public int getPeerListeningPort() {
+		return properties.getPeerListeningPort();
+	}	
 }

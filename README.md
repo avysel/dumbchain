@@ -189,14 +189,47 @@ java -jar poc-blockchain.jar
 
 # Architecture
 
-# Scénario
+# Scénarios
 
-1. La classe principale *Main* s'exécute, analyse les paramètres de lancement pour former le *BlockchainParameter*, puis crée une *Blockchain* avec ces paramètre
+## Démarrage
+1. La classe principale *Main* s'exécute, analyse les paramètres de lancement pour former le *BlockchainParameter*, puis crée une *Blockchain* avec ces paramètres
 
 2. La *Blockchain* démarre, en plusieurs étapes
     1. Chargement depuis la base de données locale (*DBManager*)
-    2. Démarrage des services réseau (*NetworkManager*)
-        1. aa
-        2. bb
-    3. Rattrapage de chaine existante (*ChainRequestor* et *ChainCatchUpBuilder*)
+    2. Démarrage des services réseau (*NetworkManager*).
+        1. Démarrage de la partie serveur (*NodeServer*). 
+        2. Démarrage du gestionnaire de pairs (*PeerManager*).
+            1. Exploration des autres noeuds (*PeerExplorer*).
+            2. Démarrage de l'écoute des demandes de connexion des autres pairs (*PeerListener*).
+    3. Rattrapage de chaine existante (*ChainRequestor* et *ChainCatchUpBuilder*).
+        1. Envoi d'une demande de rattrapage au noeud connu avec la plus longue chaine (*ChainSender*).
+        2. Réception des données de rattrapage (*NodeServer*).
+        3. Construction de la chaine (*ChainCatchUpBuilder*).
     4. Démarrage du minage (*Miner*)
+
+    
+## Réception d'une demande de connexion d'un pair
+1. Lecture du message et collecte des données (*PeerListener*).
+2. Ajout du pair à la liste de pairs connus (*PeerManager*).
+3. Envoi d'une réponse au pair, avec notre ip, notre port d'écoute et la taille de notre chaine (*PeerListener*).
+
+## Réception d'une réponse d'un pair à notre demande de connexion
+1. Lecture du message et collecte des données (*ClientProcessor*).
+2. Ajout du pair à la liste des pairs connus (*PeerManager*).
+
+## Réception d'une demande de rattrapage d'un pair
+1. Lecture du message et collecte des données (*ClientProcessor*).
+2. Envoie des bloc manquants ou d'un message indiquant qu'il n'y a rien à rattraper (*ChainSender*).
+
+## Minage d'un bloc
+1. Sélection de données en attente (*DataPool*).
+2. Création d'un block et calcul d'un hash respectant la condition (*Miner*, *HashTool*, *MerkleTree* et *IProof*).
+3. Ajout du bloc créé à la chaine (*Blockchain*).
+4. Envoi du bloc sur le réseau (*NodeClient*);
+
+## Réception d'un bloc depuis le réseau   
+1. Lecture du message et collecte des données (*ClientProcessor*).
+2. Reconstruction du block reçu et envoi à la blockchain (*NetworkManager*, *Blockchain*).
+3. Vérification de l'intégrité du bloc et de la nouvelle chaine, et ajout du nouveau bloc (*ChainConsensusBuilder*).
+4. Sauvegarde de la chaine en local (*DBManager*).
+

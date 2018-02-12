@@ -77,7 +77,7 @@ java -jar poc-blockchain.jar
 **-help** displays this help menu.
 
 
-**-properties=fileName** to specify a properties file (embeded *config.properties* by default))
+**-properties=fileName** to specify a properties file (embeded *config.properties* by default). Use *config.properties* as pattern.
 
 
 **-mining=1** for a mining node. (default)
@@ -104,46 +104,87 @@ java -jar poc-blockchain.jar
 - Comment piocher des données dans le pool pour miner un block ? (actuellement, prises dans l'ordre d'arrivée, minimum 50, maximum 500)
 
 # Liste des classes
+
 **Main** : classe principale, traite les paramètres de lancement et lance la blockchain.
+
 **Blockchain** : classe principale métier, qui orchestre tous les autres composants.
+
 **BlockchainParameters** : fourni les paramètres de contexte (paramètres fixes, valeur des arguments de lancement, contenu du fichier .properties fourni en entrée).
+
 **BlockchainManager** : fourni des opérations de recherche de blocs dnas la blockchain selon différents critères.
+
 **PropertiesManager** : intégré au BlockchainParameters, il gère le fichier .properties.
+
 **Block** : représentation d'un bloc.
+
 **BlockHeader** et **BlockData** : les entêtes et le contenu d'un bloc.
+
 **Genesis** : un *Block* particulier, le bloc de départ de la chain, il est fixe pour toutes les instances de la blockchain.
+
 **ChainPart** : une liste de blocs (une chaine), avec des opérations d'ajout et retrait de bloc, des informations sur la hauteur de la chaine, l'effort de minage ... Cet objet représente un morceau de chaine.
+
 **Chain** : basé sur *ChainPart*, gère la présence d'un bloc *Genesis*. Cet objet est *LA* chaine de la blokcchain.
+
 **ChainBuilder** : stocke la liste des derniers blocs reçus et est capable de les remettre dans l'ordre pour reconstruire un morceau de chaine.
+
 **ChainRequestor** : au démarrage de l'instance, requête les autres noeuds pour rattraper le travail effectué par le reste de la chaine. Passe ensuite le relais au *ChainCatchUpBuilder*.
+
 **ChainCatchUpBuilder** : lors du démarrage de l'instance, après la demande du *ChainRequestor*, rattrape le travail effectué par les autres noeuds du réseau.
+
 **ChainConsensusBuilder** : gère la réception des blocs minés par les autres noeuds, vérifie l'intégrité de ces blocs et de la nouvelle chaine.
+
 **ChainSender** : envoie la partie de la chaine manquante à une nouvelle instance lors de son arrivée sur le réseau.
+
 **ISingleData** : interface qui définit ce que doit être une donnée à inclure dans un bloc.
+
 **SingleData** : une proposition d'implémentation d'une donnée de bloc.
+
 **HashTools** : utilisé pour calculer les hashs.
+
 **MerkleTree** : fourni les services de vérification d'intégrité basés sur l'arbre de Merkle.
+
 **DBManager** : gère le stockage local via LevelDB.
+
 **RandomDataGenerator** : en mode test, génère à intervalle régulier des données de test.
+
 **BlockIntegrityException** : quand un bloc doit être rejecté car il est corrompu.
+
 **ChainIntegrityException** : quand la chaine ne peut être construite ou complétée car elle est corrompue.
+
 **DataPool** : contient les données en attente d'être inclues dans un bloc.
+
 **Miner** : effectue la création des blocs.
+
 **IProof** : interface qui défini comment fournir la règle de minage d'un bloc.
+
 **ProofOfWork** : proposition d'implémentation de la règle de minage par preuve de travail.
+
 **ProofOfStake** : proposition d'implémentation de la règle de minage par preuve d'implication.
+
 **NodeClient** : gère la partie envoi de données au réseau
+
 **NodeServer** : gère la partie récpetion de données depuis le réseau
+
 **ClientProcessor** : gère unitairement chaque connexion entrante.
+
 **PeerManager** : gère les connexions aux autres noeuds
+
 **PeerExplorer** : au démarrage de l'instance, cherche à établir des connexions avec les autres noeuds.
+
 **PeerListener** : est à l'écoute des demandes de connexion de nouveaux noeuds sur le réseau.
+
 **NetworkDataBulk** : encapsule un message envoyé sur le réseau.
+
 **NetworkMessage** : un message envoyé sur le réseau.
+
 **CatchUpRequestMessage** : une demande de rattrapage émise par un nouveau noeud.
+
 **CatchUpDataMessage** : contient les données de rattrapage envoiyé à un nouveau noeud.
+
 **JsonMapper** : serialisation/déserialisation des objets de/vers le format JSon.
+
 **NetworkTools** : utilitaire de fonctions réseau
+
 **Util** : utilitaires divers
 
 # Architecture

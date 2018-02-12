@@ -190,3 +190,13 @@ java -jar poc-blockchain.jar
 # Architecture
 
 # Scénario
+
+1. La classe principale *Main* s'exécute, analyse les paramètres de lancement pour former le *BlockchainParameter*, puis crée une *Blockchain* avec ces paramètre
+
+2. La *Blockchain* démarre, en plusieurs étapes
+    1. Chargement depuis la base de données locale (*DBManager*)
+    2. Démarrage des services réseau (*NetworkManager*)
+        1. aa
+        2. bb
+    3. Rattrapage de chaine existante (*ChainRequestor* et *ChainCatchUpBuilder*)
+    4. Démarrage du minage (*Miner*)

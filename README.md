@@ -64,10 +64,12 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 
 # Usage
-`java -jar poc-blockchain.jar 
+```
+java -jar poc-blockchain.jar 
 	-properties=/usr/foo/param.properties 
 	-mining=1 
-	-demoDataGenerator=0`
+	-demoDataGenerator=0
+```
 
 
 ### Regular use parameters : 

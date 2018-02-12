@@ -64,7 +64,10 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 
 
 # Usage
-`java -jar poc-blockchain.jar -properties=/usr/foo/param.properties  -mining=1 -demoDataGenerator=0`
+`java -jar poc-blockchain.jar 
+	-properties=/usr/foo/param.properties 
+	-mining=1 
+	-demoDataGenerator=0`
 
 
 ### Regular use parameters : 
@@ -72,7 +75,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 **-help** displays this help menu.
 
 
-**-properties=fileName** to specify a properties file
+**-properties=fileName** to specify a properties file (embeded *config.properties* by default))
 
 
 **-mining=1** for a mining node. (default)

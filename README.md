@@ -98,7 +98,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - Faut-il faire un catch-up du pool de données ?
 - Comment piocher des données dans le pool pour miner un block ? (actuellement, prises dans l'ordre d'arrivée, minimum 50, maximum 500)
 
-# Architecture
+# Liste des classes
 **Main** : classe principale, traite les paramètres de lancement et lance la blockchain.
 **Blockchain** : classe principale métier, qui orchestre tous les autres composants.
 **BlockchainParameters** : fourni les paramètres de contexte (paramètres fixes, valeur des arguments de lancement, contenu du fichier .properties fourni en entrée).
@@ -140,5 +140,7 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 **JsonMapper** : serialisation/déserialisation des objets de/vers le format JSon.
 **NetworkTools** : utilitaire de fonctions réseau
 **Util** : utilitaires divers
+
+# Architecture
 
 # Scénario

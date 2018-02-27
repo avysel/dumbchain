@@ -54,14 +54,6 @@ public class DataPool {
 		getDataPool().removeAll(dataList);
 	}
 
-	public List<ISingleData> getData(long quantity) {
-		List<ISingleData> result = new ArrayList<ISingleData>();
-		for(int i=0; i<quantity && !getDataPool().isEmpty(); i++) {
-			result.add(getDataPool().poll());
-		}
-		return result;
-	}
-
 	/**
 	 * Pick a quantity of data in the list of pending data.
 	 * @param quantity the number of data to pick. If pool size is lower than expected quantity, all remaining data will be picked up.
@@ -112,5 +104,22 @@ public class DataPool {
 			if(it.next().getHash().equals(hash))
 				return true;
 		return false;
+	}
+	
+	/**
+	 * Get all data created before a giver time.
+	 * @param timestamp the time.
+	 * @return all data created before given timestamp.
+	 */
+	public List<ISingleData> getDataOlderThan(Long timestamp) {
+		List<ISingleData> result = new ArrayList<ISingleData>();
+		
+		for(ISingleData data : getDataPool()) {
+			if(data.getTimestamp() < timestamp) {
+				result.add(data);
+			}
+		}
+		
+		return result;		
 	}
 }

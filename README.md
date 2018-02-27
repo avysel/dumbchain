@@ -153,6 +153,8 @@ java -jar poc-blockchain.jar
 
 **DataPool** : contient les données en attente d'être inclues dans un bloc.
 
+**DataSender** : réenvoie au réseau toutes les données du *DataPool* plus vieilles que le dernier block.
+
 **Miner** : effectue la création des blocs.
 
 **IProof** : interface qui défini comment fournir la règle de minage d'un bloc.

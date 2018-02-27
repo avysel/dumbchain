@@ -13,6 +13,7 @@ import com.avysel.blockchain.business.chainbuilder.ChainCatchUpBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder;
 import com.avysel.blockchain.business.chainbuilder.ChainConsensusBuilder.RejectReason;
 import com.avysel.blockchain.business.chainbuilder.ChainSender;
+import com.avysel.blockchain.business.data.DataSender;
 import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.db.DBManager;
 import com.avysel.blockchain.demo.RandomDataGenerator;
@@ -57,6 +58,9 @@ public class Blockchain {
 	// to catch-up with existing chain
 	private ChainCatchUpBuilder catchUpBuilder;
 
+	// to send data to the newtorck if they stay too much time in pool
+	private DataSender dataSender;
+	
 	// is catch-up completed (true) or still in progress (false)
 	private boolean catchUpCompleted;
 
@@ -243,6 +247,7 @@ public class Blockchain {
 		}
 
 		if(incomingBlockAdded) {
+			dataSender.setLastBlockTimestamp(block.getTimestamp());
 			// save new chain
 			save();
 			log.debug("Incoming block linked : "+ block.getIndex() + " ("+block.getHash()+")");
@@ -276,6 +281,8 @@ public class Blockchain {
 
 		// send block to the network
 		network.sendBlock(block);
+		
+		dataSender.setLastBlockTimestamp(block.getTimestamp());
 		
 		// save new chain
 		save();
@@ -331,6 +338,8 @@ public class Blockchain {
 		if(isMiningNode()) {
 			miner.start();
 		}
+		
+		dataSender.start();
 	}
 
 	/**

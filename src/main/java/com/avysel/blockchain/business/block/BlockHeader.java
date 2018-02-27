@@ -24,6 +24,9 @@ public class BlockHeader {
 	// number of tries to get a suitable hash for this block
 	private long difficulty;
 	
+	// number of data in this block;
+	private int dataCount;
+	
 	public BlockHeader(String previousHash, String merkleRoot, long timestamp, long difficulty) {
 		super();
 		this.previousHash = previousHash;
@@ -72,4 +75,13 @@ public class BlockHeader {
 	protected void setDifficulty(long difficulty) {
 		this.difficulty = difficulty;
 	}
+
+	public int getDataCount() {
+		return dataCount;
+	}
+
+	public void setDataCount(int dataCount) {
+		this.dataCount = dataCount;
+	}
+	
 }

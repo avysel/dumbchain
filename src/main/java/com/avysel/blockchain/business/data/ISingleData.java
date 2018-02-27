@@ -17,4 +17,9 @@ public interface ISingleData {
 	Class getClazz();
 
 	String toString();
+	
+	Integer getOrder();
+	void setOrder(Integer order);
+	
+	Long getTimestamp();
 }

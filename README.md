@@ -99,8 +99,8 @@ java -jar poc-blockchain.jar
 # Questions en cours (à répondre, et appliquer dans le code)
 - Quelles données d'un bloc utiliser pour calculer le hash ? (actuellement : timestamp, nombre d'iteration de hash et données)
 - Comment utiliser l'arbre de merkle pour vérifier la présence d'une donnée.
-- Faut-il garantir l'ordre des données dans un bloc ?
-- Faut-il faire un catch-up du pool de données ?
+- Faut-il garantir l'ordre des données dans un bloc ? (Réponse : oui)
+- Faut-il faire un catch-up du pool de données ? (Réponse : Non. Une routine doit tourner sur le noeud régulièrement, pour envoyer à tous les noeuds les transactions créées localement et non encore inclues dans un block)
 - Comment piocher des données dans le pool pour miner un block ? (actuellement, prises dans l'ordre d'arrivée, minimum 50, maximum 500)
 
 # Liste des classes

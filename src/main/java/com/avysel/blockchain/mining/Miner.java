@@ -99,6 +99,7 @@ public class Miner implements Runnable {
 		// pick new dataset, blocking when pending data is empty
 		List<ISingleData> dataList = dataPool.pickData(blockchain.getParams().getMaxDataInBlock());
 
+		// add data to block, they are time-ordered, older first
 		block.addAllData(dataList);	
 		block.setMerkleRoot(MerkleTree.computeMerkleRoot(block));
 		
@@ -110,7 +111,7 @@ public class Miner implements Runnable {
 				// all block creation timestamps are based on GMT+0 timezone
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
 				block.setTimestamp(Timestamp.from(Instant.now()).getTime());
-				block.setDifficulty(difficulty);				
+				block.setDifficulty(difficulty);
 				
 				hash = HashTools.calculateBlockHash(block);
 
@@ -122,6 +123,7 @@ public class Miner implements Runnable {
 			}
 		} while (pauseMining || !proof.checkCondition(blockchain.getParams(), block)); // try again if pow is not checked
 
+		
 		return block;
 	}
 

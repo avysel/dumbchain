@@ -1,5 +1,6 @@
 package com.avysel.blockchain.business.data;
 
+import java.util.TimeZone;
 import java.util.UUID;
 
 import com.avysel.blockchain.business.BlockchainParameters;
@@ -15,6 +16,8 @@ public class SingleData implements ISingleData {
 	private String uuid;
 	private String hash;
 	private Class clazz;
+	private Integer order;
+	private Long timestamp;
 
 	public SingleData() {
 		super();
@@ -24,6 +27,10 @@ public class SingleData implements ISingleData {
 		this.data = data;
 		this.uuid = UUID.randomUUID().toString();
 		this.hash = HashTools.calculateHash((data+uuid).getBytes(BlockchainParameters.DEFAULT_CHARSET));
+		
+		// all block creation timestamps are based on GMT+0 timezone
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+		this.timestamp = System.currentTimeMillis();
 	}
 
 	public String getData() {
@@ -48,6 +55,21 @@ public class SingleData implements ISingleData {
 
 	public void setClazz(Class clazz) {
 		this.clazz = clazz;
+	}
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+
+	public Long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Long timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@JsonIgnore

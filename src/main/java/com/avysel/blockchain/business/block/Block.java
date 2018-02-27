@@ -1,6 +1,8 @@
 package com.avysel.blockchain.business.block;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +49,24 @@ public class Block {
 	 * @param dataList the data to add
 	 */ 
 	public void addAllData(List<ISingleData> dataList) {
+		
+		// sort data, older first
+		Collections.sort(dataList, new Comparator<ISingleData>() {
+		    @Override
+		    public int compare(ISingleData d1, ISingleData d2) {
+		        return d1.getTimestamp().compareTo(d2.getTimestamp());
+		    }
+		});
+		
+		int dataCounter = 1;
+		// assign order for each data
+		for(ISingleData data : dataList) {
+			data.setOrder(new Integer(dataCounter));
+			dataCounter ++;
+		}
+		
 		this.getBlockData().getDataList().addAll(dataList);
+		this.setDataCount(dataList.size());
 	}
 	
 	/**
@@ -103,6 +122,12 @@ public class Block {
 	public List<ISingleData> getDataList() {
 		return this.getBlockData().getDataList();
 	}	
+	public void setDataCount(int dataCount) {
+		this.getBlockHeader().setDataCount(dataCount);
+	}
+	public int getDataCount() {
+		return this.getBlockHeader().getDataCount();
+	}
 	
 	/**
 	 * Return String representation of data used to calculate Block's hash.

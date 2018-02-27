@@ -93,6 +93,7 @@ public class Blockchain {
 		this.network = new NetworkManager(this);
 		this.consensusBuilder = new ChainConsensusBuilder(this);
 		this.catchUpCompleted = false;
+		this.dataSender = new DataSender(dataPool, network);
 	}
 
 	private void initNodeId() {

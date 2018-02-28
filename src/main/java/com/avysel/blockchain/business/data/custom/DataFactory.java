@@ -11,8 +11,19 @@ public class DataFactory implements IDataFactory {
 	}
 
 	@Override
+	public ISingleData getDataInstance(String serializedData) {
+		SingleData data = new SingleData();
+		data.setData(serializedData);
+		data.setClazz(MyCustomObject.class);
+		return data;
+	}	
+	
+	@Override
 	public ISingleData getDataInstance(String serializedData, Class clazz) {
-		return new SingleData(serializedData);
+		SingleData data = new SingleData();
+		data.setData(serializedData);
+		data.setClazz(clazz);
+		return data;
 	}
 
 }

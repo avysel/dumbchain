@@ -4,5 +4,8 @@ public interface IDataFactory {
 	
 	public ISingleData getDataInstance();
 	
+	public ISingleData getDataInstance(String serializedData);
+	
 	public ISingleData getDataInstance(String serializedData, Class clazz);
+	
 }

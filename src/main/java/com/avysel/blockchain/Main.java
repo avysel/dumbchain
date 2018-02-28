@@ -5,6 +5,9 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainParameters;
 
+/**
+ * Start a standalone blockchain.
+ */
 public final class Main {
 
 	private static Logger log = Logger.getLogger(Main.class);

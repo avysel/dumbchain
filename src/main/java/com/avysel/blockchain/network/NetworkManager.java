@@ -32,10 +32,9 @@ public class NetworkManager {
 	private NodeServer server;
 	private NodeClient client;
 	private PeerManager peerManager;
-
-
 	private Blockchain blockchain;
-
+	
+	// TODO static ?
 	private static int serverListeningPort;
 	private static int broadcastPort;
 
@@ -61,6 +60,14 @@ public class NetworkManager {
 	}
 
 	/**
+	 * Provides the port used to send hello messages when a blockchain node is started.
+	 * @return the broadcast port
+	 */
+	public static int getBroadcastPort() {		
+		return broadcastPort;	
+	}	
+	
+	/**
 	 * Provides the port used by current server.
 	 * @return the server port
 	 */
@@ -77,14 +84,6 @@ public class NetworkManager {
 	 */
 	public static void setServerListeningPort(int port) {
 		serverListeningPort = port;	
-	}
-
-	/**
-	 * Provides the port used to send hello messages when a blockchain node is started.
-	 * @return the broadcast port
-	 */
-	public static int getBroadcastPort() {		
-		return broadcastPort;	
 	}
 
 	/**
@@ -228,7 +227,7 @@ public class NetworkManager {
 			break;
 		case NetworkDataBulk.MESSAGE_CATCH_UP_EMPTY :
 			log.debug("Get an empty catch-up");
-			blockchain.emptyCatchUp();
+			blockchain.markAsUpToDate();
 			break;			
 		default: 
 			log.error("error incoming, unkown type : "+bulk.getBulkType());

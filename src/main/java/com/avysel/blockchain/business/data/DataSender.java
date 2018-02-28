@@ -6,7 +6,7 @@ import com.avysel.blockchain.mining.DataPool;
 import com.avysel.blockchain.network.NetworkManager;
 
 /**
- * Check if data stays too much time in data pool, and send them again to the network.
+ * Check if data stay too much time in data pool, and send them again to the network.
  */
 public class DataSender implements Runnable {
 
@@ -44,7 +44,7 @@ public class DataSender implements Runnable {
 
 		while(running) {
 			try {
-				Thread.sleep(1000 * 10); // sleep 10 minutes
+				Thread.sleep(1000 * 60 * 10); // sleep 10 minutes
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} 
@@ -59,7 +59,6 @@ public class DataSender implements Runnable {
 					network.sendData(data);
 				}
 			}
-
 		}
 	}
 }

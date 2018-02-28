@@ -62,7 +62,7 @@ public class Blockchain {
 	private DataSender dataSender;
 	
 	// is catch-up completed (true) or still in progress (false)
-	private boolean catchUpCompleted;
+	private boolean catchUpCompleted; // TODO move to catchup builder ?
 
 	public Blockchain() {
 		// init with default parameters
@@ -404,8 +404,8 @@ public class Blockchain {
 	/**
 	 * Notify catch-up builder that current chain is empty.
 	 */
-	public void emptyCatchUp() {
-		catchUpBuilder.emptyCatchUp();
+	public void markAsUpToDate() {
+		catchUpBuilder.markAsUpToDate();
 	}
 
 	/**

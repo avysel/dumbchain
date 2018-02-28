@@ -31,8 +31,15 @@ public class ChainCatchUpBuilder {
 
 	private ChainRequestor requestor;
 
-	private CatchUpResult completed;
-	private boolean getEmptyDataResult;
+	/**
+	 *  the result of last catchup try
+	 */
+	private CatchUpResult catchupResult;
+	
+	/**
+	 * Get empty catch up : chain is up to date
+	 */
+	private boolean upToDate;
 	
 	private enum CatchUpResult {
 		NO_TRY,
@@ -47,8 +54,8 @@ public class ChainCatchUpBuilder {
 		this.blockchain = blockchain;
 		this.pendingBlocks = new HashMap<Long, List<Block>>();
 		this.requestor = new ChainRequestor(this.blockchain);
-		this.completed = CatchUpResult.NO_TRY;
-		this.getEmptyDataResult = false;
+		this.catchupResult = CatchUpResult.NO_TRY;
+		this.upToDate = false;
 	}
 
 	public long getChainSize() {
@@ -68,8 +75,8 @@ public class ChainCatchUpBuilder {
 		requestor.requestBlocks(lastIndex);
 		
 		// wait to get catch up data or build successfull
-		while(completed != CatchUpResult.CATCH_UP_SUCCESSFUL 
-				&& !getEmptyDataResult 
+		while(catchupResult != CatchUpResult.CATCH_UP_SUCCESSFUL 
+				&& !upToDate 
 				&& (System.currentTimeMillis() - startTime) <= blockchain.getParams().getWaitForCatchupTime()) {
 			
 			// wait a few time bewteen two tries
@@ -80,19 +87,26 @@ public class ChainCatchUpBuilder {
 			}
 
 			// try build chain with existing blocks
-			completed = tryBuildingChain();
+			catchupResult = tryBuildingChain();
 		}
-		log.info("Catch-up completed : "+completed);
+		log.info("Catch-up completed : "+catchupResult);
 		
 		// if successful or nothing to catch up -> resume blockchain starting
-		return completed == CatchUpResult.CATCH_UP_SUCCESSFUL || completed == CatchUpResult.CATCH_UP_EMPTY;
+		return catchupResult == CatchUpResult.CATCH_UP_SUCCESSFUL || catchupResult == CatchUpResult.CATCH_UP_EMPTY;
 	}
 	
-	public void emptyCatchUp() {
+	/**
+	 * Notify that current chain is already up to date, so stop catching up.
+	 */
+	public void markAsUpToDate() {
 		log.debug("No chain to catch up.");
-		getEmptyDataResult = true;
+		upToDate = true;
 	}
 	
+	/**
+	 * Add a list of blocks to be added to the chain for catch-up.
+	 * @param blocks the list of catch-up blocks.
+	 */
 	public void addPendingBlocks(List<Block> blocks) {
 		if(blocks == null) return;
 		for(Block block : blocks) {
@@ -100,6 +114,10 @@ public class ChainCatchUpBuilder {
 		}
 	}
 
+	/**
+	 * Add a block to be added to the chain for catch-up.
+	 * @param block catch-up block.
+	 */
 	public void addPendingBlock(Block block) {
 
 		List<Block> sameIndexBlocks = pendingBlocks.get(block.getIndex());
@@ -110,7 +128,11 @@ public class ChainCatchUpBuilder {
 		sameIndexBlocks.add(block);
 	}
 
-	public CatchUpResult tryBuildingChain() {
+	/**
+	 * Try to build chain with all received catch-up blocks.
+	 * @return the result of try.
+	 */
+	private CatchUpResult tryBuildingChain() {
 
 		log.debug("Try to build the chain.");
 

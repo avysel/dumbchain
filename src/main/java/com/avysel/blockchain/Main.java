@@ -17,8 +17,6 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 		
-		
-		
 		log.info(BlockchainParameters.getUsage());
 		
 		BlockchainParameters params = processParams(args);

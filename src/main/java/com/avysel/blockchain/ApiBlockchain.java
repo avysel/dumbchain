@@ -2,6 +2,7 @@ package com.avysel.blockchain;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import com.avysel.blockchain.business.Blockchain;
 
@@ -16,6 +17,13 @@ public class ApiBlockchain {
 		
 		Blockchain blockchain = new Blockchain();
 		blockchain.start();
+	}
+	
+	@Bean
+	public Blockchain blockchain() {
+		Blockchain blockchain = new Blockchain();
+		blockchain.start();
+		return blockchain;
 	}
 	
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.data.ISingleData;
-import com.avysel.blockchain.business.data.SingleData;
+import com.avysel.blockchain.business.data.custom.SingleData;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.tools.JsonMapper;
 

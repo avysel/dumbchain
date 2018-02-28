@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.avysel.blockchain.business.data.ISingleData;
 
@@ -17,6 +18,7 @@ public class DataPool {
 
 	private static Logger log = Logger.getLogger(DataPool.class);
 
+	@Autowired
 	private LinkedBlockingQueue<ISingleData> queue;
 
 	public DataPool() {

@@ -7,6 +7,12 @@
 
 	<packaging>jar</packaging>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.10.RELEASE</version>
+	</parent>
+
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -37,10 +43,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
-		</dependency>
+			</dependency>
 		<dependency>
 			<groupId>org.iq80.leveldb</groupId>
 			<artifactId>leveldb</artifactId>
@@ -49,8 +62,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.2</version>
-		</dependency>
+			</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -116,6 +128,7 @@
 		</plugins>
 	</build>
 
+<!--  
 	<reporting>
 		<plugins>
 			<plugin>
@@ -146,11 +159,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.9.0</version>
-				<!-- <reportSets> <reportSet> <reports> <report>pmd</report> </reports> 
-					</reportSet> </reportSets> <configuration> <linkXRef>true</linkXRef> <sourceEncoding>UTF-8</sourceEncoding> 
-					<minimumTokens>100</minimumTokens> <targetJdk>1.8</targetJdk> </configuration> -->
-				<!-- <executions> <execution> <phase>compile</phase> <goals> <goal>check</goal> 
-					<goal>cpd-check</goal> </goals> </execution> </executions> -->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -158,4 +166,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	-->
 </project>

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.avysel.blockchain.business.data.ISingleData;
-import com.avysel.blockchain.business.data.SingleData;
 
 /**
  * The main content of Block.
@@ -12,21 +11,19 @@ import com.avysel.blockchain.business.data.SingleData;
  */
 public class BlockData {
 	
-	// data list if the block
+	// data list of the block
 	private List<ISingleData> dataList;
-
+	
 	public BlockData() {
 		super();
 		dataList = new ArrayList<ISingleData>();
 	}
 		
-	public BlockData(List<String> data) {
+	public BlockData(List<ISingleData> data) {
 		super();
 		dataList = new ArrayList<ISingleData>();
-		for(String s : data) {
-			dataList.add(new SingleData(s));
-		}
-	}	
+		dataList.addAll(data);
+	}
 
 	public List<ISingleData> getDataList() {
 		return dataList;

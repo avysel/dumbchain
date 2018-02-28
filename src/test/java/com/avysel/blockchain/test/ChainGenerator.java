@@ -2,7 +2,7 @@ package com.avysel.blockchain.test;
 
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.chain.ChainPart;
-import com.avysel.blockchain.business.data.SingleData;
+import com.avysel.blockchain.business.data.custom.SingleData;
 
 public final class ChainGenerator {
 	

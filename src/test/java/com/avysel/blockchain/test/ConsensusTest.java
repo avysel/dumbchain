@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.BlockchainManager;
 import com.avysel.blockchain.business.block.Block;
-import com.avysel.blockchain.business.data.SingleData;
+import com.avysel.blockchain.business.data.custom.SingleData;
 import com.avysel.blockchain.crypto.HashTools;
 import com.avysel.blockchain.mining.DataPool;
 import com.avysel.blockchain.mining.Miner;

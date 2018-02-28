@@ -1,12 +1,18 @@
 package com.avysel.blockchain.business.block;
 
-import com.avysel.blockchain.business.data.SingleData;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.avysel.blockchain.business.data.IDataFactory;
+import com.avysel.blockchain.business.data.custom.SingleData;
 
 /**
  * The genesis Block.
  * The first Block to be added in a Chain.
  */
 public class Genesis extends Block {
+	
+	@Autowired
+	IDataFactory dataFactory;
 	
 	/**
 	 * Genesis index.

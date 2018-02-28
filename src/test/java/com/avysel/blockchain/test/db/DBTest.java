@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.block.Block;
-import com.avysel.blockchain.business.data.SingleData;
+import com.avysel.blockchain.business.data.custom.SingleData;
 
 public class DBTest {
 

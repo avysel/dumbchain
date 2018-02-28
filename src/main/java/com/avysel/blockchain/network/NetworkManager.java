@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.block.Block;
 import com.avysel.blockchain.business.data.ISingleData;
-import com.avysel.blockchain.business.data.SingleData;
+import com.avysel.blockchain.business.data.custom.SingleData;
 import com.avysel.blockchain.network.client.NodeClient;
 import com.avysel.blockchain.network.data.NetworkDataBulk;
 import com.avysel.blockchain.network.data.message.CatchUpDataMessage;

@@ -1,9 +1,10 @@
-package com.avysel.blockchain.business.data;
+package com.avysel.blockchain.business.data.custom;
 
 import java.util.TimeZone;
 import java.util.UUID;
 
 import com.avysel.blockchain.business.BlockchainParameters;
+import com.avysel.blockchain.business.data.ISingleData;
 import com.avysel.blockchain.crypto.HashTools;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

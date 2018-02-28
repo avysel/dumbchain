@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.avysel.blockchain.business.Blockchain;
 import com.avysel.blockchain.business.block.Block;
@@ -33,6 +34,7 @@ public class Miner implements Runnable {
 	private Blockchain blockchain;
 
 	// the condition to validate a block
+	@Autowired
 	private IProof proof;
 
 	// mining is pending or running ?

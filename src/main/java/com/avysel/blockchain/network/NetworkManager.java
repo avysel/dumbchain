@@ -152,7 +152,7 @@ public class NetworkManager {
 	}
 
 	/**
-	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists.
+	 * Process an incoming SingleData received from the network. Add it to the DataPool if not already exists, and relay it to other peers.
 	 * @param data the incoming SingleData
 	 */
 	private void processIncomingData(SingleData data) {
@@ -160,7 +160,10 @@ public class NetworkManager {
 		synchronized(blockchain.getDataPool()) {
 			log.debug("Pool size before : "+blockchain.getDataPool().size());
 			try {
-				blockchain.addIncomingData(data);
+				if(blockchain.addIncomingData(data)) {
+					// if added to the pool, relay it on network
+					sendData(data);
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

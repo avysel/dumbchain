@@ -58,7 +58,7 @@ public class Blockchain {
 	// to catch-up with existing chain
 	private ChainCatchUpBuilder catchUpBuilder;
 
-	// to send data to the newtorck if they stay too much time in pool
+	// to send data to the network if they stay too much time in pool
 	private DataSender dataSender;
 	
 	// is catch-up completed (true) or still in progress (false)
@@ -224,9 +224,10 @@ public class Blockchain {
 	 * Add a new data, coming from network, to be included in a block in one of the next mining.
 	 * @param data the incoming data.
 	 * @throws InterruptedException if synchronize error occurs.
+	 * * @return true if data was added, false if data already exists in pool.
 	 */
-	public void addIncomingData(ISingleData data) throws InterruptedException {
-		dataPool.addData(data);
+	public boolean addIncomingData(ISingleData data) throws InterruptedException {
+		return dataPool.addData(data);
 	}
 
 	/**

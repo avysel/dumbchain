@@ -31,16 +31,19 @@ public class DataPool {
 
 	/**
 	 * Add a new SingleData to the pending data list to be added in a Block.
-	 * @param data the SingleData to be added
-	 * @throws InterruptedException when a synchronization problem occurs
+	 * @param data the SingleData to be added.
+	 * @throws InterruptedException when a synchronization problem occurs.
+	 * @return true if data was added, false if data already exists in pool.
 	 */
-	public void addData(ISingleData data) throws InterruptedException {
+	public boolean addData(ISingleData data) throws InterruptedException {
 
 		if(!exists(data.getHash())) {
 			getDataPool().put(data);
 			log.debug("New data in pool : "+data);
+			return true;
 		} else {
 			log.warn("Data "+data.getHash()+" already exists");
+			return false;
 		}
 	}
 

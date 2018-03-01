@@ -127,4 +127,13 @@ public class DataPool {
 		
 		return result;		
 	}
+
+	public LinkedBlockingQueue<ISingleData> getQueue() {
+		return queue;
+	}
+
+	public void setQueue(LinkedBlockingQueue<ISingleData> queue) {
+		this.queue = queue;
+	}
+	
 }

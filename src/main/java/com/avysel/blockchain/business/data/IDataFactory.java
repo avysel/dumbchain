@@ -2,10 +2,10 @@ package com.avysel.blockchain.business.data;
 
 public interface IDataFactory {
 	
-	public ISingleData getDataInstance();
+	public ISingleData createData();
 	
-	public ISingleData getDataInstance(String serializedData);
+	public ISingleData createData(String serializedData);
 	
-	public ISingleData getDataInstance(String serializedData, Class clazz);
+	public ISingleData createData(String serializedData, Class clazz);
 	
 }

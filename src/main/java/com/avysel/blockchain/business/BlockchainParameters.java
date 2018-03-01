@@ -28,14 +28,14 @@ public class BlockchainParameters {
 	
 	public BlockchainParameters() {
 		miningNode = Constants.MINING_YES;
-		demoDataGenerator = Constants.DATA_GENERATOR_YES;
+		demoDataGenerator = Constants.DATA_GENERATOR_NO;
 		properties = new PropertiesManager("config.properties");
 	}
 	
 	public BlockchainParameters(String fileName) {
 		// init default
 		miningNode = Constants.MINING_YES;
-		demoDataGenerator = Constants.DATA_GENERATOR_YES;
+		demoDataGenerator = Constants.DATA_GENERATOR_NO;
 		properties = new PropertiesManager(fileName);		
 	}
 	

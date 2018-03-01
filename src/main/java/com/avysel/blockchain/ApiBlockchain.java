@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.avysel.blockchain.business.Blockchain;
+import com.avysel.blockchain.business.BlockchainParameters;
+import com.avysel.blockchain.business.data.IDataFactory;
+import com.avysel.blockchain.business.data.custom.DataFactory;
 
 /**
  * Start a blockchain with API.
@@ -14,16 +17,19 @@ public class ApiBlockchain {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiBlockchain.class, args);
-		
-		Blockchain blockchain = new Blockchain();
-		blockchain.start();
+		System.out.println("Starting api");
 	}
 	
 	@Bean
 	public Blockchain blockchain() {
-		Blockchain blockchain = new Blockchain();
+		Blockchain blockchain = new Blockchain(new BlockchainParameters());
 		blockchain.start();
 		return blockchain;
+	}
+	
+	@Bean
+	public IDataFactory dataFactory() {
+		return new DataFactory();
 	}
 	
 }

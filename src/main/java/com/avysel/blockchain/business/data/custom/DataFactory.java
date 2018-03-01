@@ -6,22 +6,20 @@ import com.avysel.blockchain.business.data.ISingleData;
 public class DataFactory implements IDataFactory {
 
 	@Override
-	public ISingleData getDataInstance() {
+	public ISingleData createData() {
 		return new SingleData();
 	}
 
 	@Override
-	public ISingleData getDataInstance(String serializedData) {
-		SingleData data = new SingleData();
-		data.setData(serializedData);
+	public ISingleData createData(String serializedData) {
+		SingleData data = new SingleData(serializedData);
 		data.setClazz(MyCustomObject.class);
 		return data;
 	}	
 	
 	@Override
-	public ISingleData getDataInstance(String serializedData, Class clazz) {
-		SingleData data = new SingleData();
-		data.setData(serializedData);
+	public ISingleData createData(String serializedData, Class clazz) {
+		SingleData data = new SingleData(serializedData);
 		data.setClazz(clazz);
 		return data;
 	}

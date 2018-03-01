@@ -357,11 +357,22 @@ public class Blockchain {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append('\n');
 		buffer.append("Node : ").append(this.nodeId).append('\n');
+		buffer.append("Local : ").append(this.network.getLocalPeer()).append('\n');
 		buffer.append("Mining : ").append(this.isMiningNode()).append('\n');
+		buffer.append("Height : ").append(this.getLastIndex()).append('\n');
 
 		return buffer.toString();
 	}
 
+	public BlockchainStatus getStatus() {
+		BlockchainStatus status = new BlockchainStatus();
+		status.setNodeId(this.getNodeId());
+		status.setLocalPeer(this.network.getLocalPeer().toString());
+		status.setHeight(this.getLastIndex());
+		status.setMining(this.isMiningNode());
+		return status;
+	}
+	
 	/**
 	 * Catch up with existing chain.
 	 * @param lastIndex the index of last known block.

@@ -44,7 +44,8 @@ public class BlockchainController {
 	}	
 	
 	@RequestMapping(value="/data", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
-	public void newData (@RequestBody String dataValue, HttpServletResponse response) {
+	@ResponseBody
+	public ISingleData newData (@RequestBody String dataValue, HttpServletResponse response) {
 		ISingleData data = dataFactory.createData(dataValue);
 		try {
 			blockchain.addData(data);
@@ -53,6 +54,7 @@ public class BlockchainController {
 			e.printStackTrace();
 			response.setStatus(500);
 		}
+		return data;
 	}
 	
 	@RequestMapping(value="/data/{dataHash}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })

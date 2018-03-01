@@ -85,7 +85,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										com.avysel.blockchain.Main
+										com.avysel.blockchain.BlockchainStandaloneStarter
 									</mainClass>
 								</manifest>
 							</archive>

@@ -8,11 +8,11 @@ import com.avysel.blockchain.business.BlockchainParameters;
 /**
  * Start a standalone blockchain.
  */
-public final class Main {
+public final class BlockchainStandaloneStarter {
 
-	private static Logger log = Logger.getLogger(Main.class);
+	private static Logger log = Logger.getLogger(BlockchainStandaloneStarter.class);
 	
-	private Main() {}
+	private BlockchainStandaloneStarter() {}
 	
 	/**
 	 * Starts the blockchain.

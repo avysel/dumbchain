@@ -13,10 +13,10 @@ import com.avysel.blockchain.business.data.custom.DataFactory;
  * Start a blockchain with API.
  */
 @SpringBootApplication(scanBasePackages = {"com.avysel.blockchain.api"})
-public class ApiBlockchain {
+public class BlockchainAPIStarter {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(ApiBlockchain.class, args);
+		SpringApplication.run(BlockchainAPIStarter.class, args);
 		System.out.println("Starting api");
 	}
 	

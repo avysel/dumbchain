@@ -38,8 +38,8 @@ Il a été créé dans le but de réaliser un exemple de fonctionnement de block
 - [x] Chargement au démarrage
 
 ### Utilisation
-- [ ] Création de données
-- [ ] API d'ajout de données
+- [x] Création de données
+- [x] API d'ajout de données
 - [ ] Consultation des données
 - [ ] API consultation des données
 - [ ] Lancement du noeud avec création de données uniquement (pas de minage, pas de stockage de chaine ?)
@@ -103,15 +103,31 @@ java -jar poc-blockchain.jar
 - Faut-il faire un catch-up du pool de données ? (Réponse : Non. Une routine doit tourner sur le noeud régulièrement, pour envoyer à tous les noeuds les transactions créées localement et non encore inclues dans un block)
 - Comment piocher des données dans le pool pour miner un block ? (actuellement, prises dans l'ordre d'arrivée, minimum 50, maximum 500)
 
+
+# Standalone vs API
+
+La blockchain peut se lancer en deux mode différents :
+- Standalone : le programme s'exécute seul, sans interface.
+- API : la blockchain est couplée à une API REST qui permet d'exécuter des actions (récupération et post de nouvelles données, interrogation du status ...).
+
+
 # Liste des classes
 
-**Main** : classe principale, traite les paramètres de lancement et lance la blockchain.
+## démarrage
+
+**BlockchainStandaloneStarter** : classe principale, traite les paramètres de lancement et lance la blockchain en mode standalone.
+
+**BlockchainAPIStarter** : classe principale, traite les paramètres de lancement et lance la blockchain en mode API.
+
+## coeur du business
 
 **Blockchain** : classe principale métier, qui orchestre tous les autres composants.
 
 **BlockchainParameters** : fourni les paramètres de contexte (paramètres fixes, valeur des arguments de lancement, contenu du fichier .properties fourni en entrée).
 
 **BlockchainManager** : fourni des opérations de recherche de blocs dnas la blockchain selon différents critères.
+
+**BlockchainStatus** : POJO qui contient des informations de base sur l'état de la blockchain.
 
 **PropertiesManager** : intégré au BlockchainParameters, il gère le fichier .properties.
 
@@ -188,6 +204,10 @@ java -jar poc-blockchain.jar
 **NetworkTools** : utilitaire de fonctions réseau
 
 **Util** : utilitaires divers
+
+## API
+
+**BlockchainController** : controleur REST de l'API.
 
 # Architecture
 

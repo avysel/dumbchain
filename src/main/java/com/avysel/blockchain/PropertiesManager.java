@@ -57,7 +57,7 @@ public class PropertiesManager {
 		try {
 			if(fileName == null)
 				fileName = "config.properties"; 
-			input = Main.class.getClassLoader().getResourceAsStream(fileName);
+			input = BlockchainStandaloneStarter.class.getClassLoader().getResourceAsStream(fileName);
 			if(input==null){
 				System.out.println("Sorry, unable to find " + fileName);
 				return;

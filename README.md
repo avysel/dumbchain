@@ -151,10 +151,6 @@ La blockchain peut se lancer en deux mode différents :
 
 **ChainSender** : envoie la partie de la chaine manquante à une nouvelle instance lors de son arrivée sur le réseau.
 
-**ISingleData** : interface qui définit ce que doit être une donnée à inclure dans un bloc.
-
-**SingleData** : une proposition d'implémentation d'une donnée de bloc.
-
 **HashTools** : utilisé pour calculer les hashs.
 
 **MerkleTree** : fourni les services de vérification d'intégrité basés sur l'arbre de Merkle.
@@ -204,6 +200,21 @@ La blockchain peut se lancer en deux mode différents :
 **NetworkTools** : utilitaire de fonctions réseau
 
 **Util** : utilitaires divers
+
+## Personnalisation des données à stocker
+
+### contrats à suivre
+**ISingleData** : interface qui définit ce que doit être une donnée à inclure dans un bloc.
+
+**IDataFactory** : Interface qui définit une fabrique de données. Le type de donnée est basé sur *ISingleData* et injecté selon l'implémentation fournie.
+
+### package "custom", pour les éléments personnalisés
+**SingleData** : une proposition d'implémentation d'une donnée de bloc. (contient un objet à stocker et des méta-données)
+
+**MyCustomObject** : un exemple d'objet personnalisé qui peut être remplacé par n'importe quel objet à stocker dans la chaine.
+
+**DataFactory** : une proposition d'implémentation de *IDataFactory*.
+
 
 ## API
 
